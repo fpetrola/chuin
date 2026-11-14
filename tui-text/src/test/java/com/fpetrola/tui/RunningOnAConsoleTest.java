@@ -13,7 +13,8 @@ class RunningOnAConsoleTest {
   private static final String MOUSE_ON = ESC + "?1000h" + ESC + "?1006h";
   /** Turns the mouse off and shows the cursor again, as the console was before. */
   private static final String MOUSE_OFF = ESC + "?1006l" + ESC + "?1000l" + ESC + "?25h";
-  private static final String WINDOW = ESC + "0;30;47m";
+  /** Black on the grey of the DOS palette, as exact RGB. */
+  private static final String WINDOW = ESC + "0;38;2;0;0;0;48;2;168;168;168m";
   private static final String FRAME = ESC + "2J"
       + ESC + "1;1H" + WINDOW + "╔══ A ═══╗"
       + ESC + "2;1H" + WINDOW + "║        ║"
