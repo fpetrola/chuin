@@ -54,4 +54,9 @@ public class TextToolkit implements Toolkit {
   public Keyboard keyboard(InputStream in) {
     return new StreamKeyboard(in, keys.enter());
   }
+
+  @Override
+  public Console console(InputStream in, OutputStream out, Screen screen) {
+    return new TextConsole(keyboard(in), terminal(out), screen);
+  }
 }

@@ -8,6 +8,8 @@ com.fpetrola.tui.Button#accept(ViewVisitor): void
 com.fpetrola.tui.Button#onPress(ButtonListener): void
 com.fpetrola.tui.ButtonListener interface
 com.fpetrola.tui.ButtonListener#pressed(Button): void
+com.fpetrola.tui.Console interface
+com.fpetrola.tui.Console#run(Desktop): void
 com.fpetrola.tui.Desktop interface
 com.fpetrola.tui.Desktop#draw(Screen): void
 com.fpetrola.tui.Desktop#open(Window): void
@@ -29,6 +31,7 @@ com.fpetrola.tui.TextToolkit#<init>()
 com.fpetrola.tui.Toolkit interface
 com.fpetrola.tui.Toolkit#area(int, int, int, int): Area
 com.fpetrola.tui.Toolkit#button(String): Button
+com.fpetrola.tui.Toolkit#console(InputStream, OutputStream, Screen): Console
 com.fpetrola.tui.Toolkit#desktop(): Desktop
 com.fpetrola.tui.Toolkit#keyboard(InputStream): Keyboard
 com.fpetrola.tui.Toolkit#keys(): Keys

@@ -21,4 +21,6 @@ public interface Toolkit {
   Terminal terminal(OutputStream out);
 
   Keyboard keyboard(InputStream in);
+
+  Console console(InputStream in, OutputStream out, Screen screen);
 }
