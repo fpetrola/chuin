@@ -48,13 +48,13 @@ class ChoosingARadioButtonTest {
     desktop.draw(screen);
 
     assertEquals("╔═══ R ════╗  ", screen.lines().get(1));
-    assertEquals(List.of("wwwwwwwwwwwws.", "wwwwwwwwwwwws."), screen.tints().subList(3, 5));
+    assertEquals(List.of("wccccccwwwwws.", "wccccccwwwwws."), screen.tints().subList(3, 5));
 
     press(toolkit, desktop, "\t" + DOWN);
     desktop.draw(screen);
 
     assertEquals("╔═══ R ════╗  ", screen.lines().get(1));
-    assertEquals(List.of("wwwwwwwwwwwws.", "wffffffwwwwws."), screen.tints().subList(3, 5));
+    assertEquals(List.of("wccccccwwwwws.", "wffffffwwwwws."), screen.tints().subList(3, 5));
     assertEquals("║( ) Si▀   ║  ", screen.lines().get(3));
     assertEquals("║(•) No    ║  ", screen.lines().get(4));
   }

@@ -128,8 +128,8 @@ class ClickingWithTheMouseTest {
     desktop.draw(screen);
     assertEquals(Optional.of("Verde"), colors.selected());
     assertEquals("wbbbbbbwwwwwwwwwwwwwww", screen.tints().get(1));
-    assertEquals("wwwwwwwwwwwwwwwwwwwwww", screen.tints().get(2));
-    assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(3));
+    assertEquals("wwwwwwwwwccccccwwwwwww", screen.tints().get(2));
+    assertEquals("wfffffwwwccccccwwwwwww", screen.tints().get(3));
 
     click(0, 9, 3);
     desktop.draw(screen);

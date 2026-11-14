@@ -9,6 +9,8 @@ import java.util.List;
  */
 class RowPainter implements ViewVisitor {
   private static final char FOCUS_TINT = 'f';
+  /** The field a group of options sits on: black on cyan. */
+  private static final char GROUP_TINT = 'c';
   /** The blank and the scroll bar cell after a list item. */
   private static final int BESIDE_ITEM = 2;
   private final Screen screen;
@@ -76,11 +78,13 @@ class RowPainter implements ViewVisitor {
 
   @Override
   public void visitOption(Option option) {
+    screen.paint(at.column(), at.row() + shown, at.columns(), GROUP_TINT);
     nextRow("( ) " + option.text());
   }
 
   @Override
   public void visitChosenOption(Option option) {
+    screen.paint(at.column(), at.row() + shown, at.columns(), GROUP_TINT);
     tint(at.columns());
     nextRow("(•) " + option.text());
   }

@@ -25,6 +25,7 @@ class AnsiTerminal implements Terminal {
       'i', "0;97;44",
       'h', "0;31;47",
       'k', "0;93;42",
+      'c', "0;30;46",
       's', "0;90;40");
   private final OutputStream out;
 
