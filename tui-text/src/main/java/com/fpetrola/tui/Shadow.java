@@ -1,9 +1,7 @@
 package com.fpetrola.tui;
 
-import java.util.function.Consumer;
-
 /** The shadow an area casts: one cell to its right and one cell below it. */
-class Shadow implements Consumer<Screen> {
+class Shadow implements Drawing {
   private static final String CELL = "░";
   private static final char TINT = 's';
   private final Area area;
@@ -13,7 +11,7 @@ class Shadow implements Consumer<Screen> {
   }
 
   @Override
-  public void accept(Screen screen) {
+  public void drawOn(Screen screen) {
     int right = area.column() + area.columns();
     int below = area.row() + area.rows();
     for (int line = area.row() + 1; line < below; line++) {

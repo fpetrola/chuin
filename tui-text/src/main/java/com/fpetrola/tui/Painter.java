@@ -32,7 +32,7 @@ class Painter implements ViewVisitor {
   @Override
   public void visitWindow(Window window) {
     Area area = window.area();
-    new RaisedFrame(area, window.title(), WINDOW_TINT).accept(screen);
+    new RaisedFrame(area, window.title(), WINDOW_TINT).drawOn(screen);
     insideColumn = area.column() + 1;
     insideRow = area.row() + 1;
     inside = new ClippedScreen(screen, new TextArea(insideColumn, insideRow, area.columns() - 2, area.rows() - 2));

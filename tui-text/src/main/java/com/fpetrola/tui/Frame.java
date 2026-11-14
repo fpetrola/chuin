@@ -1,9 +1,7 @@
 package com.fpetrola.tui;
 
-import java.util.function.Consumer;
-
 /** A box drawn around an area: its border, a title centred on the top border when it has one, and a blank inside, all in one tint. */
-class Frame implements Consumer<Screen> {
+class Frame implements Drawing {
   private final Area area;
   private final String title;
   private final char tint;
@@ -15,7 +13,7 @@ class Frame implements Consumer<Screen> {
   }
 
   @Override
-  public void accept(Screen screen) {
+  public void drawOn(Screen screen) {
     int inner = area.columns() - 2;
     String label = title.isEmpty() ? "" : " " + title + " ";
     int left = (inner - label.length()) / 2;
