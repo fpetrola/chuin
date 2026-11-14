@@ -40,12 +40,13 @@ class SeeingAWindowShadowTest {
     Window above = toolkit.window("A");
 
     below.place(toolkit.area(0, 0, 12, 5));
+    below.add(toolkit.label("abcdefgh"), toolkit.point(0, 2));
     above.place(toolkit.area(0, 0, 6, 3));
     desktop.open(below);
     desktop.open(above);
     desktop.draw(screen);
 
-    assertEquals("│          │", screen.lines().get(3));
+    assertEquals("│abcdefgh  │", screen.lines().get(3));
     assertEquals("wsssssswwwww", screen.tints().get(3));
     assertEquals("wwwwwwswwwww", screen.tints().get(1));
   }
