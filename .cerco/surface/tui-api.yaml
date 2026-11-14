@@ -138,8 +138,11 @@ types:
   "com.fpetrola.tui.Screen":
     kind: interface
     members:
+      - "cursor(): Optional<Point>"
+      - "hideCursor(): void"
       - "lines(): List<String>"
       - "paint(int, int, int, char): void"
+      - "showCursorAt(Point): void"
       - "tints(): List<String>"
       - "write(int, int, String): void"
   "com.fpetrola.tui.Terminal":

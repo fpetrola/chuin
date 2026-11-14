@@ -2,12 +2,15 @@ package com.fpetrola.tui;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /** A grid of cells; whatever is written outside it is cut off. */
 class TextScreen implements Screen {
   private static final char UNTINTED = '.';
   private final char[][] cells;
   private final char[][] tints;
+  /** Where typing goes, or nothing while the cursor is hidden. */
+  private Optional<Point> cursor = Optional.empty();
 
   TextScreen(int columns, int rows) {
     cells = new char[rows][columns];
@@ -47,5 +50,20 @@ class TextScreen implements Screen {
     for (int at = from; at < to; at++) {
       line[column + at] = text.charAt(at);
     }
+  }
+
+  @Override
+  public void showCursorAt(Point cell) {
+    cursor = Optional.of(cell);
+  }
+
+  @Override
+  public void hideCursor() {
+    cursor = Optional.empty();
+  }
+
+  @Override
+  public Optional<Point> cursor() {
+    return cursor;
   }
 }

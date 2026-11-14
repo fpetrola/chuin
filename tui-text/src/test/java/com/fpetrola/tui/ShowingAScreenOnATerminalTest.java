@@ -27,7 +27,7 @@ class ShowingAScreenOnATerminalTest {
         ESC + "2J"
             + ESC + "1;1H" + DESKTOP + "░░░░░░"
             + ESC + "2;1H" + DESKTOP + "░┌hola"
-            + ESC + "0m",
+            + ESC + "0m" + ESC + "?25l",
         out.toString(StandardCharsets.UTF_8));
   }
 
@@ -47,7 +47,7 @@ class ShowingAScreenOnATerminalTest {
     assertEquals(
         ESC + "2J"
             + ESC + "1;1H" + WINDOW + "ab" + FOCUS + "cd" + SHADOW + "e" + DESKTOP + "f░"
-            + ESC + "0m",
+            + ESC + "0m" + ESC + "?25l",
         out.toString(StandardCharsets.UTF_8));
   }
 }

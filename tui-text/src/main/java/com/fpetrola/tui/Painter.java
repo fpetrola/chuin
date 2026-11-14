@@ -97,7 +97,9 @@ class Painter implements ViewVisitor {
     inside.write(column, row, text + " ".repeat(cells - text.length()));
     inside.paint(column, row, cells, FIELD_TINT);
     drawn.add(new TextArea(column, row, cells, 1));
-    seen++;
+    if (seen++ == focused) {
+      inside.showCursorAt(new TextPoint(column + Math.min(text.length(), cells - 1), row));
+    }
   }
 
   /** Draws a cell of a button's shadow, but only on a cell that is blank or shadow already: it never covers what a view drew. */

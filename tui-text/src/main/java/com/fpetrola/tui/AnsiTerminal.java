@@ -40,6 +40,7 @@ class AnsiTerminal implements Terminal {
       colored(text, lines.get(row), tints.get(row));
     });
     text.append(RESET);
+    text.append(screen.cursor().map(cell -> ESC + (cell.row() + 1) + ";" + (cell.column() + 1) + "H" + ESC + "?25h").orElse(ESC + "?25l"));
     try {
       out.write(text.toString().getBytes(StandardCharsets.UTF_8));
     } catch (IOException e) {

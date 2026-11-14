@@ -143,6 +143,7 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void draw(Screen screen) {
+      screen.hideCursor();
       bar.accept(new MenuPainter(screen, Optional.of(menus().get(open)), item));
     }
 

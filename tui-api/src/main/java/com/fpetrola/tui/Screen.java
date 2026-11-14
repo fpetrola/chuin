@@ -1,6 +1,7 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Screen {
   List<String> lines();
@@ -16,4 +17,13 @@ public interface Screen {
 
   /** Tints this many cells of a row, starting at a column. */
   void paint(int column, int row, int columns, char tint);
+
+  /** Shows the cursor on this cell, where typing goes. */
+  void showCursorAt(Point cell);
+
+  /** Hides the cursor: nothing on the screen takes typing. */
+  void hideCursor();
+
+  /** Where the cursor is shown, or nothing when it is hidden. */
+  Optional<Point> cursor();
 }

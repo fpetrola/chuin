@@ -17,7 +17,7 @@ class RunningOnAConsoleTest {
       + ESC + "1;1H" + WINDOW + "╔══ A ═══╗"
       + ESC + "2;1H" + WINDOW + "║        ║"
       + ESC + "3;1H" + WINDOW + "╚════════╝"
-      + ESC + "0m";
+      + ESC + "0m" + ESC + "?25l";
 
   @Test
   void theDesktopIsShownOnceAtStartAndAgainAfterEveryKey() {

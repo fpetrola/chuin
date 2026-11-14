@@ -106,6 +106,7 @@ class TextDesktop implements Desktop {
 
   /** Blanks every cell and takes its tint away, so nothing drawn before is left behind. */
   private void clear(Screen screen) {
+    screen.hideCursor();
     List<String> lines = screen.lines();
     for (int row = 0; row < lines.size(); row++) {
       int columns = lines.get(row).length();

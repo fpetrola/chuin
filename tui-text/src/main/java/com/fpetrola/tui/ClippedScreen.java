@@ -1,6 +1,7 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.Optional;
 
 /** A screen seen through an area of another: whatever is written or painted outside the area is cut off. */
 class ClippedScreen implements Screen {
@@ -42,5 +43,23 @@ class ClippedScreen implements Screen {
 
   private boolean inside(int row) {
     return row >= area.row() && row < area.row() + area.rows();
+  }
+
+  @Override
+  public void showCursorAt(Point cell) {
+    boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
+    if (across && inside(cell.row())) {
+      screen.showCursorAt(cell);
+    }
+  }
+
+  @Override
+  public void hideCursor() {
+    screen.hideCursor();
+  }
+
+  @Override
+  public Optional<Point> cursor() {
+    return screen.cursor();
   }
 }
