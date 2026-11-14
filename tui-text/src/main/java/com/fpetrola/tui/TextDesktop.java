@@ -18,7 +18,8 @@ class TextDesktop implements Windows {
   /** Ctrl+W closes the top window. */
   private static final char CLOSE_WINDOW = 'w';
   /** The smallest a window shrinks to: its frame with one cell inside. */
-  private static final Area SMALLEST = new TextArea(0, 0, 3, 3);
+  private static final int FEWEST_COLUMNS = 3;
+  private static final int FEWEST_ROWS = 3;
   private int focused;
   /** What a drag does: move the window taken by its title, or nothing. */
   private Consumer<Point> dragging = NOT_DRAGGING;
@@ -94,7 +95,7 @@ class TextDesktop implements Windows {
   private void stretch(Window window) {
     Area from = window.area();
     dragging = to -> window.place(new TextArea(from.column(), from.row(),
-        Math.max(SMALLEST.columns(), to.column() - from.column() + 1), Math.max(SMALLEST.rows(), to.row() - from.row() + 1)));
+        Math.max(FEWEST_COLUMNS, to.column() - from.column() + 1), Math.max(FEWEST_ROWS, to.row() - from.row() + 1)));
   }
 
   @Override
