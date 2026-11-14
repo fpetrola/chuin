@@ -37,6 +37,7 @@ types:
   "com.fpetrola.tui.KeyVisitor":
     kind: interface
     members:
+      - "backspace(): void"
       - "character(char): void"
       - "enter(): void"
       - "other(): void"
@@ -105,7 +106,7 @@ types:
       - "button(Button, String, List<ButtonListener>): void"
       - "checkBox(CheckBox, String, Mark, Runnable): void"
       - "child(Point): void"
-      - "inputLine(InputLine, String, int, Consumer<Character>): void"
+      - "inputLine(InputLine, String, int, Consumer<Character>, Runnable): void"
       - "label(String): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":

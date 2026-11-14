@@ -37,20 +37,21 @@ class TellingKeysApartTest {
   }
 
   @Test
-  void theKeyboardReadsTabCarriageReturnSpaceALetterAndAnyOtherByte() {
-    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream("\t\r h\u0001".getBytes(StandardCharsets.UTF_8)));
+  void theKeyboardReadsTabCarriageReturnSpaceALetterBackspaceAndAnyOtherByte() {
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream("\t\r h\u007f\u0001".getBytes(StandardCharsets.UTF_8)));
     Desktop desktop = mock(Desktop.class);
     ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
 
     keyboard.typeInto(desktop);
 
-    verify(desktop, times(5)).type(typed.capture());
+    verify(desktop, times(6)).type(typed.capture());
     typed.getAllValues().forEach(key -> key.accept(visitor));
     InOrder order = inOrder(visitor);
     order.verify(visitor).tab();
     order.verify(visitor).enter();
     order.verify(visitor).space();
     order.verify(visitor).character('h');
+    order.verify(visitor).backspace();
     order.verify(visitor).other();
   }
 }

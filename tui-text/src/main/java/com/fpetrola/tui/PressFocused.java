@@ -3,14 +3,8 @@ package com.fpetrola.tui;
 import java.util.List;
 import java.util.function.Consumer;
 
-/** Presses the button that has the focus: the one at the focused place among a window's focusable views. */
+/** What Enter does: presses a button. Meant to run inside {@link AtFocus}, so it only ever sees the focused view. */
 class PressFocused implements ViewVisitor {
-  private final int focused;
-  private int seen;
-
-  PressFocused(int focused) {
-    this.focused = focused;
-  }
 
   @Override
   public void window(String title, Area area) {
@@ -22,10 +16,7 @@ class PressFocused implements ViewVisitor {
 
   @Override
   public void button(Button button, String caption, List<ButtonListener> listeners) {
-    if (seen == focused) {
-      listeners.forEach(listener -> listener.pressed(button));
-    }
-    seen++;
+    listeners.forEach(listener -> listener.pressed(button));
   }
 
   @Override
@@ -34,11 +25,9 @@ class PressFocused implements ViewVisitor {
 
   @Override
   public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
-    seen++;
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type) {
-    seen++;
+  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
   }
 }

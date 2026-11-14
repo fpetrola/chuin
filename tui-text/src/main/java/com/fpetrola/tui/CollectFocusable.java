@@ -34,7 +34,7 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type) {
+  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
     into.add(line);
   }
 }

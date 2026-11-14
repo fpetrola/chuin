@@ -90,16 +90,19 @@ class VisitingViewsTest {
   }
 
   @Test
-  void anInputLineHandsItsTextAndWidthAndKeepsWhatIsTypedIntoIt() {
+  void anInputLineHandsItsTextAndWidthKeepsWhatIsTypedIntoItAndErasesTheLastOne() {
     InputLine name = toolkit.inputLine(10);
     ArgumentCaptor<Consumer<Character>> type = ArgumentCaptor.captor();
+    ArgumentCaptor<Runnable> erase = ArgumentCaptor.captor();
 
     name.accept(visitor);
-    verify(visitor).inputLine(eq(name), eq(""), eq(10), type.capture());
+    verify(visitor).inputLine(eq(name), eq(""), eq(10), type.capture(), erase.capture());
     type.getValue().accept('h');
     type.getValue().accept('i');
+    type.getValue().accept('x');
+    erase.getValue().run();
     name.accept(visitor);
 
-    verify(visitor).inputLine(eq(name), eq("hi"), eq(10), any());
+    verify(visitor).inputLine(eq(name), eq("hi"), eq(10), any(), any());
   }
 }

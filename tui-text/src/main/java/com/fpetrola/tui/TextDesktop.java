@@ -32,7 +32,7 @@ class TextDesktop implements Desktop {
   private class Typed implements KeyVisitor {
     @Override
     public void enter() {
-      top().ifPresent(window -> window.accept(new PressFocused(focused)));
+      top().ifPresent(window -> window.accept(new AtFocus(focused, new PressFocused())));
     }
 
     /** Moves the focus to the next focusable view, back to the first after the last. */
@@ -45,12 +45,17 @@ class TextDesktop implements Desktop {
 
     @Override
     public void space() {
-      top().ifPresent(window -> window.accept(new ToggleFocused(focused)));
+      top().ifPresent(window -> window.accept(new AtFocus(focused, new ToggleFocused())));
     }
 
     @Override
     public void character(char typed) {
-      top().ifPresent(window -> window.accept(new TypeIntoFocused(focused, typed)));
+      top().ifPresent(window -> window.accept(new AtFocus(focused, new TypeIntoFocused(typed))));
+    }
+
+    @Override
+    public void backspace() {
+      top().ifPresent(window -> window.accept(new AtFocus(focused, new EraseFocused())));
     }
 
     @Override

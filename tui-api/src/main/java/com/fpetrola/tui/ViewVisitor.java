@@ -17,6 +17,6 @@ interface ViewVisitor {
   /** A check box hands over its text, its mark, and how to toggle it. */
   void checkBox(CheckBox box, String text, Mark mark, Runnable toggle);
 
-  /** An input line hands over its text, its width in cells, and where typed characters go. */
-  void inputLine(InputLine line, String text, int width, Consumer<Character> type);
+  /** An input line hands over its text, its width in cells, where typed characters go, and how to erase the last one. */
+  void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase);
 }

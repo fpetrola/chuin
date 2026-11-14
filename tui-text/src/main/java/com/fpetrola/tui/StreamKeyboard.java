@@ -10,6 +10,7 @@ class StreamKeyboard implements Keyboard {
   private static final int CONTROL_Q = 0x11;
   private static final int CARRIAGE_RETURN = '\r';
   private static final int TAB = '\t';
+  private static final int BACKSPACE = 0x7F;
   private static final int SPACE = ' ';
   private static final int FIRST_PRINTABLE = '!';
   private static final int LAST_PRINTABLE = '~';
@@ -35,7 +36,8 @@ class StreamKeyboard implements Keyboard {
   private Key keyFor(int read) {
     boolean printable = read >= FIRST_PRINTABLE && read <= LAST_PRINTABLE;
     Key written = printable ? visitor -> visitor.character((char) read) : KeyVisitor::other;
-    Key spaced = read == SPACE ? keys.space() : written;
+    Key erased = read == BACKSPACE ? KeyVisitor::backspace : written;
+    Key spaced = read == SPACE ? keys.space() : erased;
     Key named = read == TAB ? keys.tab() : spaced;
     return read == CARRIAGE_RETURN ? keys.enter() : named;
   }

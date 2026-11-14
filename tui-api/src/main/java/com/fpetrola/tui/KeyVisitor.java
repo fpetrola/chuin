@@ -10,5 +10,7 @@ interface KeyVisitor {
 
   void character(char typed);
 
+  void backspace();
+
   void other();
 }

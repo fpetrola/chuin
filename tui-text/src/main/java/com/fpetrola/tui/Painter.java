@@ -74,7 +74,7 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type) {
+  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
     screen.write(column, row, text + "_".repeat(Math.max(0, width - text.length())));
     seen++;
   }
