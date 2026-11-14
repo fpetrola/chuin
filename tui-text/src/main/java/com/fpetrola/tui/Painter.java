@@ -12,6 +12,9 @@ class Painter implements ViewVisitor {
   private final Screen screen;
   /** The inside of the window being drawn: its views cannot draw past it. */
   private Screen inside;
+  /** The top left cell inside the frame of the window drawn last. */
+  private int insideColumn;
+  private int insideRow;
   private final int focused;
   /** Where each focusable view was drawn, in focus order, so a click can find what is under it. */
   private final List<Area> drawn;
@@ -49,14 +52,16 @@ class Painter implements ViewVisitor {
       screen.paint(area.column() + area.columns(), area.row() + line + 1, 1, SHADOW_TINT);
     }
     screen.paint(area.column() + 1, area.row() + area.rows(), area.columns(), SHADOW_TINT);
-    int insideColumn = area.column() + 1;
-    int insideRow = area.row() + 1;
+    insideColumn = area.column() + 1;
+    insideRow = area.row() + 1;
     inside = new ClippedScreen(screen, new TextArea(insideColumn, insideRow, area.columns() - 2, area.rows() - 2));
-    window.acceptChildren((view, position) -> {
-      column = insideColumn + position.column();
-      row = insideRow + position.row();
-      view.accept(this);
-    });
+  }
+
+  /** The view that comes next is drawn at this place inside the window drawn last. */
+  @Override
+  public void visitPlacement(Placement placement) {
+    column = insideColumn + placement.position().column();
+    row = insideRow + placement.position().row();
   }
 
   @Override

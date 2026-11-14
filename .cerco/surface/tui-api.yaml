@@ -24,10 +24,6 @@ types:
       - "acceptMark(MarkVisitor): void"
       - "text(): String"
       - "toggle(): void"
-  "com.fpetrola.tui.ChildVisitor":
-    kind: interface
-    members:
-      - "child(View, Point): void"
   "com.fpetrola.tui.Console":
     kind: interface
     members:
@@ -130,6 +126,11 @@ types:
     members:
       - "chosenOption(String): void"
       - "option(String): void"
+  "com.fpetrola.tui.Placement":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+      - "position(): Point"
   "com.fpetrola.tui.Point":
     kind: interface
     members:
@@ -186,14 +187,13 @@ types:
       - "visitInputLine(InputLine): void"
       - "visitLabel(Label): void"
       - "visitListBox(ListBox): void"
+      - "visitPlacement(Placement): void"
       - "visitRadioButtons(RadioButtons): void"
       - "visitWindow(Window): void"
   "com.fpetrola.tui.Window":
     kind: interface
     members:
       - "accept(ViewVisitor): void"
-      - "acceptChildren(ChildVisitor): void"
-      - "acceptViews(ViewVisitor): void"
       - "add(View, Point): void"
       - "area(): Area"
       - "place(Area): void"

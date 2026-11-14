@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 
 class VisitingViewsTest {
@@ -63,49 +64,47 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aWindowWalksItsViewsInTheOrderTheyWereAddedWithTheirPositions() {
+  void aWindowIsVisitedFirstThenEachPlacementRightBeforeItsView() {
     Window window = toolkit.window("Saludo");
     Point first = toolkit.point(1, 1);
     Point second = toolkit.point(1, 2);
     Button ok = toolkit.button("OK");
     Label hello = toolkit.label("hola");
-    ChildVisitor children = mock(ChildVisitor.class);
+    ArgumentCaptor<Placement> placements = ArgumentCaptor.captor();
     window.add(ok, first);
     window.add(hello, second);
 
-    window.acceptChildren(children);
+    window.accept(visitor);
 
-    InOrder order = inOrder(children);
-    order.verify(children).child(ok, first);
-    order.verify(children).child(hello, second);
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).visitWindow(window);
+    order.verify(visitor).visitPlacement(placements.capture());
+    order.verify(visitor).visitButton(ok);
+    order.verify(visitor).visitPlacement(placements.capture());
+    order.verify(visitor).visitLabel(hello);
+    assertEquals(List.of(first, second), placements.getAllValues().stream().map(Placement::position).toList());
   }
 
+
   @Test
-  void aWindowHasAVisitorVisitEachViewPlacedInItButOnlyWhenAsked() {
+  void aVisitorThatOnlyCaresAboutSomeViewsDoesNothingForTheRest() {
     Window window = toolkit.window("Saludo");
     Label hello = toolkit.label("hola");
     Button ok = toolkit.button("OK");
     List<View> seen = new ArrayList<>();
     window.add(hello, toolkit.point(0, 0));
     window.add(ok, toolkit.point(0, 1));
-    ViewVisitor collecting = new ViewVisitor() {
-      @Override
-      public void visitLabel(Label label) {
-        seen.add(label);
-      }
 
+    window.accept(new ViewVisitor() {
       @Override
       public void visitButton(Button button) {
         seen.add(button);
       }
-    };
+    });
 
-    window.accept(collecting);
-    assertEquals(List.of(), seen);
-
-    window.acceptViews(collecting);
-    assertEquals(List.of(hello, ok), seen);
+    assertEquals(List.of(ok), seen);
   }
+
 
 
 

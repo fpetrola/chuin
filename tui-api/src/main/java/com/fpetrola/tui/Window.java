@@ -5,6 +5,7 @@ public interface Window {
 
   void place(Area area);
 
+  /** Visits itself, then each of its placements, which go on to their views. */
   void accept(ViewVisitor visitor);
 
   /** The title on its top border. */
@@ -12,10 +13,4 @@ public interface Window {
 
   /** Where it is placed on the screen. */
   Area area();
-
-  /** Has the visitor visit each view placed in it, in the order they were added. */
-  void acceptViews(ViewVisitor visitor);
-
-  /** Walks the views placed in it, in the order they were added, each with its position inside the window. */
-  void acceptChildren(ChildVisitor visitor);
 }
