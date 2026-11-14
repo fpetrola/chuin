@@ -92,7 +92,7 @@ class ClickingWithTheMouseTest {
   }
 
   @Test
-  void aLeftClickOnAListOrAGroupOfOptionsOnlyFocusesIt() {
+  void aLeftClickOnARowOfAListOrOnAnOptionFocusesAndChoosesIt() {
     ListBox colors = toolkit.listBox(List.of("Rojo", "Verde", "Azul"), 3);
     window.place(toolkit.area(0, 0, 22, 5));
     window.add(toolkit.button("Ok"), toolkit.point(0, 0));
@@ -103,18 +103,34 @@ class ClickingWithTheMouseTest {
 
     click(0, 1, 3);
     desktop.draw(screen);
-    assertEquals(Optional.of("Rojo"), colors.selected());
+    assertEquals(Optional.of("Verde"), colors.selected());
     assertEquals("wwwwwwwwwwwwwwwwwwwwww", screen.tints().get(1));
-    assertEquals("wwwwwwwwwwwwwwwwwwwwww", screen.tints().get(3));
-    assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(2));
+    assertEquals("wwwwwwwwwwwwwwwwwwwwww", screen.tints().get(2));
+    assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(3));
 
     click(0, 9, 3);
     desktop.draw(screen);
-    assertEquals("│  Ok                │", screen.lines().get(1));
-    assertEquals("│Rojo    (•) Si      │", screen.lines().get(2));
-    assertEquals("│Verde   ( ) No      │", screen.lines().get(3));
-    assertEquals("wwwwwwwwwffffffwwwwwww", screen.tints().get(2));
+    assertEquals("│Rojo    ( ) Si      │", screen.lines().get(2));
+    assertEquals("│Verde   (•) No      │", screen.lines().get(3));
+    assertEquals("wwwwwwwwwffffffwwwwwww", screen.tints().get(3));
   }
+
+  @Test
+  void aLeftClickBelowTheLastItemOfAListOnlyFocusesIt() {
+    ListBox one = toolkit.listBox(List.of("Solo"), 3);
+    window.place(toolkit.area(0, 0, 22, 5));
+    window.add(toolkit.button("Ok"), toolkit.point(0, 0));
+    window.add(one, toolkit.point(0, 1));
+    desktop.open(window);
+    desktop.draw(screen);
+
+    click(0, 1, 4);
+    desktop.draw(screen);
+
+    assertEquals(Optional.of("Solo"), one.selected());
+    assertEquals("wffffwwwwwwwwwwwwwwwww", screen.tints().get(2));
+  }
+
 
   private void open() {
     Button ok = toolkit.button("Ok");

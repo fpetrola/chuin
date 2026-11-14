@@ -86,6 +86,7 @@ types:
       - "acceptRows(ListRowVisitor): void"
       - "next(): void"
       - "previous(): void"
+      - "selectShown(int): void"
       - "selected(): Optional<String>"
       - "width(): int"
   "com.fpetrola.tui.ListRowVisitor":
@@ -118,6 +119,7 @@ types:
     kind: interface
     members:
       - "acceptOptions(OptionVisitor): void"
+      - "choose(int): void"
       - "next(): void"
       - "previous(): void"
       - "width(): int"

@@ -219,4 +219,34 @@ class VisitingViewsTest {
     order.verify(rows).barTrack();
     order.verify(rows).barDown();
   }
+
+  @Test
+  void aListBoxSelectsTheItemOnARowCountedFromTheFirstRowShown() {
+    ListBox letters = toolkit.listBox(List.of("a", "b", "c", "d", "e"), 3);
+    letters.next();
+    letters.next();
+    letters.next();
+    letters.next();
+
+    letters.selectShown(0);
+    assertEquals(Optional.of("c"), letters.selected());
+
+    letters.selectShown(3);
+    letters.selectShown(-1);
+    assertEquals(Optional.of("c"), letters.selected());
+  }
+
+  @Test
+  void aGroupOfRadioButtonsChoosesAnOptionByItsPlaceAndIgnoresPlacesItDoesNotHave() {
+    RadioButtons group = toolkit.radioButtons(List.of("a", "b"));
+    OptionVisitor options = mock(OptionVisitor.class);
+
+    group.choose(1);
+    group.choose(5);
+    group.choose(-1);
+    group.acceptOptions(options);
+
+    verify(options).option("a");
+    verify(options).chosenOption("b");
+  }
 }

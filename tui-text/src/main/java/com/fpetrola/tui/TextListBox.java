@@ -34,6 +34,14 @@ class TextListBox implements ListBox {
   }
 
   @Override
+  public void selectShown(int row) {
+    int at = top + row;
+    if (row >= 0 && row < rows && at < items.size()) {
+      selected = at;
+    }
+  }
+
+  @Override
   public void acceptRows(ListRowVisitor visitor) {
     for (int shown = 0; shown < rows; shown++) {
       item(top + shown, visitor);

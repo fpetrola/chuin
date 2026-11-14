@@ -18,4 +18,7 @@ public interface ListBox extends View {
 
   /** Selects the item after, staying on the last, and scrolls to keep it in sight. */
   void next();
+
+  /** Selects the item shown on this row, counted from the first row shown; does nothing on a row with no item. */
+  void selectShown(int row);
 }

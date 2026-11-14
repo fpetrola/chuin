@@ -22,6 +22,13 @@ class TextRadioButtons implements RadioButtons {
   }
 
   @Override
+  public void choose(int option) {
+    if (option >= 0 && option < options.size()) {
+      chosen = option;
+    }
+  }
+
+  @Override
   public void acceptOptions(OptionVisitor visitor) {
     for (int at = 0; at < options.size(); at++) {
       String text = options.get(at);
