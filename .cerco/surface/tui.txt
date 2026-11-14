@@ -15,10 +15,16 @@ com.fpetrola.tui.Desktop#draw(Screen): void
 com.fpetrola.tui.Desktop#open(Window): void
 com.fpetrola.tui.Desktop#type(Key): void
 com.fpetrola.tui.Key interface
+com.fpetrola.tui.Key#accept(KeyVisitor): void
+com.fpetrola.tui.KeyVisitor interface
+com.fpetrola.tui.KeyVisitor#enter(): void
+com.fpetrola.tui.KeyVisitor#other(): void
+com.fpetrola.tui.KeyVisitor#tab(): void
 com.fpetrola.tui.Keyboard interface
 com.fpetrola.tui.Keyboard#typeInto(Desktop): void
 com.fpetrola.tui.Keys interface
 com.fpetrola.tui.Keys#enter(): Key
+com.fpetrola.tui.Keys#tab(): Key
 com.fpetrola.tui.Label interface
 com.fpetrola.tui.Label#accept(ViewVisitor): void
 com.fpetrola.tui.Label#text(String): void

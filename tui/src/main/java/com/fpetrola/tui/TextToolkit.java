@@ -5,7 +5,7 @@ import java.io.OutputStream;
 
 public class TextToolkit implements Toolkit {
   private final TextKeys keys = new TextKeys();
-  private final TextDesktop desktop = new TextDesktop(keys.enter());
+  private final TextDesktop desktop = new TextDesktop();
 
   public TextToolkit() {
   }
@@ -57,7 +57,7 @@ public class TextToolkit implements Toolkit {
 
   @Override
   public Keyboard keyboard(InputStream in) {
-    return new StreamKeyboard(in, keys.enter());
+    return new StreamKeyboard(in, keys);
   }
 
   @Override

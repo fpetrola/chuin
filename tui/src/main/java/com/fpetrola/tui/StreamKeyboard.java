@@ -8,22 +8,28 @@ import java.io.UncheckedIOException;
 class StreamKeyboard implements Keyboard {
   private static final int END = -1;
   private static final int CARRIAGE_RETURN = '\r';
+  private static final int TAB = '\t';
   private final InputStream in;
-  private final Key enter;
+  private final Keys keys;
 
-  StreamKeyboard(InputStream in, Key enter) {
+  StreamKeyboard(InputStream in, Keys keys) {
     this.in = in;
-    this.enter = enter;
+    this.keys = keys;
   }
 
   @Override
   public void typeInto(Desktop desktop) {
     try {
       for (int read = in.read(); read != END; read = in.read()) {
-        desktop.type(read == CARRIAGE_RETURN ? enter : new TextKey());
+        desktop.type(keyFor(read));
       }
     } catch (IOException e) {
       throw new UncheckedIOException(e);
     }
+  }
+
+  private Key keyFor(int read) {
+    Key named = read == TAB ? keys.tab() : KeyVisitor::other;
+    return read == CARRIAGE_RETURN ? keys.enter() : named;
   }
 }
