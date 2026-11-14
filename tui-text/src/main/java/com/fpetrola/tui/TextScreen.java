@@ -5,11 +5,15 @@ import java.util.List;
 
 /** A grid of cells; whatever is written outside it is cut off. */
 class TextScreen implements Screen {
+  private static final char UNTINTED = '.';
   private final char[][] cells;
+  private final char[][] tints;
 
   TextScreen(int columns, int rows) {
     cells = new char[rows][columns];
     Arrays.stream(cells).forEach(line -> Arrays.fill(line, ' '));
+    tints = new char[rows][columns];
+    Arrays.stream(tints).forEach(line -> Arrays.fill(line, UNTINTED));
   }
 
   @Override
@@ -18,11 +22,26 @@ class TextScreen implements Screen {
   }
 
   @Override
+  public List<String> tints() {
+    return Arrays.stream(tints).map(String::new).toList();
+  }
+
+  @Override
+  public void paint(int column, int row, int columns, char tint) {
+    put(tints, column, row, String.valueOf(tint).repeat(Math.max(0, columns)));
+  }
+
+  @Override
   public void write(int column, int row, String text) {
-    if (row < 0 || row >= cells.length) {
+    put(cells, column, row, text);
+  }
+
+  /** Copies text into a grid from a cell on, cutting whatever falls outside it. */
+  private static void put(char[][] grid, int column, int row, String text) {
+    if (row < 0 || row >= grid.length) {
       return;
     }
-    char[] line = cells[row];
+    char[] line = grid[row];
     int from = Math.max(0, -column);
     int to = Math.min(text.length(), line.length - column);
     for (int at = from; at < to; at++) {

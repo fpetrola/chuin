@@ -7,6 +7,9 @@ import java.util.function.Consumer;
 class Painter implements ViewVisitor {
   /** What a window casts one cell to its right and one cell below it. */
   private static final String SHADOW = "░";
+  private static final char WINDOW_TINT = 'w';
+  private static final char FOCUS_TINT = 'f';
+  private static final char SHADOW_TINT = 's';
   private final Screen screen;
   private final int focused;
   private int seen;
@@ -36,6 +39,11 @@ class Painter implements ViewVisitor {
       screen.write(area.column() + area.columns(), area.row() + line, SHADOW);
     }
     screen.write(area.column() + 1, area.row() + area.rows(), SHADOW.repeat(area.columns()));
+    for (int line = 0; line < area.rows(); line++) {
+      screen.paint(area.column(), area.row() + line, area.columns(), WINDOW_TINT);
+      screen.paint(area.column() + area.columns(), area.row() + line + 1, 1, SHADOW_TINT);
+    }
+    screen.paint(area.column() + 1, area.row() + area.rows(), area.columns(), SHADOW_TINT);
     insideColumn = area.column() + 1;
     insideRow = area.row() + 1;
     column = insideColumn;
@@ -52,7 +60,7 @@ class Painter implements ViewVisitor {
   public void button(Button button, String caption, List<ButtonListener> listeners) {
     String look = seen == focused ? "[ " + caption + " ]" : "  " + caption + "  ";
     screen.write(column, row, look);
-    seen++;
+    next(look.length());
   }
 
   @Override
@@ -76,12 +84,19 @@ class Painter implements ViewVisitor {
         screen.write(column, row, "[ ] " + text);
       }
     });
-    seen++;
+    next(("[ ] " + text).length());
   }
 
   @Override
   public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
     screen.write(column, row, text + "_".repeat(Math.max(0, width - text.length())));
-    seen++;
+    next(Math.max(width, text.length()));
+  }
+
+  /** Passes a focusable view of this many cells, tinting it when it is the focused one. */
+  private void next(int cells) {
+    if (seen++ == focused) {
+      screen.paint(column, row, cells, FOCUS_TINT);
+    }
   }
 }

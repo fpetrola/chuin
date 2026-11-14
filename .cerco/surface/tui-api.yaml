@@ -79,6 +79,8 @@ types:
     kind: interface
     members:
       - "lines(): List<String>"
+      - "paint(int, int, int, char): void"
+      - "tints(): List<String>"
       - "write(int, int, String): void"
   "com.fpetrola.tui.Terminal":
     kind: interface
