@@ -79,23 +79,22 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitCheckBox(CheckBox box) {
-    String text = box.text();
     if (seen == focused) {
       inside.write(column - 1, row, ">");
     }
-    box.acceptMark(new MarkVisitor() {
-      @Override
-      public void checked() {
-        inside.write(column, row, "[X] " + text);
-      }
-
-      @Override
-      public void unchecked() {
-        inside.write(column, row, "[ ] " + text);
-      }
-    });
-    next(("[ ] " + text).length());
+    next(("[ ] " + box.text()).length());
   }
+
+  @Override
+  public void visitChecked(CheckBox box) {
+    inside.write(column, row, "[X] " + box.text());
+  }
+
+  @Override
+  public void visitUnchecked(CheckBox box) {
+    inside.write(column, row, "[ ] " + box.text());
+  }
+
 
   @Override
   public void visitInputLine(InputLine line) {

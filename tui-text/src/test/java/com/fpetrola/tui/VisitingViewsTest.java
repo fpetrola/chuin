@@ -109,21 +109,21 @@ class VisitingViewsTest {
 
 
   @Test
-  void aCheckBoxHandsItselfToTheVisitorStartsUncheckedAndTogglingItMakesItChecked() {
+  void aCheckBoxIsVisitedThenItsMarkWhichStartsUncheckedAndTogglingMakesChecked() {
     CheckBox remember = toolkit.checkBox("Recordar");
-    MarkVisitor marks = mock(MarkVisitor.class);
 
     remember.accept(visitor);
-    remember.acceptMark(marks);
     remember.toggle();
-    remember.acceptMark(marks);
+    remember.accept(visitor);
 
-    verify(visitor).visitCheckBox(remember);
     assertEquals("Recordar", remember.text());
-    InOrder order = inOrder(marks);
-    order.verify(marks).unchecked();
-    order.verify(marks).checked();
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).visitCheckBox(remember);
+    order.verify(visitor).visitUnchecked(remember);
+    order.verify(visitor).visitCheckBox(remember);
+    order.verify(visitor).visitChecked(remember);
   }
+
 
 
   @Test

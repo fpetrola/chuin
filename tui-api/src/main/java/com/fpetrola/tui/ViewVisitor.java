@@ -16,7 +16,14 @@ interface ViewVisitor {
   default void visitLabel(Label label) {
   }
 
+  /** A check box is visited first, then its mark: checked or unchecked. */
   default void visitCheckBox(CheckBox box) {
+  }
+
+  default void visitChecked(CheckBox box) {
+  }
+
+  default void visitUnchecked(CheckBox box) {
   }
 
   default void visitInputLine(InputLine line) {

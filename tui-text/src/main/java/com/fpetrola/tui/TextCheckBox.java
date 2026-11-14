@@ -1,13 +1,13 @@
 package com.fpetrola.tui;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 class TextCheckBox implements CheckBox {
-  private static final Consumer<MarkVisitor> CHECKED = MarkVisitor::checked;
-  private static final Consumer<MarkVisitor> UNCHECKED = MarkVisitor::unchecked;
+  private static final BiConsumer<ViewVisitor, CheckBox> CHECKED = ViewVisitor::visitChecked;
+  private static final BiConsumer<ViewVisitor, CheckBox> UNCHECKED = ViewVisitor::visitUnchecked;
   private final String text;
-  /** Whether it is checked, told without a flag: which method of a MarkVisitor it calls. */
-  private Consumer<MarkVisitor> mark = UNCHECKED;
+  /** Whether it is checked, told without a flag: which visit of its mark it makes. */
+  private BiConsumer<ViewVisitor, CheckBox> mark = UNCHECKED;
 
   TextCheckBox(String text) {
     this.text = text;
@@ -19,27 +19,13 @@ class TextCheckBox implements CheckBox {
   }
 
   @Override
-  public void acceptMark(MarkVisitor visitor) {
-    mark.accept(visitor);
-  }
-
-  @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitCheckBox(this);
+    mark.accept(visitor, this);
   }
 
   @Override
   public void toggle() {
-    mark.accept(new MarkVisitor() {
-      @Override
-      public void checked() {
-        mark = UNCHECKED;
-      }
-
-      @Override
-      public void unchecked() {
-        mark = CHECKED;
-      }
-    });
+    mark = mark == CHECKED ? UNCHECKED : CHECKED;
   }
 }
