@@ -15,7 +15,7 @@ class Painter implements ViewVisitor {
   /** The top left cell inside the frame of the window drawn last. */
   private int insideColumn;
   private int insideRow;
-  /** Draws the rows of the list box visited last. */
+  /** Draws the rows of the list box or the options of the group visited last. */
   private ViewVisitor rows = new ViewVisitor() {
   };
   private final int focused;
@@ -162,8 +162,18 @@ class Painter implements ViewVisitor {
   }
 
   @Override
+  public void visitOption(Option option) {
+    rows.visitOption(option);
+  }
+
+  @Override
+  public void visitChosenOption(Option option) {
+    rows.visitChosenOption(option);
+  }
+
+  @Override
   public void visitRadioButtons(RadioButtons group) {
-    group.acceptOptions(new RowPainter(inside, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn));
+    rows = new RowPainter(inside, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn);
   }
 
 }

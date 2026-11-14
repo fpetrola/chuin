@@ -29,20 +29,16 @@ class TextRadioButtons implements RadioButtons {
   }
 
   @Override
-  public void acceptOptions(OptionVisitor visitor) {
-    for (int at = 0; at < options.size(); at++) {
-      String text = options.get(at);
-      if (at == chosen) {
-        visitor.chosenOption(text);
-      } else {
-        visitor.option(text);
-      }
-    }
-  }
-
-  @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitRadioButtons(this);
+    for (int at = 0; at < options.size(); at++) {
+      Option option = new TextOption(this, options.get(at));
+      if (at == chosen) {
+        visitor.visitChosenOption(option);
+      } else {
+        visitor.visitOption(option);
+      }
+    }
   }
 
   @Override

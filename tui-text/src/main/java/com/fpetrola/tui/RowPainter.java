@@ -7,7 +7,7 @@ import java.util.List;
  * options: a list row is its item padded to the longest, a blank and its scroll bar cell; an option is its mark and
  * its text. The selected row is tinted when the view has the focus.
  */
-class RowPainter implements ViewVisitor, OptionVisitor {
+class RowPainter implements ViewVisitor {
   private static final char FOCUS_TINT = 'f';
   /** The blank and the scroll bar cell after a list item. */
   private static final int BESIDE_ITEM = 2;
@@ -75,14 +75,14 @@ class RowPainter implements ViewVisitor, OptionVisitor {
   }
 
   @Override
-  public void option(String text) {
-    nextRow("( ) " + text);
+  public void visitOption(Option option) {
+    nextRow("( ) " + option.text());
   }
 
   @Override
-  public void chosenOption(String text) {
+  public void visitChosenOption(Option option) {
     tint(at.columns());
-    nextRow("(•) " + text);
+    nextRow("(•) " + option.text());
   }
 
   private void bar(String cell) {

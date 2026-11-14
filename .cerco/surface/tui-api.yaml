@@ -108,11 +108,11 @@ types:
     kind: interface
     members:
       - "visitMenu(Menu): void"
-  "com.fpetrola.tui.OptionVisitor":
+  "com.fpetrola.tui.Option":
     kind: interface
     members:
-      - "chosenOption(String): void"
-      - "option(String): void"
+      - "group(): RadioButtons"
+      - "text(): String"
   "com.fpetrola.tui.Placement":
     kind: interface
     members:
@@ -126,7 +126,6 @@ types:
   "com.fpetrola.tui.RadioButtons":
     kind: interface
     members:
-      - "acceptOptions(OptionVisitor): void"
       - "choose(int): void"
       - "next(): void"
       - "previous(): void"
@@ -172,12 +171,14 @@ types:
       - "visitButton(Button): void"
       - "visitCheckBox(CheckBox): void"
       - "visitChecked(CheckBox): void"
+      - "visitChosenOption(Option): void"
       - "visitInputLine(InputLine): void"
       - "visitLabel(Label): void"
       - "visitListBox(ListBox): void"
       - "visitListItem(ListItem): void"
       - "visitNoListItem(ListBox): void"
       - "visitNoScrollBar(ListBox): void"
+      - "visitOption(Option): void"
       - "visitPlacement(Placement): void"
       - "visitRadioButtons(RadioButtons): void"
       - "visitScrollDown(ListBox): void"

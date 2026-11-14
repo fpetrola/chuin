@@ -171,24 +171,26 @@ class VisitingViewsTest {
 
 
   @Test
-  void aGroupOfRadioButtonsHandsItselfToTheVisitorWalksItsOptionsAndItsChoiceStopsAtBothEnds() {
+  void aGroupOfRadioButtonsIsVisitedThenEachOptionAndItsChoiceStopsAtBothEnds() {
     RadioButtons group = toolkit.radioButtons(List.of("a", "bb", "c"));
-    OptionVisitor options = mock(OptionVisitor.class);
+    ArgumentCaptor<Option> chosen = ArgumentCaptor.captor();
 
-    group.accept(visitor);
     group.previous();
     group.next();
     group.next();
     group.next();
-    group.acceptOptions(options);
+    group.accept(visitor);
 
-    verify(visitor).visitRadioButtons(group);
     assertEquals(6, group.width());
-    InOrder order = inOrder(options);
-    order.verify(options).option("a");
-    order.verify(options).option("bb");
-    order.verify(options).chosenOption("c");
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).visitRadioButtons(group);
+    order.verify(visitor).visitOption(argThat(option -> option.text().equals("a") && option.group() == group));
+    order.verify(visitor).visitOption(argThat(option -> option.text().equals("bb") && option.group() == group));
+    order.verify(visitor).visitChosenOption(chosen.capture());
+    assertEquals("c", chosen.getValue().text());
+    assertEquals(group, chosen.getValue().group());
   }
+
 
 
   @Test
@@ -238,15 +240,13 @@ class VisitingViewsTest {
   @Test
   void aGroupOfRadioButtonsChoosesAnOptionByItsPlaceAndIgnoresPlacesItDoesNotHave() {
     RadioButtons group = toolkit.radioButtons(List.of("a", "b"));
-    OptionVisitor options = mock(OptionVisitor.class);
-
     group.choose(1);
     group.choose(5);
     group.choose(-1);
-    group.acceptOptions(options);
+    group.accept(visitor);
 
-    verify(options).option("a");
-    verify(options).chosenOption("b");
+    verify(visitor).visitOption(argThat(option -> option.text().equals("a")));
+    verify(visitor).visitChosenOption(argThat(option -> option.text().equals("b")));
   }
 
   @Test

@@ -59,6 +59,13 @@ interface ViewVisitor {
   default void visitNoScrollBar(ListBox box) {
   }
 
+  /** A group of radio buttons is visited first, then each of its options, top to bottom. */
   default void visitRadioButtons(RadioButtons group) {
+  }
+
+  default void visitOption(Option option) {
+  }
+
+  default void visitChosenOption(Option option) {
   }
 }
