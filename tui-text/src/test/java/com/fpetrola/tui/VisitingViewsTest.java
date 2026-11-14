@@ -280,4 +280,12 @@ class VisitingViewsTest {
   }
 
 
+
+  @Test
+  void aLabelForAViewSaysWhichViewItIsLinkedToAndAPlainLabelToNone() {
+    InputLine city = toolkit.inputLine(8);
+
+    assertEquals(Optional.of(city), toolkit.label("Or~t~:", city).linked());
+    assertEquals(Optional.empty(), toolkit.label("Hola").linked());
+  }
 }

@@ -14,6 +14,9 @@ public interface Toolkit {
 
   Label label(String text);
 
+  /** A label for a view: its highlighted letter, with Alt, reaches that view. */
+  Label label(String text, View linked);
+
   CheckBox checkBox(String text);
 
   InputLine inputLine(int width);

@@ -75,6 +75,17 @@ class MenuDesktop implements Desktop {
     return NONE;
   }
 
+  /** Which menu's title answers to this letter, or NONE when none does. */
+  private int menuAnswering(char letter) {
+    List<Menu> menus = menus();
+    for (int at = 0; at < menus.size(); at++) {
+      if (new TextCaption(menus.get(at).title()).answers(letter)) {
+        return at;
+      }
+    }
+    return NONE;
+  }
+
   /** The state every desktop call lands in; open and show are the menu desktop's, whatever the state. */
   private abstract class MenuState implements Desktop {
     @Override
@@ -234,6 +245,22 @@ class MenuDesktop implements Desktop {
     public void other() {
       windows.type(key);
     }
+
+    @Override
+    public void escape() {
+      windows.type(key);
+    }
+
+    /** A menu whose title answers opens; otherwise the windows get it. */
+    @Override
+    public void alt(char letter) {
+      int menu = menuAnswering(letter);
+      if (menu == NONE) {
+        windows.type(key);
+      } else {
+        state = new Opened(menu);
+      }
+    }
   }
 
   /** Keys while a menu is open: they stay with the menus. */
@@ -284,6 +311,27 @@ class MenuDesktop implements Desktop {
     @Override
     public void escape() {
       state = new Closed();
+    }
+
+    /** The item of the open menu whose caption answers runs, and the menu closes. */
+    @Override
+    public void character(char typed) {
+      for (MenuItem each : opened.items()) {
+        if (new TextCaption(each.text()).answers(typed)) {
+          state = new Closed();
+          each.run();
+          return;
+        }
+      }
+    }
+
+    /** Another menu whose title answers opens instead. */
+    @Override
+    public void alt(char letter) {
+      int menu = menuAnswering(letter);
+      if (menu != NONE) {
+        state = new Opened(menu);
+      }
     }
   }
 }

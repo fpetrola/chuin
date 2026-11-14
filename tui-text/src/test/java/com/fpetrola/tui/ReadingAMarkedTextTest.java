@@ -31,4 +31,15 @@ class ReadingAMarkedTextTest {
   void aLoneTildeAtTheEndIsShownAsItIs() {
     assertEquals("50~", new TextCaption("50~").shown());
   }
+
+  @Test
+  void aCaptionAnswersToItsMarkedLetterInEitherCaseAndToNoOther() {
+    Caption marked = new TextCaption("Be~e~nden");
+    Caption plain = new TextCaption("Beenden");
+
+    assertEquals(true, marked.answers('e'));
+    assertEquals(true, marked.answers('E'));
+    assertEquals(false, marked.answers('b'));
+    assertEquals(false, plain.answers('b'));
+  }
 }

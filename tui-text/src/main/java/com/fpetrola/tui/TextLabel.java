@@ -1,10 +1,14 @@
 package com.fpetrola.tui;
 
+import java.util.Optional;
+
 class TextLabel implements Label {
   private String text;
+  private final Optional<View> linked;
 
-  TextLabel(String text) {
+  TextLabel(String text, Optional<View> linked) {
     this.text = text;
+    this.linked = linked;
   }
 
   @Override
@@ -20,5 +24,10 @@ class TextLabel implements Label {
   @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitLabel(this);
+  }
+
+  @Override
+  public Optional<View> linked() {
+    return linked;
   }
 }

@@ -1,6 +1,7 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.Optional;
 
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -28,8 +29,13 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public Label label(String text, View linked) {
+    return new TextLabel(text, Optional.of(linked));
+  }
+
+  @Override
   public Label label(String text) {
-    return new TextLabel(text);
+    return new TextLabel(text, Optional.empty());
   }
 
   @Override

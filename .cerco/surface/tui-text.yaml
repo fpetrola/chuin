@@ -10,6 +10,7 @@ types:
   "com.fpetrola.tui.Caption":
     kind: interface
     members:
+      - "answers(char): boolean"
       - "highlight(Screen, int, int, char): void"
       - "shown(): String"
   "com.fpetrola.tui.Drawing":

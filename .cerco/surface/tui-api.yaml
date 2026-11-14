@@ -76,6 +76,7 @@ types:
   "com.fpetrola.tui.Label":
     kind: interface
     members:
+      - "linked(): Optional<View>"
       - "text(): String"
       - "text(String): void"
   "com.fpetrola.tui.ListBox":
@@ -163,6 +164,7 @@ types:
       - "keyboard(InputStream): Keyboard"
       - "keys(): Keys"
       - "label(String): Label"
+      - "label(String, View): Label"
       - "listBox(List<String>, int): ListBox"
       - "menu(String): Menu"
       - "menuBar(): MenuBar"

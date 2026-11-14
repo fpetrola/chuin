@@ -175,6 +175,13 @@ class TextDesktop implements Desktop {
     }
 
     @Override
+    public void alt(char letter) {
+      List<View> focusable = new ArrayList<>();
+      top().ifPresent(window -> window.accept(new CollectFocusable(focusable)));
+      top().ifPresent(window -> window.accept(new ReachByLetter(letter, focusable, view -> focused = view)));
+    }
+
+    @Override
     public void control(char letter) {
       if (letter == CLOSE_WINDOW && !opened.isEmpty()) {
         opened.remove(opened.size() - 1);

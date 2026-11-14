@@ -38,4 +38,9 @@ class TextCaption implements Caption {
       screen.paint(column + marked, row, 1, tint);
     }
   }
+
+  @Override
+  public boolean answers(char letter) {
+    return marked != NONE && Character.toLowerCase(shown.charAt(marked)) == Character.toLowerCase(letter);
+  }
 }

@@ -7,4 +7,7 @@ interface Caption {
 
   /** Paints the marked letter of the text shown from this cell on in the tint of a highlighted letter; nothing when none is marked. */
   void highlight(Screen screen, int column, int row, char tint);
+
+  /** Whether this letter, in upper or lower case, is the one marked. */
+  boolean answers(char letter);
 }

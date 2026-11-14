@@ -65,3 +65,12 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
 
    Esc cierra el menú abierto. Esto resuelve lo que quedaba abierto en el punto 9. Propuesta 0042.
 48. **Letras resaltadas con `~`, como Turbo Vision.** Un texto marca una letra entre tildes (`"~D~atei"`): se dibuja sin las tildes, y la letra marcada va en otro color. `~~` es una tilde literal, y una tilde suelta se muestra tal cual. `Caption` lee las marcas una sola vez y da el texto visible (`shown`) y el resaltado (`highlight`), para títulos e ítems de menú, botones y etiquetas. Colores: `h` (rojo sobre gris) en ventanas y menús, y `k` (amarillo sobre verde) en botones, en el título del menú abierto y en el ítem elegido. Los anchos se cuentan sobre el texto visible. Propuesta 0043.
+49. **Alt+letra llega a lo que muestra esa letra.**
+   - Con el menú cerrado, primero se busca un título de menú, que se abre. Si no hay, se busca en la ventana de arriba: un botón recibe el foco y se aprieta, y una etiqueta le pasa el foco a la vista de la que es etiqueta (`Toolkit#label(String, View)` y `Label#linked()`).
+   - Con un menú abierto, la letra sola ejecuta el ítem que la tiene, y Alt+letra cambia de menú.
+   - `Caption#answers(char)` dice si responde a una letra, sin mayúsculas ni minúsculas, y no entrega la letra (lo sugirió cerco-tdd-97).
+   - Alt+o (minúscula, sin Shift) llega como `ESC o` y funciona. Solo Alt+Shift+O no está disponible, porque `ESC O` es el prefijo con que las terminales mandan F1 a F4. Como `answers` no distingue mayúsculas, una etiqueta `~O~rt:` responde a Alt+o (lo corrigió cerco-tdd-97).
+   - Si un título de menú y un botón tienen la misma letra, gana el menú.
+   - Con el menú cerrado, `MenuDesktop` ahora le pasa a las ventanas Esc y Alt+letra.
+
+   Propuesta 0044.
