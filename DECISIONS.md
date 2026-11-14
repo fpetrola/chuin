@@ -23,3 +23,4 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
    - `Toolkit#listBox` rechaza menos de 3 filas con `IllegalArgumentException`: el scroll bar necesita ▲, al menos una celda de carril y ▼.
    - Una lista vacía se permite: muestra filas en blanco, no tiene fila con foco y las flechas no hacen nada (no mueven la ventana, porque la lista tiene el foco).
 18. **Las flechas van primero a la vista con foco.** Si es una lista, ↑ y ↓ mueven la selección; si no, mueven la ventana. Esto cierra lo que quedaba abierto en el punto 8, sin modo "mover ventana" por ahora. ← y → siguen moviendo la ventana.
+19. **Solo la ventana de arriba muestra el foco.** Las de abajo se dibujan sin vista enfocada. El índice de foco es uno solo para todo el desktop y se reinicia al abrir una ventana. Cuando se pueda cambiar de ventana, cada una tendría que recordar su propio foco.

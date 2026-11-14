@@ -9,6 +9,8 @@ class TextDesktop implements Desktop {
   private final List<Window> opened = new ArrayList<>();
   /** The tint of a cell no window covers. */
   private static final char BARE = '.';
+  /** A focus no view has: windows below the top one are drawn with it. */
+  private static final int UNFOCUSED = -1;
   private int focused;
 
   @Override
@@ -25,7 +27,10 @@ class TextDesktop implements Desktop {
   @Override
   public void draw(Screen screen) {
     clear(screen);
-    opened.forEach(window -> window.accept(new Painter(screen, focused)));
+    int last = opened.size() - 1;
+    for (int at = 0; at < opened.size(); at++) {
+      opened.get(at).accept(new Painter(screen, at == last ? focused : UNFOCUSED));
+    }
   }
 
   /** Hands ↑ or ↓ to the focused view; when there is none, the window moves. */

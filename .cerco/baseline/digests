@@ -37,7 +37,7 @@ c65b26c83ea2e4f192745de964201b7377dc446fb902f1fa819ba462433ded7e	tui-text/src/ma
 030d13c6ec776bf5eb698a2c12c9d8b3263660ace3cd151e229de062ad2cd294	tui-text/src/main/java/com/fpetrola/tui/TextButton.java
 10e9d9f64d15fa8a033c6e4d5e3d0365e87d65941a16d8b0ebe3ca3dc6dfa81d	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java
 32ac37831f851cf211d365dcc9adb355563a8b86288ccfe6a73dfd186996a955	tui-text/src/main/java/com/fpetrola/tui/TextConsole.java
-a500ba967635af9ff142182f0305ce6cb84709fb80bc0f71098db5649df5cd4b	tui-text/src/main/java/com/fpetrola/tui/TextDesktop.java
+c70677ab2eda4e3ec95d45b1e23266ffa113146ebdba0b8edd946eeeb2d65f72	tui-text/src/main/java/com/fpetrola/tui/TextDesktop.java
 c9392b8a09789f440e65bf14facdf8ea220e2190848df2d4de17beefb515369d	tui-text/src/main/java/com/fpetrola/tui/TextInputLine.java
 1ffcc9c3c7f3be9972b624fb255cd5cc5841fde28fe080fc4127326a17d6a535	tui-text/src/main/java/com/fpetrola/tui/TextKeys.java
 1ad846cbbe3b20101118f237f4b57c34bb1f4adc4956a6f645a8dc5a0b4c7af1	tui-text/src/main/java/com/fpetrola/tui/TextLabel.java
@@ -51,6 +51,7 @@ c9392b8a09789f440e65bf14facdf8ea220e2190848df2d4de17beefb515369d	tui-text/src/ma
 6b6f8823db1c1c74d06a9127047e2435c4a91df9f6322cde7927d9a4558aa1ea	tui-text/src/test/java/com/fpetrola/tui/ChangingALabelTest.java
 0c1a66d2aa99f3d941782ae2aa37d0da5881140a87cc1f5fc8af149353c78e6a	tui-text/src/test/java/com/fpetrola/tui/DrawingAWindowTest.java
 be7cddff168233df2a6be70ea293c22b9dd97f51df7805e05eff5553003b8b23	tui-text/src/test/java/com/fpetrola/tui/ErasingWithBackspaceTest.java
+6724ddb518d3a996d9942c4e5f9f3b881b90491f162900b84c98d070c6eeb9a0	tui-text/src/test/java/com/fpetrola/tui/FocusingOnlyTheTopWindowTest.java
 a5885acf6d54fd5fa4034e319237b5acf480a1e3738ce23fd49edad5a797f6a5	tui-text/src/test/java/com/fpetrola/tui/GeometryTest.java
 d939c3a8c8202b2dd6c1524cfaf9fb3193b05c76c2d9c847bd2bd658323edbe9	tui-text/src/test/java/com/fpetrola/tui/MovingAWindowWithArrowsTest.java
 80038a3cb8c1879d7ec1e15f2768e7da4cd87c159f56d1f635812a8aa3ee2898	tui-text/src/test/java/com/fpetrola/tui/MovingFocusWithTabTest.java
