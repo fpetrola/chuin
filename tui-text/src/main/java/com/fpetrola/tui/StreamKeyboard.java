@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.Arrays;
+import java.util.concurrent.locks.LockSupport;
 import java.util.function.Consumer;
 
 /** Reads bytes from a stream until it ends or Ctrl+Q is typed, and types each as a key. */
@@ -24,6 +25,8 @@ class StreamKeyboard implements Keyboard {
   private static final int NONE = -2;
   /** How long to wait after an escape for the rest of a sequence: Turbo Vision and ncurses wait about as long. */
   private static final long ESCAPE_WAIT_NANOS = 50_000_000L;
+  /** How often to look again for the rest of a sequence while waiting. */
+  private static final long ONE_MILLISECOND = 1_000_000L;
   private static final int BACKSPACE = 0x7F;
   /** What several terminals send for backspace instead of 0x7F. */
   private static final int CONTROL_H = 0x08;
@@ -71,16 +74,16 @@ class StreamKeyboard implements Keyboard {
   private int waited() throws IOException {
     long deadline = System.nanoTime() + ESCAPE_WAIT_NANOS;
     while (in.available() == 0 && System.nanoTime() < deadline) {
-      Thread.onSpinWait();
+      LockSupport.parkNanos(ONE_MILLISECOND);
     }
     return in.available() > 0 ? in.read() : NONE;
   }
 
-  /** What follows an escape: a sequence after [ or O, Alt with a letter, or else the escape key alone, the byte after it read as usual. */
+  /** What follows an escape: a sequence after [ or O, Alt with an ASCII letter, or else the escape key alone, the byte after it read as usual. */
   private Consumer<Desktop> escaped() throws IOException {
     int kind = waited();
     boolean sequence = kind == '[' || kind == 'O';
-    boolean letter = kind != NONE && Character.isLetter(kind);
+    boolean letter = kind >= 'a' && kind <= 'z' || kind >= 'A' && kind <= 'Z';
     Key alone = letter ? visitor -> visitor.alt((char) kind) : KeyVisitor::escape;
     pending = sequence || letter ? NONE : kind;
     return sequence ? sequence(kind) : desktop -> desktop.type(alone);

@@ -188,6 +188,22 @@ class TellingKeysApartTest {
     order.verify(visitor).character('1');
   }
 
+  @Test
+  void altIsOnlyForAsciiLettersSoAnEscapeBeforeANonAsciiByteIsTheEscapeKey() {
+    byte[] escapeThenFirstByteOfEnye = {0x1B, (byte) 0xC3};
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream(escapeThenFirstByteOfEnye));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(2)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).escape();
+    order.verify(visitor).other();
+  }
+
   /** A stream whose bytes become available in chunks, each some milliseconds after the one before, as over a slow link. */
   private static class SlowStream extends InputStream {
     private final List<Integer> delays = new ArrayList<>();
