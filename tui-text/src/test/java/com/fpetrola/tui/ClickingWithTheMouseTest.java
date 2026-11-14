@@ -33,7 +33,8 @@ class ClickingWithTheMouseTest {
     desktop.draw(screen);
 
     assertEquals("│  Ok      No        │", screen.lines().get(1));
-    assertEquals(">[X] C" + " ".repeat(15) + "│", screen.lines().get(2));
+    assertEquals("│[X] C" + " ".repeat(15) + "│", screen.lines().get(2));
+    assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(2));
   }
 
   @Test

@@ -10,6 +10,8 @@ class Painter implements ViewVisitor {
   private static final char FOCUS_TINT = 'f';
   private static final char SHADOW_TINT = 's';
   private final Screen screen;
+  /** The inside of the window being drawn: its views cannot draw past it. */
+  private Screen inside;
   private final int focused;
   /** Where each focusable view was drawn, in focus order, so a click can find what is under it. */
   private final List<Area> drawn;
@@ -19,6 +21,7 @@ class Painter implements ViewVisitor {
 
   Painter(Screen screen, int focused, List<Area> drawn) {
     this.screen = screen;
+    this.inside = screen;
     this.focused = focused;
     this.drawn = drawn;
   }
@@ -48,6 +51,7 @@ class Painter implements ViewVisitor {
     screen.paint(area.column() + 1, area.row() + area.rows(), area.columns(), SHADOW_TINT);
     int insideColumn = area.column() + 1;
     int insideRow = area.row() + 1;
+    inside = new ClippedScreen(screen, new TextArea(insideColumn, insideRow, area.columns() - 2, area.rows() - 2));
     window.acceptChildren((view, position) -> {
       column = insideColumn + position.column();
       row = insideRow + position.row();
@@ -59,30 +63,30 @@ class Painter implements ViewVisitor {
   public void visitButton(Button button) {
     String caption = button.caption();
     String look = seen == focused ? "[ " + caption + " ]" : "  " + caption + "  ";
-    screen.write(column, row, look);
+    inside.write(column, row, look);
     next(look.length());
   }
 
   @Override
   public void visitLabel(Label label) {
-    screen.write(column, row, label.text());
+    inside.write(column, row, label.text());
   }
 
   @Override
   public void visitCheckBox(CheckBox box) {
     String text = box.text();
     if (seen == focused) {
-      screen.write(column - 1, row, ">");
+      inside.write(column - 1, row, ">");
     }
     box.acceptMark(new MarkVisitor() {
       @Override
       public void checked() {
-        screen.write(column, row, "[X] " + text);
+        inside.write(column, row, "[X] " + text);
       }
 
       @Override
       public void unchecked() {
-        screen.write(column, row, "[ ] " + text);
+        inside.write(column, row, "[ ] " + text);
       }
     });
     next(("[ ] " + text).length());
@@ -91,7 +95,7 @@ class Painter implements ViewVisitor {
   @Override
   public void visitInputLine(InputLine line) {
     String text = line.text();
-    screen.write(column, row, text + "_".repeat(Math.max(0, line.width() - text.length())));
+    inside.write(column, row, text + "_".repeat(Math.max(0, line.width() - text.length())));
     next(Math.max(line.width(), text.length()));
   }
 
@@ -99,20 +103,20 @@ class Painter implements ViewVisitor {
   private void next(int cells) {
     drawn.add(new TextArea(column, row, cells, 1));
     if (seen++ == focused) {
-      screen.paint(column, row, cells, FOCUS_TINT);
+      inside.paint(column, row, cells, FOCUS_TINT);
     }
   }
 
   @Override
   public void visitListBox(ListBox box) {
-    box.acceptRows(new RowPainter(screen, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn));
+    box.acceptRows(new RowPainter(inside, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn));
   }
 
 
 
   @Override
   public void visitRadioButtons(RadioButtons group) {
-    group.acceptOptions(new RowPainter(screen, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn));
+    group.acceptOptions(new RowPainter(inside, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn));
   }
 
 }
