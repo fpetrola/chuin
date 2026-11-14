@@ -28,9 +28,9 @@ class MovingAWindowWithArrowsTest {
     assertEquals(List.of(
         "            ",
         " ┌─ A ──┐   ",
-        " │      │░  ",
-        " └──────┘░  ",
-        "  ░░░░░░░░  "), screen.lines());
+        " │      │   ",
+        " └──────┘   ",
+        "            "), screen.lines());
   }
 
   @Test
@@ -38,9 +38,9 @@ class MovingAWindowWithArrowsTest {
     List<String> lines = movedAndDrawn("\u001b[D\u001b[D\u001b[A");
 
     assertEquals(List.of(
-        "     │░     ",
-        "─────┘░     ",
-        "░░░░░░░     ",
+        "     │      ",
+        "─────┘      ",
+        "            ",
         "            ",
         "            "), lines);
   }
@@ -89,9 +89,9 @@ class MovingAWindowWithArrowsTest {
 
     assertEquals(List.of(
         "  ┌ A ─┐  ",
-        "  │    │░ ",
-        "  └────┘░ ",
-        "   ░░░░░░ "), screen.lines());
+        "  │    │  ",
+        "  └────┘  ",
+        "          "), screen.lines());
     assertEquals(List.of(
         "..wwwwww..",
         "..wwwwwws.",

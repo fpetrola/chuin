@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class SeeingAWindowShadowTest {
   @Test
-  void aWindowCastsAShadowOneCellRightAndOneCellDown() {
+  void aWindowCastsAShadowOneCellRightAndOneCellDownThatGreysWhatIsUnderIt() {
     Toolkit toolkit = new TextToolkit();
     Screen screen = toolkit.screen(12, 5);
     Desktop desktop = toolkit.desktop();
@@ -19,9 +19,34 @@ class SeeingAWindowShadowTest {
 
     assertEquals(List.of(
         "┌─ A ──┐    ",
-        "│      │░   ",
-        "└──────┘░   ",
-        " ░░░░░░░░   ",
+        "│      │    ",
+        "└──────┘    ",
+        "            ",
         "            "), screen.lines());
+    assertEquals(List.of(
+        "wwwwwwww....",
+        "wwwwwwwws...",
+        "wwwwwwwws...",
+        ".ssssssss...",
+        "............"), screen.tints());
+  }
+
+  @Test
+  void aShadowOverAnotherWindowLeavesItsCharactersAndGreysThem() {
+    Toolkit toolkit = new TextToolkit();
+    Screen screen = toolkit.screen(12, 5);
+    Desktop desktop = toolkit.desktop();
+    Window below = toolkit.window("B");
+    Window above = toolkit.window("A");
+
+    below.place(toolkit.area(0, 0, 12, 5));
+    above.place(toolkit.area(0, 0, 6, 3));
+    desktop.open(below);
+    desktop.open(above);
+    desktop.draw(screen);
+
+    assertEquals("│          │", screen.lines().get(3));
+    assertEquals("wsssssswwwww", screen.tints().get(3));
+    assertEquals("wwwwwwswwwww", screen.tints().get(1));
   }
 }

@@ -27,10 +27,10 @@ class ChoosingFromAMenuTest {
     assertEquals(List.of(
         " Archivo  Ayuda         ",
         "┌───────┐               ",
-        "│ Nuevo │░              ",
-        "│ Salir │░              ",
-        "└───────┘░              ",
-        " ░░░░░░░░░              "), screen.lines().subList(0, 6));
+        "│ Nuevo │               ",
+        "│ Salir │               ",
+        "└───────┘               ",
+        "                        "), screen.lines().subList(0, 6));
     assertEquals("fffffffffwwwwwwwwwwwwwww", screen.tints().get(0));
     assertEquals("wfffffffws..............", screen.tints().get(2));
     assertEquals("wwwwwwwwws..............", screen.tints().get(3));
@@ -68,9 +68,9 @@ class ChoosingFromAMenuTest {
     assertEquals(List.of(
         " Archivo  Ayuda         ",
         "         ┌────────┐     ",
-        "         │ Acerca │░    ",
-        "         └────────┘░    ",
-        "          ░░░░░░░░░░    "), screen.lines().subList(0, 5));
+        "         │ Acerca │     ",
+        "         └────────┘     ",
+        "                        "), screen.lines().subList(0, 5));
     assertEquals("wwwwwwwwwfffffffwwwwwwww", screen.tints().get(0));
     assertEquals(".........wffffffffws....", screen.tints().get(2));
   }

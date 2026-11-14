@@ -42,7 +42,7 @@ class SeeingAMenuBarTest {
 
     assertEquals(" Archivo  Ayuda         ", screen.lines().get(0));
     assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
-    assertEquals("│                  │░   ", screen.lines().get(1));
-    assertEquals("└──────────────────┘░   ", screen.lines().get(2));
+    assertEquals("│                  │    ", screen.lines().get(1));
+    assertEquals("└──────────────────┘    ", screen.lines().get(2));
   }
 }

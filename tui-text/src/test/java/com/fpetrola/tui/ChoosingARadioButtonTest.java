@@ -27,9 +27,9 @@ class ChoosingARadioButtonTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "│ ( ) Uno  │░ ",
-        "│ (•) Dos  │░ ",
-        "│ ( ) Tres │░ "), screen.lines().subList(1, 4));
+        "│ ( ) Uno  │  ",
+        "│ (•) Dos  │  ",
+        "│ ( ) Tres │  "), screen.lines().subList(1, 4));
     assertEquals("wwffffffffwws.", screen.tints().get(2));
   }
 
@@ -55,8 +55,8 @@ class ChoosingARadioButtonTest {
 
     assertEquals("┌─── R ────┐  ", screen.lines().get(1));
     assertEquals(List.of("wwwwwwwwwwwws.", "wffffffwwwwws."), screen.tints().subList(3, 5));
-    assertEquals("│( ) Si    │░ ", screen.lines().get(3));
-    assertEquals("│(•) No    │░ ", screen.lines().get(4));
+    assertEquals("│( ) Si    │  ", screen.lines().get(3));
+    assertEquals("│(•) No    │  ", screen.lines().get(4));
   }
 
   @Test

@@ -29,12 +29,12 @@ class ScrollingAListBoxTest {
 
     assertEquals(List.of(
         "┌─── L ────┐  ",
-        "│ tres   ▲ │░ ",
-        "│ cuatro ░ │░ ",
-        "│ cinco  ■ │░ ",
-        "│ seis   ░ │░ ",
-        "│ siete  ▼ │░ ",
-        "└──────────┘░ "), screen.lines());
+        "│ tres   ▲ │  ",
+        "│ cuatro ░ │  ",
+        "│ cinco  ■ │  ",
+        "│ seis   ░ │  ",
+        "│ siete  ▼ │  ",
+        "└──────────┘  "), screen.lines());
     assertEquals("wwffffffwwwws.", screen.tints().get(4));
   }
 
@@ -95,9 +95,9 @@ class ScrollingAListBoxTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "│ solo   │░ ",
-        "│        │░ ",
-        "│        │░ "), screen.lines().subList(1, 4));
+        "│ solo   │  ",
+        "│        │  ",
+        "│        │  "), screen.lines().subList(1, 4));
     assertEquals("wwffffwwwws.", screen.tints().get(1));
   }
 
@@ -117,9 +117,9 @@ class ScrollingAListBoxTest {
 
     assertEquals(List.of(
         "┌── A ───┐  ",
-        "│        │░ ",
-        "│        │░ ",
-        "│        │░ "), screen.lines().subList(0, 4));
+        "│        │  ",
+        "│        │  ",
+        "│        │  "), screen.lines().subList(0, 4));
     assertEquals("wwwwwwwwwws.", screen.tints().get(1));
   }
 

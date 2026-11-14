@@ -16,9 +16,9 @@ class DrawingFramesAndShadowsTest {
 
     assertEquals(List.of(
         "┌ A ─┐  ",
-        "│    │░ ",
-        "└────┘░ ",
-        " ░░░░░░ ",
+        "│    │  ",
+        "└────┘  ",
+        "        ",
         "        "), screen.lines());
     assertEquals(List.of(
         "wwwwww..",

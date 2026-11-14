@@ -92,8 +92,8 @@ class ClickingWithTheMouseTest {
     click(0, 3, 1);
     desktop.draw(screen);
 
-    assertEquals("│  No   │░│  Si   │░  ", screen.lines().get(1));
-    assertEquals("│[ Ni ] │░│       │░  ", screen.lines().get(2));
+    assertEquals("│  No   │ │  Si   │   ", screen.lines().get(1));
+    assertEquals("│[ Ni ] │ │       │   ", screen.lines().get(2));
   }
 
   @Test

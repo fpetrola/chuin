@@ -22,9 +22,9 @@ class KeepingViewsInsideTheirWindowTest {
 
     assertEquals(List.of(
         "┌── A ───┐    ",
-        "│Hola Bar│░   ",
-        "│        │░   ",
-        "└────────┘░   ",
-        " ░░░░░░░░░░   "), screen.lines());
+        "│Hola Bar│    ",
+        "│        │    ",
+        "└────────┘    ",
+        "              "), screen.lines());
   }
 }

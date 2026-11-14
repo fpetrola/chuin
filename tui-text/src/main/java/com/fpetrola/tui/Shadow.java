@@ -1,8 +1,7 @@
 package com.fpetrola.tui;
 
-/** The shadow an area casts: one cell to its right and one cell below it. */
+/** The shadow an area casts, one cell to its right and one cell below it: what is under it keeps its characters, greyed. */
 class Shadow implements Drawing {
-  private static final String CELL = "░";
   private static final char TINT = 's';
   private final Area area;
 
@@ -15,10 +14,8 @@ class Shadow implements Drawing {
     int right = area.column() + area.columns();
     int below = area.row() + area.rows();
     for (int line = area.row() + 1; line < below; line++) {
-      screen.write(right, line, CELL);
       screen.paint(right, line, 1, TINT);
     }
-    screen.write(area.column() + 1, below, CELL.repeat(area.columns()));
     screen.paint(area.column() + 1, below, area.columns(), TINT);
   }
 }
