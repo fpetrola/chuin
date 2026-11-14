@@ -1,10 +1,10 @@
 package com.fpetrola.tui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 /**
  * A desktop with a menu bar over the windows of another. While no menu is open, keys and clicks go to the windows,
@@ -13,11 +13,11 @@ import java.util.Optional;
  */
 class MenuDesktop implements Desktop {
   private static final int MENU_KEY = 10;
-  private static final int NONE = -1;
   /** The name Escape goes by, which an open menu keeps for itself whatever is bound to it. */
   private static final String ESCAPE = "escape";
   private final Windows windows;
   private MenuBar bar = new TextMenuBar();
+  private MenuTitles titles = new BarTitles(bar);
   private Desktop state = new Closed();
   /** The status line across the bottom row, once one is shown. */
   private Optional<StatusLine> status = Optional.empty();
@@ -51,6 +51,7 @@ class MenuDesktop implements Desktop {
   @Override
   public void show(MenuBar shown) {
     bar = shown;
+    titles = new BarTitles(shown);
     shown.accept(new MenuVisitor() {
       @Override
       public void visitMenuItem(MenuItem item) {
@@ -117,46 +118,6 @@ class MenuDesktop implements Desktop {
     state.draw(screen);
   }
 
-  private List<Menu> menus() {
-    List<Menu> menus = new ArrayList<>();
-    bar.accept(new MenuVisitor() {
-      @Override
-      public void visitMenu(Menu menu) {
-        menus.add(menu);
-      }
-    });
-    return menus;
-  }
-
-  /** Where each menu's title starts on the bar, left to right, and where the last one ends. */
-  private List<Integer> titleStarts() {
-    List<Integer> starts = new ArrayList<>(List.of(0));
-    menus().forEach(menu -> starts.add(starts.getLast() + new TextCaption(menu.title()).shown().length() + 2));
-    return starts;
-  }
-
-  /** Which menu's title covers this cell, or NONE when it is not on a title. */
-  private int titleAt(Point cell) {
-    List<Integer> starts = titleStarts();
-    for (int at = 0; at + 1 < starts.size(); at++) {
-      if (cell.row() == 0 && cell.column() >= starts.get(at) && cell.column() < starts.get(at + 1)) {
-        return at;
-      }
-    }
-    return NONE;
-  }
-
-  /** Which menu's title answers to this letter, or NONE when none does. */
-  private int menuAnswering(char letter) {
-    List<Menu> menus = menus();
-    for (int at = 0; at < menus.size(); at++) {
-      if (new TextCaption(menus.get(at).title()).answers(letter)) {
-        return at;
-      }
-    }
-    return NONE;
-  }
-
   /** The state every desktop call lands in; open and show are the menu desktop's, whatever the state. */
   private abstract class MenuState implements Desktop {
     @Override
@@ -209,18 +170,17 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void click(Point cell) {
-      int title = titleAt(cell);
-      boolean onBar = cell.row() == 0 && !menus().isEmpty();
-      if (title != NONE) {
-        state = new Opened(title);
-      } else if (!onBar) {
-        windows.click(cell);
-      }
+      boolean onBar = cell.row() == 0 && titles.count() > 0;
+      titles.titleAt(cell).ifPresentOrElse(title -> state = new Opened(title), () -> {
+        if (!onBar) {
+          windows.click(cell);
+        }
+      });
     }
 
     @Override
     public void draw(Screen screen) {
-      if (!menus().isEmpty()) {
+      if (titles.count() > 0) {
         bar.accept(new MenuPainter(screen, Optional.empty(), 0));
       }
     }
@@ -246,13 +206,13 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void click(Point cell) {
-      int title = titleAt(cell);
+      OptionalInt title = titles.titleAt(cell);
       int row = cell.row() - 2;
-      int start = titleStarts().get(open);
-      boolean across = cell.column() >= start && cell.column() < start + menus().get(open).width();
-      List<Optional<MenuItem>> rows = rows();
-      state = title == NONE ? new Closed() : new Opened(title);
-      if (title == NONE && across && row >= 0 && row < rows.size()) {
+      int start = titles.start(open);
+      boolean across = cell.column() >= start && cell.column() < start + titles.menu(open).width();
+      List<Optional<MenuItem>> rows = titles.rows(open);
+      state = title.isPresent() ? new Opened(title.getAsInt()) : new Closed();
+      if (title.isEmpty() && across && row >= 0 && row < rows.size()) {
         rows.get(row).ifPresent(MenuItem::run);
       }
     }
@@ -260,40 +220,7 @@ class MenuDesktop implements Desktop {
     @Override
     public void draw(Screen screen) {
       screen.hideCursor();
-      bar.accept(new MenuPainter(screen, Optional.of(menus().get(open)), item));
-    }
-
-    /** The rows of this menu, top to bottom: an item, or nothing for a separator. */
-    private List<Optional<MenuItem>> rows() {
-      Menu shown = menus().get(open);
-      List<Optional<MenuItem>> rows = new ArrayList<>();
-      shown.accept(new MenuVisitor() {
-        @Override
-        public void visitMenuItem(MenuItem each) {
-          rows.add(Optional.of(each));
-        }
-
-        @Override
-        public void visitMenuSeparator(Menu menu) {
-          rows.add(Optional.empty());
-        }
-      });
-      return rows;
-    }
-
-    /** The items of this menu, top to bottom. */
-    private List<MenuItem> items() {
-      Menu shown = menus().get(open);
-      List<MenuItem> items = new ArrayList<>();
-      bar.accept(new MenuVisitor() {
-        @Override
-        public void visitMenuItem(MenuItem each) {
-          if (each.menu() == shown) {
-            items.add(each);
-          }
-        }
-      });
-      return items;
+      bar.accept(new MenuPainter(screen, Optional.of(titles.menu(open)), item));
     }
   }
 
@@ -305,7 +232,7 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void function(int number) {
-      if (number == MENU_KEY && !menus().isEmpty()) {
+      if (number == MENU_KEY && titles.count() > 0) {
         state = new Opened(0);
       } else {
         super.function(number);
@@ -315,12 +242,7 @@ class MenuDesktop implements Desktop {
     /** A menu whose title answers opens; otherwise the windows get it. */
     @Override
     public void alt(char letter) {
-      int menu = menuAnswering(letter);
-      if (menu == NONE) {
-        super.alt(letter);
-      } else {
-        state = new Opened(menu);
-      }
+      titles.answering(letter).ifPresentOrElse(menu -> state = new Opened(menu), () -> super.alt(letter));
     }
   }
 
@@ -334,7 +256,7 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void enter() {
-      List<MenuItem> items = opened.items();
+      List<MenuItem> items = titles.items(opened.open);
       state = new Closed();
       if (opened.item < items.size()) {
         items.get(opened.item).run();
@@ -348,18 +270,18 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void down() {
-      opened.item = Math.max(0, Math.min(opened.items().size() - 1, opened.item + 1));
+      opened.item = Math.max(0, Math.min(titles.items(opened.open).size() - 1, opened.item + 1));
     }
 
     @Override
     public void left() {
-      int count = menus().size();
+      int count = titles.count();
       state = new Opened((opened.open + count - 1) % count);
     }
 
     @Override
     public void right() {
-      state = new Opened((opened.open + 1) % menus().size());
+      state = new Opened((opened.open + 1) % titles.count());
     }
 
     @Override
@@ -377,7 +299,7 @@ class MenuDesktop implements Desktop {
     /** The item of the open menu whose caption answers runs, and the menu closes. */
     @Override
     public void character(char typed) {
-      for (MenuItem each : opened.items()) {
+      for (MenuItem each : titles.items(opened.open)) {
         if (new TextCaption(each.text()).answers(typed)) {
           state = new Closed();
           each.run();
@@ -389,10 +311,7 @@ class MenuDesktop implements Desktop {
     /** Another menu whose title answers opens instead. */
     @Override
     public void alt(char letter) {
-      int menu = menuAnswering(letter);
-      if (menu != NONE) {
-        state = new Opened(menu);
-      }
+      titles.answering(letter).ifPresent(menu -> state = new Opened(menu));
     }
   }
 }
