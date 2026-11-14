@@ -14,13 +14,13 @@ import java.util.Optional;
 class MenuDesktop implements Desktop {
   private static final int MENU_KEY = 10;
   private static final int NONE = -1;
-  private final Desktop windows;
+  private final Windows windows;
   private MenuBar bar = new TextMenuBar();
   private Desktop state = new Closed();
   /** The command of each bound key, by the key's name. */
   private final Map<String, Runnable> bindings = new HashMap<>();
 
-  MenuDesktop(Desktop windows) {
+  MenuDesktop(Windows windows) {
     this.windows = windows;
   }
 

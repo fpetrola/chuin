@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 
-class TextDesktop implements Desktop {
+class TextDesktop implements Windows {
   private final List<Window> opened = new ArrayList<>();
   /** The tint of a cell no window covers. */
   private static final char BARE = '.';
@@ -32,11 +32,6 @@ class TextDesktop implements Desktop {
   }
 
   @Override
-  public void bind(Key key, Runnable command) {
-    throw new UnsupportedOperationException("keys are bound on the MenuDesktop around this one");
-  }
-
-  @Override
   public void type(Key key) {
     key.accept(new Typed());
   }
@@ -59,11 +54,6 @@ class TextDesktop implements Desktop {
         top().ifPresent(window -> window.accept(new AtFocus(clicked, click)));
       }
     }
-  }
-
-  @Override
-  public void show(MenuBar bar) {
-    throw new UnsupportedOperationException("the menu bar is shown by the MenuDesktop around this one");
   }
 
   @Override

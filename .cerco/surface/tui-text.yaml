@@ -20,3 +20,10 @@ types:
   "com.fpetrola.tui.TextToolkit":
     members:
       - "<init>()"
+  "com.fpetrola.tui.Windows":
+    kind: interface
+    members:
+      - "click(Point): void"
+      - "draw(Screen): void"
+      - "open(Window): void"
+      - "type(Key): void"
