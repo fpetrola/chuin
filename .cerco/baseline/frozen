@@ -34,6 +34,7 @@ no-type-code
 no-type-keyed-map
 no-utility-class
 notified-by-caller
+one-accept
 parseable
 property-shuffle
 reached-through

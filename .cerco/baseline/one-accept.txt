@@ -1,0 +1,3 @@
+# cerco baseline v1 one-accept: count, key
+1	tui-text/src/main/java/com/fpetrola/tui/TextListBox.java|TextListBox
+1	tui-text/src/main/java/com/fpetrola/tui/TextRadioButtons.java|TextRadioButtons
