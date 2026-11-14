@@ -56,4 +56,17 @@ class ReadingAMarkedTextTest {
     assertEquals(false, odd.answers('a'));
     assertEquals(false, odd.answers('b'));
   }
+
+  @Test
+  void theCaptionOfAKeyIsItsNameAndHasNoMarkedLetter() {
+    Keys keys = new TextToolkit().keys();
+    Caption f3 = new KeyCaption(keys.function(3));
+
+    f3.highlight(screen, 0, 0, 'h');
+
+    assertEquals("F3", f3.shown());
+    assertEquals("Esc", new KeyCaption(keys.escape()).shown());
+    assertEquals(false, f3.answers('f'));
+    assertEquals("..........", screen.tints().getFirst());
+  }
 }

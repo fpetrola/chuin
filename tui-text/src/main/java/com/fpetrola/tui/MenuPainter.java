@@ -78,17 +78,9 @@ class MenuPainter implements MenuVisitor {
         Caption caption = new TextCaption(shown.text());
         screen.write(boxColumn + 2, 2 + row, caption.shown());
         caption.highlight(screen, boxColumn + 2, 2 + row, chosen ? CHOSEN_LETTER : LETTER);
-        String key = shown.key().map(MenuPainter::label).orElse("");
+        String key = shown.key().map(bound -> new KeyCaption(bound).shown()).orElse("");
         screen.write(boxColumn + width - 2 - key.length(), 2 + row, key);
       }
     }
   }
-
-  private static String label(Key key) {
-    StringBuilder label = new StringBuilder();
-    key.accept(new KeyLabel(label));
-    return label.toString();
-  }
-
-
 }

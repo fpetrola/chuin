@@ -47,7 +47,7 @@ class TextMenu implements Menu {
   @Override
   public int width() {
     int text = items.stream().mapToInt(item -> new TextCaption(item.text()).shown().length()).max().orElse(0);
-    int key = items.stream().mapToInt(item -> item.key().map(TextMenu::label).orElse("").length()).max().orElse(0);
+    int key = items.stream().mapToInt(item -> item.key().map(bound -> new KeyCaption(bound).shown()).orElse("").length()).max().orElse(0);
     return text + (key == 0 ? 0 : BEFORE_KEY + key) + AROUND_ITEM;
   }
 
@@ -55,11 +55,5 @@ class TextMenu implements Menu {
   public void accept(MenuVisitor visitor) {
     visitor.visitMenu(this);
     rows.forEach(row -> row.accept(visitor));
-  }
-
-  private static String label(Key key) {
-    StringBuilder label = new StringBuilder();
-    key.accept(new KeyLabel(label));
-    return label.toString();
   }
 }
