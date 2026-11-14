@@ -21,8 +21,8 @@ class MenuPainter implements MenuVisitor {
   private final EntryRow titles;
   /** Where the open menu's box starts. */
   private int boxColumn;
-  /** The open menu's items met so far; its box is drawn again, one row taller, with each. */
-  private final List<Caption> shown = new ArrayList<>();
+  /** The open menu's rows met so far, in order: an item, or nothing for a separator. */
+  private final List<Optional<MenuItem>> rows = new ArrayList<>();
 
   MenuPainter(Screen screen, Optional<Menu> open, int selected) {
     this.screen = screen;
@@ -47,20 +47,48 @@ class MenuPainter implements MenuVisitor {
 
   @Override
   public void visitMenuItem(MenuItem item) {
-    Menu menu = item.menu();
-    if (open.filter(menu::equals).isEmpty()) {
-      return;
-    }
-    shown.add(new TextCaption(item.text()));
-    Area box = new TextArea(boxColumn, 1, menu.width(), shown.size() + 2);
-    new RaisedFrame(box, "", BAR_TINT, Lines.SINGLE).drawOn(screen);
-    if (selected < shown.size()) {
-      screen.paint(boxColumn + 1, 2 + selected, menu.width() - 2, CHOSEN_TINT);
-    }
-    for (int at = 0; at < shown.size(); at++) {
-      screen.write(boxColumn + 2, 2 + at, shown.get(at).shown());
-      shown.get(at).highlight(screen, boxColumn + 2, 2 + at, at == selected ? CHOSEN_LETTER : LETTER);
+    if (open.filter(item.menu()::equals).isPresent()) {
+      rows.add(Optional.of(item));
+      box(item.menu());
     }
   }
+
+  @Override
+  public void visitMenuSeparator(Menu menu) {
+    if (open.filter(menu::equals).isPresent()) {
+      rows.add(Optional.empty());
+      box(menu);
+    }
+  }
+
+  /** Draws the open menu's box with the rows met so far: it is drawn again, one row taller, with each. */
+  private void box(Menu menu) {
+    int width = menu.width();
+    new RaisedFrame(new TextArea(boxColumn, 1, width, rows.size() + 2), "", BAR_TINT, Lines.SINGLE).drawOn(screen);
+    int item = 0;
+    for (int row = 0; row < rows.size(); row++) {
+      if (rows.get(row).isEmpty()) {
+        screen.write(boxColumn, 2 + row, "├" + "─".repeat(width - 2) + "┤");
+      } else {
+        boolean chosen = item++ == selected;
+        if (chosen) {
+          screen.paint(boxColumn + 1, 2 + row, width - 2, CHOSEN_TINT);
+        }
+        MenuItem shown = rows.get(row).get();
+        Caption caption = new TextCaption(shown.text());
+        screen.write(boxColumn + 2, 2 + row, caption.shown());
+        caption.highlight(screen, boxColumn + 2, 2 + row, chosen ? CHOSEN_LETTER : LETTER);
+        String key = shown.key().map(MenuPainter::label).orElse("");
+        screen.write(boxColumn + width - 2 - key.length(), 2 + row, key);
+      }
+    }
+  }
+
+  private static String label(Key key) {
+    StringBuilder label = new StringBuilder();
+    key.accept(new KeyLabel(label));
+    return label.toString();
+  }
+
 
 }

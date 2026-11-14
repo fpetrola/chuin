@@ -100,7 +100,9 @@ types:
     kind: interface
     members:
       - "accept(MenuVisitor): void"
+      - "add(String, Key, Runnable): void"
       - "add(String, Runnable): void"
+      - "separator(): void"
       - "title(): String"
       - "width(): int"
   "com.fpetrola.tui.MenuBar":
@@ -111,6 +113,7 @@ types:
   "com.fpetrola.tui.MenuItem":
     kind: interface
     members:
+      - "key(): Optional<Key>"
       - "menu(): Menu"
       - "run(): void"
       - "text(): String"
@@ -120,6 +123,7 @@ types:
       - "visitMenu(Menu): void"
       - "visitMenuBar(MenuBar): void"
       - "visitMenuItem(MenuItem): void"
+      - "visitMenuSeparator(Menu): void"
   "com.fpetrola.tui.Option":
     kind: interface
     members:

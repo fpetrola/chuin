@@ -47,9 +47,16 @@ class MenuDesktop implements Desktop {
     });
   }
 
+  /** Shows the bar across the top row and binds the key of each of its items to that item. */
   @Override
   public void show(MenuBar shown) {
     bar = shown;
+    shown.accept(new MenuVisitor() {
+      @Override
+      public void visitMenuItem(MenuItem item) {
+        item.key().ifPresent(key -> bind(key, item::run));
+      }
+    });
   }
 
   @Override
@@ -214,10 +221,10 @@ class MenuDesktop implements Desktop {
       int row = cell.row() - 2;
       int start = titleStarts().get(open);
       boolean across = cell.column() >= start && cell.column() < start + menus().get(open).width();
-      List<MenuItem> items = items();
+      List<Optional<MenuItem>> rows = rows();
       state = title == NONE ? new Closed() : new Opened(title);
-      if (title == NONE && across && row >= 0 && row < items.size()) {
-        items.get(row).run();
+      if (title == NONE && across && row >= 0 && row < rows.size()) {
+        rows.get(row).ifPresent(MenuItem::run);
       }
     }
 
@@ -225,6 +232,24 @@ class MenuDesktop implements Desktop {
     public void draw(Screen screen) {
       screen.hideCursor();
       bar.accept(new MenuPainter(screen, Optional.of(menus().get(open)), item));
+    }
+
+    /** The rows of this menu, top to bottom: an item, or nothing for a separator. */
+    private List<Optional<MenuItem>> rows() {
+      Menu shown = menus().get(open);
+      List<Optional<MenuItem>> rows = new ArrayList<>();
+      shown.accept(new MenuVisitor() {
+        @Override
+        public void visitMenuItem(MenuItem each) {
+          rows.add(Optional.of(each));
+        }
+
+        @Override
+        public void visitMenuSeparator(Menu menu) {
+          rows.add(Optional.empty());
+        }
+      });
+      return rows;
     }
 
     /** The items of this menu, top to bottom. */

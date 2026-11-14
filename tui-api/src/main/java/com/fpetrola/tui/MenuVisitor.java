@@ -10,4 +10,8 @@ interface MenuVisitor {
 
   default void visitMenuItem(MenuItem item) {
   }
+
+  /** A line between items of this menu. */
+  default void visitMenuSeparator(Menu menu) {
+  }
 }
