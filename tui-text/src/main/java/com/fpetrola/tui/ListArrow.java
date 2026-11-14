@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.function.BinaryOperator;
 import java.util.function.Consumer;
 
-/** What ↑ or ↓ does to the focused view: a list selects the item before or after, any other view lets the window move. */
+/** What ↑ or ↓ does to the focused view: a list selects the item before or after, any other view lets the window move. Every focusable view must be overridden here, or ↑ and ↓ do nothing while it has the focus. */
 class ListArrow implements ViewVisitor {
   private final BinaryOperator<Runnable> choose;
   private final Runnable otherwise;
