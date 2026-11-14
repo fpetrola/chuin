@@ -1,7 +1,9 @@
 package com.fpetrola.tui;
 
 interface MarkVisitor {
-  void checked();
+  default void checked() {
+  }
 
-  void unchecked();
+  default void unchecked() {
+  }
 }

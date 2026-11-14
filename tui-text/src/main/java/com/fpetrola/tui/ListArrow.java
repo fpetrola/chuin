@@ -15,20 +15,8 @@ class ListArrow implements ViewVisitor {
   }
 
   @Override
-  public void window(String title, Area area) {
-  }
-
-  @Override
-  public void child(Point position) {
-  }
-
-  @Override
   public void button(Button button, String caption, List<ButtonListener> listeners) {
     otherwise.run();
-  }
-
-  @Override
-  public void label(String text) {
   }
 
   @Override

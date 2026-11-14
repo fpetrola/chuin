@@ -2,26 +2,37 @@ package com.fpetrola.tui;
 
 /** Tells keys apart without asking their type: each key says which one it is. */
 interface KeyVisitor {
-  void enter();
+  default void enter() {
+  }
 
-  void tab();
+  default void tab() {
+  }
 
-  void space();
+  default void space() {
+  }
 
-  void character(char typed);
+  default void character(char typed) {
+  }
 
-  void backspace();
+  default void backspace() {
+  }
 
-  void up();
+  default void up() {
+  }
 
-  void down();
+  default void down() {
+  }
 
-  void left();
+  default void left() {
+  }
 
-  void right();
+  default void right() {
+  }
 
   /** A function key, F1 to F12, by its number. */
-  void function(int number);
+  default void function(int number) {
+  }
 
-  void other();
+  default void other() {
+  }
 }
