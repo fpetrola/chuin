@@ -19,8 +19,8 @@ ef3df1a50e8fa0f5df6014227ed3422ca101cc6a910f78e2df2acae222c29729	tui-api/src/mai
 ed1cfb42ef3752c0ec3671b4c68602d6d42ee82d61f4ef697874d74b1f00a449	tui-api/src/main/java/com/fpetrola/tui/View.java
 5a155c2b670e1e34ec54784fc7c1b4614b49c8aae96ba85883f857784c74e620	tui-api/src/main/java/com/fpetrola/tui/ViewVisitor.java
 41079b5e616cb7e65c087eed0069fa858214a0155e5dc9d3136bdd67d2f3ac30	tui-api/src/main/java/com/fpetrola/tui/Window.java
-f6e0761c78c355fa2804816fd5571e922e18e2f1dab7cce167fa3eadc4bceb98	tui-demo/src/main/java/com/fpetrola/tui/demo/Demo.java
-32fdb3cbb47df95d116d3d69f402e7702db3bfe315a62c301b5419019ebc012d	tui-demo/src/test/java/com/fpetrola/tui/demo/DemoTest.java
+40a6654413fe5d1070bbef1d3cecaff24572e8030d5ece31e2095266304e9c06	tui-demo/src/main/java/com/fpetrola/tui/demo/Demo.java
+beab3139712da37220ac149a10da22cda91abad146d9698d457e4cc6db30c1e1	tui-demo/src/test/java/com/fpetrola/tui/demo/DemoTest.java
 9a597ef77dc33df475bde1d940fad449b5efe5aace4cfea8cfaf66bcc5a0e290	tui-text/src/main/java/com/fpetrola/tui/AnsiTerminal.java
 fc83c2cbf0bb654dbad80b7341912c5df223e5c9fe4158365bf5c3b60f592c56	tui-text/src/main/java/com/fpetrola/tui/CollectFocusable.java
 7ac70812446eaaafe76769b855546960508884b815f54239408c2a6d3b043637	tui-text/src/main/java/com/fpetrola/tui/Painter.java
