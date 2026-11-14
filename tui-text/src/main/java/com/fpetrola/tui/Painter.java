@@ -106,7 +106,7 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitListBox(ListBox box) {
-    box.acceptRows(new RowPainter(screen, new TextArea(column, row, box.width() + 2, 1), seen++ == focused, drawn));
+    box.acceptRows(new RowPainter(screen, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn));
   }
 
 

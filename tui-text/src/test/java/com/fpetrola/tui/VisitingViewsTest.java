@@ -120,7 +120,7 @@ class VisitingViewsTest {
 
     verify(visitor).visitListBox(letters);
     assertEquals(Optional.of("d"), letters.selected());
-    assertEquals(2, letters.width());
+    assertEquals(4, letters.width());
     InOrder order = inOrder(rows);
     order.verify(rows).item("bb");
     order.verify(rows).barUp();

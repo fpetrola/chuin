@@ -7,7 +7,7 @@ public interface ListBox extends View {
   /** The item selected now, or nothing when the list has no items. */
   Optional<String> selected();
 
-  /** How many cells its longest item takes. */
+  /** How many cells it takes across: its longest item, a blank, and the scroll bar. */
   int width();
 
   /** Walks the rows it shows, top to bottom: for each, its item, then its cell of the scroll bar. */

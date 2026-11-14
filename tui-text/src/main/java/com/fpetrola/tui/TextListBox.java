@@ -8,6 +8,8 @@ import java.util.function.Consumer;
 class TextListBox implements ListBox {
   /** ▲, at least one cell of track, and ▼. */
   private static final int FEWEST_ROWS = 3;
+  /** The blank and the scroll bar cell after the longest item. */
+  private static final int BESIDE_ITEM = 2;
   private final List<String> items;
   private final int rows;
   private int top;
@@ -28,7 +30,7 @@ class TextListBox implements ListBox {
 
   @Override
   public int width() {
-    return items.stream().mapToInt(String::length).max().orElse(0);
+    return items.stream().mapToInt(String::length).max().orElse(0) + BESIDE_ITEM;
   }
 
   @Override
