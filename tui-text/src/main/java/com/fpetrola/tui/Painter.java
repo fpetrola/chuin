@@ -6,8 +6,8 @@ import java.util.List;
 class Painter implements ViewVisitor {
   private static final char WINDOW_TINT = 'w';
   private static final char FOCUS_TINT = 'f';
-  /** The focus a window below the top one is drawn with: no view has it. */
-  private static final int UNFOCUSED = -1;
+  /** The lines the frame of its window is drawn with: double for the window on top, single for the rest. */
+  private final Border border;
   private final Screen screen;
   /** The inside of the window being drawn: its views cannot draw past it. */
   private Screen inside;
@@ -24,7 +24,8 @@ class Painter implements ViewVisitor {
   private int column;
   private int row;
 
-  Painter(Screen screen, int focused, List<Area> drawn) {
+  Painter(Screen screen, int focused, List<Area> drawn, Border border) {
+    this.border = border;
     this.screen = screen;
     this.inside = screen;
     this.focused = focused;
@@ -34,7 +35,7 @@ class Painter implements ViewVisitor {
   @Override
   public void visitWindow(Window window) {
     Area area = window.area();
-    new RaisedFrame(area, window.title(), WINDOW_TINT, focused == UNFOCUSED ? Border.SINGLE : Border.DOUBLE).drawOn(screen);
+    new RaisedFrame(area, window.title(), WINDOW_TINT, border).drawOn(screen);
     insideColumn = area.column() + 1;
     insideRow = area.row() + 1;
     inside = new ClippedScreen(screen, new TextArea(insideColumn, insideRow, area.columns() - 2, area.rows() - 2));

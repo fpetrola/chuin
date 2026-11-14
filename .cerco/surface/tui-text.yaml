@@ -1,6 +1,12 @@
 # What a person signed of this module's surface; cerco:approve grows it.
 module: "tui-text"
 types:
+  "com.fpetrola.tui.Border":
+    kind: interface
+    members:
+      - "bottom(int): String"
+      - "middle(int): String"
+      - "top(String, int): String"
   "com.fpetrola.tui.Drawing":
     kind: interface
     members:

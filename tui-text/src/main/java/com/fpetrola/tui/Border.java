@@ -1,23 +1,13 @@
 package com.fpetrola.tui;
 
-/** The lines a frame is drawn with: single for most, double for the window on top. */
-enum Border {
-  SINGLE('┌', '┐', '└', '┘', '─', '│'),
-  DOUBLE('╔', '╗', '╚', '╝', '═', '║');
+/** The lines a frame is drawn with, each row of it drawn by the border itself. */
+interface Border {
+  /** The top row: a corner, the line across with a label in the middle, a corner. */
+  String top(String label, int inner);
 
-  final char topLeft;
-  final char topRight;
-  final char bottomLeft;
-  final char bottomRight;
-  final char across;
-  final char down;
+  /** A row between the top and the bottom: the line down, a blank inside, the line down. */
+  String middle(int inner);
 
-  Border(char topLeft, char topRight, char bottomLeft, char bottomRight, char across, char down) {
-    this.topLeft = topLeft;
-    this.topRight = topRight;
-    this.bottomLeft = bottomLeft;
-    this.bottomRight = bottomRight;
-    this.across = across;
-    this.down = down;
-  }
+  /** The bottom row: a corner, the line across, a corner. */
+  String bottom(int inner);
 }

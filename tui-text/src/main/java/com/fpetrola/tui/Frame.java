@@ -1,6 +1,6 @@
 package com.fpetrola.tui;
 
-/** A box drawn around an area: its border, a title centred on the top border when it has one, and a blank inside, all in one tint. */
+/** A box drawn around an area with a border: a title centred on the top row when it has one, and a blank inside, all in one tint. */
 class Frame implements Drawing {
   private final Area area;
   private final String title;
@@ -17,17 +17,12 @@ class Frame implements Drawing {
   @Override
   public void drawOn(Screen screen) {
     int inner = area.columns() - 2;
-    String label = title.isEmpty() ? "" : " " + title + " ";
-    int left = (inner - label.length()) / 2;
-    int right = inner - label.length() - left;
     int last = area.rows() - 1;
-    String across = String.valueOf(border.across);
-    String down = String.valueOf(border.down);
-    screen.write(area.column(), area.row(), border.topLeft + across.repeat(left) + label + across.repeat(right) + border.topRight);
+    screen.write(area.column(), area.row(), border.top(title.isEmpty() ? "" : " " + title + " ", inner));
     for (int line = 1; line < last; line++) {
-      screen.write(area.column(), area.row() + line, down + " ".repeat(inner) + down);
+      screen.write(area.column(), area.row() + line, border.middle(inner));
     }
-    screen.write(area.column(), area.row() + last, border.bottomLeft + across.repeat(inner) + border.bottomRight);
+    screen.write(area.column(), area.row() + last, border.bottom(inner));
     for (int line = 0; line <= last; line++) {
       screen.paint(area.column(), area.row() + line, area.columns(), tint);
     }
