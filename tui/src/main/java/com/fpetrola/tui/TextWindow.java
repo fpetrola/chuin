@@ -14,23 +14,10 @@ class TextWindow implements Window {
   }
 
   @Override
-  public void add(Button button) {
-    add(button, new TextPoint(0, 0));
-  }
-
-  @Override
-  public void add(Button button, Point position) {
+  public void add(View view, Point position) {
     children.add(visitor -> {
       visitor.child(position);
-      button.accept(visitor);
-    });
-  }
-
-  @Override
-  public void add(Label label, Point position) {
-    children.add(visitor -> {
-      visitor.child(position);
-      label.accept(visitor);
+      view.accept(visitor);
     });
   }
 

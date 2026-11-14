@@ -17,7 +17,7 @@ class PressingAButtonTest {
     Key enter = keys.enter();
 
     ok.onPress(listener);
-    window.add(ok);
+    window.add(ok, toolkit.point(0, 0));
     desktop.open(window);
     desktop.type(enter);
 

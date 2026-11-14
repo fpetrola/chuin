@@ -1,11 +1,7 @@
 package com.fpetrola.tui;
 
 public interface Window {
-  void add(Button button);
-
-  void add(Button button, Point position);
-
-  void add(Label label, Point position);
+  void add(View view, Point position);
 
   void place(Area area);
 

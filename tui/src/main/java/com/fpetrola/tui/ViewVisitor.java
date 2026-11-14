@@ -12,4 +12,7 @@ interface ViewVisitor {
   void button(Button button, String caption, List<ButtonListener> listeners);
 
   void label(String text);
+
+  /** A check box hands over its text, its mark, and how to toggle it. */
+  void checkBox(CheckBox box, String text, Mark mark, Runnable toggle);
 }

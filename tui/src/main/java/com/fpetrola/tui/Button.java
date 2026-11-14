@@ -1,7 +1,5 @@
 package com.fpetrola.tui;
 
-public interface Button {
+public interface Button extends View {
   void onPress(ButtonListener listener);
-
-  void accept(ViewVisitor visitor);
 }

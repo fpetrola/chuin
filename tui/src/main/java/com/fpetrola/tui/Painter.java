@@ -52,4 +52,20 @@ class Painter implements ViewVisitor {
   public void label(String text) {
     screen.write(column, row, text);
   }
+
+  @Override
+  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+    mark.accept(new MarkVisitor() {
+      @Override
+      public void checked() {
+        screen.write(column, row, "[X] " + text);
+      }
+
+      @Override
+      public void unchecked() {
+        screen.write(column, row, "[ ] " + text);
+      }
+    });
+    seen++;
+  }
 }

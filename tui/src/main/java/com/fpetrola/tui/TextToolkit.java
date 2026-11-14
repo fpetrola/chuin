@@ -31,6 +31,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public CheckBox checkBox(String text) {
+    return new TextCheckBox(text);
+  }
+
+  @Override
   public Keys keys() {
     return keys;
   }

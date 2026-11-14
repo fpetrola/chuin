@@ -9,6 +9,7 @@ class StreamKeyboard implements Keyboard {
   private static final int END = -1;
   private static final int CARRIAGE_RETURN = '\r';
   private static final int TAB = '\t';
+  private static final int SPACE = ' ';
   private final InputStream in;
   private final Keys keys;
 
@@ -29,7 +30,8 @@ class StreamKeyboard implements Keyboard {
   }
 
   private Key keyFor(int read) {
-    Key named = read == TAB ? keys.tab() : KeyVisitor::other;
+    Key spaced = read == SPACE ? keys.space() : KeyVisitor::other;
+    Key named = read == TAB ? keys.tab() : spaced;
     return read == CARRIAGE_RETURN ? keys.enter() : named;
   }
 }

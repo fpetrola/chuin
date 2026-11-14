@@ -12,6 +12,8 @@ public interface Toolkit {
 
   Label label(String text);
 
+  CheckBox checkBox(String text);
+
   Keys keys();
 
   Screen screen(int columns, int rows);

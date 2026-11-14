@@ -6,5 +6,7 @@ interface KeyVisitor {
 
   void tab();
 
+  void space();
+
   void other();
 }

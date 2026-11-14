@@ -1,7 +1,5 @@
 package com.fpetrola.tui;
 
-public interface Label {
+public interface Label extends View {
   void text(String text);
-
-  void accept(ViewVisitor visitor);
 }

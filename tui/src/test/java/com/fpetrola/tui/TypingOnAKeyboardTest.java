@@ -21,7 +21,7 @@ class TypingOnAKeyboardTest {
     ButtonListener listener = mock(ButtonListener.class);
 
     ok.onPress(listener);
-    window.add(ok);
+    window.add(ok, toolkit.point(0, 0));
     desktop.open(window);
     keyboard.typeInto(desktop);
 

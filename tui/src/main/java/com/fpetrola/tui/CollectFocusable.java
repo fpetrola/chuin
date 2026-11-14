@@ -2,11 +2,11 @@ package com.fpetrola.tui;
 
 import java.util.List;
 
-/** Collects the buttons of the views it visits, in the order they are visited. */
-class CollectButtons implements ViewVisitor {
-  private final List<Button> into;
+/** Collects the views that can take the focus, in the order they are visited. */
+class CollectFocusable implements ViewVisitor {
+  private final List<View> into;
 
-  CollectButtons(List<Button> into) {
+  CollectFocusable(List<View> into) {
     this.into = into;
   }
 
@@ -25,5 +25,10 @@ class CollectButtons implements ViewVisitor {
 
   @Override
   public void label(String text) {
+  }
+
+  @Override
+  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+    into.add(box);
   }
 }

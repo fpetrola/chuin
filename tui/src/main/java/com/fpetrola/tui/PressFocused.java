@@ -2,7 +2,7 @@ package com.fpetrola.tui;
 
 import java.util.List;
 
-/** Presses the button that has the focus: the one at the focused place among a window's buttons. */
+/** Presses the button that has the focus: the one at the focused place among a window's focusable views. */
 class PressFocused implements ViewVisitor {
   private final int focused;
   private int seen;
@@ -29,5 +29,10 @@ class PressFocused implements ViewVisitor {
 
   @Override
   public void label(String text) {
+  }
+
+  @Override
+  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+    seen++;
   }
 }
