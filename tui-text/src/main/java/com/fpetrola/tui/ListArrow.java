@@ -29,8 +29,8 @@ class ListArrow implements ViewVisitor {
   }
 
   @Override
-  public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
-    choose.apply(previous, next).run();
+  public void visitListBox(ListBox box) {
+    choose.apply(box::previous, box::next).run();
   }
 
   @Override

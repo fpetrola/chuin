@@ -38,7 +38,7 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
+  public void visitListBox(ListBox box) {
     into.add(box);
   }
 

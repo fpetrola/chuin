@@ -9,6 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -105,23 +106,31 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aListBoxHandsItsItemsAndRowsAndItsSelectionStopsAtBothEnds() {
-    List<String> items = List.of("a", "b", "c", "d");
-    ListBox letters = toolkit.listBox(items, 3);
-    ArgumentCaptor<Runnable> previous = ArgumentCaptor.captor();
-    ArgumentCaptor<Runnable> next = ArgumentCaptor.captor();
+  void aListBoxHandsItselfToTheVisitorAndWalksItsRowsWithTheSelectionAndScrollBar() {
+    ListBox letters = toolkit.listBox(List.of("a", "bb", "c", "d"), 3);
+    ListRowVisitor rows = mock(ListRowVisitor.class);
 
     letters.accept(visitor);
-    verify(visitor).listBox(eq(letters), eq(items), eq(3), eq(0), eq(0), previous.capture(), next.capture());
-    previous.getValue().run();
-    next.getValue().run();
-    next.getValue().run();
-    next.getValue().run();
-    next.getValue().run();
-    letters.accept(visitor);
+    letters.previous();
+    letters.next();
+    letters.next();
+    letters.next();
+    letters.next();
+    letters.acceptRows(rows);
 
-    verify(visitor).listBox(eq(letters), eq(items), eq(3), eq(1), eq(3), any(), any());
+    verify(visitor).visitListBox(letters);
+    assertEquals(Optional.of("d"), letters.selected());
+    assertEquals(2, letters.width());
+    InOrder order = inOrder(rows);
+    order.verify(rows).item("bb");
+    order.verify(rows).barUp();
+    order.verify(rows).item("c");
+    order.verify(rows).barThumb();
+    order.verify(rows).selectedItem("d");
+    order.verify(rows).barDown();
   }
+
+
 
   @Test
   void aGroupOfRadioButtonsHandsItsOptionsAndItsChoiceStopsAtBothEnds() {
@@ -139,5 +148,35 @@ class VisitingViewsTest {
     group.accept(visitor);
 
     verify(visitor).radioButtons(eq(group), eq(options), eq(2), any(), any());
+  }
+
+  @Test
+  void aListBoxWalksRowsPastItsLastItemAsNoItemAndHasNoBarWhenEveryItemFits() {
+    ListBox one = toolkit.listBox(List.of("a"), 3);
+    ListRowVisitor rows = mock(ListRowVisitor.class);
+
+    one.acceptRows(rows);
+
+    InOrder order = inOrder(rows);
+    order.verify(rows).selectedItem("a");
+    order.verify(rows).noBar();
+    order.verify(rows).noItem();
+    order.verify(rows).noBar();
+    order.verify(rows).noItem();
+    order.verify(rows).noBar();
+  }
+
+  @Test
+  void aListBoxWalksTheTrackOfItsScrollBarAwayFromTheThumb() {
+    ListBox five = toolkit.listBox(List.of("a", "b", "c", "d", "e"), 4);
+    ListRowVisitor rows = mock(ListRowVisitor.class);
+
+    five.acceptRows(rows);
+
+    InOrder order = inOrder(rows);
+    order.verify(rows).barUp();
+    order.verify(rows).barThumb();
+    order.verify(rows).barTrack();
+    order.verify(rows).barDown();
   }
 }

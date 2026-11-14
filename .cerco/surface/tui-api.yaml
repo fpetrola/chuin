@@ -72,7 +72,22 @@ types:
   "com.fpetrola.tui.ListBox":
     kind: interface
     members:
+      - "acceptRows(ListRowVisitor): void"
+      - "next(): void"
+      - "previous(): void"
       - "selected(): Optional<String>"
+      - "width(): int"
+  "com.fpetrola.tui.ListRowVisitor":
+    kind: interface
+    members:
+      - "barDown(): void"
+      - "barThumb(): void"
+      - "barTrack(): void"
+      - "barUp(): void"
+      - "item(String): void"
+      - "noBar(): void"
+      - "noItem(): void"
+      - "selectedItem(String): void"
   "com.fpetrola.tui.Mark":
     kind: interface
     members:
@@ -129,9 +144,9 @@ types:
       - "checkBox(CheckBox, String, Mark, Runnable): void"
       - "child(Point): void"
       - "label(String): void"
-      - "listBox(ListBox, List<String>, int, int, int, Runnable, Runnable): void"
       - "radioButtons(RadioButtons, List<String>, int, Runnable, Runnable): void"
       - "visitInputLine(InputLine): void"
+      - "visitListBox(ListBox): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":
     kind: interface
