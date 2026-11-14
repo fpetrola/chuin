@@ -52,9 +52,9 @@
       <plugin>
         <groupId>com.fpetrola</groupId>
         <artifactId>cerco-maven-plugin</artifactId>
-        <version>0.21.0</version>
+        <version>0.22.1</version>
         <configuration>
-          <sealedSurface>all</sealedSurface>
+          <sealedSurface>promises</sealedSurface>
         </configuration>
         <executions>
           <execution>
