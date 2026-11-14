@@ -4,9 +4,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 
-/** Reads bytes from a stream until it ends and types each as a key. */
+/** Reads bytes from a stream until it ends or Ctrl+Q is typed, and types each as a key. */
 class StreamKeyboard implements Keyboard {
   private static final int END = -1;
+  private static final int CONTROL_Q = 0x11;
   private static final int CARRIAGE_RETURN = '\r';
   private static final int TAB = '\t';
   private static final int SPACE = ' ';
@@ -21,7 +22,7 @@ class StreamKeyboard implements Keyboard {
   @Override
   public void typeInto(Desktop desktop) {
     try {
-      for (int read = in.read(); read != END; read = in.read()) {
+      for (int read = in.read(); read != END && read != CONTROL_Q; read = in.read()) {
         desktop.type(keyFor(read));
       }
     } catch (IOException e) {

@@ -8,7 +8,7 @@ import com.fpetrola.tui.TextToolkit;
 import com.fpetrola.tui.Toolkit;
 import com.fpetrola.tui.Window;
 
-/** Runs a window with a button on this process's console. Launch it through demo.sh. */
+/** Runs a window with a button on this process's console. Launch it through demo.sh; Ctrl+Q quits. */
 public class Demo {
   private Demo() {
   }

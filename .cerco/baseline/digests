@@ -25,7 +25,7 @@ f6e0761c78c355fa2804816fd5571e922e18e2f1dab7cce167fa3eadc4bceb98	tui-demo/src/ma
 4b14fe3c4db3114a46dc507ae816ce9e895eb40ac21915bf9e4e96c09c003c66	tui-text/src/main/java/com/fpetrola/tui/Painter.java
 4ba5995efbcd6c829fefd21a230d0ded75576f73c08b8e6cafdaf154ee517709	tui-text/src/main/java/com/fpetrola/tui/PressFocused.java
 5d9211e160ae227d805642c07d5477517e646e7b433dec5d8028b70f5b3b1304	tui-text/src/main/java/com/fpetrola/tui/ShownDesktop.java
-0b4e60e571bfb99f05da09486753850fc5ddc1d837aa5aa2f4a92af27db8376f	tui-text/src/main/java/com/fpetrola/tui/StreamKeyboard.java
+1c89d2deee9a0d76d430ffa7874145f4f0ad2d79236e003bcc1e38947ef23543	tui-text/src/main/java/com/fpetrola/tui/StreamKeyboard.java
 c65b26c83ea2e4f192745de964201b7377dc446fb902f1fa819ba462433ded7e	tui-text/src/main/java/com/fpetrola/tui/TextArea.java
 030d13c6ec776bf5eb698a2c12c9d8b3263660ace3cd151e229de062ad2cd294	tui-text/src/main/java/com/fpetrola/tui/TextButton.java
 10e9d9f64d15fa8a033c6e4d5e3d0365e87d65941a16d8b0ebe3ca3dc6dfa81d	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java
@@ -43,6 +43,7 @@ a2e850aaa7b9d48ac1265fa83f1c024c3bd0f7e1c48c095a0572ceba9f05796a	tui-text/src/ma
 a5885acf6d54fd5fa4034e319237b5acf480a1e3738ce23fd49edad5a797f6a5	tui-text/src/test/java/com/fpetrola/tui/GeometryTest.java
 80038a3cb8c1879d7ec1e15f2768e7da4cd87c159f56d1f635812a8aa3ee2898	tui-text/src/test/java/com/fpetrola/tui/MovingFocusWithTabTest.java
 8137411e2947c66df96c55bac7c0beffb37f00c6637344576c455a0048cfdb7c	tui-text/src/test/java/com/fpetrola/tui/PressingAButtonTest.java
+279316d1ca3260c1dfdda0ec2b4d06b4a9098bb3fb5d96b3dc53b85382cd1c8a	tui-text/src/test/java/com/fpetrola/tui/QuittingWithControlQTest.java
 f64c2cae45576b72146a29b8412e299a5b8ac392d65256dddbc23954abeb5e7b	tui-text/src/test/java/com/fpetrola/tui/RunningOnAConsoleTest.java
 76a7638e461c722e5416635a9db578f8dc22e69a451b2a74bf308cc37d0bf4b7	tui-text/src/test/java/com/fpetrola/tui/SeeingTheFocusOnACheckBoxTest.java
 677758184612c1e3bbb62e9ba5146a8e8037fb902c5d114506a217252d72f149	tui-text/src/test/java/com/fpetrola/tui/SeeingTheFocusTest.java
