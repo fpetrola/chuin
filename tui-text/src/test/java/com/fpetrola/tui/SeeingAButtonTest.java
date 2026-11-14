@@ -27,4 +27,22 @@ class SeeingAButtonTest {
         "wwffffffwwwbbbbbbwww",
         "wwwwwwwwwwwwwwwwwwww"), screen.tints().subList(1, 3));
   }
+
+  @Test
+  void aButtonShadowOnlyFallsOnBlankCellsSoItNeverCoversWhatAnotherViewDrew() {
+    Toolkit toolkit = new TextToolkit();
+    Screen screen = toolkit.screen(20, 4);
+    Desktop desktop = toolkit.desktop();
+    Window window = toolkit.window("A");
+
+    window.place(toolkit.area(0, 0, 20, 4));
+    window.add(toolkit.label("abcd"), toolkit.point(1, 1));
+    window.add(toolkit.label("xy"), toolkit.point(6, 0));
+    window.add(toolkit.button("Ok"), toolkit.point(0, 0));
+    desktop.open(window);
+    desktop.draw(screen);
+
+    assertEquals("║  Ok  xy          ║", screen.lines().get(1));
+    assertEquals("║ abcd▀▀           ║", screen.lines().get(2));
+  }
 }

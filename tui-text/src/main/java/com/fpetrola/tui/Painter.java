@@ -6,6 +6,8 @@ import java.util.List;
 class Painter implements ViewVisitor {
   private static final char WINDOW_TINT = 'w';
   private static final char FOCUS_TINT = 'f';
+  /** What a button's shadow may be drawn over: a blank cell or another button's shadow. */
+  private static final String SHADE_COVERS = " ▀▄";
   /** The field of an input line, focused or not: white on blue. */
   private static final char FIELD_TINT = 'i';
   /** The face of a button without the focus: black on green. */
@@ -55,8 +57,11 @@ class Painter implements ViewVisitor {
   @Override
   public void visitButton(Button button) {
     String face = "  " + button.caption() + "  ";
-    inside.write(column, row, face + "▄");
-    inside.write(column + 1, row + 1, "▀".repeat(face.length()));
+    inside.write(column, row, face);
+    shade(column + face.length(), row, '▄');
+    for (int cell = 1; cell <= face.length(); cell++) {
+      shade(column + cell, row + 1, '▀');
+    }
     inside.paint(column, row, face.length(), BUTTON_TINT);
     next(face.length());
   }
@@ -93,6 +98,15 @@ class Painter implements ViewVisitor {
     inside.paint(column, row, cells, FIELD_TINT);
     drawn.add(new TextArea(column, row, cells, 1));
     seen++;
+  }
+
+  /** Draws a cell of a button's shadow, but only on a cell that is blank or shadow already: it never covers what a view drew. */
+  private void shade(int at, int line, char cell) {
+    List<String> lines = inside.lines();
+    boolean onScreen = line >= 0 && line < lines.size() && at >= 0 && at < lines.get(line).length();
+    if (onScreen && SHADE_COVERS.indexOf(lines.get(line).charAt(at)) >= 0) {
+      inside.write(at, line, String.valueOf(cell));
+    }
   }
 
   /** Passes a focusable view of this many cells, tinting it when it is the focused one. */
