@@ -13,14 +13,6 @@ class AtFocus implements ViewVisitor {
   }
 
   @Override
-  public void window(String title, Area area) {
-  }
-
-  @Override
-  public void child(Point position) {
-  }
-
-  @Override
   public void visitButton(Button button) {
     if (seen++ == focused) {
       action.visitButton(button);

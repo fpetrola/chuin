@@ -88,7 +88,7 @@ class TextDesktop implements Desktop {
 
   /** Moves the top window by the given cells, wherever that leaves it: the screen cuts what falls outside. */
   private void move(int columns, int rows) {
-    top().ifPresent(window -> window.accept(new MoveWindow(window, columns, rows)));
+    top().ifPresent(window -> window.accept(new MoveWindow(columns, rows)));
   }
 
   /** What each key does to the desktop: Tab moves the focus, Enter presses the focused button, Space toggles the focused check box, a letter goes into the focused input line. */

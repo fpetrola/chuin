@@ -11,14 +11,6 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void window(String title, Area area) {
-  }
-
-  @Override
-  public void child(Point position) {
-  }
-
-  @Override
   public void visitButton(Button button) {
     into.add(button);
   }

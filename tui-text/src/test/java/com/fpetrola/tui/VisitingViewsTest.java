@@ -8,6 +8,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
@@ -18,22 +19,18 @@ class VisitingViewsTest {
   private final ViewVisitor visitor = mock(ViewVisitor.class);
 
   @Test
-  void aWindowHandsItsTitleAreaAndPlacedButtonsToTheVisitor() {
+  void aWindowHandsItselfToTheVisitorWithItsTitleAndArea() {
     Window window = toolkit.window("Saludo");
     Area area = toolkit.area(0, 0, 20, 5);
-    Point position = toolkit.point(1, 1);
-    Button ok = toolkit.button("OK");
-    View view = ok;
     window.place(area);
-    window.add(view, position);
 
     window.accept(visitor);
 
-    InOrder order = inOrder(visitor);
-    order.verify(visitor).window("Saludo", area);
-    order.verify(visitor).child(position);
-    order.verify(visitor).visitButton(ok);
+    verify(visitor).visitWindow(window);
+    assertEquals("Saludo", window.title());
+    assertEquals(area, window.area());
   }
+
 
   @Test
   void aButtonHandsItselfToTheVisitorAndPressingItTellsItsListenersInOrder() {
@@ -66,18 +63,40 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aWindowHandsItsPlacedLabelsToTheVisitor() {
+  void aWindowWalksItsViewsInTheOrderTheyWereAddedWithTheirPositions() {
     Window window = toolkit.window("Saludo");
-    Point position = toolkit.point(1, 2);
+    Point first = toolkit.point(1, 1);
+    Point second = toolkit.point(1, 2);
+    Button ok = toolkit.button("OK");
     Label hello = toolkit.label("hola");
-    window.add(hello, position);
+    ChildVisitor children = mock(ChildVisitor.class);
+    window.add(ok, first);
+    window.add(hello, second);
 
-    window.accept(visitor);
+    window.acceptChildren(children);
 
-    InOrder order = inOrder(visitor);
-    order.verify(visitor).child(position);
-    order.verify(visitor).visitLabel(hello);
+    InOrder order = inOrder(children);
+    order.verify(children).child(ok, first);
+    order.verify(children).child(hello, second);
   }
+
+  @Test
+  void byDefaultVisitingAWindowVisitsTheViewsPlacedInIt() {
+    Window window = toolkit.window("Saludo");
+    Label hello = toolkit.label("hola");
+    List<Label> seen = new ArrayList<>();
+    window.add(hello, toolkit.point(0, 0));
+
+    window.accept(new ViewVisitor() {
+      @Override
+      public void visitLabel(Label label) {
+        seen.add(label);
+      }
+    });
+
+    assertEquals(List.of(hello), seen);
+  }
+
 
   @Test
   void aCheckBoxHandsItselfToTheVisitorStartsUncheckedAndTogglingItMakesItChecked() {

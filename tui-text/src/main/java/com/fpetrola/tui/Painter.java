@@ -14,8 +14,6 @@ class Painter implements ViewVisitor {
   /** Where each focusable view was drawn, in focus order, so a click can find what is under it. */
   private final List<Area> drawn;
   private int seen;
-  private int insideColumn;
-  private int insideRow;
   private int column;
   private int row;
 
@@ -26,7 +24,9 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void window(String title, Area area) {
+  public void visitWindow(Window window) {
+    String title = window.title();
+    Area area = window.area();
     int inner = area.columns() - 2;
     String label = " " + title + " ";
     int left = (inner - label.length()) / 2;
@@ -46,16 +46,13 @@ class Painter implements ViewVisitor {
       screen.paint(area.column() + area.columns(), area.row() + line + 1, 1, SHADOW_TINT);
     }
     screen.paint(area.column() + 1, area.row() + area.rows(), area.columns(), SHADOW_TINT);
-    insideColumn = area.column() + 1;
-    insideRow = area.row() + 1;
-    column = insideColumn;
-    row = insideRow;
-  }
-
-  @Override
-  public void child(Point position) {
-    column = insideColumn + position.column();
-    row = insideRow + position.row();
+    int insideColumn = area.column() + 1;
+    int insideRow = area.row() + 1;
+    window.acceptChildren((view, position) -> {
+      column = insideColumn + position.column();
+      row = insideRow + position.row();
+      view.accept(this);
+    });
   }
 
   @Override

@@ -6,4 +6,13 @@ public interface Window {
   void place(Area area);
 
   void accept(ViewVisitor visitor);
+
+  /** The title on its top border. */
+  String title();
+
+  /** Where it is placed on the screen. */
+  Area area();
+
+  /** Walks the views placed in it, in the order they were added, each with its position inside the window. */
+  void acceptChildren(ChildVisitor visitor);
 }

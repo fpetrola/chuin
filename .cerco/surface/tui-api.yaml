@@ -24,6 +24,10 @@ types:
       - "acceptMark(MarkVisitor): void"
       - "text(): String"
       - "toggle(): void"
+  "com.fpetrola.tui.ChildVisitor":
+    kind: interface
+    members:
+      - "child(View, Point): void"
   "com.fpetrola.tui.Console":
     kind: interface
     members:
@@ -153,17 +157,19 @@ types:
   "com.fpetrola.tui.ViewVisitor":
     kind: interface
     members:
-      - "child(Point): void"
       - "visitButton(Button): void"
       - "visitCheckBox(CheckBox): void"
       - "visitInputLine(InputLine): void"
       - "visitLabel(Label): void"
       - "visitListBox(ListBox): void"
       - "visitRadioButtons(RadioButtons): void"
-      - "window(String, Area): void"
+      - "visitWindow(Window): void"
   "com.fpetrola.tui.Window":
     kind: interface
     members:
       - "accept(ViewVisitor): void"
+      - "acceptChildren(ChildVisitor): void"
       - "add(View, Point): void"
+      - "area(): Area"
       - "place(Area): void"
+      - "title(): String"
