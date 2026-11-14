@@ -22,7 +22,7 @@ class TogglingACheckBoxTest {
     desktop.type(toolkit.keys().space());
     desktop.draw(screen);
 
-    assertEquals("│ [ ] Recordar     │", before.get(1));
-    assertEquals("│ [X] Recordar     │", screen.lines().get(1));
+    assertEquals("│>[ ] Recordar     │", before.get(1));
+    assertEquals("│>[X] Recordar     │", screen.lines().get(1));
   }
 }

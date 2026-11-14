@@ -2,7 +2,7 @@ package com.fpetrola.tui;
 
 import java.util.List;
 
-/** Draws the views it visits on a screen; only the focused button is drawn between brackets. */
+/** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
 class Painter implements ViewVisitor {
   private final Screen screen;
   private final int focused;
@@ -55,6 +55,9 @@ class Painter implements ViewVisitor {
 
   @Override
   public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+    if (seen == focused) {
+      screen.write(column - 1, row, ">");
+    }
     mark.accept(new MarkVisitor() {
       @Override
       public void checked() {
