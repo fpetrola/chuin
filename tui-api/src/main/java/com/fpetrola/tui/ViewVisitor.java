@@ -1,6 +1,5 @@
 package com.fpetrola.tui;
 
-import java.util.List;
 
 /** Visits views without asking their type: each view hands over what it holds. */
 interface ViewVisitor {
@@ -11,10 +10,10 @@ interface ViewVisitor {
   default void child(Point position) {
   }
 
-  default void button(Button button, String caption, List<ButtonListener> listeners) {
+  default void visitButton(Button button) {
   }
 
-  default void label(String text) {
+  default void visitLabel(Label label) {
   }
 
   default void visitCheckBox(CheckBox box) {

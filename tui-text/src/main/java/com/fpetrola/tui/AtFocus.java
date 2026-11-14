@@ -1,6 +1,5 @@
 package com.fpetrola.tui;
 
-import java.util.List;
 
 /** Counts a window's focusable views and hands only the focused one to an action. */
 class AtFocus implements ViewVisitor {
@@ -22,14 +21,14 @@ class AtFocus implements ViewVisitor {
   }
 
   @Override
-  public void button(Button button, String caption, List<ButtonListener> listeners) {
+  public void visitButton(Button button) {
     if (seen++ == focused) {
-      action.button(button, caption, listeners);
+      action.visitButton(button);
     }
   }
 
   @Override
-  public void label(String text) {
+  public void visitLabel(Label label) {
   }
 
   @Override

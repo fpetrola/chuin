@@ -13,7 +13,12 @@ class TextLabel implements Label {
   }
 
   @Override
+  public String text() {
+    return text;
+  }
+
+  @Override
   public void accept(ViewVisitor visitor) {
-    visitor.label(text);
+    visitor.visitLabel(this);
   }
 }

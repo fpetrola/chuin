@@ -32,41 +32,51 @@ class VisitingViewsTest {
     InOrder order = inOrder(visitor);
     order.verify(visitor).window("Saludo", area);
     order.verify(visitor).child(position);
-    order.verify(visitor).button(ok, "OK", List.of());
+    order.verify(visitor).visitButton(ok);
   }
 
   @Test
-  void aButtonHandsItselfItsCaptionAndItsListenersToTheVisitor() {
+  void aButtonHandsItselfToTheVisitorAndPressingItTellsItsListenersInOrder() {
     Button ok = toolkit.button("OK");
-    ButtonListener listener = mock(ButtonListener.class);
-    ok.onPress(listener);
+    ButtonListener first = mock(ButtonListener.class);
+    ButtonListener second = mock(ButtonListener.class);
+    ok.onPress(first);
+    ok.onPress(second);
 
     ok.accept(visitor);
+    ok.press();
 
-    verify(visitor).button(ok, "OK", List.of(listener));
+    verify(visitor).visitButton(ok);
+    assertEquals("OK", ok.caption());
+    InOrder order = inOrder(first, second);
+    order.verify(first).pressed(ok);
+    order.verify(second).pressed(ok);
   }
 
+
   @Test
-  void aLabelHandsItsCurrentTextToTheVisitor() {
+  void aLabelHandsItselfToTheVisitorAndShowsItsCurrentText() {
     Label message = toolkit.label("antes");
     message.text("después");
 
     message.accept(visitor);
 
-    verify(visitor).label("después");
+    verify(visitor).visitLabel(message);
+    assertEquals("después", message.text());
   }
 
   @Test
   void aWindowHandsItsPlacedLabelsToTheVisitor() {
     Window window = toolkit.window("Saludo");
     Point position = toolkit.point(1, 2);
-    window.add(toolkit.label("hola"), position);
+    Label hello = toolkit.label("hola");
+    window.add(hello, position);
 
     window.accept(visitor);
 
     InOrder order = inOrder(visitor);
     order.verify(visitor).child(position);
-    order.verify(visitor).label("hola");
+    order.verify(visitor).visitLabel(hello);
   }
 
   @Test

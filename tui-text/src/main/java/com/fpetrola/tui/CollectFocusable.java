@@ -19,12 +19,12 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void button(Button button, String caption, List<ButtonListener> listeners) {
+  public void visitButton(Button button) {
     into.add(button);
   }
 
   @Override
-  public void label(String text) {
+  public void visitLabel(Label label) {
   }
 
   @Override

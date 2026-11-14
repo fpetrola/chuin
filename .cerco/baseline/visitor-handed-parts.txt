@@ -1,2 +1,0 @@
-# cerco baseline v1 visitor-handed-parts: count, key
-1	tui-text/src/main/java/com/fpetrola/tui/TextButton.java|accept|visitor.button(this, caption, List.copyOf(listeners))

@@ -17,7 +17,17 @@ class TextButton implements Button {
   }
 
   @Override
+  public String caption() {
+    return caption;
+  }
+
+  @Override
+  public void press() {
+    List.copyOf(listeners).forEach(listener -> listener.pressed(this));
+  }
+
+  @Override
   public void accept(ViewVisitor visitor) {
-    visitor.button(this, caption, List.copyOf(listeners));
+    visitor.visitButton(this);
   }
 }

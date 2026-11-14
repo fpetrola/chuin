@@ -11,7 +11,9 @@ types:
   "com.fpetrola.tui.Button":
     kind: interface
     members:
+      - "caption(): String"
       - "onPress(ButtonListener): void"
+      - "press(): void"
   "com.fpetrola.tui.ButtonListener":
     kind: interface
     members:
@@ -72,6 +74,7 @@ types:
   "com.fpetrola.tui.Label":
     kind: interface
     members:
+      - "text(): String"
       - "text(String): void"
   "com.fpetrola.tui.ListBox":
     kind: interface
@@ -150,11 +153,11 @@ types:
   "com.fpetrola.tui.ViewVisitor":
     kind: interface
     members:
-      - "button(Button, String, List<ButtonListener>): void"
       - "child(Point): void"
-      - "label(String): void"
+      - "visitButton(Button): void"
       - "visitCheckBox(CheckBox): void"
       - "visitInputLine(InputLine): void"
+      - "visitLabel(Label): void"
       - "visitListBox(ListBox): void"
       - "visitRadioButtons(RadioButtons): void"
       - "window(String, Area): void"

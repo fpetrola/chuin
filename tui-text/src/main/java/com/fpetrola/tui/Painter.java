@@ -59,15 +59,16 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void button(Button button, String caption, List<ButtonListener> listeners) {
+  public void visitButton(Button button) {
+    String caption = button.caption();
     String look = seen == focused ? "[ " + caption + " ]" : "  " + caption + "  ";
     screen.write(column, row, look);
     next(look.length());
   }
 
   @Override
-  public void label(String text) {
-    screen.write(column, row, text);
+  public void visitLabel(Label label) {
+    screen.write(column, row, label.text());
   }
 
   @Override

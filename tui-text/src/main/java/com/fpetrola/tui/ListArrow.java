@@ -1,6 +1,5 @@
 package com.fpetrola.tui;
 
-import java.util.List;
 import java.util.function.BinaryOperator;
 
 /** What ↑ or ↓ does to the focused view: a list selects the item before or after, any other view lets the window move. Every focusable view must be overridden here, or ↑ and ↓ do nothing while it has the focus. */
@@ -14,7 +13,7 @@ class ListArrow implements ViewVisitor {
   }
 
   @Override
-  public void button(Button button, String caption, List<ButtonListener> listeners) {
+  public void visitButton(Button button) {
     otherwise.run();
   }
 
