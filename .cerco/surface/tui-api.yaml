@@ -109,12 +109,18 @@ types:
   "com.fpetrola.tui.Menu":
     kind: interface
     members:
+      - "acceptItems(MenuItemVisitor): void"
+      - "add(String, Runnable): void"
       - "title(): String"
   "com.fpetrola.tui.MenuBar":
     kind: interface
     members:
       - "acceptMenus(MenuVisitor): void"
       - "add(Menu): void"
+  "com.fpetrola.tui.MenuItemVisitor":
+    kind: interface
+    members:
+      - "item(String, Runnable): void"
   "com.fpetrola.tui.MenuVisitor":
     kind: interface
     members:

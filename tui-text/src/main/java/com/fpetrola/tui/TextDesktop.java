@@ -9,8 +9,6 @@ class TextDesktop implements Desktop {
   private final List<Window> opened = new ArrayList<>();
   /** The tint of a cell no window covers. */
   private static final char BARE = '.';
-  /** The tint of the menu bar's row. */
-  private static final char BAR_TINT = 'w';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
   /** F6 raises the bottom window over the others, as in Turbo Vision. */
@@ -18,8 +16,6 @@ class TextDesktop implements Desktop {
   /** Ctrl+W closes the top window. */
   private static final char CLOSE_WINDOW = 'w';
   private int focused;
-  /** The menu bar across the top row, once one is shown. */
-  private Optional<MenuBar> bar = Optional.empty();
   /** Where the focusable views of the top window were last drawn, in focus order. */
   private final List<Area> onTop = new ArrayList<>();
   /** The focus each window had when it last left the top, by its place in {@link #opened}. */
@@ -62,7 +58,7 @@ class TextDesktop implements Desktop {
 
   @Override
   public void show(MenuBar bar) {
-    this.bar = Optional.of(bar);
+    throw new UnsupportedOperationException("the menu bar is shown by the MenuDesktop around this one");
   }
 
   @Override
@@ -74,7 +70,6 @@ class TextDesktop implements Desktop {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
       opened.get(at).accept(new Painter(screen, at == last ? focused : UNFOCUSED, drawn));
     }
-    bar.ifPresent(shown -> drawBar(shown, screen));
   }
 
   /** Where among the opened windows is the topmost one covering this cell, or -1 when the cell is bare desktop. */
@@ -107,15 +102,6 @@ class TextDesktop implements Desktop {
     } else {
       otherwise.run();
     }
-  }
-
-  /** Draws the titles of the bar's menus across the top row, over whatever windows reach it. */
-  private void drawBar(MenuBar shown, Screen screen) {
-    StringBuilder titles = new StringBuilder();
-    shown.acceptMenus(menu -> titles.append(' ').append(menu.title()).append(' '));
-    int columns = screen.lines().getFirst().length();
-    screen.write(0, 0, titles + " ".repeat(Math.max(0, columns - titles.length())));
-    screen.paint(0, 0, columns, BAR_TINT);
   }
 
   /** Blanks every cell and takes its tint away, so nothing drawn before is left behind. */

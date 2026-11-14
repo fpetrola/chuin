@@ -266,4 +266,20 @@ class VisitingViewsTest {
     order.verify(menus).visitMenu(help);
     assertEquals("Archivo", file.title());
   }
+
+  @Test
+  void aMenuWalksItsItemsTopToBottomWithTheirCommands() {
+    Menu file = toolkit.menu("Archivo");
+    Runnable create = mock(Runnable.class);
+    Runnable quit = mock(Runnable.class);
+    MenuItemVisitor items = mock(MenuItemVisitor.class);
+    file.add("Nuevo", create);
+    file.add("Salir", quit);
+
+    file.acceptItems(items);
+
+    InOrder order = inOrder(items);
+    order.verify(items).item("Nuevo", create);
+    order.verify(items).item("Salir", quit);
+  }
 }
