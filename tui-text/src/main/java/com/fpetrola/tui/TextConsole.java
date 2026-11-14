@@ -8,7 +8,8 @@ import java.nio.charset.StandardCharsets;
 /** Runs a desktop on a console: turns the mouse on, shows the desktop at start and again after every key or click, and turns the mouse off when done. */
 class TextConsole implements Console {
   private static final String MOUSE_ON = "\u001b[?1000h\u001b[?1006h";
-  private static final String MOUSE_OFF = "\u001b[?1006l\u001b[?1000l";
+  /** Turns the mouse off and shows the cursor again, as the console was before. */
+  private static final String MOUSE_OFF = "\u001b[?1006l\u001b[?1000l\u001b[?25h";
   private final Keyboard keyboard;
   private final Terminal terminal;
   private final OutputStream out;

@@ -11,7 +11,8 @@ class RunningOnAConsoleTest {
   private static final String ESC = "\u001b[";
   /** Asks the terminal to report mouse presses and releases, in the SGR form. */
   private static final String MOUSE_ON = ESC + "?1000h" + ESC + "?1006h";
-  private static final String MOUSE_OFF = ESC + "?1006l" + ESC + "?1000l";
+  /** Turns the mouse off and shows the cursor again, as the console was before. */
+  private static final String MOUSE_OFF = ESC + "?1006l" + ESC + "?1000l" + ESC + "?25h";
   private static final String WINDOW = ESC + "0;30;47m";
   private static final String FRAME = ESC + "2J"
       + ESC + "1;1H" + WINDOW + "╔══ A ═══╗"

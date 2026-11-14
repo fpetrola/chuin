@@ -102,11 +102,12 @@ class Painter implements ViewVisitor {
     }
   }
 
-  /** Draws a cell of a button's shadow, but only on a cell that is blank or shadow already: it never covers what a view drew. */
+  /** Draws a cell of a button's shadow, but only on the window's own background, blank or shadowed already: it never covers what a view drew. */
   private void shade(int at, int line, char cell) {
     List<String> lines = inside.lines();
     boolean onScreen = line >= 0 && line < lines.size() && at >= 0 && at < lines.get(line).length();
-    if (onScreen && SHADE_COVERS.indexOf(lines.get(line).charAt(at)) >= 0) {
+    boolean free = onScreen && SHADE_COVERS.indexOf(lines.get(line).charAt(at)) >= 0;
+    if (free && inside.tints().get(line).charAt(at) == WINDOW_TINT) {
       inside.write(at, line, String.valueOf(cell));
     }
   }
