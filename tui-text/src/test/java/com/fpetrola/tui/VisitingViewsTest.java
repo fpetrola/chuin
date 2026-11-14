@@ -133,22 +133,25 @@ class VisitingViewsTest {
 
 
   @Test
-  void aGroupOfRadioButtonsHandsItsOptionsAndItsChoiceStopsAtBothEnds() {
-    List<String> options = List.of("a", "b", "c");
-    RadioButtons group = toolkit.radioButtons(options);
-    ArgumentCaptor<Runnable> previous = ArgumentCaptor.captor();
-    ArgumentCaptor<Runnable> next = ArgumentCaptor.captor();
+  void aGroupOfRadioButtonsHandsItselfToTheVisitorWalksItsOptionsAndItsChoiceStopsAtBothEnds() {
+    RadioButtons group = toolkit.radioButtons(List.of("a", "bb", "c"));
+    OptionVisitor options = mock(OptionVisitor.class);
 
     group.accept(visitor);
-    verify(visitor).radioButtons(eq(group), eq(options), eq(0), previous.capture(), next.capture());
-    previous.getValue().run();
-    next.getValue().run();
-    next.getValue().run();
-    next.getValue().run();
-    group.accept(visitor);
+    group.previous();
+    group.next();
+    group.next();
+    group.next();
+    group.acceptOptions(options);
 
-    verify(visitor).radioButtons(eq(group), eq(options), eq(2), any(), any());
+    verify(visitor).visitRadioButtons(group);
+    assertEquals(6, group.width());
+    InOrder order = inOrder(options);
+    order.verify(options).option("a");
+    order.verify(options).option("bb");
+    order.verify(options).chosenOption("c");
   }
+
 
   @Test
   void aListBoxWalksRowsPastItsLastItemAsNoItemAndHasNoBarWhenEveryItemFits() {

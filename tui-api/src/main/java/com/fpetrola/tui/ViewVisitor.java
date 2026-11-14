@@ -27,7 +27,6 @@ interface ViewVisitor {
   default void visitListBox(ListBox box) {
   }
 
-  /** A group of radio buttons hands over its options, the chosen one, and how to choose the one before or after. */
-  default void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+  default void visitRadioButtons(RadioButtons group) {
   }
 }

@@ -43,7 +43,7 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+  public void visitRadioButtons(RadioButtons group) {
     into.add(group);
   }
 }

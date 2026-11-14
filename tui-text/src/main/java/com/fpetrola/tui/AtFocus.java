@@ -54,9 +54,9 @@ class AtFocus implements ViewVisitor {
   }
 
   @Override
-  public void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+  public void visitRadioButtons(RadioButtons group) {
     if (seen++ == focused) {
-      action.radioButtons(group, options, chosen, previous, next);
+      action.visitRadioButtons(group);
     }
   }
 }

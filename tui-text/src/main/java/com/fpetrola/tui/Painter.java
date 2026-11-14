@@ -7,8 +7,6 @@ class Painter implements ViewVisitor {
   /** What a window casts one cell to its right and one cell below it. */
   private static final String SHADOW = "░";
   private static final char WINDOW_TINT = 'w';
-  /** The cells "(•) " takes before each option. */
-  private static final int RADIO_MARK = 4;
   private static final char FOCUS_TINT = 'f';
   private static final char SHADOW_TINT = 's';
   private final Screen screen;
@@ -108,20 +106,14 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitListBox(ListBox box) {
-    box.acceptRows(new ListRowPainter(screen, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn));
+    box.acceptRows(new RowPainter(screen, new TextArea(column, row, box.width() + 2, 1), seen++ == focused, drawn));
   }
 
 
 
   @Override
-  public void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
-    int width = options.stream().mapToInt(String::length).max().orElse(0) + RADIO_MARK;
-    for (int option = 0; option < options.size(); option++) {
-      screen.write(column, row + option, (option == chosen ? "(•) " : "( ) ") + options.get(option));
-    }
-    drawn.add(new TextArea(column, row, width, options.size()));
-    if (seen++ == focused) {
-      screen.paint(column, row + chosen, width, FOCUS_TINT);
-    }
+  public void visitRadioButtons(RadioButtons group) {
+    group.acceptOptions(new RowPainter(screen, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn));
   }
+
 }

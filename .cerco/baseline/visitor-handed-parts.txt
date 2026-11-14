@@ -1,0 +1,3 @@
+# cerco baseline v1 visitor-handed-parts: count, key
+1	tui-text/src/main/java/com/fpetrola/tui/TextButton.java|accept|visitor.button(this, caption, List.copyOf(listeners))
+1	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java|accept|visitor.checkBox(this, text, mark, this::toggle)

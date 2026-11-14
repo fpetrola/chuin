@@ -39,4 +39,5 @@ property-shuffle
 reached-through
 refiltered-by-type
 state-asked-across-methods
+visitor-handed-parts
 walked-from-outside

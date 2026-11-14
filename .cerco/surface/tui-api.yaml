@@ -97,6 +97,11 @@ types:
     members:
       - "checked(): void"
       - "unchecked(): void"
+  "com.fpetrola.tui.OptionVisitor":
+    kind: interface
+    members:
+      - "chosenOption(String): void"
+      - "option(String): void"
   "com.fpetrola.tui.Point":
     kind: interface
     members:
@@ -104,6 +109,11 @@ types:
       - "row(): int"
   "com.fpetrola.tui.RadioButtons":
     kind: interface
+    members:
+      - "acceptOptions(OptionVisitor): void"
+      - "next(): void"
+      - "previous(): void"
+      - "width(): int"
   "com.fpetrola.tui.Screen":
     kind: interface
     members:
@@ -144,9 +154,9 @@ types:
       - "checkBox(CheckBox, String, Mark, Runnable): void"
       - "child(Point): void"
       - "label(String): void"
-      - "radioButtons(RadioButtons, List<String>, int, Runnable, Runnable): void"
       - "visitInputLine(InputLine): void"
       - "visitListBox(ListBox): void"
+      - "visitRadioButtons(RadioButtons): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":
     kind: interface
