@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 class RunningOnAConsoleTest {
   private static final String ESC = "\u001b[";
+  /** Asks the terminal to report mouse presses and releases, in the SGR form. */
+  private static final String MOUSE_ON = ESC + "?1000h" + ESC + "?1006h";
+  private static final String MOUSE_OFF = ESC + "?1006l" + ESC + "?1000l";
   private static final String WINDOW = ESC + "0;30;47m";
   private static final String FRAME = ESC + "2J"
       + ESC + "1;1H" + WINDOW + "┌── A ───┐"
@@ -29,7 +32,7 @@ class RunningOnAConsoleTest {
     desktop.open(window);
     console.run(desktop);
 
-    assertEquals(FRAME + FRAME, shown.toString(StandardCharsets.UTF_8));
+    assertEquals(MOUSE_ON + FRAME + FRAME + MOUSE_OFF, shown.toString(StandardCharsets.UTF_8));
   }
 
   @Test
@@ -46,6 +49,6 @@ class RunningOnAConsoleTest {
     desktop.open(window);
     console.run(desktop);
 
-    assertEquals(FRAME + FRAME, shown.toString(StandardCharsets.UTF_8));
+    assertEquals(MOUSE_ON + FRAME + FRAME + MOUSE_OFF, shown.toString(StandardCharsets.UTF_8));
   }
 }

@@ -84,6 +84,6 @@ public class TextToolkit implements Toolkit {
 
   @Override
   public Console console(InputStream in, OutputStream out, Screen screen) {
-    return new TextConsole(keyboard(in), terminal(out), screen);
+    return new TextConsole(keyboard(in), terminal(out), out, screen);
   }
 }
