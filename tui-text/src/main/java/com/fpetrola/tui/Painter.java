@@ -5,6 +5,8 @@ import java.util.function.Consumer;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
 class Painter implements ViewVisitor {
+  /** What a window casts one cell to its right and one cell below it. */
+  private static final String SHADOW = "░";
   private final Screen screen;
   private final int focused;
   private int seen;
@@ -30,6 +32,10 @@ class Painter implements ViewVisitor {
       screen.write(area.column(), area.row() + line, middle);
     }
     screen.write(area.column(), area.row() + area.rows() - 1, "└" + "─".repeat(inner) + "┘");
+    for (int line = 1; line < area.rows(); line++) {
+      screen.write(area.column() + area.columns(), area.row() + line, SHADOW);
+    }
+    screen.write(area.column() + 1, area.row() + area.rows(), SHADOW.repeat(area.columns()));
     insideColumn = area.column() + 1;
     insideRow = area.row() + 1;
     column = insideColumn;
