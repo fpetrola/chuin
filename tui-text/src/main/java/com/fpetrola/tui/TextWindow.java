@@ -40,6 +40,11 @@ class TextWindow implements Window {
   }
 
   @Override
+  public void acceptViews(ViewVisitor visitor) {
+    acceptChildren((view, position) -> view.accept(visitor));
+  }
+
+  @Override
   public void acceptChildren(ChildVisitor visitor) {
     children.forEach(child -> child.accept(visitor));
   }

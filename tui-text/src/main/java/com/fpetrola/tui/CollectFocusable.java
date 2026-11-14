@@ -10,6 +10,12 @@ class CollectFocusable implements ViewVisitor {
     this.into = into;
   }
 
+  /** Goes into every view placed in the window. */
+  @Override
+  public void visitWindow(Window window) {
+    window.acceptViews(this);
+  }
+
   @Override
   public void visitButton(Button button) {
     into.add(button);

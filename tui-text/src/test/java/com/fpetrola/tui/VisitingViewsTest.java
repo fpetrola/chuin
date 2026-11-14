@@ -81,21 +81,32 @@ class VisitingViewsTest {
   }
 
   @Test
-  void byDefaultVisitingAWindowVisitsTheViewsPlacedInIt() {
+  void aWindowHasAVisitorVisitEachViewPlacedInItButOnlyWhenAsked() {
     Window window = toolkit.window("Saludo");
     Label hello = toolkit.label("hola");
-    List<Label> seen = new ArrayList<>();
+    Button ok = toolkit.button("OK");
+    List<View> seen = new ArrayList<>();
     window.add(hello, toolkit.point(0, 0));
-
-    window.accept(new ViewVisitor() {
+    window.add(ok, toolkit.point(0, 1));
+    ViewVisitor collecting = new ViewVisitor() {
       @Override
       public void visitLabel(Label label) {
         seen.add(label);
       }
-    });
 
-    assertEquals(List.of(hello), seen);
+      @Override
+      public void visitButton(Button button) {
+        seen.add(button);
+      }
+    };
+
+    window.accept(collecting);
+    assertEquals(List.of(), seen);
+
+    window.acceptViews(collecting);
+    assertEquals(List.of(hello, ok), seen);
   }
+
 
 
   @Test

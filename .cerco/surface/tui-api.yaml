@@ -169,6 +169,7 @@ types:
     members:
       - "accept(ViewVisitor): void"
       - "acceptChildren(ChildVisitor): void"
+      - "acceptViews(ViewVisitor): void"
       - "add(View, Point): void"
       - "area(): Area"
       - "place(Area): void"

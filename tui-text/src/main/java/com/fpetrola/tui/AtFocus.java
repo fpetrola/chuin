@@ -12,6 +12,12 @@ class AtFocus implements ViewVisitor {
     this.action = action;
   }
 
+  /** Goes into every view placed in the window. */
+  @Override
+  public void visitWindow(Window window) {
+    window.acceptViews(this);
+  }
+
   @Override
   public void visitButton(Button button) {
     if (seen++ == focused) {
