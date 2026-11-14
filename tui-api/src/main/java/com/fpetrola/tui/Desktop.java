@@ -6,6 +6,9 @@ public interface Desktop {
   /** Shows this menu bar across the top row, over the windows. */
   void show(MenuBar bar);
 
+  /** Shows this status line across the bottom row, over the windows, and binds the key of each entry to it. */
+  void show(StatusLine status);
+
   void type(Key key);
 
   /**

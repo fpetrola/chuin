@@ -35,6 +35,7 @@ types:
       - "draw(Screen): void"
       - "open(Window): void"
       - "show(MenuBar): void"
+      - "show(StatusLine): void"
       - "type(Key): void"
   "com.fpetrola.tui.InputLine":
     kind: interface
@@ -72,6 +73,7 @@ types:
     kind: interface
     members:
       - "enter(): Key"
+      - "escape(): Key"
       - "function(int): Key"
       - "space(): Key"
       - "tab(): Key"
@@ -150,6 +152,22 @@ types:
       - "showCursorAt(Point): void"
       - "tints(): List<String>"
       - "write(int, int, String): void"
+  "com.fpetrola.tui.StatusItem":
+    kind: interface
+    members:
+      - "key(): Key"
+      - "run(): void"
+      - "text(): String"
+  "com.fpetrola.tui.StatusLine":
+    kind: interface
+    members:
+      - "accept(StatusVisitor): void"
+      - "add(String, Key, Runnable): void"
+  "com.fpetrola.tui.StatusVisitor":
+    kind: interface
+    members:
+      - "visitStatusItem(StatusItem): void"
+      - "visitStatusLine(StatusLine): void"
   "com.fpetrola.tui.Terminal":
     kind: interface
     members:
@@ -173,6 +191,7 @@ types:
       - "point(int, int): Point"
       - "radioButtons(List<String>): RadioButtons"
       - "screen(int, int): Screen"
+      - "statusLine(): StatusLine"
       - "terminal(OutputStream): Terminal"
       - "window(String): Window"
   "com.fpetrola.tui.View":

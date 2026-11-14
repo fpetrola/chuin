@@ -6,6 +6,11 @@ class TextKeys implements Keys {
   private final Key space = KeyVisitor::space;
 
   @Override
+  public Key escape() {
+    return KeyVisitor::escape;
+  }
+
+  @Override
   public Key function(int number) {
     return visitor -> visitor.function(number);
   }

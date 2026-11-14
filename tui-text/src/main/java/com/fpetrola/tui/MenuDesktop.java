@@ -14,9 +14,15 @@ import java.util.Optional;
 class MenuDesktop implements Desktop {
   private static final int MENU_KEY = 10;
   private static final int NONE = -1;
+  /** The name Escape goes by, which an open menu keeps for itself whatever is bound to it. */
+  private static final String ESCAPE = "escape";
   private final Windows windows;
   private MenuBar bar = new TextMenuBar();
   private Desktop state = new Closed();
+  /** The status line across the bottom row, once one is shown. */
+  private Optional<StatusLine> status = Optional.empty();
+  /** How many rows the screen had when last drawn, so a click can tell the bottom row. */
+  private int rows;
   /** The command of each bound key, by the key's name. */
   private final Map<String, Runnable> bindings = new HashMap<>();
 
@@ -29,6 +35,18 @@ class MenuDesktop implements Desktop {
     windows.open(window);
   }
 
+  /** Shows the line across the bottom row and binds the key of each entry to it. */
+  @Override
+  public void show(StatusLine shown) {
+    status = Optional.of(shown);
+    shown.accept(new StatusVisitor() {
+      @Override
+      public void visitStatusItem(StatusItem item) {
+        bind(item.key(), item::run);
+      }
+    });
+  }
+
   @Override
   public void show(MenuBar shown) {
     bar = shown;
@@ -39,16 +57,20 @@ class MenuDesktop implements Desktop {
     bindings.put(name(key), command);
   }
 
-  /** A bound key runs its command and closes any open menu; any other key goes to the state. */
+  /** Each state decides whether a bound key runs: with a menu open, Escape closes the menu first. */
   @Override
   public void type(Key key) {
+    state.type(key);
+  }
+
+  /** Runs the command bound to this key, closing any open menu, and tells whether there was one. */
+  private boolean ranBound(Key key) {
     Runnable bound = bindings.get(name(key));
-    if (bound == null) {
-      state.type(key);
-    } else {
+    if (bound != null) {
       state = new Closed();
       bound.run();
     }
+    return bound != null;
   }
 
   private static String name(Key key) {
@@ -57,14 +79,23 @@ class MenuDesktop implements Desktop {
     return name.toString();
   }
 
+  /** A click on the status row runs the entry under it, or nothing, and closes any open menu; others go to the state. */
   @Override
   public void click(Point cell) {
-    state.click(cell);
+    boolean onStatus = status.isPresent() && cell.row() == rows - 1;
+    if (onStatus) {
+      state = new Closed();
+      status.get().accept(new StatusClick(cell.column()));
+    } else {
+      state.click(cell);
+    }
   }
 
   @Override
   public void draw(Screen screen) {
+    rows = screen.lines().size();
     windows.draw(screen);
+    status.ifPresent(line -> line.accept(new StatusPainter(screen)));
     state.draw(screen);
   }
 
@@ -116,6 +147,11 @@ class MenuDesktop implements Desktop {
     }
 
     @Override
+    public void show(StatusLine shown) {
+      MenuDesktop.this.show(shown);
+    }
+
+    @Override
     public void open(Window window) {
       MenuDesktop.this.open(window);
     }
@@ -130,7 +166,9 @@ class MenuDesktop implements Desktop {
   private class Closed extends MenuState {
     @Override
     public void type(Key key) {
-      key.accept(new ClosedKeys(key));
+      if (!ranBound(key)) {
+        key.accept(new ClosedKeys(key));
+      }
     }
 
     @Override
@@ -163,7 +201,11 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void type(Key key) {
-      key.accept(new OpenedKeys(this));
+      if (name(key).equals(ESCAPE)) {
+        state = new Closed();
+      } else if (!ranBound(key)) {
+        key.accept(new OpenedKeys(this));
+      }
     }
 
     @Override
@@ -201,62 +243,10 @@ class MenuDesktop implements Desktop {
     }
   }
 
-  /** Keys while no menu is open: F10 opens the first one when there is a bar, any other key goes to the windows. */
-  private class ClosedKeys implements KeyVisitor {
-    private final Key key;
-
+  /** Keys while no menu is open: F10 opens the first menu when there is a bar, Alt with a letter the menu that answers; any other key goes to the windows. */
+  private class ClosedKeys extends ToWindows {
     ClosedKeys(Key key) {
-      this.key = key;
-    }
-
-    @Override
-    public void enter() {
-      windows.type(key);
-    }
-
-    @Override
-    public void tab() {
-      windows.type(key);
-    }
-
-    @Override
-    public void space() {
-      windows.type(key);
-    }
-
-    @Override
-    public void character(char typed) {
-      windows.type(key);
-    }
-
-    @Override
-    public void backspace() {
-      windows.type(key);
-    }
-
-    @Override
-    public void up() {
-      windows.type(key);
-    }
-
-    @Override
-    public void down() {
-      windows.type(key);
-    }
-
-    @Override
-    public void left() {
-      windows.type(key);
-    }
-
-    @Override
-    public void right() {
-      windows.type(key);
-    }
-
-    @Override
-    public void control(char letter) {
-      windows.type(key);
+      super(key, windows);
     }
 
     @Override
@@ -264,18 +254,8 @@ class MenuDesktop implements Desktop {
       if (number == MENU_KEY && !menus().isEmpty()) {
         state = new Opened(0);
       } else {
-        windows.type(key);
+        super.function(number);
       }
-    }
-
-    @Override
-    public void other() {
-      windows.type(key);
-    }
-
-    @Override
-    public void escape() {
-      windows.type(key);
     }
 
     /** A menu whose title answers opens; otherwise the windows get it. */
@@ -283,7 +263,7 @@ class MenuDesktop implements Desktop {
     public void alt(char letter) {
       int menu = menuAnswering(letter);
       if (menu == NONE) {
-        windows.type(key);
+        super.alt(letter);
       } else {
         state = new Opened(menu);
       }

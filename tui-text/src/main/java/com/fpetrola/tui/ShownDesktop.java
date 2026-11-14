@@ -35,6 +35,11 @@ class ShownDesktop implements Desktop {
   }
 
   @Override
+  public void show(StatusLine status) {
+    desktop.show(status);
+  }
+
+  @Override
   public void show(MenuBar bar) {
     desktop.show(bar);
   }

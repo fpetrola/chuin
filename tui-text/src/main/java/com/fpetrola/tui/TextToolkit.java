@@ -84,6 +84,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public StatusLine statusLine() {
+    return new TextStatusLine();
+  }
+
+  @Override
   public MenuBar menuBar() {
     return new TextMenuBar();
   }

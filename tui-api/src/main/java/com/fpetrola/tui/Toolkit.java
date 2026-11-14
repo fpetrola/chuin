@@ -30,6 +30,9 @@ public interface Toolkit {
   /** An empty menu bar; menus are added to it left to right. */
   MenuBar menuBar();
 
+  /** An empty status line; entries are added to it left to right. */
+  StatusLine statusLine();
+
   Menu menu(String title);
 
   Keys keys();

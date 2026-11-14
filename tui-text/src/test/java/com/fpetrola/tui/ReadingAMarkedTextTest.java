@@ -42,4 +42,18 @@ class ReadingAMarkedTextTest {
     assertEquals(false, marked.answers('b'));
     assertEquals(false, plain.answers('b'));
   }
+
+  @Test
+  void aMarkOfSeveralLettersIsHighlightedWholeAndAnswersToNoLetter() {
+    Caption key = new TextCaption("~F3~ Laden");
+    Caption odd = new TextCaption("~Ab~c");
+
+    key.highlight(screen, 0, 0, 'h');
+
+    assertEquals("F3 Laden", key.shown());
+    assertEquals("hh........", screen.tints().getFirst());
+    assertEquals(false, key.answers('f'));
+    assertEquals(false, odd.answers('a'));
+    assertEquals(false, odd.answers('b'));
+  }
 }
