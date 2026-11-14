@@ -2,8 +2,12 @@ package com.fpetrola.tui;
 
 import java.util.List;
 
+/** Visits views without asking their type: each view hands over what it holds. */
 interface ViewVisitor {
-  void window(List<Button> buttons);
+  void window(String title, Area area);
 
-  void button(Button button, List<ButtonListener> listeners);
+  /** The next view visited sits at this position inside the window being visited. */
+  void child(Point position);
+
+  void button(Button button, String caption, List<ButtonListener> listeners);
 }

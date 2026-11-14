@@ -4,7 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 class TextButton implements Button {
+  private final String caption;
   private final List<ButtonListener> listeners = new ArrayList<>();
+
+  TextButton(String caption) {
+    this.caption = caption;
+  }
 
   @Override
   public void onPress(ButtonListener listener) {
@@ -13,6 +18,6 @@ class TextButton implements Button {
 
   @Override
   public void accept(ViewVisitor visitor) {
-    visitor.button(this, List.copyOf(listeners));
+    visitor.button(this, caption, List.copyOf(listeners));
   }
 }

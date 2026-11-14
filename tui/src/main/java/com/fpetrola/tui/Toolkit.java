@@ -8,4 +8,10 @@ public interface Toolkit {
   Button button(String caption);
 
   Keys keys();
+
+  Screen screen(int columns, int rows);
+
+  Area area(int column, int row, int columns, int rows);
+
+  Point point(int column, int row);
 }

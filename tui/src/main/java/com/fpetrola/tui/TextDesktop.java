@@ -15,4 +15,9 @@ class TextDesktop implements Desktop {
   public void type(Key key) {
     opened.stream().reduce((below, above) -> above).ifPresent(top -> top.accept(new KeyDispatch()));
   }
+
+  @Override
+  public void draw(Screen screen) {
+    opened.forEach(window -> window.accept(new Painter(screen)));
+  }
 }
