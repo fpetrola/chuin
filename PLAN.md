@@ -35,7 +35,7 @@ Referencia: la captura de Quadra (una aplicación Turbo Vision) que pasó Fernan
 
 Hay que decidir de nuevo cómo se guardan los tintes. Hoy son un `char` por celda (DECISIONS 14) con cuatro letras. Con unos doce tintes, las letras sueltas se vuelven difíciles de leer. Propongo dos cosas:
 - Seguir con un `char` por celda, porque los tests leen los tintes fila por fila, y documentar la paleta entera en `Screen#tints`. La alternativa es un tipo `Tint`, y hay que decidirlo antes de empezar.
-- Que la sombra sea un tinte que oscurece y no escribe nada: la terminal muestra el mismo carácter, pero con colores apagados.
+- Que la sombra sea un tinte que no escribe nada: la terminal muestra el mismo carácter, pero en gris sobre negro. No oscurece cada color por separado, sino que lo reemplaza por gris sobre negro, como hace Turbo Vision. Alcanza, y el test lo fija así.
 
 Tests:
 - El desktop vacío se llena de `░` con tinte de fondo.
@@ -60,7 +60,7 @@ Tests:
 - `ESC` seguido de una letra es Alt+letra.
 - `ESC [` sigue siendo el comienzo de una secuencia.
 
-Para distinguirlos, el teclado mira si hay más bytes disponibles después del `ESC` (`InputStream#available`). Si no hay, es un Esc suelto. Esc cierra el menú abierto.
+Para distinguirlos, el teclado espera un momento corto después del `ESC` (entre 25 y 100 ms, como Turbo Vision y ncurses). Si no llega nada, es un Esc suelto. `InputStream#available` no alcanza: por SSH, o en una terminal lenta, el `ESC` y el `[` pueden llegar en lecturas separadas. Un test con un stream que demora fija los dos casos. Esc cierra el menú abierto.
 
 Superficie: `KeyVisitor#escape()` y `KeyVisitor#alt(char)`. Va con propuesta.
 
@@ -74,6 +74,7 @@ Tests:
 - Con un menú abierto, la letra sola elige el ítem.
 - Alt+letra aprieta el botón de esa letra.
 - Alt+letra enfoca el campo asociado a una etiqueta.
+- `~~` se escribe como un `~` literal.
 
 Superficie: una etiqueta asociada a una vista, por ejemplo `Toolkit#label(String, View)`. Va con propuesta.
 
