@@ -69,6 +69,7 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
    - Con el menú cerrado, primero se busca un título de menú, que se abre. Si no hay, se busca en la ventana de arriba: un botón recibe el foco y se aprieta, y una etiqueta le pasa el foco a la vista de la que es etiqueta (`Toolkit#label(String, View)` y `Label#linked()`).
    - Con un menú abierto, la letra sola ejecuta el ítem que la tiene, y Alt+letra cambia de menú.
    - `Caption#answers(char)` dice si responde a una letra, sin mayúsculas ni minúsculas, y no entrega la letra (lo sugirió cerco-tdd-97).
+   - Alt+letra también alcanza un check box, que se enfoca y se tilda, y una opción de un grupo: el grupo se enfoca y esa opción queda elegida. Una letra resaltada es una promesa de que Alt+esa letra hace algo (lo pidió cerco-tdd-97). `ReachByLetter` tiene dos estados: mientras busca, delega en un visitor que busca, y cuando alcanza una vista pasa a uno que no hace nada. Así no pregunta un booleano en cada método.
    - Alt+o (minúscula, sin Shift) llega como `ESC o` y funciona. Solo Alt+Shift+O no está disponible, porque `ESC O` es el prefijo con que las terminales mandan F1 a F4. Como `answers` no distingue mayúsculas, una etiqueta `~O~rt:` responde a Alt+o (lo corrigió cerco-tdd-97).
    - Si un título de menú y un botón tienen la misma letra, gana el menú.
    - Con el menú cerrado, `MenuDesktop` ahora le pasa a las ventanas Esc y Alt+letra.
