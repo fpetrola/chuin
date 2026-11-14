@@ -105,7 +105,7 @@ Tests:
 
 Superficie: la etiqueta del grupo, y `Toolkit#comboBox(...)` o como se llame. Va con propuesta.
 
-### Paso 7: la demo como Quadra
+### Paso 7: la demo como Quadra — hecho
 
 Rearmar la demo para que se parezca a la captura:
 - Una ventana "Adreßdatenbank" con etiquetas, campos, dos grupos de opciones y una fila de botones.
