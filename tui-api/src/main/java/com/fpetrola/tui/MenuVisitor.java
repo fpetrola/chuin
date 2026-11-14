@@ -1,6 +1,13 @@
 package com.fpetrola.tui;
 
-/** Meets each menu of a menu bar. */
+/** Visits a menu bar: the bar first, then each menu left to right, each followed by its items top to bottom. */
 interface MenuVisitor {
-  void visitMenu(Menu menu);
+  default void visitMenuBar(MenuBar bar) {
+  }
+
+  default void visitMenu(Menu menu) {
+  }
+
+  default void visitMenuItem(MenuItem item) {
+  }
 }

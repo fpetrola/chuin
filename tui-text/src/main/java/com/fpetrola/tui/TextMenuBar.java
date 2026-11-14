@@ -12,7 +12,8 @@ class TextMenuBar implements MenuBar {
   }
 
   @Override
-  public void acceptMenus(MenuVisitor visitor) {
-    menus.forEach(visitor::visitMenu);
+  public void accept(MenuVisitor visitor) {
+    visitor.visitMenuBar(this);
+    menus.forEach(menu -> menu.accept(visitor));
   }
 }

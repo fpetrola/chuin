@@ -92,22 +92,27 @@ types:
   "com.fpetrola.tui.Menu":
     kind: interface
     members:
-      - "acceptItems(MenuItemVisitor): void"
+      - "accept(MenuVisitor): void"
       - "add(String, Runnable): void"
       - "title(): String"
+      - "width(): int"
   "com.fpetrola.tui.MenuBar":
     kind: interface
     members:
-      - "acceptMenus(MenuVisitor): void"
+      - "accept(MenuVisitor): void"
       - "add(Menu): void"
-  "com.fpetrola.tui.MenuItemVisitor":
+  "com.fpetrola.tui.MenuItem":
     kind: interface
     members:
-      - "item(String, Runnable): void"
+      - "menu(): Menu"
+      - "run(): void"
+      - "text(): String"
   "com.fpetrola.tui.MenuVisitor":
     kind: interface
     members:
       - "visitMenu(Menu): void"
+      - "visitMenuBar(MenuBar): void"
+      - "visitMenuItem(MenuItem): void"
   "com.fpetrola.tui.Option":
     kind: interface
     members:

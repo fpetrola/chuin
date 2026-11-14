@@ -2,6 +2,7 @@ package com.fpetrola.tui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A desktop with a menu bar over the windows of another. F10 opens the first menu; while a menu is open, every key
@@ -50,20 +51,35 @@ class MenuDesktop implements Desktop {
     windows.draw(screen);
     List<Menu> menus = menus();
     if (!menus.isEmpty()) {
-      new MenuPainter(menus, open, item).accept(screen);
+      Optional<Menu> shown = open == CLOSED ? Optional.empty() : Optional.of(menus.get(open));
+      bar.accept(new MenuPainter(screen, shown, item));
     }
   }
 
   private List<Menu> menus() {
     List<Menu> menus = new ArrayList<>();
-    bar.acceptMenus(menus::add);
+    bar.accept(new MenuVisitor() {
+      @Override
+      public void visitMenu(Menu menu) {
+        menus.add(menu);
+      }
+    });
     return menus;
   }
 
-  private List<Runnable> commands() {
-    List<Runnable> commands = new ArrayList<>();
-    menus().get(open).acceptItems((text, command) -> commands.add(command));
-    return commands;
+  /** The items of the open menu, top to bottom. */
+  private List<MenuItem> items() {
+    Menu shown = menus().get(open);
+    List<MenuItem> items = new ArrayList<>();
+    bar.accept(new MenuVisitor() {
+      @Override
+      public void visitMenuItem(MenuItem each) {
+        if (each.menu() == shown) {
+          items.add(each);
+        }
+      }
+    });
+    return items;
   }
 
   /** Keys while no menu is open: F10 opens the first one when there is a bar, any other key goes to the windows. */
@@ -144,11 +160,11 @@ class MenuDesktop implements Desktop {
   private class Opened implements KeyVisitor {
     @Override
     public void enter() {
-      List<Runnable> commands = commands();
+      List<MenuItem> items = items();
       int chosen = item;
       open = CLOSED;
-      if (chosen < commands.size()) {
-        commands.get(chosen).run();
+      if (chosen < items.size()) {
+        items.get(chosen).run();
       }
     }
 
@@ -159,7 +175,7 @@ class MenuDesktop implements Desktop {
 
     @Override
     public void down() {
-      item = Math.max(0, Math.min(commands().size() - 1, item + 1));
+      item = Math.max(0, Math.min(items().size() - 1, item + 1));
     }
 
     @Override

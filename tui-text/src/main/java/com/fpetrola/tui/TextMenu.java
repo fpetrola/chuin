@@ -2,12 +2,12 @@ package com.fpetrola.tui;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 class TextMenu implements Menu {
+  /** A blank on each side of an item and the two borders of the box. */
+  private static final int AROUND_ITEM = 4;
   private final String title;
-  /** Each item already paired with its command, top to bottom. */
-  private final List<Consumer<MenuItemVisitor>> items = new ArrayList<>();
+  private final List<MenuItem> items = new ArrayList<>();
 
   TextMenu(String title) {
     this.title = title;
@@ -20,11 +20,17 @@ class TextMenu implements Menu {
 
   @Override
   public void add(String item, Runnable command) {
-    items.add(visitor -> visitor.item(item, command));
+    items.add(new TextMenuItem(this, item, command));
   }
 
   @Override
-  public void acceptItems(MenuItemVisitor visitor) {
-    items.forEach(each -> each.accept(visitor));
+  public int width() {
+    return items.stream().mapToInt(item -> item.text().length()).max().orElse(0) + AROUND_ITEM;
+  }
+
+  @Override
+  public void accept(MenuVisitor visitor) {
+    visitor.visitMenu(this);
+    items.forEach(visitor::visitMenuItem);
   }
 }

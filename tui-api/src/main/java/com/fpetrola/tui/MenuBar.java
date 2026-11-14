@@ -4,6 +4,6 @@ package com.fpetrola.tui;
 public interface MenuBar {
   void add(Menu menu);
 
-  /** Walks its menus, left to right. */
-  void acceptMenus(MenuVisitor visitor);
+  /** Visits the bar, then each of its menus, which go on to their items. */
+  void accept(MenuVisitor visitor);
 }

@@ -7,6 +7,9 @@ public interface Menu {
   /** Adds an item at the bottom of the menu, with the command it runs when chosen. */
   void add(String item, Runnable command);
 
-  /** Walks its items, top to bottom. */
-  void acceptItems(MenuItemVisitor visitor);
+  /** How many cells across its open box takes: its longest item, a blank on each side and the two borders. */
+  int width();
+
+  /** Visits the menu, then each of its items, top to bottom. */
+  void accept(MenuVisitor visitor);
 }

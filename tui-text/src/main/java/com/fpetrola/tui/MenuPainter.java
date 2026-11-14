@@ -1,68 +1,67 @@
 package com.fpetrola.tui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
+import java.util.Optional;
 
-/** Draws the menu bar across the top row and, when a menu is open, its title highlighted and its box of items under it. */
-class MenuPainter implements MenuItemVisitor, Consumer<Screen> {
+/**
+ * Draws the menu bar across the top row and, when a menu is open, its title highlighted and its box of items under
+ * it, the selected item highlighted. Items of the menus that are not open are met and left alone.
+ */
+class MenuPainter implements MenuVisitor {
   private static final char BAR_TINT = 'w';
   private static final char CHOSEN_TINT = 'f';
-  /** The blank and the border on each side of an item. */
-  private static final int AROUND_ITEM = 4;
-  private final List<Menu> menus;
-  private final int open;
-  private final int item;
-  private final List<String> items = new ArrayList<>();
+  private final Screen screen;
+  private final Optional<Menu> open;
+  private final int selected;
+  /** Where the next title goes on the top row. */
+  private int column;
+  /** Where the open menu's box starts. */
+  private int boxColumn;
+  /** How many of the open menu's items were drawn. */
+  private int drawn;
 
-  private Screen screen;
-
-  MenuPainter(List<Menu> menus, int open, int item) {
-    this.menus = menus;
+  MenuPainter(Screen screen, Optional<Menu> open, int selected) {
+    this.screen = screen;
     this.open = open;
-    this.item = item;
+    this.selected = selected;
   }
 
   @Override
-  public void item(String text, Runnable command) {
-    items.add(text);
-  }
-
-  /** Paints the bar on this screen, then the open menu if there is one. */
-  @Override
-  public void accept(Screen target) {
-    screen = target;
+  public void visitMenuBar(MenuBar bar) {
     int columns = screen.lines().getFirst().length();
-    StringBuilder titles = new StringBuilder();
-    int titleAt = 0;
-    for (int at = 0; at < menus.size(); at++) {
-      titleAt = at == open ? titles.length() : titleAt;
-      titles.append(' ').append(menus.get(at).title()).append(' ');
-    }
-    screen.write(0, 0, titles + " ".repeat(Math.max(0, columns - titles.length())));
+    screen.write(0, 0, " ".repeat(columns));
     screen.paint(0, 0, columns, BAR_TINT);
-    if (open >= 0) {
-      Menu menu = menus.get(open);
-      screen.paint(titleAt, 0, menu.title().length() + 2, CHOSEN_TINT);
-      menu.acceptItems(this);
-      box(titleAt);
-    }
   }
 
-  private void box(int column) {
-    if (items.isEmpty()) {
+  @Override
+  public void visitMenu(Menu menu) {
+    String title = " " + menu.title() + " ";
+    screen.write(column, 0, title);
+    if (open.filter(menu::equals).isPresent()) {
+      screen.paint(column, 0, title.length(), CHOSEN_TINT);
+      boxColumn = column;
+    }
+    column += title.length();
+  }
+
+  @Override
+  public void visitMenuItem(MenuItem item) {
+    Menu menu = item.menu();
+    if (open.filter(menu::equals).isEmpty()) {
       return;
     }
-    int inner = items.stream().mapToInt(String::length).max().orElse(0) + AROUND_ITEM - 2;
-    screen.write(column, 1, "┌" + "─".repeat(inner) + "┐");
-    for (int at = 0; at < items.size(); at++) {
-      String text = items.get(at);
-      screen.write(column, 2 + at, "│ " + text + " ".repeat(inner - text.length() - 1) + "│");
+    int inner = menu.width() - 2;
+    int row = 2 + drawn;
+    if (drawn == 0) {
+      screen.write(boxColumn, 1, "┌" + "─".repeat(inner) + "┐");
+      screen.paint(boxColumn, 1, inner + 2, BAR_TINT);
     }
-    screen.write(column, 2 + items.size(), "└" + "─".repeat(inner) + "┘");
-    for (int row = 1; row < 3 + items.size(); row++) {
-      screen.paint(column, row, inner + 2, BAR_TINT);
+    screen.write(boxColumn, row, "│ " + item.text() + " ".repeat(inner - item.text().length() - 1) + "│");
+    screen.write(boxColumn, row + 1, "└" + "─".repeat(inner) + "┘");
+    screen.paint(boxColumn, row, inner + 2, BAR_TINT);
+    screen.paint(boxColumn, row + 1, inner + 2, BAR_TINT);
+    if (drawn == selected) {
+      screen.paint(boxColumn + 1, row, inner, CHOSEN_TINT);
     }
-    screen.paint(column + 1, 2 + item, inner, CHOSEN_TINT);
+    drawn++;
   }
 }

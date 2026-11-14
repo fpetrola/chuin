@@ -250,35 +250,34 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aMenuBarWalksItsMenusLeftToRightAndEachKnowsItsTitle() {
+  void aMenuBarIsVisitedThenEachMenuFollowedByItsItemsAndAnItemRunsItsCommand() {
     MenuBar bar = toolkit.menuBar();
     Menu file = toolkit.menu("Archivo");
     Menu help = toolkit.menu("Ayuda");
+    Runnable create = mock(Runnable.class);
     MenuVisitor menus = mock(MenuVisitor.class);
+    ArgumentCaptor<MenuItem> items = ArgumentCaptor.captor();
+    file.add("Nuevo", create);
+    file.add("Salir", () -> { });
+    help.add("Acerca", () -> { });
     bar.add(file);
     bar.add(help);
 
-    bar.acceptMenus(menus);
+    bar.accept(menus);
 
     InOrder order = inOrder(menus);
+    order.verify(menus).visitMenuBar(bar);
     order.verify(menus).visitMenu(file);
+    order.verify(menus, times(2)).visitMenuItem(items.capture());
     order.verify(menus).visitMenu(help);
+    order.verify(menus).visitMenuItem(items.capture());
+    assertEquals(List.of("Nuevo", "Salir", "Acerca"), items.getAllValues().stream().map(MenuItem::text).toList());
+    assertEquals(List.of(file, file, help), items.getAllValues().stream().map(MenuItem::menu).toList());
     assertEquals("Archivo", file.title());
+    assertEquals(9, file.width());
+    items.getAllValues().getFirst().run();
+    verify(create).run();
   }
 
-  @Test
-  void aMenuWalksItsItemsTopToBottomWithTheirCommands() {
-    Menu file = toolkit.menu("Archivo");
-    Runnable create = mock(Runnable.class);
-    Runnable quit = mock(Runnable.class);
-    MenuItemVisitor items = mock(MenuItemVisitor.class);
-    file.add("Nuevo", create);
-    file.add("Salir", quit);
 
-    file.acceptItems(items);
-
-    InOrder order = inOrder(items);
-    order.verify(items).item("Nuevo", create);
-    order.verify(items).item("Salir", quit);
-  }
 }
