@@ -25,7 +25,7 @@ class DemoTest {
       System.setOut(originalOut);
     }
 
-    String output = shown.toString(StandardCharsets.UTF_8);
+    String output = shown.toString(StandardCharsets.UTF_8).replaceAll("\u001b\\[[0-9;]*m", "");
     assertTrue(output.contains(" Demo ") && output.contains("[ No ]") && output.contains("Elegiste No") && output.contains("[X] Recordar") && output.contains("Nombre: Ana____________"), output);
   }
 }

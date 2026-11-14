@@ -9,10 +9,12 @@ import org.junit.jupiter.api.Test;
 
 class RunningOnAConsoleTest {
   private static final String ESC = "\u001b[";
+  private static final String WINDOW = ESC + "0;30;47m";
   private static final String FRAME = ESC + "2J"
-      + ESC + "1;1H" + "┌── A ───┐"
-      + ESC + "2;1H" + "│        │"
-      + ESC + "3;1H" + "└────────┘";
+      + ESC + "1;1H" + WINDOW + "┌── A ───┐"
+      + ESC + "2;1H" + WINDOW + "│        │"
+      + ESC + "3;1H" + WINDOW + "└────────┘"
+      + ESC + "0m";
 
   @Test
   void theDesktopIsShownOnceAtStartAndAgainAfterEveryKey() {
