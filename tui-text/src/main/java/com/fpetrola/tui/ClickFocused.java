@@ -10,7 +10,7 @@ class ClickFocused implements ViewVisitor {
   }
 
   @Override
-  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
-    toggle.run();
+  public void visitCheckBox(CheckBox box) {
+    box.toggle();
   }
 }

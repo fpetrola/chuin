@@ -11,7 +11,6 @@ import static org.mockito.Mockito.verify;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 
 class VisitingViewsTest {
@@ -71,24 +70,22 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aNewCheckBoxIsUncheckedAndTogglingItMakesItChecked() {
+  void aCheckBoxHandsItselfToTheVisitorStartsUncheckedAndTogglingItMakesItChecked() {
     CheckBox remember = toolkit.checkBox("Recordar");
-    ArgumentCaptor<Mark> mark = ArgumentCaptor.forClass(Mark.class);
-    ArgumentCaptor<Runnable> toggle = ArgumentCaptor.forClass(Runnable.class);
     MarkVisitor marks = mock(MarkVisitor.class);
 
     remember.accept(visitor);
-    verify(visitor).checkBox(eq(remember), eq("Recordar"), mark.capture(), toggle.capture());
-    mark.getValue().accept(marks);
-    toggle.getValue().run();
-    remember.accept(visitor);
-    verify(visitor, times(2)).checkBox(eq(remember), eq("Recordar"), mark.capture(), any(Runnable.class));
-    mark.getValue().accept(marks);
+    remember.acceptMark(marks);
+    remember.toggle();
+    remember.acceptMark(marks);
 
+    verify(visitor).visitCheckBox(remember);
+    assertEquals("Recordar", remember.text());
     InOrder order = inOrder(marks);
     order.verify(marks).unchecked();
     order.verify(marks).checked();
   }
+
 
   @Test
   void anInputLineHandsItselfToTheVisitorKeepsWhatIsTypedIntoItAndErasesTheLastOne() {

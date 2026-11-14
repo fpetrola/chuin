@@ -28,7 +28,7 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+  public void visitCheckBox(CheckBox box) {
     into.add(box);
   }
 

@@ -18,6 +18,10 @@ types:
       - "pressed(Button): void"
   "com.fpetrola.tui.CheckBox":
     kind: interface
+    members:
+      - "acceptMark(MarkVisitor): void"
+      - "text(): String"
+      - "toggle(): void"
   "com.fpetrola.tui.Console":
     kind: interface
     members:
@@ -88,10 +92,6 @@ types:
       - "noBar(): void"
       - "noItem(): void"
       - "selectedItem(String): void"
-  "com.fpetrola.tui.Mark":
-    kind: interface
-    members:
-      - "accept(MarkVisitor): void"
   "com.fpetrola.tui.MarkVisitor":
     kind: interface
     members:
@@ -151,9 +151,9 @@ types:
     kind: interface
     members:
       - "button(Button, String, List<ButtonListener>): void"
-      - "checkBox(CheckBox, String, Mark, Runnable): void"
       - "child(Point): void"
       - "label(String): void"
+      - "visitCheckBox(CheckBox): void"
       - "visitInputLine(InputLine): void"
       - "visitListBox(ListBox): void"
       - "visitRadioButtons(RadioButtons): void"

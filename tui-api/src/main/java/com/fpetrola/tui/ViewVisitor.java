@@ -17,8 +17,7 @@ interface ViewVisitor {
   default void label(String text) {
   }
 
-  /** A check box hands over its text, its mark, and how to toggle it. */
-  default void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+  default void visitCheckBox(CheckBox box) {
   }
 
   default void visitInputLine(InputLine line) {

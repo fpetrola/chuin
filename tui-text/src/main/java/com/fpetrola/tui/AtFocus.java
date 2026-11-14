@@ -33,9 +33,9 @@ class AtFocus implements ViewVisitor {
   }
 
   @Override
-  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+  public void visitCheckBox(CheckBox box) {
     if (seen++ == focused) {
-      action.checkBox(box, text, mark, toggle);
+      action.visitCheckBox(box);
     }
   }
 

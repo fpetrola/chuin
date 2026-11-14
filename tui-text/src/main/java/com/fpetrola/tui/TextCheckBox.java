@@ -1,21 +1,35 @@
 package com.fpetrola.tui;
 
+import java.util.function.Consumer;
+
 class TextCheckBox implements CheckBox {
-  private static final Mark CHECKED = MarkVisitor::checked;
-  private static final Mark UNCHECKED = MarkVisitor::unchecked;
+  private static final Consumer<MarkVisitor> CHECKED = MarkVisitor::checked;
+  private static final Consumer<MarkVisitor> UNCHECKED = MarkVisitor::unchecked;
   private final String text;
-  private Mark mark = UNCHECKED;
+  /** Whether it is checked, told without a flag: which method of a MarkVisitor it calls. */
+  private Consumer<MarkVisitor> mark = UNCHECKED;
 
   TextCheckBox(String text) {
     this.text = text;
   }
 
   @Override
-  public void accept(ViewVisitor visitor) {
-    visitor.checkBox(this, text, mark, this::toggle);
+  public String text() {
+    return text;
   }
 
-  private void toggle() {
+  @Override
+  public void acceptMark(MarkVisitor visitor) {
+    mark.accept(visitor);
+  }
+
+  @Override
+  public void accept(ViewVisitor visitor) {
+    visitor.visitCheckBox(this);
+  }
+
+  @Override
+  public void toggle() {
     mark.accept(new MarkVisitor() {
       @Override
       public void checked() {

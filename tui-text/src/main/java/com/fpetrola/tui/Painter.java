@@ -71,11 +71,12 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+  public void visitCheckBox(CheckBox box) {
+    String text = box.text();
     if (seen == focused) {
       screen.write(column - 1, row, ">");
     }
-    mark.accept(new MarkVisitor() {
+    box.acceptMark(new MarkVisitor() {
       @Override
       public void checked() {
         screen.write(column, row, "[X] " + text);
