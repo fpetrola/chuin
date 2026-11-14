@@ -29,14 +29,18 @@ class SwitchingWindowsTest {
     toolkit.keyboard(new ByteArrayInputStream(("\t" + F6).getBytes(StandardCharsets.UTF_8))).typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("║[ No ] ║ │  Si   │ ", screen.lines().get(1));
-    assertEquals("║       ║ │  Ya   │ ", screen.lines().get(2));
+    assertEquals("║  No  ▄║ │  Si  ▄│ ", screen.lines().get(1));
+    assertEquals("║ ▀▀▀▀▀▀║ │  Ya  ▄│ ", screen.lines().get(2));
+    assertEquals("ffffff", screen.tints().get(1).substring(1, 7));
+    assertEquals("bbbbbb", screen.tints().get(1).substring(11, 17));
 
     toolkit.keyboard(new ByteArrayInputStream(F6.getBytes(StandardCharsets.UTF_8))).typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("│  No   │ ║  Si   ║ ", screen.lines().get(1));
-    assertEquals("│       │ ║[ Ya ] ║ ", screen.lines().get(2));
+    assertEquals("│  No  ▄│ ║  Si  ▄║ ", screen.lines().get(1));
+    assertEquals("│ ▀▀▀▀▀▀│ ║  Ya  ▄║ ", screen.lines().get(2));
+    assertEquals("ffffff", screen.tints().get(2).substring(11, 17));
+    assertEquals("bbbbbb", screen.tints().get(1).substring(11, 17));
   }
 
   @Test
@@ -79,7 +83,8 @@ class SwitchingWindowsTest {
     press(toolkit, single, F6);
     single.draw(screen);
     assertEquals("╔═ A ══╗  ", screen.lines().get(0));
-    assertEquals("║[ Ok ]║  ", screen.lines().get(1));
+    assertEquals("║  Ok  ║  ", screen.lines().get(1));
+    assertEquals("ffffff", screen.tints().get(1).substring(1, 7));
   }
 
   private static void press(Toolkit toolkit, Desktop desktop, String typed) {
@@ -104,11 +109,14 @@ class SwitchingWindowsTest {
     press(toolkit, desktop, "\t");
     desktop.open(second);
     desktop.draw(screen);
-    assertEquals("│  No   │ ║[ Si ] ║ ", screen.lines().get(1));
+    assertEquals("│  No  ▄│ ║  Si  ▄║ ", screen.lines().get(1));
+    assertEquals("ffffff", screen.tints().get(1).substring(11, 17));
 
     press(toolkit, desktop, F6);
     desktop.draw(screen);
-    assertEquals("║  No   ║ │  Si   │ ", screen.lines().get(1));
-    assertEquals("║[ Ni ] ║ │  Ya   │ ", screen.lines().get(2));
+    assertEquals("║  No  ▄║ │  Si  ▄│ ", screen.lines().get(1));
+    assertEquals("║  Ni  ▄║ │  Ya  ▄│ ", screen.lines().get(2));
+    assertEquals("ffffff", screen.tints().get(2).substring(1, 7));
+    assertEquals("bbbbbb", screen.tints().get(1).substring(1, 7));
   }
 }

@@ -25,8 +25,8 @@ class ChangingALabelTest {
 
     assertEquals(List.of(
         "╔═══════ A ════════╗",
-        "║ [ OK ]           ║",
-        "║                  ║",
+        "║   OK  ▄          ║",
+        "║  ▀▀▀▀▀▀          ║",
         "║ ¡Presionado!     ║",
         "╚══════════════════╝"), screen.lines());
   }

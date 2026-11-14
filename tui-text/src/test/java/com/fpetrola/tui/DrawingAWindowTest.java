@@ -23,8 +23,8 @@ class DrawingAWindowTest {
     assertEquals(List.of(
         "╔═════ Saludo ═════╗",
         "║                  ║",
-        "║ [ OK ]           ║",
-        "║                  ║",
+        "║   OK  ▄          ║",
+        "║  ▀▀▀▀▀▀          ║",
         "╚══════════════════╝"), screen.lines());
   }
 }

@@ -55,7 +55,7 @@ class ChoosingARadioButtonTest {
 
     assertEquals("╔═══ R ════╗  ", screen.lines().get(1));
     assertEquals(List.of("wwwwwwwwwwwws.", "wffffffwwwwws."), screen.tints().subList(3, 5));
-    assertEquals("║( ) Si    ║  ", screen.lines().get(3));
+    assertEquals("║( ) Si▀   ║  ", screen.lines().get(3));
     assertEquals("║(•) No    ║  ", screen.lines().get(4));
   }
 
@@ -81,11 +81,11 @@ class ChoosingARadioButtonTest {
     desktop.open(window);
     press(toolkit, desktop, "\r\t");
     desktop.draw(screen);
-    assertEquals("║                  ║", screen.lines().get(5));
+    assertEquals("║ ▀▀▀▀▀▀           ║", screen.lines().get(5));
 
     press(toolkit, desktop, "\r");
     desktop.draw(screen);
-    assertEquals("║ok                ║", screen.lines().get(5));
+    assertEquals("║ok▀▀▀▀▀           ║", screen.lines().get(5));
   }
 
   private static void press(Toolkit toolkit, Desktop desktop, String typed) {

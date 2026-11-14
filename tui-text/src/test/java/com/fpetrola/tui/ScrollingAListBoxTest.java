@@ -150,10 +150,10 @@ class ScrollingAListBoxTest {
     desktop.type(keys.enter());
     desktop.type(keys.tab());
     desktop.draw(screen);
-    assertEquals("║                  ║", screen.lines().get(5));
+    assertEquals("║ ▀▀▀▀▀▀           ║", screen.lines().get(5));
 
     desktop.type(keys.enter());
     desktop.draw(screen);
-    assertEquals("║ok                ║", screen.lines().get(5));
+    assertEquals("║ok▀▀▀▀▀           ║", screen.lines().get(5));
   }
 }

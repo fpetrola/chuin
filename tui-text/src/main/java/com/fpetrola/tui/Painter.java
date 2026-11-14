@@ -6,6 +6,8 @@ import java.util.List;
 class Painter implements ViewVisitor {
   private static final char WINDOW_TINT = 'w';
   private static final char FOCUS_TINT = 'f';
+  /** The face of a button without the focus: black on green. */
+  private static final char BUTTON_TINT = 'b';
   /** The lines the frame of its window is drawn with: double for the window on top, single for the rest. */
   private final Border border;
   private final Screen screen;
@@ -50,10 +52,11 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitButton(Button button) {
-    String caption = button.caption();
-    String look = seen == focused ? "[ " + caption + " ]" : "  " + caption + "  ";
-    inside.write(column, row, look);
-    next(look.length());
+    String face = "  " + button.caption() + "  ";
+    inside.write(column, row, face + "▄");
+    inside.write(column + 1, row + 1, "▀".repeat(face.length()));
+    inside.paint(column, row, face.length(), BUTTON_TINT);
+    next(face.length());
   }
 
   @Override

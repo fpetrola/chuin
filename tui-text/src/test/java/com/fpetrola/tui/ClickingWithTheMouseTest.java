@@ -22,7 +22,8 @@ class ClickingWithTheMouseTest {
     click(0, 11, 1);
     desktop.draw(screen);
 
-    assertEquals("║  Ok    [ No ]      ║", screen.lines().get(1));
+    assertEquals("║  Ok  ▄   No  ▄     ║", screen.lines().get(1));
+    assertEquals("wbbbbbbwwffffffwwwwwww", screen.tints().get(1));
     assertEquals("║no                  ║", screen.lines().get(3));
   }
 
@@ -32,8 +33,9 @@ class ClickingWithTheMouseTest {
     click(0, 3, 2);
     desktop.draw(screen);
 
-    assertEquals("║  Ok      No        ║", screen.lines().get(1));
-    assertEquals("║[X] C" + " ".repeat(15) + "║", screen.lines().get(2));
+    assertEquals("║  Ok  ▄   No  ▄     ║", screen.lines().get(1));
+    assertEquals("wbbbbbbwwbbbbbbwwwwwww", screen.tints().get(1));
+    assertEquals("║[X] C▀▀  ▀▀▀▀▀▀     ║", screen.lines().get(2));
     assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(2));
   }
 
@@ -46,7 +48,8 @@ class ClickingWithTheMouseTest {
     type("\u001b[<0;12;2m");
     desktop.draw(screen);
 
-    assertEquals("║[ Ok ]    No        ║", screen.lines().get(1));
+    assertEquals("║  Ok  ▄   No  ▄     ║", screen.lines().get(1));
+    assertEquals("wffffffwwbbbbbbwwwwwww", screen.tints().get(1));
     assertEquals("║                    ║", screen.lines().get(3));
   }
 
@@ -66,7 +69,8 @@ class ClickingWithTheMouseTest {
     desktop.draw(screen);
 
     assertEquals("Ana", name.text());
-    assertEquals("║  Ok                ║", screen.lines().get(1));
+    assertEquals("║  Ok  ▄             ║", screen.lines().get(1));
+    assertEquals("bbbbbb", screen.tints().get(1).substring(1, 7));
   }
 
   @Test
@@ -92,8 +96,10 @@ class ClickingWithTheMouseTest {
     click(0, 3, 1);
     desktop.draw(screen);
 
-    assertEquals("║  No   ║ │  Si   │   ", screen.lines().get(1));
-    assertEquals("║[ Ni ] ║ │       │   ", screen.lines().get(2));
+    assertEquals("║  No  ▄║ │  Si  ▄│   ", screen.lines().get(1));
+    assertEquals("║  Ni  ▄║ │ ▀▀▀▀▀▀│   ", screen.lines().get(2));
+    assertEquals("ffffff", screen.tints().get(2).substring(1, 7));
+    assertEquals("bbbbbb", screen.tints().get(1).substring(11, 17));
   }
 
   @Test
@@ -102,7 +108,8 @@ class ClickingWithTheMouseTest {
     click(0, 0, 5);
     desktop.draw(screen);
 
-    assertEquals("║[ Ok ]    No        ║", screen.lines().get(1));
+    assertEquals("║  Ok  ▄   No  ▄     ║", screen.lines().get(1));
+    assertEquals("wffffffwwbbbbbbwwwwwww", screen.tints().get(1));
     assertEquals("║                    ║", screen.lines().get(3));
   }
 
@@ -120,7 +127,7 @@ class ClickingWithTheMouseTest {
     click(0, 1, 3);
     desktop.draw(screen);
     assertEquals(Optional.of("Verde"), colors.selected());
-    assertEquals("wwwwwwwwwwwwwwwwwwwwww", screen.tints().get(1));
+    assertEquals("wbbbbbbwwwwwwwwwwwwwww", screen.tints().get(1));
     assertEquals("wwwwwwwwwwwwwwwwwwwwww", screen.tints().get(2));
     assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(3));
 

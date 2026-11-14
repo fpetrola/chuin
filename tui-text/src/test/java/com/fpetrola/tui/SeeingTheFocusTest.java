@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class SeeingTheFocusTest {
   @Test
-  void onlyTheFocusedButtonIsDrawnBetweenBracketsAndTabMovesThem() {
+  void onlyTheFocusedButtonHasTheBrightFaceAndTabMovesIt() {
     Toolkit toolkit = new TextToolkit();
     Screen screen = toolkit.screen(20, 3);
     Desktop desktop = toolkit.desktop();
@@ -19,16 +19,19 @@ class SeeingTheFocusTest {
     desktop.open(window);
     desktop.draw(screen);
     List<String> beforeTab = screen.lines();
+    String tintsBeforeTab = screen.tints().get(1);
     desktop.type(toolkit.keys().tab());
     desktop.draw(screen);
 
     assertEquals(List.of(
         "╔═══════ A ════════╗",
-        "║ [ Sí ]   No      ║",
+        "║   Sí  ▄  No  ▄   ║",
         "╚══════════════════╝"), beforeTab);
+    assertEquals("wwffffffwbbbbbbwwwww", tintsBeforeTab);
     assertEquals(List.of(
         "╔═══════ A ════════╗",
-        "║   Sí   [ No ]    ║",
+        "║   Sí  ▄  No  ▄   ║",
         "╚══════════════════╝"), screen.lines());
+    assertEquals("wwbbbbbbwffffffwwwww", screen.tints().get(1));
   }
 }

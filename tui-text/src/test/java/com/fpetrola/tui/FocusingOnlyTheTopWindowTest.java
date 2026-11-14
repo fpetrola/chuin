@@ -21,7 +21,9 @@ class FocusingOnlyTheTopWindowTest {
     desktop.open(above);
     desktop.draw(screen);
 
-    assertEquals("│  No   │ ║[ Si ] ║ ", screen.lines().get(1));
-    assertEquals("wwwwwwwwwswffffffwws", screen.tints().get(1));
+    assertEquals("│  No  ▄│ ║  Si  ▄║ ", screen.lines().get(1));
+    assertEquals("bbbbbb", screen.tints().get(1).substring(1, 7));
+    assertEquals("ffffff", screen.tints().get(1).substring(11, 17));
+    assertEquals("wbbbbbbwwswffffffwws", screen.tints().get(1));
   }
 }
