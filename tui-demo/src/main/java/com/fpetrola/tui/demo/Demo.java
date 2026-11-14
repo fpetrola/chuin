@@ -6,6 +6,7 @@ import com.fpetrola.tui.Desktop;
 import com.fpetrola.tui.InputLine;
 import com.fpetrola.tui.Label;
 import com.fpetrola.tui.ListBox;
+import com.fpetrola.tui.Menu;
 import com.fpetrola.tui.MenuBar;
 import com.fpetrola.tui.TextToolkit;
 import com.fpetrola.tui.Toolkit;
@@ -41,11 +42,7 @@ public class Demo {
     window.add(colors, toolkit.point(10, 7));
     yes.onPress(pressed -> message.text("Hola " + name.text() + ", elegiste " + colors.selected().orElse("nada")));
     no.onPress(pressed -> message.text("Elegiste No"));
-    MenuBar bar = toolkit.menuBar();
-    bar.add(toolkit.menu("Archivo"));
-    bar.add(toolkit.menu("Ventana"));
-    bar.add(toolkit.menu("Ayuda"));
-    desktop.show(bar);
+    desktop.show(menus(toolkit, message));
     desktop.open(help(toolkit));
     desktop.open(window);
     toolkit.console(System.in, System.out, toolkit.screen(80, 24)).run(desktop);
@@ -54,18 +51,31 @@ public class Demo {
   /** A window that lists what each key does. */
   private static Window help(Toolkit toolkit) {
     Window help = toolkit.window("Ayuda");
-    help.place(toolkit.area(45, 4, 34, 9));
+    help.place(toolkit.area(45, 4, 34, 10));
     List<String> keys = List.of(
         "Tab      pasa al siguiente",
         "Enter    aprieta el botón",
         "Espacio  tilda o escribe",
         "Flechas  mueven ventana/lista",
         "F6       cambia de ventana",
+        "F10      abre el menú",
         "Ctrl+W   cierra la ventana",
         "Ctrl+Q   sale");
     for (int line = 0; line < keys.size(); line++) {
       help.add(toolkit.label(keys.get(line)), toolkit.point(1, line));
     }
     return help;
+  }
+
+  /** Archivo clears the message; Ayuda says what this is. */
+  private static MenuBar menus(Toolkit toolkit, Label message) {
+    MenuBar bar = toolkit.menuBar();
+    Menu file = toolkit.menu("Archivo");
+    Menu help = toolkit.menu("Ayuda");
+    file.add("Limpiar", () -> message.text(""));
+    help.add("Acerca de", () -> message.text("Una TUI hecha con cerco"));
+    bar.add(file);
+    bar.add(help);
+    return bar;
   }
 }
