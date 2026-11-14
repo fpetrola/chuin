@@ -1,8 +1,11 @@
 package com.fpetrola.tui;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public class TextToolkit implements Toolkit {
-  private final TextDesktop desktop = new TextDesktop();
   private final TextKeys keys = new TextKeys();
+  private final TextDesktop desktop = new TextDesktop(keys.enter());
 
   public TextToolkit() {
   }
@@ -40,5 +43,15 @@ public class TextToolkit implements Toolkit {
   @Override
   public Point point(int column, int row) {
     return new TextPoint(column, row);
+  }
+
+  @Override
+  public Terminal terminal(OutputStream out) {
+    return new AnsiTerminal(out);
+  }
+
+  @Override
+  public Keyboard keyboard(InputStream in) {
+    return new StreamKeyboard(in, keys.enter());
   }
 }

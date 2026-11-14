@@ -13,6 +13,8 @@ com.fpetrola.tui.Desktop#draw(Screen): void
 com.fpetrola.tui.Desktop#open(Window): void
 com.fpetrola.tui.Desktop#type(Key): void
 com.fpetrola.tui.Key interface
+com.fpetrola.tui.Keyboard interface
+com.fpetrola.tui.Keyboard#typeInto(Desktop): void
 com.fpetrola.tui.Keys interface
 com.fpetrola.tui.Keys#enter(): Key
 com.fpetrola.tui.Point interface
@@ -21,14 +23,18 @@ com.fpetrola.tui.Point#row(): int
 com.fpetrola.tui.Screen interface
 com.fpetrola.tui.Screen#lines(): List<String>
 com.fpetrola.tui.Screen#write(int, int, String): void
+com.fpetrola.tui.Terminal interface
+com.fpetrola.tui.Terminal#show(Screen): void
 com.fpetrola.tui.TextToolkit#<init>()
 com.fpetrola.tui.Toolkit interface
 com.fpetrola.tui.Toolkit#area(int, int, int, int): Area
 com.fpetrola.tui.Toolkit#button(String): Button
 com.fpetrola.tui.Toolkit#desktop(): Desktop
+com.fpetrola.tui.Toolkit#keyboard(InputStream): Keyboard
 com.fpetrola.tui.Toolkit#keys(): Keys
 com.fpetrola.tui.Toolkit#point(int, int): Point
 com.fpetrola.tui.Toolkit#screen(int, int): Screen
+com.fpetrola.tui.Toolkit#terminal(OutputStream): Terminal
 com.fpetrola.tui.Toolkit#window(String): Window
 com.fpetrola.tui.ViewVisitor interface
 com.fpetrola.tui.ViewVisitor#button(Button, String, List<ButtonListener>): void
