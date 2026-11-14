@@ -20,5 +20,8 @@ interface KeyVisitor {
 
   void right();
 
+  /** A function key, F1 to F12, by its number. */
+  void function(int number);
+
   void other();
 }

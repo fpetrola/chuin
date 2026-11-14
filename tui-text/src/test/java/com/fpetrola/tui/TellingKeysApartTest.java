@@ -71,4 +71,29 @@ class TellingKeysApartTest {
     order.verify(visitor).right();
     order.verify(visitor).left();
   }
+
+  @Test
+  void theKeyboardReadsTheFunctionKeysInBothWaysTerminalsSendThem() {
+    String f1 = "\u001bOP";
+    String f4 = "\u001bOS";
+    String alsoF1 = "\u001b[11~";
+    String f6 = "\u001b[17~";
+    String f12 = "\u001b[24~";
+    String noKey = "\u001b[16~";
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream((f1 + f4 + alsoF1 + f6 + f12 + noKey).getBytes(StandardCharsets.UTF_8)));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(6)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).function(1);
+    order.verify(visitor).function(4);
+    order.verify(visitor).function(1);
+    order.verify(visitor).function(6);
+    order.verify(visitor).function(12);
+    order.verify(visitor).other();
+  }
 }

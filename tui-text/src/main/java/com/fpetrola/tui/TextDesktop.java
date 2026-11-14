@@ -11,11 +11,19 @@ class TextDesktop implements Desktop {
   private static final char BARE = '.';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
+  /** F6 raises the bottom window over the others, as in Turbo Vision. */
+  private static final int NEXT_WINDOW = 6;
   private int focused;
+  /** The focus each window had when it last left the top, by its place in {@link #opened}. */
+  private final List<Integer> remembered = new ArrayList<>();
 
   @Override
   public void open(Window window) {
+    if (!opened.isEmpty()) {
+      remembered.set(opened.size() - 1, focused);
+    }
     opened.add(window);
+    remembered.add(0);
     focused = 0;
   }
 
@@ -111,6 +119,16 @@ class TextDesktop implements Desktop {
     @Override
     public void right() {
       move(1, 0);
+    }
+
+    @Override
+    public void function(int number) {
+      if (number == NEXT_WINDOW && opened.size() > 1) {
+        remembered.set(opened.size() - 1, focused);
+        opened.add(opened.remove(0));
+        remembered.add(remembered.remove(0));
+        focused = remembered.get(opened.size() - 1);
+      }
     }
 
     @Override

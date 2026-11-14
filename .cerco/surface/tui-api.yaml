@@ -41,6 +41,7 @@ types:
       - "character(char): void"
       - "down(): void"
       - "enter(): void"
+      - "function(int): void"
       - "left(): void"
       - "other(): void"
       - "right(): void"
