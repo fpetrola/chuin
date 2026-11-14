@@ -22,7 +22,7 @@ class TypingIntoAnInputLineTest {
     keyboard.typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("║ hola______       ║", screen.lines().get(1));
+    assertEquals("║ hola             ║", screen.lines().get(1));
   }
 
   @Test
@@ -42,6 +42,6 @@ class TypingIntoAnInputLineTest {
     keyboard.typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("║ abc_______       ║", screen.lines().get(1));
+    assertEquals("║ abc              ║", screen.lines().get(1));
   }
 }

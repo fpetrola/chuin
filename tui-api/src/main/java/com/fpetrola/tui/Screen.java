@@ -9,7 +9,7 @@ public interface Screen {
 
   /**
    * One string per row, one tint per cell: a letter of the palette that says how the cell is colored.
-   * The palette: {@code '.'} bare desktop, {@code 'w'} inside a window, {@code 'f'} the view with the focus, {@code 'b'} the face of a button,
+   * The palette: {@code '.'} bare desktop, {@code 'w'} inside a window, {@code 'f'} the view with the focus, {@code 'b'} the face of a button, {@code 'i'} the field of an input line,
    * {@code 's'} a window's shadow.
    */
   List<String> tints();

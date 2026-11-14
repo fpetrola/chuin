@@ -6,6 +6,8 @@ import java.util.List;
 class Painter implements ViewVisitor {
   private static final char WINDOW_TINT = 'w';
   private static final char FOCUS_TINT = 'f';
+  /** The field of an input line, focused or not: white on blue. */
+  private static final char FIELD_TINT = 'i';
   /** The face of a button without the focus: black on green. */
   private static final char BUTTON_TINT = 'b';
   /** The lines the frame of its window is drawn with: double for the window on top, single for the rest. */
@@ -86,8 +88,11 @@ class Painter implements ViewVisitor {
   @Override
   public void visitInputLine(InputLine line) {
     String text = line.text();
-    inside.write(column, row, text + "_".repeat(Math.max(0, line.width() - text.length())));
-    next(Math.max(line.width(), text.length()));
+    int cells = Math.max(line.width(), text.length());
+    inside.write(column, row, text + " ".repeat(cells - text.length()));
+    inside.paint(column, row, cells, FIELD_TINT);
+    drawn.add(new TextArea(column, row, cells, 1));
+    seen++;
   }
 
   /** Passes a focusable view of this many cells, tinting it when it is the focused one. */

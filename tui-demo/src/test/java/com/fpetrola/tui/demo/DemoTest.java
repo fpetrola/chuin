@@ -26,6 +26,6 @@ class DemoTest {
     }
 
     String output = shown.toString(StandardCharsets.UTF_8).replaceAll("\u001b\\[[0-9;]*m", "");
-    assertTrue(output.contains(" Demo ") && output.contains("Elegiste No") && output.contains("[X] Recordar") && output.contains("Nombre: Ana____________") && output.contains("Color:  Rojo     ▲") && output.contains("Verde    ■") && output.contains(" Archivo  Ayuda ") && output.contains("Una TUI hecha con cerco") && output.contains(" Ayuda ") && output.contains("Hola Ana, elegiste Azul") && output.contains("F6       cambia de ventana"), output);
+    assertTrue(output.contains(" Demo ") && output.contains("Elegiste No") && output.contains("[X] Recordar") && output.contains("Nombre: Ana            ") && output.contains("Color:  Rojo     ▲") && output.contains("Verde    ■") && output.contains(" Archivo  Ayuda ") && output.contains("Una TUI hecha con cerco") && output.contains(" Ayuda ") && output.contains("Hola Ana, elegiste Azul") && output.contains("F6       cambia de ventana"), output);
   }
 }
