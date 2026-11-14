@@ -8,6 +8,13 @@ public interface Desktop {
 
   void type(Key key);
 
+  /**
+   * Runs the command whenever this key is typed, whatever view has the focus or menu is open, closing the menu; the
+   * key then reaches nothing else. A binding wins over what the key did before, F10 and Tab included; binding a key
+   * again replaces its command.
+   */
+  void bind(Key key, Runnable command);
+
   /** The left mouse button pressed on this screen cell, counted from 0. */
   void click(Point cell);
 

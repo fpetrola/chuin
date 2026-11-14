@@ -32,6 +32,11 @@ class TextDesktop implements Desktop {
   }
 
   @Override
+  public void bind(Key key, Runnable command) {
+    throw new UnsupportedOperationException("keys are bound on the MenuDesktop around this one");
+  }
+
+  @Override
   public void type(Key key) {
     key.accept(new Typed());
   }

@@ -8,6 +8,8 @@ import java.util.function.IntConsumer;
  * the first label that answers passes the focus to the view it is the label of.
  */
 class ReachByLetter implements ViewVisitor {
+  /** Where a view that cannot take the focus here is among the focusable ones. */
+  private static final int NOWHERE = -1;
   private final char letter;
   private final List<View> focusable;
   private final IntConsumer focus;
@@ -30,9 +32,10 @@ class ReachByLetter implements ViewVisitor {
 
   @Override
   public void visitLabel(Label label) {
-    if (!reached && new TextCaption(label.text()).answers(letter) && label.linked().isPresent()) {
+    int linked = label.linked().map(focusable::indexOf).orElse(NOWHERE);
+    if (!reached && new TextCaption(label.text()).answers(letter) && linked != NOWHERE) {
       reached = true;
-      focus.accept(focusable.indexOf(label.linked().get()));
+      focus.accept(linked);
     }
   }
 }

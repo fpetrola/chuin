@@ -30,6 +30,7 @@ types:
   "com.fpetrola.tui.Desktop":
     kind: interface
     members:
+      - "bind(Key, Runnable): void"
       - "click(Point): void"
       - "draw(Screen): void"
       - "open(Window): void"
@@ -71,6 +72,7 @@ types:
     kind: interface
     members:
       - "enter(): Key"
+      - "function(int): Key"
       - "space(): Key"
       - "tab(): Key"
   "com.fpetrola.tui.Label":

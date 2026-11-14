@@ -96,6 +96,15 @@ class ReachingViewsByTheirLetterTest {
     assertEquals("whwwwwwfkffffffffwwwwwww", screen.tints().get(0));
   }
 
+  @Test
+  void aLabelLinkedToAViewThatCannotTakeTheFocusLeavesTheFocusWhereItWas() {
+    open();
+    window.add(toolkit.label("~X~yz", said), toolkit.point(0, 6));
+    press("\t\u001bx\r");
+
+    assertEquals("si", label());
+  }
+
   /** A bar with ~D~atei (~N~eu) and ~A~ktionen; a window with ~O~rt: linked to an input line, and buttons ~S~i and ~N~o. */
   private void open() {
     MenuBar bar = toolkit.menuBar();

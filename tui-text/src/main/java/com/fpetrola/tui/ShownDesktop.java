@@ -18,6 +18,11 @@ class ShownDesktop implements Desktop {
   }
 
   @Override
+  public void bind(Key key, Runnable command) {
+    desktop.bind(key, command);
+  }
+
+  @Override
   public void type(Key key) {
     desktop.type(key);
     draw(screen);

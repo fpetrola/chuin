@@ -1,7 +1,9 @@
 package com.fpetrola.tui;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -15,6 +17,8 @@ class MenuDesktop implements Desktop {
   private final Desktop windows;
   private MenuBar bar = new TextMenuBar();
   private Desktop state = new Closed();
+  /** The command of each bound key, by the key's name. */
+  private final Map<String, Runnable> bindings = new HashMap<>();
 
   MenuDesktop(Desktop windows) {
     this.windows = windows;
@@ -31,8 +35,26 @@ class MenuDesktop implements Desktop {
   }
 
   @Override
+  public void bind(Key key, Runnable command) {
+    bindings.put(name(key), command);
+  }
+
+  /** A bound key runs its command and closes any open menu; any other key goes to the state. */
+  @Override
   public void type(Key key) {
-    state.type(key);
+    Runnable bound = bindings.get(name(key));
+    if (bound == null) {
+      state.type(key);
+    } else {
+      state = new Closed();
+      bound.run();
+    }
+  }
+
+  private static String name(Key key) {
+    StringBuilder name = new StringBuilder();
+    key.accept(new KeyName(name));
+    return name.toString();
   }
 
   @Override
@@ -88,6 +110,11 @@ class MenuDesktop implements Desktop {
 
   /** The state every desktop call lands in; open and show are the menu desktop's, whatever the state. */
   private abstract class MenuState implements Desktop {
+    @Override
+    public void bind(Key key, Runnable command) {
+      MenuDesktop.this.bind(key, command);
+    }
+
     @Override
     public void open(Window window) {
       MenuDesktop.this.open(window);
