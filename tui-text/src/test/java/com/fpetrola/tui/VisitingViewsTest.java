@@ -105,4 +105,23 @@ class VisitingViewsTest {
 
     verify(visitor).inputLine(eq(name), eq("hi"), eq(10), any(), any());
   }
+
+  @Test
+  void aListBoxHandsItsItemsAndRowsAndItsSelectionStopsAtBothEnds() {
+    List<String> items = List.of("a", "b", "c", "d");
+    ListBox letters = toolkit.listBox(items, 3);
+    ArgumentCaptor<Runnable> previous = ArgumentCaptor.captor();
+    ArgumentCaptor<Runnable> next = ArgumentCaptor.captor();
+
+    letters.accept(visitor);
+    verify(visitor).listBox(eq(letters), eq(items), eq(3), eq(0), eq(0), previous.capture(), next.capture());
+    previous.getValue().run();
+    next.getValue().run();
+    next.getValue().run();
+    next.getValue().run();
+    next.getValue().run();
+    letters.accept(visitor);
+
+    verify(visitor).listBox(eq(letters), eq(items), eq(3), eq(1), eq(3), any(), any());
+  }
 }

@@ -99,4 +99,27 @@ class Painter implements ViewVisitor {
       screen.paint(column, row, cells, FOCUS_TINT);
     }
   }
+
+  @Override
+  public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
+    int width = items.stream().mapToInt(String::length).max().orElse(0);
+    for (int shown = 0; shown < rows; shown++) {
+      int at = top + shown;
+      String item = at < items.size() ? items.get(at) : "";
+      screen.write(column, row + shown, item + " ".repeat(width - item.length() + 1) + scrollBar(shown, rows, selected, items.size()));
+    }
+    if (seen++ == focused && !items.isEmpty()) {
+      screen.paint(column, row + selected - top, width, FOCUS_TINT);
+    }
+  }
+
+  /** The scroll bar cell of a row: ▲ on the first, ▼ on the last, the thumb ■ where the selection sits on the track ░ between; blank when every item fits. */
+  private static String scrollBar(int shown, int rows, int selected, int items) {
+    int track = rows - 2;
+    int thumb = 1 + selected * (track - 1) / Math.max(1, items - 1);
+    String onTrack = shown == thumb ? "■" : "░";
+    String ends = shown == rows - 1 ? "▼" : onTrack;
+    String cell = shown == 0 ? "▲" : ends;
+    return items > rows ? cell : " ";
+  }
 }

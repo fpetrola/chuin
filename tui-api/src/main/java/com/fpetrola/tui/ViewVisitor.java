@@ -19,4 +19,7 @@ interface ViewVisitor {
 
   /** An input line hands over its text, its width in cells, where typed characters go, and how to erase the last one. */
   void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase);
+
+  /** A list box hands over its items, how many rows it shows, the first one shown, the selected one, and how to select the one before or after. */
+  void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next);
 }

@@ -61,6 +61,8 @@ types:
     kind: interface
     members:
       - "text(String): void"
+  "com.fpetrola.tui.ListBox":
+    kind: interface
   "com.fpetrola.tui.Mark":
     kind: interface
     members:
@@ -98,6 +100,7 @@ types:
       - "keyboard(InputStream): Keyboard"
       - "keys(): Keys"
       - "label(String): Label"
+      - "listBox(List<String>, int): ListBox"
       - "point(int, int): Point"
       - "screen(int, int): Screen"
       - "terminal(OutputStream): Terminal"
@@ -114,6 +117,7 @@ types:
       - "child(Point): void"
       - "inputLine(InputLine, String, int, Consumer<Character>, Runnable): void"
       - "label(String): void"
+      - "listBox(ListBox, List<String>, int, int, int, Runnable, Runnable): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":
     kind: interface

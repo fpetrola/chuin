@@ -46,4 +46,11 @@ class AtFocus implements ViewVisitor {
       action.inputLine(line, text, width, type, erase);
     }
   }
+
+  @Override
+  public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
+    if (seen++ == focused) {
+      action.listBox(box, items, rows, top, selected, previous, next);
+    }
+  }
 }

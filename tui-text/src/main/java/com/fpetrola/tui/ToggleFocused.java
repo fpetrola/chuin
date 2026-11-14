@@ -31,4 +31,8 @@ class ToggleFocused implements ViewVisitor {
   public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
     type.accept(' ');
   }
+
+  @Override
+  public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
+  }
 }

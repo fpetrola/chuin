@@ -30,4 +30,8 @@ class EraseFocused implements ViewVisitor {
   public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
     erase.run();
   }
+
+  @Override
+  public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
+  }
 }

@@ -1,5 +1,7 @@
 package com.fpetrola.tui;
 
+import java.util.List;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -33,6 +35,11 @@ public class TextToolkit implements Toolkit {
   @Override
   public CheckBox checkBox(String text) {
     return new TextCheckBox(text);
+  }
+
+  @Override
+  public ListBox listBox(List<String> items, int rows) {
+    return new TextListBox(items, rows);
   }
 
   @Override

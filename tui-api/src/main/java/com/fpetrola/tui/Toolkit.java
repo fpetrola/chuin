@@ -1,5 +1,7 @@
 package com.fpetrola.tui;
 
+import java.util.List;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -15,6 +17,9 @@ public interface Toolkit {
   CheckBox checkBox(String text);
 
   InputLine inputLine(int width);
+
+  /** A list of items that shows this many rows at a time, with a scroll bar beside them. */
+  ListBox listBox(List<String> items, int rows);
 
   Keys keys();
 

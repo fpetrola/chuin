@@ -3,6 +3,7 @@ package com.fpetrola.tui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.BinaryOperator;
 
 class TextDesktop implements Desktop {
   private final List<Window> opened = new ArrayList<>();
@@ -25,6 +26,17 @@ class TextDesktop implements Desktop {
   public void draw(Screen screen) {
     clear(screen);
     opened.forEach(window -> window.accept(new Painter(screen, focused)));
+  }
+
+  /** Hands ↑ or ↓ to the focused view; when there is none, the window moves. */
+  private void arrow(BinaryOperator<Runnable> choose, Runnable otherwise) {
+    List<View> focusable = new ArrayList<>();
+    top().ifPresent(window -> window.accept(new CollectFocusable(focusable)));
+    if (focused < focusable.size()) {
+      focusable.get(focused).accept(new ListArrow(choose, otherwise));
+    } else {
+      otherwise.run();
+    }
   }
 
   /** Blanks every cell and takes its tint away, so nothing drawn before is left behind. */
@@ -78,12 +90,12 @@ class TextDesktop implements Desktop {
 
     @Override
     public void up() {
-      move(0, -1);
+      arrow((previous, next) -> previous, () -> move(0, -1));
     }
 
     @Override
     public void down() {
-      move(0, 1);
+      arrow((previous, next) -> next, () -> move(0, 1));
     }
 
     @Override
