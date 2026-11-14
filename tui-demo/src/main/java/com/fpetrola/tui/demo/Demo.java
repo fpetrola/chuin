@@ -5,9 +5,11 @@ import com.fpetrola.tui.CheckBox;
 import com.fpetrola.tui.Desktop;
 import com.fpetrola.tui.InputLine;
 import com.fpetrola.tui.Label;
+import com.fpetrola.tui.ListBox;
 import com.fpetrola.tui.TextToolkit;
 import com.fpetrola.tui.Toolkit;
 import com.fpetrola.tui.Window;
+import java.util.List;
 
 /** Runs a window with a button on this process's console. Launch it through demo.sh; Ctrl+Q quits. */
 public class Demo {
@@ -24,14 +26,18 @@ public class Demo {
     Label message = toolkit.label("Tab cambia, Enter elige");
     Label nameLabel = toolkit.label("Nombre:");
     InputLine name = toolkit.inputLine(15);
+    Label colorLabel = toolkit.label("Color:");
+    ListBox colors = toolkit.listBox(List.of("Rojo", "Verde", "Azul", "Amarillo", "Negro", "Blanco"), 4);
 
-    window.place(toolkit.area(2, 1, 30, 8));
+    window.place(toolkit.area(2, 1, 30, 13));
     window.add(yes, toolkit.point(7, 1));
     window.add(no, toolkit.point(15, 1));
     window.add(remember, toolkit.point(7, 3));
     window.add(message, toolkit.point(2, 4));
     window.add(nameLabel, toolkit.point(2, 5));
     window.add(name, toolkit.point(10, 5));
+    window.add(colorLabel, toolkit.point(2, 7));
+    window.add(colors, toolkit.point(10, 7));
     yes.onPress(pressed -> message.text("Elegiste Sí"));
     no.onPress(pressed -> message.text("Elegiste No"));
     desktop.open(window);
