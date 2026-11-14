@@ -72,4 +72,30 @@ class MovingAWindowWithArrowsTest {
     desktop.draw(screen);
     return screen.lines();
   }
+
+  @Test
+  void drawingAgainAfterAMoveLeavesNoTrailBehind() {
+    Toolkit toolkit = new TextToolkit();
+    Screen screen = toolkit.screen(10, 4);
+    Desktop desktop = toolkit.desktop();
+    Window window = toolkit.window("A");
+
+    window.place(toolkit.area(0, 0, 6, 3));
+    desktop.open(window);
+    desktop.draw(screen);
+    desktop.type(visitor -> visitor.right());
+    desktop.type(visitor -> visitor.right());
+    desktop.draw(screen);
+
+    assertEquals(List.of(
+        "  ┌ A ─┐  ",
+        "  │    │░ ",
+        "  └────┘░ ",
+        "   ░░░░░░ "), screen.lines());
+    assertEquals(List.of(
+        "..wwwwww..",
+        "..wwwwwws.",
+        "..wwwwwws.",
+        "...ssssss."), screen.tints());
+  }
 }

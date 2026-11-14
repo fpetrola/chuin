@@ -6,6 +6,8 @@ import java.util.Optional;
 
 class TextDesktop implements Desktop {
   private final List<Window> opened = new ArrayList<>();
+  /** The tint of a cell no window covers. */
+  private static final char BARE = '.';
   private int focused;
 
   @Override
@@ -21,7 +23,18 @@ class TextDesktop implements Desktop {
 
   @Override
   public void draw(Screen screen) {
+    clear(screen);
     opened.forEach(window -> window.accept(new Painter(screen, focused)));
+  }
+
+  /** Blanks every cell and takes its tint away, so nothing drawn before is left behind. */
+  private void clear(Screen screen) {
+    List<String> lines = screen.lines();
+    for (int row = 0; row < lines.size(); row++) {
+      int columns = lines.get(row).length();
+      screen.write(0, row, " ".repeat(columns));
+      screen.paint(0, row, columns, BARE);
+    }
   }
 
   private Optional<Window> top() {
