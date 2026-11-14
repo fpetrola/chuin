@@ -119,7 +119,7 @@ class TellingKeysApartTest {
   }
 
   @Test
-  void theKeyboardHandsALeftClickToTheDesktopAndIgnoresReleasesAndOtherButtons() {
+  void theKeyboardHandsALeftClickAndItsReleaseToTheDesktopAndIgnoresOtherButtons() {
     String leftPressed = "\u001b[<0;12;3M";
     String leftReleased = "\u001b[<0;12;3m";
     String rightPressed = "\u001b[<2;5;5M";
@@ -131,10 +131,11 @@ class TellingKeysApartTest {
 
     InOrder clicked = inOrder(desktop);
     clicked.verify(desktop).click(toolkit.point(11, 2));
-    clicked.verify(desktop, times(3)).type(typed.capture());
+    clicked.verify(desktop).release(toolkit.point(11, 2));
+    clicked.verify(desktop, times(2)).type(typed.capture());
     typed.getAllValues().forEach(key -> key.accept(visitor));
     InOrder order = inOrder(visitor);
-    order.verify(visitor, times(2)).other();
+    order.verify(visitor).other();
     order.verify(visitor).tab();
   }
 

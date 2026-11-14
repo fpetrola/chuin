@@ -20,6 +20,9 @@ class StreamKeyboard implements Keyboard {
   private static final int MOUSE_NUMBERS = 3;
   private static final int LEFT_BUTTON = 0;
   private static final int PRESSED = 'M';
+  private static final int RELEASED = 'm';
+  /** What a mouse report adds to the button when the pointer moved with it held. */
+  private static final int MOVED = 32;
   private static final int ESCAPE = 0x1B;
   /** No byte: nothing came, or nothing is put back. */
   private static final int NONE = -2;
@@ -96,7 +99,7 @@ class StreamKeyboard implements Keyboard {
     return first == '<' ? mouse() : desktop -> desktop.type(bracketed);
   }
 
-  /** ESC [ < button ; column ; row then M when pressed or m when released, counted from 1: only a left press is a click. */
+  /** ESC [ < button ; column ; row then M when pressed or moved and m when released, counted from 1: the left button's press is a click, its moves held a drag, its letting go a release. */
   private Consumer<Desktop> mouse() throws IOException {
     int[] numbers = new int[MOUSE_NUMBERS];
     int last = in.read();
@@ -106,9 +109,13 @@ class StreamKeyboard implements Keyboard {
       }
       last = at < MOUSE_NUMBERS - 1 ? in.read() : last;
     }
-    boolean click = numbers[0] == LEFT_BUTTON && last == PRESSED;
+    boolean left = numbers[0] == LEFT_BUTTON;
+    boolean dragged = numbers[0] == LEFT_BUTTON + MOVED && last == PRESSED;
     Point cell = new TextPoint(numbers[1] - 1, numbers[2] - 1);
-    return click ? desktop -> desktop.click(cell) : desktop -> desktop.type(KeyVisitor::other);
+    Consumer<Desktop> other = desktop -> desktop.type(KeyVisitor::other);
+    Consumer<Desktop> moved = dragged ? desktop -> desktop.drag(cell) : other;
+    Consumer<Desktop> released = left && last == RELEASED ? desktop -> desktop.release(cell) : moved;
+    return left && last == PRESSED ? desktop -> desktop.click(cell) : released;
   }
 
   /** ESC O P..S: how many terminals send F1 to F4. */

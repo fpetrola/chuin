@@ -88,6 +88,17 @@ class MenuDesktop implements Desktop {
 
   /** A click on the status row runs the entry under it, or nothing, and closes any open menu; others go to the state. */
   @Override
+  /** A drag goes to the windows, which take it only if the click that started it went to them. */
+  public void drag(Point cell) {
+    windows.drag(cell);
+  }
+
+  @Override
+  public void release(Point cell) {
+    windows.release(cell);
+  }
+
+  @Override
   public void click(Point cell) {
     boolean onStatus = status.isPresent() && cell.row() == rows - 1;
     if (onStatus) {
@@ -148,6 +159,16 @@ class MenuDesktop implements Desktop {
 
   /** The state every desktop call lands in; open and show are the menu desktop's, whatever the state. */
   private abstract class MenuState implements Desktop {
+    @Override
+    public void drag(Point cell) {
+      MenuDesktop.this.drag(cell);
+    }
+
+    @Override
+    public void release(Point cell) {
+      MenuDesktop.this.release(cell);
+    }
+
     @Override
     public void bind(Key key, Runnable command) {
       MenuDesktop.this.bind(key, command);

@@ -9,6 +9,12 @@ interface Windows {
   /** The left mouse button pressed on this screen cell, counted from 0. */
   void click(Point cell);
 
+  /** The pointer moved to this cell with the left button held since a click. */
+  void drag(Point cell);
+
+  /** The left button let go on this cell. */
+  void release(Point cell);
+
   void draw(Screen screen);
 
   /** Closes whatever is open in the windows, such as a drop down's list; when nothing is open, runs otherwise instead. */

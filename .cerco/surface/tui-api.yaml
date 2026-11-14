@@ -32,8 +32,10 @@ types:
     members:
       - "bind(Key, Runnable): void"
       - "click(Point): void"
+      - "drag(Point): void"
       - "draw(Screen): void"
       - "open(Window): void"
+      - "release(Point): void"
       - "show(MenuBar): void"
       - "show(StatusLine): void"
       - "type(Key): void"

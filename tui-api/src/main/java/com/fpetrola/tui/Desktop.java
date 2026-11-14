@@ -21,5 +21,11 @@ public interface Desktop {
   /** The left mouse button pressed on this screen cell, counted from 0. */
   void click(Point cell);
 
+  /** The pointer moved to this cell with the left button still held since a click. */
+  void drag(Point cell);
+
+  /** The left button let go on this cell. */
+  void release(Point cell);
+
   void draw(Screen screen);
 }

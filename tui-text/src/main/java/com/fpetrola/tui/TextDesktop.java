@@ -3,6 +3,7 @@ package com.fpetrola.tui;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.BinaryOperator;
 
 class TextDesktop implements Windows {
@@ -11,11 +12,14 @@ class TextDesktop implements Windows {
   private static final char BARE = '.';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
+  private static final Consumer<Point> NOT_DRAGGING = cell -> { };
   /** F6 raises the bottom window over the others, as in Turbo Vision. */
   private static final int NEXT_WINDOW = 6;
   /** Ctrl+W closes the top window. */
   private static final char CLOSE_WINDOW = 'w';
   private int focused;
+  /** What a drag does: move the window taken by its title, or nothing. */
+  private Consumer<Point> dragging = NOT_DRAGGING;
   /** Where the focusable views of the top window were last drawn, in focus order. */
   private final List<Area> onTop = new ArrayList<>();
   /** The focus each window had when it last left the top, by its place in {@link #opened}. */
@@ -40,8 +44,12 @@ class TextDesktop implements Windows {
   public void click(Point cell) {
     closeOpenList();
     int under = windowUnder(cell);
-    if (under >= 0 && under < opened.size() - 1) {
+    boolean below = under >= 0 && under < opened.size() - 1;
+    if (below) {
       raise(under);
+    }
+    top().filter(window -> under >= 0 && cell.row() == window.area().row()).ifPresent(window -> grab(window, cell));
+    if (below) {
       return;
     }
     for (int view = 0; view < onTop.size(); view++) {
@@ -55,6 +63,24 @@ class TextDesktop implements Windows {
         top().ifPresent(window -> window.accept(new AtFocus(clicked, click)));
       }
     }
+  }
+
+  @Override
+  public void drag(Point cell) {
+    dragging.accept(cell);
+  }
+
+  @Override
+  public void release(Point cell) {
+    dragging = NOT_DRAGGING;
+  }
+
+  /** Takes a window by its title at a cell: dragging moves it so that cell stays under the pointer. */
+  private void grab(Window window, Point held) {
+    Area from = window.area();
+    int across = held.column() - from.column();
+    int down = held.row() - from.row();
+    dragging = to -> window.place(new TextArea(to.column() - across, to.row() - down, from.columns(), from.rows()));
   }
 
   @Override

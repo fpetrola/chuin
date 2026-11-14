@@ -8,7 +8,7 @@ import java.io.OutputStream;
 
 public class TextToolkit implements Toolkit {
   private final TextKeys keys = new TextKeys();
-  private final Desktop desktop = new MenuDesktop(new TextDesktop());
+  private final Desktop desktop = new MenuDesktop(new PointerWindows(new TextDesktop()));
 
   public TextToolkit() {
   }

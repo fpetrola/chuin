@@ -29,6 +29,18 @@ class ShownDesktop implements Desktop {
   }
 
   @Override
+  public void drag(Point cell) {
+    desktop.drag(cell);
+    draw(screen);
+  }
+
+  @Override
+  public void release(Point cell) {
+    desktop.release(cell);
+    draw(screen);
+  }
+
+  @Override
   public void click(Point cell) {
     desktop.click(cell);
     draw(screen);

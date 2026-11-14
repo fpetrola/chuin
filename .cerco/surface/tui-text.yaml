@@ -33,7 +33,9 @@ types:
     kind: interface
     members:
       - "click(Point): void"
+      - "drag(Point): void"
       - "draw(Screen): void"
       - "escape(Runnable): void"
       - "open(Window): void"
+      - "release(Point): void"
       - "type(Key): void"
