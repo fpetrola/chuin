@@ -42,4 +42,9 @@ class CollectFocusable implements ViewVisitor {
   public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
     into.add(box);
   }
+
+  @Override
+  public void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+    into.add(group);
+  }
 }

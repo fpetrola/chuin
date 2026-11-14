@@ -29,4 +29,8 @@ interface ViewVisitor {
   /** A list box hands over its items, how many rows it shows, the first one shown, the selected one, and how to select the one before or after. */
   default void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
   }
+
+  /** A group of radio buttons hands over its options, the chosen one, and how to choose the one before or after. */
+  default void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+  }
 }

@@ -38,6 +38,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public RadioButtons radioButtons(List<String> options) {
+    return new TextRadioButtons(options);
+  }
+
+  @Override
   public ListBox listBox(List<String> items, int rows) {
     return new TextListBox(items, rows);
   }

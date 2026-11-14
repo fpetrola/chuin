@@ -8,6 +8,8 @@ class Painter implements ViewVisitor {
   /** What a window casts one cell to its right and one cell below it. */
   private static final String SHADOW = "░";
   private static final char WINDOW_TINT = 'w';
+  /** The cells "(•) " takes before each option. */
+  private static final int RADIO_MARK = 4;
   private static final char FOCUS_TINT = 'f';
   private static final char SHADOW_TINT = 's';
   private final Screen screen;
@@ -121,5 +123,16 @@ class Painter implements ViewVisitor {
     String ends = shown == rows - 1 ? "▼" : onTrack;
     String cell = shown == 0 ? "▲" : ends;
     return items > rows ? cell : " ";
+  }
+
+  @Override
+  public void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+    int width = options.stream().mapToInt(String::length).max().orElse(0) + RADIO_MARK;
+    for (int option = 0; option < options.size(); option++) {
+      screen.write(column, row + option, (option == chosen ? "(•) " : "( ) ") + options.get(option));
+    }
+    if (seen++ == focused) {
+      screen.paint(column, row + chosen, width, FOCUS_TINT);
+    }
   }
 }

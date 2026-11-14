@@ -33,4 +33,9 @@ class ListArrow implements ViewVisitor {
   public void listBox(ListBox box, List<String> items, int rows, int top, int selected, Runnable previous, Runnable next) {
     choose.apply(previous, next).run();
   }
+
+  @Override
+  public void radioButtons(RadioButtons group, List<String> options, int chosen, Runnable previous, Runnable next) {
+    choose.apply(previous, next).run();
+  }
 }

@@ -21,6 +21,9 @@ public interface Toolkit {
   /** A list of items that shows this many rows at a time, with a scroll bar beside them. */
   ListBox listBox(List<String> items, int rows);
 
+  /** A group of options, one per row, with the first one chosen. */
+  RadioButtons radioButtons(List<String> options);
+
   Keys keys();
 
   Screen screen(int columns, int rows);

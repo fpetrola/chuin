@@ -79,6 +79,8 @@ types:
     members:
       - "column(): int"
       - "row(): int"
+  "com.fpetrola.tui.RadioButtons":
+    kind: interface
   "com.fpetrola.tui.Screen":
     kind: interface
     members:
@@ -104,6 +106,7 @@ types:
       - "label(String): Label"
       - "listBox(List<String>, int): ListBox"
       - "point(int, int): Point"
+      - "radioButtons(List<String>): RadioButtons"
       - "screen(int, int): Screen"
       - "terminal(OutputStream): Terminal"
       - "window(String): Window"
@@ -120,6 +123,7 @@ types:
       - "inputLine(InputLine, String, int, Consumer<Character>, Runnable): void"
       - "label(String): void"
       - "listBox(ListBox, List<String>, int, int, int, Runnable, Runnable): void"
+      - "radioButtons(RadioButtons, List<String>, int, Runnable, Runnable): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":
     kind: interface

@@ -124,4 +124,22 @@ class VisitingViewsTest {
 
     verify(visitor).listBox(eq(letters), eq(items), eq(3), eq(1), eq(3), any(), any());
   }
+
+  @Test
+  void aGroupOfRadioButtonsHandsItsOptionsAndItsChoiceStopsAtBothEnds() {
+    List<String> options = List.of("a", "b", "c");
+    RadioButtons group = toolkit.radioButtons(options);
+    ArgumentCaptor<Runnable> previous = ArgumentCaptor.captor();
+    ArgumentCaptor<Runnable> next = ArgumentCaptor.captor();
+
+    group.accept(visitor);
+    verify(visitor).radioButtons(eq(group), eq(options), eq(0), previous.capture(), next.capture());
+    previous.getValue().run();
+    next.getValue().run();
+    next.getValue().run();
+    next.getValue().run();
+    group.accept(visitor);
+
+    verify(visitor).radioButtons(eq(group), eq(options), eq(2), any(), any());
+  }
 }
