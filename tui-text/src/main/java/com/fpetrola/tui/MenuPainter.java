@@ -17,8 +17,8 @@ class MenuPainter implements MenuVisitor {
   private final Screen screen;
   private final Optional<Menu> open;
   private final int selected;
-  /** Where the next title goes on the top row. */
-  private int column;
+  /** The top row, which takes the titles left to right. */
+  private final EntryRow titles;
   /** Where the open menu's box starts. */
   private int boxColumn;
   /** The open menu's items met so far; its box is drawn again, one row taller, with each. */
@@ -28,6 +28,7 @@ class MenuPainter implements MenuVisitor {
     this.screen = screen;
     this.open = open;
     this.selected = selected;
+    this.titles = new TextEntryRow(screen, 0);
   }
 
   @Override
@@ -39,16 +40,9 @@ class MenuPainter implements MenuVisitor {
 
   @Override
   public void visitMenu(Menu menu) {
-    Caption caption = new TextCaption(menu.title());
-    String title = " " + caption.shown() + " ";
     boolean chosen = open.filter(menu::equals).isPresent();
-    screen.write(column, 0, title);
-    if (chosen) {
-      screen.paint(column, 0, title.length(), CHOSEN_TINT);
-      boxColumn = column;
-    }
-    caption.highlight(screen, column + 1, 0, chosen ? CHOSEN_LETTER : LETTER);
-    column += title.length();
+    boxColumn = chosen ? titles.next() : boxColumn;
+    titles.put(new TextCaption(menu.title()), chosen ? CHOSEN_TINT : BAR_TINT, chosen ? CHOSEN_LETTER : LETTER);
   }
 
   @Override

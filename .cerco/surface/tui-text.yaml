@@ -17,6 +17,11 @@ types:
     kind: interface
     members:
       - "drawOn(Screen): void"
+  "com.fpetrola.tui.EntryRow":
+    kind: interface
+    members:
+      - "next(): int"
+      - "put(Caption, char, char): void"
   "com.fpetrola.tui.TextToolkit":
     members:
       - "<init>()"

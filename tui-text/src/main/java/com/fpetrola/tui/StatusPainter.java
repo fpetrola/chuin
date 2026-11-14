@@ -5,28 +5,24 @@ class StatusPainter implements StatusVisitor {
   private static final char TINT = 'w';
   private static final char LETTER = 'h';
   private final Screen screen;
-  private final int row;
-  /** What the entries drawn so far take across the row. */
-  private final StringBuilder drawn = new StringBuilder();
+  /** The bottom row, which takes the entries left to right. */
+  private final EntryRow entries;
 
   StatusPainter(Screen screen) {
     this.screen = screen;
-    this.row = screen.lines().size() - 1;
+    this.entries = new TextEntryRow(screen, screen.lines().size() - 1);
   }
 
   @Override
   public void visitStatusLine(StatusLine line) {
     int columns = screen.lines().getFirst().length();
+    int row = screen.lines().size() - 1;
     screen.write(0, row, " ".repeat(columns));
     screen.paint(0, row, columns, TINT);
   }
 
   @Override
   public void visitStatusItem(StatusItem item) {
-    Caption caption = new TextCaption(item.text());
-    String entry = " " + caption.shown() + " ";
-    screen.write(drawn.length(), row, entry);
-    caption.highlight(screen, drawn.length() + 1, row, LETTER);
-    drawn.append(entry);
+    entries.put(new TextCaption(item.text()), TINT, LETTER);
   }
 }
