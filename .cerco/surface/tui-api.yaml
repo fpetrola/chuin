@@ -32,7 +32,10 @@ types:
   "com.fpetrola.tui.InputLine":
     kind: interface
     members:
+      - "erase(): void"
       - "text(): String"
+      - "type(char): void"
+      - "width(): int"
   "com.fpetrola.tui.Key":
     kind: interface
     members:
@@ -125,10 +128,10 @@ types:
       - "button(Button, String, List<ButtonListener>): void"
       - "checkBox(CheckBox, String, Mark, Runnable): void"
       - "child(Point): void"
-      - "inputLine(InputLine, String, int, Consumer<Character>, Runnable): void"
       - "label(String): void"
       - "listBox(ListBox, List<String>, int, int, int, Runnable, Runnable): void"
       - "radioButtons(RadioButtons, List<String>, int, Runnable, Runnable): void"
+      - "visitInputLine(InputLine): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":
     kind: interface

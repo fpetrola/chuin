@@ -14,11 +14,22 @@ class TextInputLine implements InputLine {
   }
 
   @Override
-  public void accept(ViewVisitor visitor) {
-    visitor.inputLine(this, text.toString(), width, text::append, this::erase);
+  public int width() {
+    return width;
   }
 
-  private void erase() {
+  @Override
+  public void type(char typed) {
+    text.append(typed);
+  }
+
+  @Override
+  public void accept(ViewVisitor visitor) {
+    visitor.visitInputLine(this);
+  }
+
+  @Override
+  public void erase() {
     if (!text.isEmpty()) {
       text.setLength(text.length() - 1);
     }

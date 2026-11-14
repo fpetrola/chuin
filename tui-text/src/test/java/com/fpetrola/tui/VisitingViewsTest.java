@@ -1,5 +1,6 @@
 package com.fpetrola.tui;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
@@ -8,7 +9,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
-import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -90,20 +90,18 @@ class VisitingViewsTest {
   }
 
   @Test
-  void anInputLineHandsItsTextAndWidthKeepsWhatIsTypedIntoItAndErasesTheLastOne() {
+  void anInputLineHandsItselfToTheVisitorKeepsWhatIsTypedIntoItAndErasesTheLastOne() {
     InputLine name = toolkit.inputLine(10);
-    ArgumentCaptor<Consumer<Character>> type = ArgumentCaptor.captor();
-    ArgumentCaptor<Runnable> erase = ArgumentCaptor.captor();
 
     name.accept(visitor);
-    verify(visitor).inputLine(eq(name), eq(""), eq(10), type.capture(), erase.capture());
-    type.getValue().accept('h');
-    type.getValue().accept('i');
-    type.getValue().accept('x');
-    erase.getValue().run();
-    name.accept(visitor);
+    name.type('h');
+    name.type('i');
+    name.type('x');
+    name.erase();
 
-    verify(visitor).inputLine(eq(name), eq("hi"), eq(10), any(), any());
+    verify(visitor).visitInputLine(name);
+    assertEquals("hi", name.text());
+    assertEquals(10, name.width());
   }
 
   @Test

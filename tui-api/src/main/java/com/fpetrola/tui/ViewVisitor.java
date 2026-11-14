@@ -1,7 +1,6 @@
 package com.fpetrola.tui;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /** Visits views without asking their type: each view hands over what it holds. */
 interface ViewVisitor {
@@ -22,8 +21,7 @@ interface ViewVisitor {
   default void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
   }
 
-  /** An input line hands over its text, its width in cells, where typed characters go, and how to erase the last one. */
-  default void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
+  default void visitInputLine(InputLine line) {
   }
 
   /** A list box hands over its items, how many rows it shows, the first one shown, the selected one, and how to select the one before or after. */

@@ -1,6 +1,5 @@
 package com.fpetrola.tui;
 
-import java.util.function.Consumer;
 
 /** What Space does: toggles a check box, types a blank into an input line. Meant to run inside {@link AtFocus}, so it only ever sees the focused view. */
 class ToggleFocused implements ViewVisitor {
@@ -10,7 +9,7 @@ class ToggleFocused implements ViewVisitor {
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
-    type.accept(' ');
+  public void visitInputLine(InputLine line) {
+    line.type(' ');
   }
 }

@@ -1,7 +1,6 @@
 package com.fpetrola.tui;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /** Counts a window's focusable views and hands only the focused one to an action. */
 class AtFocus implements ViewVisitor {
@@ -41,9 +40,9 @@ class AtFocus implements ViewVisitor {
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
+  public void visitInputLine(InputLine line) {
     if (seen++ == focused) {
-      action.inputLine(line, text, width, type, erase);
+      action.visitInputLine(line);
     }
   }
 

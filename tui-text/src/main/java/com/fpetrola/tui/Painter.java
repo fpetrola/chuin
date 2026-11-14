@@ -1,7 +1,6 @@
 package com.fpetrola.tui;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
 class Painter implements ViewVisitor {
@@ -93,9 +92,10 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
-    screen.write(column, row, text + "_".repeat(Math.max(0, width - text.length())));
-    next(Math.max(width, text.length()));
+  public void visitInputLine(InputLine line) {
+    String text = line.text();
+    screen.write(column, row, text + "_".repeat(Math.max(0, line.width() - text.length())));
+    next(Math.max(line.width(), text.length()));
   }
 
   /** Passes a focusable view of this many cells, tinting it when it is the focused one. */

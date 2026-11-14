@@ -1,7 +1,6 @@
 package com.fpetrola.tui;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 /** Collects the views that can take the focus, in the order they are visited. */
 class CollectFocusable implements ViewVisitor {
@@ -34,7 +33,7 @@ class CollectFocusable implements ViewVisitor {
   }
 
   @Override
-  public void inputLine(InputLine line, String text, int width, Consumer<Character> type, Runnable erase) {
+  public void visitInputLine(InputLine line) {
     into.add(line);
   }
 
