@@ -12,6 +12,10 @@ class Painter implements ViewVisitor {
   private static final char FIELD_TINT = 'i';
   /** A highlighted letter on grey, and on the green face of a button. */
   private static final char LETTER = 'h';
+  /** Check boxes sit on cyan like groups of options, their marked letter yellow on cyan. */
+  private static final char GROUP_TINT = 'c';
+  private static final char GROUP_LETTER = 'q';
+  private static final String BOX = "[ ] ";
   private static final char BUTTON_LETTER = 'k';
   /** The face of a button without the focus: black on green. */
   private static final char BUTTON_TINT = 'b';
@@ -86,21 +90,26 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitCheckBox(CheckBox box) {
+    Caption caption = new TextCaption(box.text());
+    int cells = BOX.length() + caption.shown().length();
     if (seen == focused) {
       inside.write(column - 1, row, ">");
     }
-    next(("[ ] " + box.text()).length());
+    inside.paint(column, row, cells, GROUP_TINT);
+    next(cells);
+    caption.highlight(inside, column + BOX.length(), row, seen - 1 == focused ? BUTTON_LETTER : GROUP_LETTER);
   }
 
   @Override
   public void visitChecked(CheckBox box) {
-    inside.write(column, row, "[X] " + box.text());
+    inside.write(column, row, "[X] " + new TextCaption(box.text()).shown());
   }
 
   @Override
   public void visitUnchecked(CheckBox box) {
-    inside.write(column, row, "[ ] " + box.text());
+    inside.write(column, row, BOX + new TextCaption(box.text()).shown());
   }
+
 
 
   @Override

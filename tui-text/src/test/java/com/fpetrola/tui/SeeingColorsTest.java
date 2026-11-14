@@ -44,7 +44,7 @@ class SeeingColorsTest {
     assertEquals(List.of(
         "wwwwwwwwwwww..",
         "wwffffffwwwws.",
-        "wwwwwwwwwwwws.",
+        "wwcccccwwwwws.",
         "wwwwwwwwwwwws.",
         ".ssssssssssss."), screen.tints());
 

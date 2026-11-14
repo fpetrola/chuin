@@ -97,3 +97,4 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
    Propuesta 0050.
 59. **Colores a la Turbo C++.** La referencia es el Turbo Vision original, no Jexer (decisión de Fernando): diálogos gris claro con texto negro, barra y línea de estado grises con letras rojas, botones verdes con letra amarilla, y grupos de opciones y casillas sobre cian con letra amarilla.
    - La barra de menú, los menús y listas abiertos y la línea de estado tienen su propio tinte, `m`. Por ahora es el mismo gris que la ventana, pero ya se pueden ajustar por separado.
+   - Las opciones de un grupo muestran su letra marcada en amarillo sobre cian (`q`), y en amarillo sobre verde (`k`) cuando son la elegida con foco. Los check boxes se dibujan sobre cian, como los grupos, con su letra en `q`. El ancho de un grupo se cuenta sobre el texto visible.

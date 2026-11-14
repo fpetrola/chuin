@@ -18,7 +18,7 @@ class TextRadioButtons implements RadioButtons {
 
   @Override
   public int width() {
-    return MARK + options.stream().mapToInt(String::length).max().orElse(0);
+    return MARK + options.stream().mapToInt(option -> new TextCaption(option).shown().length()).max().orElse(0);
   }
 
   @Override

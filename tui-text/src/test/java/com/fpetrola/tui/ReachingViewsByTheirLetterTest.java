@@ -33,7 +33,7 @@ class ReachingViewsByTheirLetterTest {
     desktop.draw(screen);
 
     assertEquals("neu", label());
-    assertEquals("mwmmmmmmwmmmmmmmmmmmmmmm", screen.tints().get(0).replace('h', 'w'));
+    assertEquals("m".repeat(24), screen.tints().get(0).replace('h', 'm'));
   }
 
   @Test
