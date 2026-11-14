@@ -51,7 +51,7 @@ dd403bd876b6f92d0f14ee9bea53e1a6a1007ca9bf01fa2f80354d7b7c8d4f16	tui-text/src/ma
 decfb2191869651401d1f439a0a71c707cba00d877c791e6c332f3e24ae4b29f	tui-text/src/main/java/com/fpetrola/tui/TextRadioButtons.java
 80af953abe728075047288893e570cbd8fb0242b8e0e9a05c2f0d2c9b95ef2cb	tui-text/src/main/java/com/fpetrola/tui/TextScreen.java
 264c7f6faf6d2e962e5daf89ac8176514618884a4e9407e452016fced6dfd07c	tui-text/src/main/java/com/fpetrola/tui/TextToolkit.java
-c2bec612d91e227a226a64b98574af204c24861d6cbe39bdd9eacdfcb6fb7db1	tui-text/src/main/java/com/fpetrola/tui/TextWindow.java
+4322b046d88e995f9fc9a653ba95df4357f4966852dbf9ddb7c9e97a17952052	tui-text/src/main/java/com/fpetrola/tui/TextWindow.java
 54e630a45b903983c218e60ad412ee2d3e1034dcce443ed85954e5988c642e81	tui-text/src/main/java/com/fpetrola/tui/ToggleFocused.java
 27e26d26a4ed5133ce116a17d545173773bf1e28f0b64d5c5f147a8dc2451ba1	tui-text/src/main/java/com/fpetrola/tui/TypeIntoFocused.java
 6b6f8823db1c1c74d06a9127047e2435c4a91df9f6322cde7927d9a4558aa1ea	tui-text/src/test/java/com/fpetrola/tui/ChangingALabelTest.java

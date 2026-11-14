@@ -2,11 +2,12 @@ package com.fpetrola.tui;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 class TextWindow implements Window {
   private final String title;
-  private final List<View> views = new ArrayList<>();
-  private final List<Point> positions = new ArrayList<>();
+  /** Each view placed in it, already paired with its position, so the two can never fall out of step. */
+  private final List<Consumer<ChildVisitor>> children = new ArrayList<>();
   private Area area = new TextArea(0, 0, 0, 0);
 
   TextWindow(String title) {
@@ -15,8 +16,7 @@ class TextWindow implements Window {
 
   @Override
   public void add(View view, Point position) {
-    views.add(view);
-    positions.add(position);
+    children.add(visitor -> visitor.child(view, position));
   }
 
   @Override
@@ -41,8 +41,6 @@ class TextWindow implements Window {
 
   @Override
   public void acceptChildren(ChildVisitor visitor) {
-    for (int at = 0; at < views.size(); at++) {
-      visitor.child(views.get(at), positions.get(at));
-    }
+    children.forEach(child -> child.accept(visitor));
   }
 }
