@@ -25,6 +25,7 @@ types:
   "com.fpetrola.tui.Desktop":
     kind: interface
     members:
+      - "click(Point): void"
       - "draw(Screen): void"
       - "open(Window): void"
       - "type(Key): void"

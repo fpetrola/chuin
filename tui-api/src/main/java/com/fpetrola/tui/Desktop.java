@@ -5,5 +5,8 @@ public interface Desktop {
 
   void type(Key key);
 
+  /** The left mouse button pressed on this screen cell, counted from 0. */
+  void click(Point cell);
+
   void draw(Screen screen);
 }

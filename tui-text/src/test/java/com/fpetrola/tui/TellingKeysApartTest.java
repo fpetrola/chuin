@@ -114,4 +114,24 @@ class TellingKeysApartTest {
     order.verify(visitor).tab();
     order.verify(visitor).backspace();
   }
+
+  @Test
+  void theKeyboardHandsALeftClickToTheDesktopAndIgnoresReleasesAndOtherButtons() {
+    String leftPressed = "\u001b[<0;12;3M";
+    String leftReleased = "\u001b[<0;12;3m";
+    String rightPressed = "\u001b[<2;5;5M";
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream((leftPressed + leftReleased + rightPressed + "\t").getBytes(StandardCharsets.UTF_8)));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    InOrder clicked = inOrder(desktop);
+    clicked.verify(desktop).click(toolkit.point(11, 2));
+    clicked.verify(desktop, times(3)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor, times(2)).other();
+    order.verify(visitor).tab();
+  }
 }

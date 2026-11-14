@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 /** Reads bytes from a stream until it ends or Ctrl+Q is typed, and types each as a key. */
 class StreamKeyboard implements Keyboard {
@@ -14,6 +15,10 @@ class StreamKeyboard implements Keyboard {
   private static final int FIRST_ARROW = 'A';
   /** The ESC [ n ~ codes of F1 to F12, in order: xterm skips 16 and 22. */
   private static final int[] FUNCTION_CODES = {11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24};
+  /** A mouse report carries the button, the column and the row. */
+  private static final int MOUSE_NUMBERS = 3;
+  private static final int LEFT_BUTTON = 0;
+  private static final int PRESSED = 'M';
   private static final int ESCAPE = 0x1B;
   private static final int BACKSPACE = 0x7F;
   /** What several terminals send for backspace instead of 0x7F. */
@@ -35,7 +40,7 @@ class StreamKeyboard implements Keyboard {
   public void typeInto(Desktop desktop) {
     try {
       for (int read = in.read(); read != END && read != CONTROL_Q; read = in.read()) {
-        desktop.type(read == ESCAPE ? escaped() : keyFor(read));
+        heard(read).accept(desktop);
       }
     } catch (IOException e) {
       throw new UncheckedIOException(e);
@@ -43,10 +48,33 @@ class StreamKeyboard implements Keyboard {
   }
 
   /** Reads the rest of an escape sequence: ESC [ then digits and ';' up to a final byte. Only the arrows mean something. */
-  private Key escaped() throws IOException {
+  /** What a byte, and the bytes after it when it starts an escape sequence, does to the desktop. */
+  private Consumer<Desktop> heard(int read) throws IOException {
+    Key key = read == ESCAPE ? KeyVisitor::other : keyFor(read);
+    return read == ESCAPE ? escaped() : desktop -> desktop.type(key);
+  }
+
+  private Consumer<Desktop> escaped() throws IOException {
     int kind = in.read();
-    Key bracketed = kind == '[' ? bracketed() : KeyVisitor::other;
-    return kind == 'O' ? shifted(in.read()) : bracketed;
+    int first = kind == '[' ? in.read() : END;
+    Key key = kind == 'O' ? shifted(in.read()) : KeyVisitor::other;
+    Key bracketed = kind == '[' && first != '<' ? bracketed(first) : key;
+    return first == '<' ? mouse() : desktop -> desktop.type(bracketed);
+  }
+
+  /** ESC [ < button ; column ; row then M when pressed or m when released, counted from 1: only a left press is a click. */
+  private Consumer<Desktop> mouse() throws IOException {
+    int[] numbers = new int[MOUSE_NUMBERS];
+    int last = in.read();
+    for (int at = 0; at < MOUSE_NUMBERS; at++) {
+      for (; Character.isDigit(last); last = in.read()) {
+        numbers[at] = numbers[at] * 10 + last - '0';
+      }
+      last = at < MOUSE_NUMBERS - 1 ? in.read() : last;
+    }
+    boolean click = numbers[0] == LEFT_BUTTON && last == PRESSED;
+    Point cell = new TextPoint(numbers[1] - 1, numbers[2] - 1);
+    return click ? desktop -> desktop.click(cell) : desktop -> desktop.type(KeyVisitor::other);
   }
 
   /** ESC O P..S: how many terminals send F1 to F4. */
@@ -56,9 +84,9 @@ class StreamKeyboard implements Keyboard {
   }
 
   /** ESC [ then a number, maybe more numbers after ';', and a final byte: ~ for function keys, A..D for arrows. */
-  private Key bracketed() throws IOException {
+  private Key bracketed(int first) throws IOException {
     int number = 0;
-    int last = in.read();
+    int last = first;
     for (; Character.isDigit(last); last = in.read()) {
       number = number * 10 + last - '0';
     }

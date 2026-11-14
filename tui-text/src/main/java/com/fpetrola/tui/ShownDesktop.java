@@ -24,6 +24,12 @@ class ShownDesktop implements Desktop {
   }
 
   @Override
+  public void click(Point cell) {
+    desktop.click(cell);
+    draw(screen);
+  }
+
+  @Override
   public void draw(Screen target) {
     desktop.draw(target);
     terminal.show(target);

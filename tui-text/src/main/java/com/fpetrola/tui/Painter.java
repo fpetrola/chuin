@@ -14,15 +14,18 @@ class Painter implements ViewVisitor {
   private static final char SHADOW_TINT = 's';
   private final Screen screen;
   private final int focused;
+  /** Where each focusable view was drawn, in focus order, so a click can find what is under it. */
+  private final List<Area> drawn;
   private int seen;
   private int insideColumn;
   private int insideRow;
   private int column;
   private int row;
 
-  Painter(Screen screen, int focused) {
+  Painter(Screen screen, int focused, List<Area> drawn) {
     this.screen = screen;
     this.focused = focused;
+    this.drawn = drawn;
   }
 
   @Override
@@ -97,6 +100,7 @@ class Painter implements ViewVisitor {
 
   /** Passes a focusable view of this many cells, tinting it when it is the focused one. */
   private void next(int cells) {
+    drawn.add(new TextArea(column, row, cells, 1));
     if (seen++ == focused) {
       screen.paint(column, row, cells, FOCUS_TINT);
     }
@@ -110,6 +114,7 @@ class Painter implements ViewVisitor {
       String item = at < items.size() ? items.get(at) : "";
       screen.write(column, row + shown, item + " ".repeat(width - item.length() + 1) + scrollBar(shown, rows, selected, items.size()));
     }
+    drawn.add(new TextArea(column, row, width + 2, rows));
     if (seen++ == focused && !items.isEmpty()) {
       screen.paint(column, row + selected - top, width, FOCUS_TINT);
     }
@@ -131,6 +136,7 @@ class Painter implements ViewVisitor {
     for (int option = 0; option < options.size(); option++) {
       screen.write(column, row + option, (option == chosen ? "(•) " : "( ) ") + options.get(option));
     }
+    drawn.add(new TextArea(column, row, width, options.size()));
     if (seen++ == focused) {
       screen.paint(column, row + chosen, width, FOCUS_TINT);
     }

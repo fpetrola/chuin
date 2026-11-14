@@ -31,4 +31,21 @@ class RunningOnAConsoleTest {
 
     assertEquals(FRAME + FRAME, shown.toString(StandardCharsets.UTF_8));
   }
+
+  @Test
+  void theDesktopIsShownAgainAfterAClick() {
+    Toolkit toolkit = new TextToolkit();
+    String leftPressedOnTheTopLeftCell = "\u001b[<0;1;1M";
+    ByteArrayInputStream clicked = new ByteArrayInputStream(leftPressedOnTheTopLeftCell.getBytes(StandardCharsets.UTF_8));
+    ByteArrayOutputStream shown = new ByteArrayOutputStream();
+    Console console = toolkit.console(clicked, shown, toolkit.screen(10, 3));
+    Desktop desktop = toolkit.desktop();
+    Window window = toolkit.window("A");
+
+    window.place(toolkit.area(0, 0, 10, 3));
+    desktop.open(window);
+    console.run(desktop);
+
+    assertEquals(FRAME + FRAME, shown.toString(StandardCharsets.UTF_8));
+  }
 }

@@ -16,6 +16,8 @@ class TextDesktop implements Desktop {
   /** Ctrl+W closes the top window. */
   private static final char CLOSE_WINDOW = 'w';
   private int focused;
+  /** Where the focusable views of the top window were last drawn, in focus order. */
+  private final List<Area> onTop = new ArrayList<>();
   /** The focus each window had when it last left the top, by its place in {@link #opened}. */
   private final List<Integer> remembered = new ArrayList<>();
 
@@ -35,11 +37,27 @@ class TextDesktop implements Desktop {
   }
 
   @Override
+  public void click(Point cell) {
+    for (int view = 0; view < onTop.size(); view++) {
+      Area area = onTop.get(view);
+      boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
+      boolean down = cell.row() >= area.row() && cell.row() < area.row() + area.rows();
+      if (across && down) {
+        focused = view;
+        int clicked = view;
+        top().ifPresent(window -> window.accept(new AtFocus(clicked, new ClickFocused())));
+      }
+    }
+  }
+
+  @Override
   public void draw(Screen screen) {
     clear(screen);
+    onTop.clear();
     int last = opened.size() - 1;
     for (int at = 0; at < opened.size(); at++) {
-      opened.get(at).accept(new Painter(screen, at == last ? focused : UNFOCUSED));
+      List<Area> drawn = at == last ? onTop : new ArrayList<>();
+      opened.get(at).accept(new Painter(screen, at == last ? focused : UNFOCUSED, drawn));
     }
   }
 
