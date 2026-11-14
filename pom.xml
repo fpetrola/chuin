@@ -11,6 +11,7 @@
 
   <modules>
     <module>tui</module>
+    <module>tui-demo</module>
   </modules>
 
   <properties>
@@ -53,7 +54,7 @@
       <plugin>
         <groupId>com.fpetrola</groupId>
         <artifactId>cerco-maven-plugin</artifactId>
-        <version>0.22.1</version>
+        <version>0.22.2</version>
         <configuration>
           <sealedSurface>promises</sealedSurface>
         </configuration>
