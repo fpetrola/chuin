@@ -38,6 +38,11 @@ class TextDesktop implements Desktop {
 
   @Override
   public void click(Point cell) {
+    int under = windowUnder(cell);
+    if (under >= 0 && under < opened.size() - 1) {
+      raise(under);
+      return;
+    }
     for (int view = 0; view < onTop.size(); view++) {
       Area area = onTop.get(view);
       boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
@@ -60,6 +65,27 @@ class TextDesktop implements Desktop {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
       opened.get(at).accept(new Painter(screen, at == last ? focused : UNFOCUSED, drawn));
     }
+  }
+
+  /** Where among the opened windows is the topmost one covering this cell, or -1 when the cell is bare desktop. */
+  private int windowUnder(Point cell) {
+    for (int at = opened.size() - 1; at >= 0; at--) {
+      Area area = opened.get(at).area();
+      boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
+      boolean down = cell.row() >= area.row() && cell.row() < area.row() + area.rows();
+      if (across && down) {
+        return at;
+      }
+    }
+    return -1;
+  }
+
+  /** Brings the window at this place over the others, giving it back the focus it had and keeping the top's. */
+  private void raise(int at) {
+    remembered.set(opened.size() - 1, focused);
+    opened.add(opened.remove(at));
+    remembered.add(remembered.remove(at));
+    focused = remembered.get(opened.size() - 1);
   }
 
   /** Hands ↑ or ↓ to the focused view; when there is none, the window moves. */
@@ -154,10 +180,7 @@ class TextDesktop implements Desktop {
     @Override
     public void function(int number) {
       if (number == NEXT_WINDOW && opened.size() > 1) {
-        remembered.set(opened.size() - 1, focused);
-        opened.add(opened.remove(0));
-        remembered.add(remembered.remove(0));
-        focused = remembered.get(opened.size() - 1);
+        raise(0);
       }
     }
 

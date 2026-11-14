@@ -69,27 +69,42 @@ class ClickingWithTheMouseTest {
   }
 
   @Test
-  void aLeftClickOnAWindowBelowPressesNothingAndKeepsTheFocus() {
+  void aLeftClickOnAWindowBelowRaisesItWithItsOwnFocusAndPressesNothing() {
     Window below = toolkit.window("B");
     Button no = toolkit.button("No");
+    Button ni = toolkit.button("Ni");
     Button si = toolkit.button("Si");
     below.place(toolkit.area(0, 0, 9, 4));
     below.add(no, toolkit.point(0, 0));
+    below.add(ni, toolkit.point(0, 1));
     window.place(toolkit.area(10, 0, 9, 4));
     window.add(si, toolkit.point(0, 0));
     window.add(said, toolkit.point(0, 1));
     no.onPress(pressed -> said.text("no"));
+    ni.onPress(pressed -> said.text("ni"));
     si.onPress(pressed -> said.text("si"));
     desktop.open(below);
+    type("\t");
     desktop.open(window);
     desktop.draw(screen);
 
     click(0, 3, 1);
     desktop.draw(screen);
 
-    assertEquals("│  No   │░│[ Si ] │░  ", screen.lines().get(1));
-    assertEquals("│       │░│       │░  ", screen.lines().get(2));
+    assertEquals("│  No   │░│  Si   │░  ", screen.lines().get(1));
+    assertEquals("│[ Ni ] │░│       │░  ", screen.lines().get(2));
   }
+
+  @Test
+  void aLeftClickOnTheBareDesktopChangesNothing() {
+    open();
+    click(0, 0, 5);
+    desktop.draw(screen);
+
+    assertEquals("│[ Ok ]    No        │", screen.lines().get(1));
+    assertEquals("│                    │", screen.lines().get(3));
+  }
+
 
   @Test
   void aLeftClickOnARowOfAListOrOnAnOptionFocusesAndChoosesIt() {

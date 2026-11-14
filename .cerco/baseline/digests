@@ -42,7 +42,7 @@ c65b26c83ea2e4f192745de964201b7377dc446fb902f1fa819ba462433ded7e	tui-text/src/ma
 f14d49ec838b7cb3256a1b55860206145cba6f239daf1f7ebb5538dae5e1b1c2	tui-text/src/main/java/com/fpetrola/tui/TextButton.java
 2c75b7e0207063a4d152772c1d24b534601cae045fcb8b0b50c2b3dedfdb3281	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java
 8cba3df1b6a67d70587d700edae03bb9fbe606facfd9028582b09e7f4ba1233c	tui-text/src/main/java/com/fpetrola/tui/TextConsole.java
-f00dad7b2c7b1ef1887b8771fbd1c20254d4e4f61a636c120d924bc24556a455	tui-text/src/main/java/com/fpetrola/tui/TextDesktop.java
+ff5c8c9d7470ebaca43b07354c6b29c31252861ecef91eb3534dc2979b2445c6	tui-text/src/main/java/com/fpetrola/tui/TextDesktop.java
 ddf1fe21cd65212ba7cdc9cb72c0278c691c33f1c4100921054064d60e7f0cee	tui-text/src/main/java/com/fpetrola/tui/TextInputLine.java
 1ffcc9c3c7f3be9972b624fb255cd5cc5841fde28fe080fc4127326a17d6a535	tui-text/src/main/java/com/fpetrola/tui/TextKeys.java
 d23ef2d65e118bb0f8d6bc165a3b218f9795b206730b4a473b12896ba9a1c25a	tui-text/src/main/java/com/fpetrola/tui/TextLabel.java
@@ -56,7 +56,7 @@ c0612bbfd726292401d34353f5ad64686ba71b19d66101236904dfeafe327837	tui-text/src/ma
 27e26d26a4ed5133ce116a17d545173773bf1e28f0b64d5c5f147a8dc2451ba1	tui-text/src/main/java/com/fpetrola/tui/TypeIntoFocused.java
 6b6f8823db1c1c74d06a9127047e2435c4a91df9f6322cde7927d9a4558aa1ea	tui-text/src/test/java/com/fpetrola/tui/ChangingALabelTest.java
 27496d1a6616200a8e6bcd12c17283f51e22ac2b9d90dbede271e39a9443bf12	tui-text/src/test/java/com/fpetrola/tui/ChoosingARadioButtonTest.java
-fc72fb6fbc1a52a6314cc2d9fbfa5b55a6da0d2df2c50766cf6f223d8bdfeb56	tui-text/src/test/java/com/fpetrola/tui/ClickingWithTheMouseTest.java
+7e50ef06ec28ed38fd98aba08b56bd63eb215d4698ba63373657255af53cb593	tui-text/src/test/java/com/fpetrola/tui/ClickingWithTheMouseTest.java
 16847ff341ec102d669ae0594d3dc906187e031a30fec864176c6fb2f52a0424	tui-text/src/test/java/com/fpetrola/tui/ClosingAWindowTest.java
 0c1a66d2aa99f3d941782ae2aa37d0da5881140a87cc1f5fc8af149353c78e6a	tui-text/src/test/java/com/fpetrola/tui/DrawingAWindowTest.java
 be7cddff168233df2a6be70ea293c22b9dd97f51df7805e05eff5553003b8b23	tui-text/src/test/java/com/fpetrola/tui/ErasingWithBackspaceTest.java
