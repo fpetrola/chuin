@@ -40,7 +40,26 @@ public class Demo {
     window.add(colors, toolkit.point(10, 7));
     yes.onPress(pressed -> message.text("Elegiste Sí"));
     no.onPress(pressed -> message.text("Elegiste No"));
+    desktop.open(help(toolkit));
     desktop.open(window);
     toolkit.console(System.in, System.out, toolkit.screen(80, 24)).run(desktop);
+  }
+
+  /** A window that lists what each key does. */
+  private static Window help(Toolkit toolkit) {
+    Window help = toolkit.window("Ayuda");
+    help.place(toolkit.area(36, 4, 34, 9));
+    List<String> keys = List.of(
+        "Tab      pasa al siguiente",
+        "Enter    aprieta el botón",
+        "Espacio  tilda o escribe",
+        "Flechas  mueven ventana/lista",
+        "F6       cambia de ventana",
+        "Ctrl+W   cierra la ventana",
+        "Ctrl+Q   sale");
+    for (int line = 0; line < keys.size(); line++) {
+      help.add(toolkit.label(keys.get(line)), toolkit.point(1, line));
+    }
+    return help;
   }
 }
