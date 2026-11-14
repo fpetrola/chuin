@@ -3,6 +3,7 @@ package com.fpetrola.tui;
 import java.util.Arrays;
 import java.util.List;
 
+/** A grid of cells; whatever is written outside it is cut off. */
 class TextScreen implements Screen {
   private final char[][] cells;
 
@@ -18,6 +19,14 @@ class TextScreen implements Screen {
 
   @Override
   public void write(int column, int row, String text) {
-    System.arraycopy(text.toCharArray(), 0, cells[row], column, text.length());
+    if (row < 0 || row >= cells.length) {
+      return;
+    }
+    char[] line = cells[row];
+    int from = Math.max(0, -column);
+    int to = Math.min(text.length(), line.length - column);
+    for (int at = from; at < to; at++) {
+      line[column + at] = text.charAt(at);
+    }
   }
 }

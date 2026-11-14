@@ -28,6 +28,11 @@ class TextDesktop implements Desktop {
     return opened.stream().reduce((below, above) -> above);
   }
 
+  /** Moves the top window by the given cells, wherever that leaves it: the screen cuts what falls outside. */
+  private void move(int columns, int rows) {
+    top().ifPresent(window -> window.accept(new MoveWindow(window, columns, rows)));
+  }
+
   /** What each key does to the desktop: Tab moves the focus, Enter presses the focused button, Space toggles the focused check box, a letter goes into the focused input line. */
   private class Typed implements KeyVisitor {
     @Override
@@ -56,6 +61,26 @@ class TextDesktop implements Desktop {
     @Override
     public void backspace() {
       top().ifPresent(window -> window.accept(new AtFocus(focused, new EraseFocused())));
+    }
+
+    @Override
+    public void up() {
+      move(0, -1);
+    }
+
+    @Override
+    public void down() {
+      move(0, 1);
+    }
+
+    @Override
+    public void left() {
+      move(-1, 0);
+    }
+
+    @Override
+    public void right() {
+      move(1, 0);
     }
 
     @Override

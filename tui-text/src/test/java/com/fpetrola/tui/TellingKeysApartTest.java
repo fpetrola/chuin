@@ -54,4 +54,21 @@ class TellingKeysApartTest {
     order.verify(visitor).backspace();
     order.verify(visitor).other();
   }
+
+  @Test
+  void theKeyboardReadsTheArrowKeysFromTheirEscapeSequences() {
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream("\u001b[A\u001b[B\u001b[C\u001b[D".getBytes(StandardCharsets.UTF_8)));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(4)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).up();
+    order.verify(visitor).down();
+    order.verify(visitor).right();
+    order.verify(visitor).left();
+  }
 }

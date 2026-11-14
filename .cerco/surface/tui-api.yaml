@@ -39,10 +39,14 @@ types:
     members:
       - "backspace(): void"
       - "character(char): void"
+      - "down(): void"
       - "enter(): void"
+      - "left(): void"
       - "other(): void"
+      - "right(): void"
       - "space(): void"
       - "tab(): void"
+      - "up(): void"
   "com.fpetrola.tui.Keyboard":
     kind: interface
     members:
