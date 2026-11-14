@@ -18,9 +18,9 @@ class SeeingAWindowShadowTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌─ A ──┐    ",
-        "│      │    ",
-        "└──────┘    ",
+        "╔═ A ══╗    ",
+        "║      ║    ",
+        "╚══════╝    ",
         "            ",
         "            "), screen.lines());
     assertEquals(List.of(

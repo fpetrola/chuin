@@ -24,10 +24,10 @@ class ChangingALabelTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌─────── A ────────┐",
-        "│ [ OK ]           │",
-        "│                  │",
-        "│ ¡Presionado!     │",
-        "└──────────────────┘"), screen.lines());
+        "╔═══════ A ════════╗",
+        "║ [ OK ]           ║",
+        "║                  ║",
+        "║ ¡Presionado!     ║",
+        "╚══════════════════╝"), screen.lines());
   }
 }

@@ -23,12 +23,12 @@ class SeeingTheFocusTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌─────── A ────────┐",
-        "│ [ Sí ]   No      │",
-        "└──────────────────┘"), beforeTab);
+        "╔═══════ A ════════╗",
+        "║ [ Sí ]   No      ║",
+        "╚══════════════════╝"), beforeTab);
     assertEquals(List.of(
-        "┌─────── A ────────┐",
-        "│   Sí   [ No ]    │",
-        "└──────────────────┘"), screen.lines());
+        "╔═══════ A ════════╗",
+        "║   Sí   [ No ]    ║",
+        "╚══════════════════╝"), screen.lines());
   }
 }

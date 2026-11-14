@@ -22,7 +22,7 @@ class ErasingWithBackspaceTest {
     keyboard.typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("│ hola______       │", screen.lines().get(1));
+    assertEquals("║ hola______       ║", screen.lines().get(1));
   }
 
   @Test
@@ -40,7 +40,7 @@ class ErasingWithBackspaceTest {
     keyboard.typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("│ a_________       │", screen.lines().get(1));
+    assertEquals("║ a_________       ║", screen.lines().get(1));
   }
 
   @Test
@@ -60,6 +60,6 @@ class ErasingWithBackspaceTest {
     keyboard.typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("│>[ ] Ok   z___    │", screen.lines().get(1));
+    assertEquals("║>[ ] Ok   z___    ║", screen.lines().get(1));
   }
 }

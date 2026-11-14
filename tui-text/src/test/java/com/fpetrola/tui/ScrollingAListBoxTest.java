@@ -28,13 +28,13 @@ class ScrollingAListBoxTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌─── L ────┐  ",
-        "│ tres   ▲ │  ",
-        "│ cuatro ░ │  ",
-        "│ cinco  ■ │  ",
-        "│ seis   ░ │  ",
-        "│ siete  ▼ │  ",
-        "└──────────┘  "), screen.lines());
+        "╔═══ L ════╗  ",
+        "║ tres   ▲ ║  ",
+        "║ cuatro ░ ║  ",
+        "║ cinco  ■ ║  ",
+        "║ seis   ░ ║  ",
+        "║ siete  ▼ ║  ",
+        "╚══════════╝  "), screen.lines());
     assertEquals("wwffffffwwwws.", screen.tints().get(4));
   }
 
@@ -52,7 +52,7 @@ class ScrollingAListBoxTest {
     keyboard.typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("┌─ B ──┐  ", screen.lines().get(1));
+    assertEquals("╔═ B ══╗  ", screen.lines().get(1));
   }
 
   @Test
@@ -70,14 +70,14 @@ class ScrollingAListBoxTest {
     desktop.type(visitor -> visitor.down());
     desktop.draw(screen);
 
-    assertEquals("┌─── C ────┐  ", screen.lines().get(1));
+    assertEquals("╔═══ C ════╗  ", screen.lines().get(1));
     assertEquals(List.of("wwwwwwwwwwwws.", "wwwwwwwwwwwws.", "wwwwwwwwwwwws."), screen.tints().subList(3, 6));
 
     desktop.type(keys.tab());
     desktop.type(visitor -> visitor.down());
     desktop.draw(screen);
 
-    assertEquals("┌─── C ────┐  ", screen.lines().get(1));
+    assertEquals("╔═══ C ════╗  ", screen.lines().get(1));
     assertEquals(List.of("wwwwwwwwwwwws.", "wfwwwwwwwwwws.", "wwwwwwwwwwwws."), screen.tints().subList(3, 6));
   }
 
@@ -95,9 +95,9 @@ class ScrollingAListBoxTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "│ solo   │  ",
-        "│        │  ",
-        "│        │  "), screen.lines().subList(1, 4));
+        "║ solo   ║  ",
+        "║        ║  ",
+        "║        ║  "), screen.lines().subList(1, 4));
     assertEquals("wwffffwwwws.", screen.tints().get(1));
   }
 
@@ -116,10 +116,10 @@ class ScrollingAListBoxTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌── A ───┐  ",
-        "│        │  ",
-        "│        │  ",
-        "│        │  "), screen.lines().subList(0, 4));
+        "╔══ A ═══╗  ",
+        "║        ║  ",
+        "║        ║  ",
+        "║        ║  "), screen.lines().subList(0, 4));
     assertEquals("wwwwwwwwwws.", screen.tints().get(1));
   }
 
@@ -150,10 +150,10 @@ class ScrollingAListBoxTest {
     desktop.type(keys.enter());
     desktop.type(keys.tab());
     desktop.draw(screen);
-    assertEquals("│                  │", screen.lines().get(5));
+    assertEquals("║                  ║", screen.lines().get(5));
 
     desktop.type(keys.enter());
     desktop.draw(screen);
-    assertEquals("│ok                │", screen.lines().get(5));
+    assertEquals("║ok                ║", screen.lines().get(5));
   }
 }

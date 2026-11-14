@@ -10,7 +10,7 @@ class DrawingFramesAndShadowsTest {
 
   @Test
   void aRaisedFrameDrawsItsBorderTitleAndInsideInItsTintAndCastsAShadow() {
-    Drawing raised = new RaisedFrame(new TextArea(0, 0, 6, 3), "A", 'w');
+    Drawing raised = new RaisedFrame(new TextArea(0, 0, 6, 3), "A", 'w', Border.SINGLE);
 
     raised.drawOn(screen);
 
@@ -30,7 +30,7 @@ class DrawingFramesAndShadowsTest {
 
   @Test
   void aFrameWithNoTitleIsAPlainBorder() {
-    Drawing frame = new Frame(new TextArea(1, 1, 4, 3), "", 'w');
+    Drawing frame = new Frame(new TextArea(1, 1, 4, 3), "", 'w', Border.SINGLE);
 
     frame.drawOn(screen);
 

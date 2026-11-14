@@ -14,9 +14,9 @@ class RunningOnAConsoleTest {
   private static final String MOUSE_OFF = ESC + "?1006l" + ESC + "?1000l";
   private static final String WINDOW = ESC + "0;30;47m";
   private static final String FRAME = ESC + "2J"
-      + ESC + "1;1H" + WINDOW + "┌── A ───┐"
-      + ESC + "2;1H" + WINDOW + "│        │"
-      + ESC + "3;1H" + WINDOW + "└────────┘"
+      + ESC + "1;1H" + WINDOW + "╔══ A ═══╗"
+      + ESC + "2;1H" + WINDOW + "║        ║"
+      + ESC + "3;1H" + WINDOW + "╚════════╝"
       + ESC + "0m";
 
   @Test

@@ -5,8 +5,8 @@ class RaisedFrame implements Drawing {
   private final Drawing frame;
   private final Drawing shadow;
 
-  RaisedFrame(Area area, String title, char tint) {
-    frame = new Frame(area, title, tint);
+  RaisedFrame(Area area, String title, char tint, Border border) {
+    frame = new Frame(area, title, tint, border);
     shadow = new Shadow(area);
   }
 

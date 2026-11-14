@@ -22,8 +22,8 @@ class ClickingWithTheMouseTest {
     click(0, 11, 1);
     desktop.draw(screen);
 
-    assertEquals("│  Ok    [ No ]      │", screen.lines().get(1));
-    assertEquals("│no                  │", screen.lines().get(3));
+    assertEquals("║  Ok    [ No ]      ║", screen.lines().get(1));
+    assertEquals("║no                  ║", screen.lines().get(3));
   }
 
   @Test
@@ -32,8 +32,8 @@ class ClickingWithTheMouseTest {
     click(0, 3, 2);
     desktop.draw(screen);
 
-    assertEquals("│  Ok      No        │", screen.lines().get(1));
-    assertEquals("│[X] C" + " ".repeat(15) + "│", screen.lines().get(2));
+    assertEquals("║  Ok      No        ║", screen.lines().get(1));
+    assertEquals("║[X] C" + " ".repeat(15) + "║", screen.lines().get(2));
     assertEquals("wfffffwwwwwwwwwwwwwwww", screen.tints().get(2));
   }
 
@@ -46,8 +46,8 @@ class ClickingWithTheMouseTest {
     type("\u001b[<0;12;2m");
     desktop.draw(screen);
 
-    assertEquals("│[ Ok ]    No        │", screen.lines().get(1));
-    assertEquals("│                    │", screen.lines().get(3));
+    assertEquals("║[ Ok ]    No        ║", screen.lines().get(1));
+    assertEquals("║                    ║", screen.lines().get(3));
   }
 
   @Test
@@ -66,7 +66,7 @@ class ClickingWithTheMouseTest {
     desktop.draw(screen);
 
     assertEquals("Ana", name.text());
-    assertEquals("│  Ok                │", screen.lines().get(1));
+    assertEquals("║  Ok                ║", screen.lines().get(1));
   }
 
   @Test
@@ -92,8 +92,8 @@ class ClickingWithTheMouseTest {
     click(0, 3, 1);
     desktop.draw(screen);
 
-    assertEquals("│  No   │ │  Si   │   ", screen.lines().get(1));
-    assertEquals("│[ Ni ] │ │       │   ", screen.lines().get(2));
+    assertEquals("║  No   ║ │  Si   │   ", screen.lines().get(1));
+    assertEquals("║[ Ni ] ║ │       │   ", screen.lines().get(2));
   }
 
   @Test
@@ -102,8 +102,8 @@ class ClickingWithTheMouseTest {
     click(0, 0, 5);
     desktop.draw(screen);
 
-    assertEquals("│[ Ok ]    No        │", screen.lines().get(1));
-    assertEquals("│                    │", screen.lines().get(3));
+    assertEquals("║[ Ok ]    No        ║", screen.lines().get(1));
+    assertEquals("║                    ║", screen.lines().get(3));
   }
 
 
@@ -126,8 +126,8 @@ class ClickingWithTheMouseTest {
 
     click(0, 9, 3);
     desktop.draw(screen);
-    assertEquals("│Rojo    ( ) Si      │", screen.lines().get(2));
-    assertEquals("│Verde   (•) No      │", screen.lines().get(3));
+    assertEquals("║Rojo    ( ) Si      ║", screen.lines().get(2));
+    assertEquals("║Verde   (•) No      ║", screen.lines().get(3));
     assertEquals("wwwwwwwwwffffffwwwwwww", screen.tints().get(3));
   }
 

@@ -31,10 +31,10 @@ class ClosingAWindowTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌── B ──┐           ",
-        "│  No   │           ",
-        "│[ Ni ] │           ",
-        "└───────┘           ",
+        "╔══ B ══╗           ",
+        "║  No   ║           ",
+        "║[ Ni ] ║           ",
+        "╚═══════╝           ",
         "                    "), screen.lines());
   }
 
@@ -76,7 +76,7 @@ class ClosingAWindowTest {
     press(toolkit, desktop, f6 + CONTROL_W);
     desktop.draw(screen);
 
-    assertEquals("         │  a2  │ │  a3  │ ", screen.lines().get(1));
-    assertEquals("         │  b2  │ │[ b3 ]│ ", screen.lines().get(2));
+    assertEquals("         │  a2  │ ║  a3  ║ ", screen.lines().get(1));
+    assertEquals("         │  b2  │ ║[ b3 ]║ ", screen.lines().get(2));
   }
 }

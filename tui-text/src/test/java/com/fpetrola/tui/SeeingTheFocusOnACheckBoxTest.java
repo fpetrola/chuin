@@ -22,7 +22,7 @@ class SeeingTheFocusOnACheckBoxTest {
     desktop.type(toolkit.keys().tab());
     desktop.draw(screen);
 
-    assertEquals(List.of("│ [ OK ]           │", "│  [ ] Recordar    │"), beforeTab.subList(1, 3));
-    assertEquals(List.of("│   OK             │", "│ >[ ] Recordar    │"), screen.lines().subList(1, 3));
+    assertEquals(List.of("║ [ OK ]           ║", "║  [ ] Recordar    ║"), beforeTab.subList(1, 3));
+    assertEquals(List.of("║   OK             ║", "║ >[ ] Recordar    ║"), screen.lines().subList(1, 3));
   }
 }

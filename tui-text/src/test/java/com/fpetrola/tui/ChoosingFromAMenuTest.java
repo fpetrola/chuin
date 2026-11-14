@@ -43,7 +43,7 @@ class ChoosingFromAMenuTest {
     press(F10 + DOWN + RIGHT + LEFT + DOWN + DOWN + "\r");
     desktop.draw(screen);
 
-    assertEquals("│salir                 │", screen.lines().get(7));
+    assertEquals("║salir                 ║", screen.lines().get(7));
     assertEquals("                        ", screen.lines().get(1));
   }
 
@@ -53,7 +53,7 @@ class ChoosingFromAMenuTest {
     press(F10 + "\t" + F10 + "\r");
     desktop.draw(screen);
 
-    assertEquals("│ok                    │", screen.lines().get(7));
+    assertEquals("║ok                    ║", screen.lines().get(7));
     assertEquals("                        ", screen.lines().get(1));
     assertEquals(" Archivo  Ayuda         ", screen.lines().get(0));
     assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
@@ -98,7 +98,7 @@ class ChoosingFromAMenuTest {
     press(F10 + "\r");
     desktop.draw(screen);
 
-    assertEquals("│ok                    │", screen.lines().get(7));
+    assertEquals("║ok                    ║", screen.lines().get(7));
   }
 
   @Test

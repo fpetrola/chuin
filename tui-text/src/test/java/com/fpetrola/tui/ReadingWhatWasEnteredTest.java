@@ -31,7 +31,7 @@ class ReadingWhatWasEnteredTest {
     toolkit.keyboard(new ByteArrayInputStream(("Ana\t" + down + "\t\r").getBytes(StandardCharsets.UTF_8))).typeInto(desktop);
     desktop.draw(screen);
 
-    assertEquals("│Hola Ana, elegiste Verde    │", screen.lines().get(6));
+    assertEquals("║Hola Ana, elegiste Verde    ║", screen.lines().get(6));
   }
 
   @Test

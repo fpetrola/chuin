@@ -19,14 +19,14 @@ class ShowingAScreenOnATerminalTest {
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Terminal terminal = toolkit.terminal(out);
     Screen screen = toolkit.screen(6, 2);
-    screen.write(1, 1, "┌hola");
+    screen.write(1, 1, "╔hola");
 
     terminal.show(screen);
 
     assertEquals(
         ESC + "2J"
             + ESC + "1;1H" + DESKTOP + "      "
-            + ESC + "2;1H" + DESKTOP + " ┌hola"
+            + ESC + "2;1H" + DESKTOP + " ╔hola"
             + ESC + "0m",
         out.toString(StandardCharsets.UTF_8));
   }

@@ -21,10 +21,10 @@ class KeepingViewsInsideTheirWindowTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌── A ───┐    ",
-        "│Hola Bar│    ",
-        "│        │    ",
-        "└────────┘    ",
+        "╔══ A ═══╗    ",
+        "║Hola Bar║    ",
+        "║        ║    ",
+        "╚════════╝    ",
         "              "), screen.lines());
   }
 }

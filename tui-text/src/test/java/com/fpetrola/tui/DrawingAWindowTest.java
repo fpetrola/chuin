@@ -21,10 +21,10 @@ class DrawingAWindowTest {
     desktop.draw(screen);
 
     assertEquals(List.of(
-        "┌───── Saludo ─────┐",
-        "│                  │",
-        "│ [ OK ]           │",
-        "│                  │",
-        "└──────────────────┘"), screen.lines());
+        "╔═════ Saludo ═════╗",
+        "║                  ║",
+        "║ [ OK ]           ║",
+        "║                  ║",
+        "╚══════════════════╝"), screen.lines());
   }
 }

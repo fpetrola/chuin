@@ -30,7 +30,7 @@ class ClickingOnTheMenuBarTest {
     click(3, 3);
     desktop.draw(screen);
 
-    assertEquals("│salir │ ", screen.lines().get(6).substring(0, 9));
+    assertEquals("║salir ║ ", screen.lines().get(6).substring(0, 9));
     assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
   }
 
@@ -40,7 +40,7 @@ class ClickingOnTheMenuBarTest {
     click(20, 0);
     desktop.draw(screen);
 
-    assertEquals("│[ Ok ]│ ", screen.lines().get(7).substring(0, 9));
+    assertEquals("║[ Ok ]║ ", screen.lines().get(7).substring(0, 9));
     assertEquals("                 │  No │", screen.lines().get(1));
   }
 
@@ -52,7 +52,7 @@ class ClickingOnTheMenuBarTest {
     desktop.draw(screen);
 
     assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
-    assertEquals("│[ Ok ]│ ", screen.lines().get(7).substring(0, 9));
+    assertEquals("║[ Ok ]║ ", screen.lines().get(7).substring(0, 9));
   }
 
   /** A bar with Archivo (Nuevo, Salir) and Ayuda (Acerca); a window under the bar's right end, and the focused one below. */
