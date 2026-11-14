@@ -38,7 +38,7 @@ class TellingKeysApartTest {
 
   @Test
   void theKeyboardReadsTabCarriageReturnSpaceALetterBackspaceAndAnyOtherByte() {
-    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream("\t\r h\u007f\u0001".getBytes(StandardCharsets.UTF_8)));
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream("\t\r h\u007f\u001c".getBytes(StandardCharsets.UTF_8)));
     Desktop desktop = mock(Desktop.class);
     ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
 
@@ -95,5 +95,23 @@ class TellingKeysApartTest {
     order.verify(visitor).function(6);
     order.verify(visitor).function(12);
     order.verify(visitor).other();
+  }
+
+  @Test
+  void theKeyboardReadsControlLettersButLeavesTabEnterControlQAndControlHToThemselves() {
+    Keyboard keyboard = toolkit.keyboard(new ByteArrayInputStream("\u0001\u0017\u001a\t\b".getBytes(StandardCharsets.UTF_8)));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(5)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).control('a');
+    order.verify(visitor).control('w');
+    order.verify(visitor).control('z');
+    order.verify(visitor).tab();
+    order.verify(visitor).backspace();
   }
 }

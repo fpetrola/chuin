@@ -16,6 +16,10 @@ class StreamKeyboard implements Keyboard {
   private static final int[] FUNCTION_CODES = {11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 23, 24};
   private static final int ESCAPE = 0x1B;
   private static final int BACKSPACE = 0x7F;
+  /** What several terminals send for backspace instead of 0x7F. */
+  private static final int CONTROL_H = 0x08;
+  private static final int CONTROL_A = 0x01;
+  private static final int CONTROL_Z = 0x1A;
   private static final int SPACE = ' ';
   private static final int FIRST_PRINTABLE = '!';
   private static final int LAST_PRINTABLE = '~';
@@ -78,8 +82,11 @@ class StreamKeyboard implements Keyboard {
 
   private Key keyFor(int read) {
     boolean printable = read >= FIRST_PRINTABLE && read <= LAST_PRINTABLE;
-    Key written = printable ? visitor -> visitor.character((char) read) : KeyVisitor::other;
-    Key erased = read == BACKSPACE ? KeyVisitor::backspace : written;
+    boolean control = read >= CONTROL_A && read <= CONTROL_Z;
+    Key controlled = control ? visitor -> visitor.control((char) ('a' + read - CONTROL_A)) : KeyVisitor::other;
+    Key written = printable ? visitor -> visitor.character((char) read) : controlled;
+    boolean erasing = read == BACKSPACE || read == CONTROL_H;
+    Key erased = erasing ? KeyVisitor::backspace : written;
     Key spaced = read == SPACE ? keys.space() : erased;
     Key named = read == TAB ? keys.tab() : spaced;
     return read == CARRIAGE_RETURN ? keys.enter() : named;

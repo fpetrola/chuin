@@ -13,6 +13,8 @@ class TextDesktop implements Desktop {
   private static final int UNFOCUSED = -1;
   /** F6 raises the bottom window over the others, as in Turbo Vision. */
   private static final int NEXT_WINDOW = 6;
+  /** Ctrl+W closes the top window. */
+  private static final char CLOSE_WINDOW = 'w';
   private int focused;
   /** The focus each window had when it last left the top, by its place in {@link #opened}. */
   private final List<Integer> remembered = new ArrayList<>();
@@ -119,6 +121,15 @@ class TextDesktop implements Desktop {
     @Override
     public void right() {
       move(1, 0);
+    }
+
+    @Override
+    public void control(char letter) {
+      if (letter == CLOSE_WINDOW && !opened.isEmpty()) {
+        opened.remove(opened.size() - 1);
+        remembered.remove(remembered.size() - 1);
+        focused = opened.isEmpty() ? 0 : remembered.get(opened.size() - 1);
+      }
     }
 
     @Override

@@ -39,6 +39,7 @@ types:
     members:
       - "backspace(): void"
       - "character(char): void"
+      - "control(char): void"
       - "down(): void"
       - "enter(): void"
       - "function(int): void"

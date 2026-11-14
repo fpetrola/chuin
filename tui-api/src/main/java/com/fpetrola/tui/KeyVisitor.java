@@ -29,6 +29,10 @@ interface KeyVisitor {
   default void right() {
   }
 
+  /** Ctrl held with a letter, by the letter in lower case; Tab, Enter, Ctrl+Q and Ctrl+H (backspace) are not handed over this way. */
+  default void control(char letter) {
+  }
+
   /** A function key, F1 to F12, by its number. */
   default void function(int number) {
   }
