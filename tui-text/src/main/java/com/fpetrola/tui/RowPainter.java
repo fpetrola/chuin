@@ -7,7 +7,7 @@ import java.util.List;
  * options: a list row is its item padded to the longest, a blank and its scroll bar cell; an option is its mark and
  * its text. The selected row is tinted when the view has the focus.
  */
-class RowPainter implements ListRowVisitor, OptionVisitor {
+class RowPainter implements ViewVisitor, OptionVisitor {
   private static final char FOCUS_TINT = 'f';
   /** The blank and the scroll bar cell after a list item. */
   private static final int BESIDE_ITEM = 2;
@@ -29,44 +29,48 @@ class RowPainter implements ListRowVisitor, OptionVisitor {
   }
 
   @Override
-  public void item(String text) {
+  public void visitListItem(ListItem item) {
+    itemRow(item.text());
+  }
+
+  @Override
+  public void visitSelectedListItem(ListItem item) {
+    itemRow(item.text());
+    tint(at.columns() - BESIDE_ITEM);
+  }
+
+  @Override
+  public void visitNoListItem(ListBox box) {
+    itemRow("");
+  }
+
+  private void itemRow(String text) {
     int width = at.columns() - BESIDE_ITEM;
     screen.write(at.column(), at.row() + shown, text + " ".repeat(width - text.length() + 1));
   }
 
   @Override
-  public void selectedItem(String text) {
-    item(text);
-    tint(at.columns() - BESIDE_ITEM);
-  }
-
-  @Override
-  public void noItem() {
-    item("");
-  }
-
-  @Override
-  public void barUp() {
+  public void visitScrollUp(ListBox box) {
     bar("▲");
   }
 
   @Override
-  public void barTrack() {
+  public void visitScrollTrack(ListBox box) {
     bar("░");
   }
 
   @Override
-  public void barThumb() {
+  public void visitScrollThumb(ListBox box) {
     bar("■");
   }
 
   @Override
-  public void barDown() {
+  public void visitScrollDown(ListBox box) {
     bar("▼");
   }
 
   @Override
-  public void noBar() {
+  public void visitNoScrollBar(ListBox box) {
     bar(" ");
   }
 

@@ -15,6 +15,9 @@ class Painter implements ViewVisitor {
   /** The top left cell inside the frame of the window drawn last. */
   private int insideColumn;
   private int insideRow;
+  /** Draws the rows of the list box visited last. */
+  private ViewVisitor rows = new ViewVisitor() {
+  };
   private final int focused;
   /** Where each focusable view was drawn, in focus order, so a click can find what is under it. */
   private final List<Area> drawn;
@@ -113,10 +116,50 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitListBox(ListBox box) {
-    box.acceptRows(new RowPainter(inside, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn));
+    rows = new RowPainter(inside, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn);
   }
 
 
+
+  @Override
+  public void visitListItem(ListItem item) {
+    rows.visitListItem(item);
+  }
+
+  @Override
+  public void visitSelectedListItem(ListItem item) {
+    rows.visitSelectedListItem(item);
+  }
+
+  @Override
+  public void visitNoListItem(ListBox box) {
+    rows.visitNoListItem(box);
+  }
+
+  @Override
+  public void visitScrollUp(ListBox box) {
+    rows.visitScrollUp(box);
+  }
+
+  @Override
+  public void visitScrollTrack(ListBox box) {
+    rows.visitScrollTrack(box);
+  }
+
+  @Override
+  public void visitScrollThumb(ListBox box) {
+    rows.visitScrollThumb(box);
+  }
+
+  @Override
+  public void visitScrollDown(ListBox box) {
+    rows.visitScrollDown(box);
+  }
+
+  @Override
+  public void visitNoScrollBar(ListBox box) {
+    rows.visitNoScrollBar(box);
+  }
 
   @Override
   public void visitRadioButtons(RadioButtons group) {

@@ -2,6 +2,7 @@ package com.fpetrola.tui;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
@@ -144,26 +145,27 @@ class VisitingViewsTest {
   @Test
   void aListBoxHandsItselfToTheVisitorAndWalksItsRowsWithTheSelectionAndScrollBar() {
     ListBox letters = toolkit.listBox(List.of("a", "bb", "c", "d"), 3);
-    ListRowVisitor rows = mock(ListRowVisitor.class);
 
-    letters.accept(visitor);
     letters.previous();
     letters.next();
     letters.next();
     letters.next();
     letters.next();
-    letters.acceptRows(rows);
+    letters.accept(visitor);
 
-    verify(visitor).visitListBox(letters);
     assertEquals(Optional.of("d"), letters.selected());
     assertEquals(4, letters.width());
-    InOrder order = inOrder(rows);
-    order.verify(rows).item("bb");
-    order.verify(rows).barUp();
-    order.verify(rows).item("c");
-    order.verify(rows).barThumb();
-    order.verify(rows).selectedItem("d");
-    order.verify(rows).barDown();
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).visitListBox(letters);
+    order.verify(visitor).visitListItem(argThat(item -> item.text().equals("bb") && item.list() == letters));
+    order.verify(visitor).visitScrollUp(letters);
+    order.verify(visitor).visitListItem(argThat(item -> item.text().equals("c") && item.list() == letters));
+    order.verify(visitor).visitScrollThumb(letters);
+    ArgumentCaptor<ListItem> selected = ArgumentCaptor.captor();
+    order.verify(visitor).visitSelectedListItem(selected.capture());
+    assertEquals("d", selected.getValue().text());
+    assertEquals(letters, selected.getValue().list());
+    order.verify(visitor).visitScrollDown(letters);
   }
 
 
@@ -192,31 +194,29 @@ class VisitingViewsTest {
   @Test
   void aListBoxWalksRowsPastItsLastItemAsNoItemAndHasNoBarWhenEveryItemFits() {
     ListBox one = toolkit.listBox(List.of("a"), 3);
-    ListRowVisitor rows = mock(ListRowVisitor.class);
 
-    one.acceptRows(rows);
+    one.accept(visitor);
 
-    InOrder order = inOrder(rows);
-    order.verify(rows).selectedItem("a");
-    order.verify(rows).noBar();
-    order.verify(rows).noItem();
-    order.verify(rows).noBar();
-    order.verify(rows).noItem();
-    order.verify(rows).noBar();
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).visitSelectedListItem(argThat(item -> item.text().equals("a") && item.list() == one));
+    order.verify(visitor).visitNoScrollBar(one);
+    order.verify(visitor).visitNoListItem(one);
+    order.verify(visitor).visitNoScrollBar(one);
+    order.verify(visitor).visitNoListItem(one);
+    order.verify(visitor).visitNoScrollBar(one);
   }
 
   @Test
   void aListBoxWalksTheTrackOfItsScrollBarAwayFromTheThumb() {
     ListBox five = toolkit.listBox(List.of("a", "b", "c", "d", "e"), 4);
-    ListRowVisitor rows = mock(ListRowVisitor.class);
 
-    five.acceptRows(rows);
+    five.accept(visitor);
 
-    InOrder order = inOrder(rows);
-    order.verify(rows).barUp();
-    order.verify(rows).barThumb();
-    order.verify(rows).barTrack();
-    order.verify(rows).barDown();
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).visitScrollUp(five);
+    order.verify(visitor).visitScrollThumb(five);
+    order.verify(visitor).visitScrollTrack(five);
+    order.verify(visitor).visitScrollDown(five);
   }
 
   @Test

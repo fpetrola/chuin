@@ -42,16 +42,12 @@ class TextListBox implements ListBox {
   }
 
   @Override
-  public void acceptRows(ListRowVisitor visitor) {
+  public void accept(ViewVisitor visitor) {
+    visitor.visitListBox(this);
     for (int shown = 0; shown < rows; shown++) {
       item(top + shown, visitor);
       bar(shown, visitor);
     }
-  }
-
-  @Override
-  public void accept(ViewVisitor visitor) {
-    visitor.visitListBox(this);
   }
 
   @Override
@@ -66,20 +62,20 @@ class TextListBox implements ListBox {
     top = Math.max(top, selected - rows + 1);
   }
 
-  private void item(int at, ListRowVisitor visitor) {
-    String text = at < items.size() ? items.get(at) : "";
-    Consumer<ListRowVisitor> present = at == selected ? row -> row.selectedItem(text) : row -> row.item(text);
-    Consumer<ListRowVisitor> shown = at < items.size() ? present : ListRowVisitor::noItem;
+  private void item(int at, ViewVisitor visitor) {
+    ListItem item = new TextListItem(this, at < items.size() ? items.get(at) : "");
+    Consumer<ViewVisitor> present = at == selected ? row -> row.visitSelectedListItem(item) : row -> row.visitListItem(item);
+    Consumer<ViewVisitor> shown = at < items.size() ? present : row -> row.visitNoListItem(this);
     shown.accept(visitor);
   }
 
   /** ▲ on the first row, ▼ on the last, the thumb where the selection sits on the track between; nothing when every item fits. */
-  private void bar(int shown, ListRowVisitor visitor) {
+  private void bar(int shown, ViewVisitor visitor) {
     int thumb = 1 + selected * (rows - 3) / Math.max(1, items.size() - 1);
-    Consumer<ListRowVisitor> track = shown == thumb ? ListRowVisitor::barThumb : ListRowVisitor::barTrack;
-    Consumer<ListRowVisitor> down = shown == rows - 1 ? ListRowVisitor::barDown : track;
-    Consumer<ListRowVisitor> up = shown == 0 ? ListRowVisitor::barUp : down;
-    Consumer<ListRowVisitor> cell = items.size() > rows ? up : ListRowVisitor::noBar;
+    Consumer<ViewVisitor> track = shown == thumb ? row -> row.visitScrollThumb(this) : row -> row.visitScrollTrack(this);
+    Consumer<ViewVisitor> down = shown == rows - 1 ? row -> row.visitScrollDown(this) : track;
+    Consumer<ViewVisitor> up = shown == 0 ? row -> row.visitScrollUp(this) : down;
+    Consumer<ViewVisitor> cell = items.size() > rows ? up : row -> row.visitNoScrollBar(this);
     cell.accept(visitor);
   }
 }

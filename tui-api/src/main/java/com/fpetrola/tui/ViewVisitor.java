@@ -29,7 +29,34 @@ interface ViewVisitor {
   default void visitInputLine(InputLine line) {
   }
 
+  /** A list box is visited first, then each row it shows, top to bottom: its item, then its cell of the scroll bar. */
   default void visitListBox(ListBox box) {
+  }
+
+  default void visitListItem(ListItem item) {
+  }
+
+  default void visitSelectedListItem(ListItem item) {
+  }
+
+  /** A row below the last item. */
+  default void visitNoListItem(ListBox box) {
+  }
+
+  default void visitScrollUp(ListBox box) {
+  }
+
+  default void visitScrollTrack(ListBox box) {
+  }
+
+  default void visitScrollThumb(ListBox box) {
+  }
+
+  default void visitScrollDown(ListBox box) {
+  }
+
+  /** Every item fits, so there is no scroll bar. */
+  default void visitNoScrollBar(ListBox box) {
   }
 
   default void visitRadioButtons(RadioButtons group) {
