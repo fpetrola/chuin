@@ -14,19 +14,19 @@ class ShowingAScreenOnATerminalTest {
   private static final String SHADOW = ESC + "0;90;40m";
 
   @Test
-  void aScreenIsShownLineByLineWithAnsiSequences() {
+  void aScreenIsShownLineByLineWithAnsiSequencesAndTheBareDesktopAsItsPattern() {
     Toolkit toolkit = new TextToolkit();
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Terminal terminal = toolkit.terminal(out);
     Screen screen = toolkit.screen(6, 2);
-    screen.write(1, 1, "╔hola");
+    screen.write(1, 1, "┌hola");
 
     terminal.show(screen);
 
     assertEquals(
         ESC + "2J"
-            + ESC + "1;1H" + DESKTOP + "      "
-            + ESC + "2;1H" + DESKTOP + " ╔hola"
+            + ESC + "1;1H" + DESKTOP + "░░░░░░"
+            + ESC + "2;1H" + DESKTOP + "░┌hola"
             + ESC + "0m",
         out.toString(StandardCharsets.UTF_8));
   }
@@ -46,7 +46,7 @@ class ShowingAScreenOnATerminalTest {
 
     assertEquals(
         ESC + "2J"
-            + ESC + "1;1H" + WINDOW + "ab" + FOCUS + "cd" + SHADOW + "e" + DESKTOP + "f "
+            + ESC + "1;1H" + WINDOW + "ab" + FOCUS + "cd" + SHADOW + "e" + DESKTOP + "f░"
             + ESC + "0m",
         out.toString(StandardCharsets.UTF_8));
   }

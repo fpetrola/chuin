@@ -31,7 +31,9 @@ Referencia: la captura de Quadra (una aplicación Turbo Vision) que pasó Fernan
 
 ## Pasos
 
-### Paso 1: paleta, fondo, sombra que oscurece y marco doble (1, 2, 3 y 4)
+### Paso 1: paleta, fondo, sombra que oscurece y marco doble (1, 2, 3 y 4) — hecho
+
+Hecho en `c39bce2`, `41ccc74`, `fe50ec0`, `4ee49d5` y el commit de la trama (DECISIONS 42 y 43). La paleta todavía no hizo falta ampliarla: los tintes nuevos van a entrar con los botones y los campos, en el paso 2.
 
 Hay que decidir de nuevo cómo se guardan los tintes. Hoy son un `char` por celda (DECISIONS 14) con cuatro letras. Con unos doce tintes, las letras sueltas se vuelven difíciles de leer. Propongo dos cosas:
 - Seguir con un `char` por celda, porque los tests leen los tintes fila por fila, y documentar la paleta entera en `Screen#tints`. La alternativa es un tipo `Tint`, y hay que decidirlo antes de empezar.
