@@ -1,5 +1,7 @@
 package com.fpetrola.tui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -16,8 +18,8 @@ class MenuPainter implements MenuVisitor {
   private int column;
   /** Where the open menu's box starts. */
   private int boxColumn;
-  /** How many of the open menu's items were drawn. */
-  private int drawn;
+  /** The open menu's items met so far; its box is drawn again, one row taller, with each. */
+  private final List<String> shown = new ArrayList<>();
 
   MenuPainter(Screen screen, Optional<Menu> open, int selected) {
     this.screen = screen;
@@ -49,19 +51,14 @@ class MenuPainter implements MenuVisitor {
     if (open.filter(menu::equals).isEmpty()) {
       return;
     }
-    int inner = menu.width() - 2;
-    int row = 2 + drawn;
-    if (drawn == 0) {
-      screen.write(boxColumn, 1, "┌" + "─".repeat(inner) + "┐");
-      screen.paint(boxColumn, 1, inner + 2, BAR_TINT);
+    shown.add(item.text());
+    new Frame(new TextArea(boxColumn, 1, menu.width(), shown.size() + 2), "", BAR_TINT).accept(screen);
+    for (int at = 0; at < shown.size(); at++) {
+      screen.write(boxColumn + 2, 2 + at, shown.get(at));
     }
-    screen.write(boxColumn, row, "│ " + item.text() + " ".repeat(inner - item.text().length() - 1) + "│");
-    screen.write(boxColumn, row + 1, "└" + "─".repeat(inner) + "┘");
-    screen.paint(boxColumn, row, inner + 2, BAR_TINT);
-    screen.paint(boxColumn, row + 1, inner + 2, BAR_TINT);
-    if (drawn == selected) {
-      screen.paint(boxColumn + 1, row, inner, CHOSEN_TINT);
+    if (selected < shown.size()) {
+      screen.paint(boxColumn + 1, 2 + selected, menu.width() - 2, CHOSEN_TINT);
     }
-    drawn++;
   }
+
 }

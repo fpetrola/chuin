@@ -4,11 +4,8 @@ import java.util.List;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
 class Painter implements ViewVisitor {
-  /** What a window casts one cell to its right and one cell below it. */
-  private static final String SHADOW = "░";
   private static final char WINDOW_TINT = 'w';
   private static final char FOCUS_TINT = 'f';
-  private static final char SHADOW_TINT = 's';
   private final Screen screen;
   /** The inside of the window being drawn: its views cannot draw past it. */
   private Screen inside;
@@ -34,27 +31,9 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitWindow(Window window) {
-    String title = window.title();
     Area area = window.area();
-    int inner = area.columns() - 2;
-    String label = " " + title + " ";
-    int left = (inner - label.length()) / 2;
-    int right = inner - label.length() - left;
-    screen.write(area.column(), area.row(), "┌" + "─".repeat(left) + label + "─".repeat(right) + "┐");
-    String middle = "│" + " ".repeat(inner) + "│";
-    for (int line = 1; line < area.rows() - 1; line++) {
-      screen.write(area.column(), area.row() + line, middle);
-    }
-    screen.write(area.column(), area.row() + area.rows() - 1, "└" + "─".repeat(inner) + "┘");
-    for (int line = 1; line < area.rows(); line++) {
-      screen.write(area.column() + area.columns(), area.row() + line, SHADOW);
-    }
-    screen.write(area.column() + 1, area.row() + area.rows(), SHADOW.repeat(area.columns()));
-    for (int line = 0; line < area.rows(); line++) {
-      screen.paint(area.column(), area.row() + line, area.columns(), WINDOW_TINT);
-      screen.paint(area.column() + area.columns(), area.row() + line + 1, 1, SHADOW_TINT);
-    }
-    screen.paint(area.column() + 1, area.row() + area.rows(), area.columns(), SHADOW_TINT);
+    new Frame(area, window.title(), WINDOW_TINT).accept(screen);
+    new Shadow(area).accept(screen);
     insideColumn = area.column() + 1;
     insideRow = area.row() + 1;
     inside = new ClippedScreen(screen, new TextArea(insideColumn, insideRow, area.columns() - 2, area.rows() - 2));
