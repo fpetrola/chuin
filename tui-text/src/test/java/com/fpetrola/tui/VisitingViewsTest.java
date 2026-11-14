@@ -249,4 +249,21 @@ class VisitingViewsTest {
     verify(options).option("a");
     verify(options).chosenOption("b");
   }
+
+  @Test
+  void aMenuBarWalksItsMenusLeftToRightAndEachKnowsItsTitle() {
+    MenuBar bar = toolkit.menuBar();
+    Menu file = toolkit.menu("Archivo");
+    Menu help = toolkit.menu("Ayuda");
+    MenuVisitor menus = mock(MenuVisitor.class);
+    bar.add(file);
+    bar.add(help);
+
+    bar.acceptMenus(menus);
+
+    InOrder order = inOrder(menus);
+    order.verify(menus).visitMenu(file);
+    order.verify(menus).visitMenu(help);
+    assertEquals("Archivo", file.title());
+  }
 }

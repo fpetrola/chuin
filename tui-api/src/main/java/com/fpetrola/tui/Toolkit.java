@@ -24,6 +24,11 @@ public interface Toolkit {
   /** A group of options, one per row, with the first one chosen. */
   RadioButtons radioButtons(List<String> options);
 
+  /** An empty menu bar; menus are added to it left to right. */
+  MenuBar menuBar();
+
+  Menu menu(String title);
+
   Keys keys();
 
   Screen screen(int columns, int rows);

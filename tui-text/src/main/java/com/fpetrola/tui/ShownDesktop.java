@@ -30,6 +30,11 @@ class ShownDesktop implements Desktop {
   }
 
   @Override
+  public void show(MenuBar bar) {
+    desktop.show(bar);
+  }
+
+  @Override
   public void draw(Screen target) {
     desktop.draw(target);
     terminal.show(target);

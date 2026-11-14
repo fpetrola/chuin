@@ -78,6 +78,16 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public MenuBar menuBar() {
+    return new TextMenuBar();
+  }
+
+  @Override
+  public Menu menu(String title) {
+    return new TextMenu(title);
+  }
+
+  @Override
   public Keyboard keyboard(InputStream in) {
     return new StreamKeyboard(in, keys);
   }

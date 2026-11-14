@@ -38,6 +38,7 @@ types:
       - "click(Point): void"
       - "draw(Screen): void"
       - "open(Window): void"
+      - "show(MenuBar): void"
       - "type(Key): void"
   "com.fpetrola.tui.InputLine":
     kind: interface
@@ -105,6 +106,19 @@ types:
     members:
       - "checked(): void"
       - "unchecked(): void"
+  "com.fpetrola.tui.Menu":
+    kind: interface
+    members:
+      - "title(): String"
+  "com.fpetrola.tui.MenuBar":
+    kind: interface
+    members:
+      - "acceptMenus(MenuVisitor): void"
+      - "add(Menu): void"
+  "com.fpetrola.tui.MenuVisitor":
+    kind: interface
+    members:
+      - "visitMenu(Menu): void"
   "com.fpetrola.tui.OptionVisitor":
     kind: interface
     members:
@@ -147,6 +161,8 @@ types:
       - "keys(): Keys"
       - "label(String): Label"
       - "listBox(List<String>, int): ListBox"
+      - "menu(String): Menu"
+      - "menuBar(): MenuBar"
       - "point(int, int): Point"
       - "radioButtons(List<String>): RadioButtons"
       - "screen(int, int): Screen"
