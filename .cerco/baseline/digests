@@ -36,7 +36,7 @@ d91480ef78a8982883a21694cf39d0580464afbbd68370a375a71eaa539b5a6d	tui-text/src/ma
 5705281b97043b89f246b275203bc8e179bfe182f59dfcbc189f8eeec5897524	tui-text/src/main/java/com/fpetrola/tui/CollectFocusable.java
 282a5c402e8b7dae8815bfb9a4b947a7291d222fcbd0a3baab122a85574bfe59	tui-text/src/main/java/com/fpetrola/tui/EraseFocused.java
 05df0ad5d82e4c1aeec419df6e1dfb70c1262098c3dcd11a5e21fe1bd0af3018	tui-text/src/main/java/com/fpetrola/tui/ListArrow.java
-8e2c34d86427bbfbc057faf5a341eef733630797b3101b068674cdb568053228	tui-text/src/main/java/com/fpetrola/tui/MenuDesktop.java
+97e34d9c57eae4289e7585b94a0a0ad2d2bf21f994d4d62211ea28629d5bcf98	tui-text/src/main/java/com/fpetrola/tui/MenuDesktop.java
 3f5393a0e3e50b16ff014864530456e405472552829fb1fccfa086e669ebc5e8	tui-text/src/main/java/com/fpetrola/tui/MenuPainter.java
 450b3dde7f02fca615cee38d4b9edf26f02e5211608a70e1e28c0b4a389918d7	tui-text/src/main/java/com/fpetrola/tui/MoveWindow.java
 9b0f66580e6e231cdf33ae753c22d46e92158af3807ea60e87f3f506097db1e0	tui-text/src/main/java/com/fpetrola/tui/Painter.java
@@ -69,6 +69,7 @@ e9c22c6b6a7634507eafe00c790856291bdd15b03ab6e06818cc91db754a9045	tui-text/src/ma
 6b6f8823db1c1c74d06a9127047e2435c4a91df9f6322cde7927d9a4558aa1ea	tui-text/src/test/java/com/fpetrola/tui/ChangingALabelTest.java
 27496d1a6616200a8e6bcd12c17283f51e22ac2b9d90dbede271e39a9443bf12	tui-text/src/test/java/com/fpetrola/tui/ChoosingARadioButtonTest.java
 c645457daf7dc404c5f9b5148db36b9ca9364cf5213697b837dfca5577aadc6e	tui-text/src/test/java/com/fpetrola/tui/ChoosingFromAMenuTest.java
+c4680993a0fd784fb0fdef669f0ffee559b63691bbe689f9f3408f4a2486f461	tui-text/src/test/java/com/fpetrola/tui/ClickingOnTheMenuBarTest.java
 4d0f816e29f43f7a6186d023e47dc1da61d742ec7a4053256678531866a47d82	tui-text/src/test/java/com/fpetrola/tui/ClickingWithTheMouseTest.java
 16847ff341ec102d669ae0594d3dc906187e031a30fec864176c6fb2f52a0424	tui-text/src/test/java/com/fpetrola/tui/ClosingAWindowTest.java
 0c1a66d2aa99f3d941782ae2aa37d0da5881140a87cc1f5fc8af149353c78e6a	tui-text/src/test/java/com/fpetrola/tui/DrawingAWindowTest.java
