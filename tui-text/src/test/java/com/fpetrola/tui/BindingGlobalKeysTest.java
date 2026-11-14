@@ -53,7 +53,7 @@ class BindingGlobalKeysTest {
     desktop.draw(screen);
 
     assertEquals("laden", said.text());
-    assertEquals("wwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -66,7 +66,7 @@ class BindingGlobalKeysTest {
     desktop.draw(screen);
 
     assertEquals("eigenes", said.text());
-    assertEquals("wwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test

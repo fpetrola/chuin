@@ -20,6 +20,7 @@ class AnsiTerminal implements Terminal {
   private static final Map<Character, String> COLORS = Map.of(
       '.', "0;37;44",
       'w', "0;30;47",
+      'm', "0;30;47",
       'f', "0;97;42",
       'b', "0;30;42",
       'i', "0;97;44",

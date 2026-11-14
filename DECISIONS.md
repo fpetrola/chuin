@@ -95,3 +95,5 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
    - Esc decide con quien observa: `CloseOpenList` recibe lo que hay que hacer si no cierra nada, lo descarta si cierra una lista, y `Settle#settle()` lo corre al terminar la visita (propuesta 0051). En `5dd1d3a`, `escape` guardaba la respuesta en un `boolean[]`: era el mismo booleano que `no-ignored-result` había marcado, escondido en un array. Es el truco del punto 55, y cerco-tdd-97 lo marcó.
 
    Propuesta 0050.
+59. **Colores a la Turbo C++.** La referencia es el Turbo Vision original, no Jexer (decisión de Fernando): diálogos gris claro con texto negro, barra y línea de estado grises con letras rojas, botones verdes con letra amarilla, y grupos de opciones y casillas sobre cian con letra amarilla.
+   - La barra de menú, los menús y listas abiertos y la línea de estado tienen su propio tinte, `m`. Por ahora es el mismo gris que la ventana, pero ya se pueden ajustar por separado.

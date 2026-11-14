@@ -23,7 +23,7 @@ class UsingTheStatusLineTest {
     desktop.draw(screen);
 
     assertEquals(" Esc Raus  F3 Laden    ", screen.lines().get(4).substring(0, 23));
-    assertEquals("whhhwwwwwwwhhwwwwwwwwwww", screen.tints().get(4));
+    assertEquals("mhhhmmmmmmmhhmmmmmmmmmmm", screen.tints().get(4));
   }
 
   @Test
@@ -55,7 +55,7 @@ class UsingTheStatusLineTest {
     desktop.draw(screen);
 
     assertEquals("", said.text());
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test

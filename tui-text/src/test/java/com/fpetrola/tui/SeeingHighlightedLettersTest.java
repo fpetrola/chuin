@@ -28,11 +28,11 @@ class SeeingHighlightedLettersTest {
     desktop.draw(screen);
 
     assertEquals(" Datei  Aktionen       ", screen.lines().get(0).substring(0, 23));
-    assertEquals("fkfffffwhwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("fkfffffmhmmmmmmmmmmmmmmm", screen.tints().get(0));
     assertEquals("│ Neu     │", screen.lines().get(2).substring(0, 11));
-    assertEquals("wfkfffffff", screen.tints().get(2).substring(0, 10));
+    assertEquals("mfkfffffff", screen.tints().get(2).substring(0, 10));
     assertEquals("│ Beenden │", screen.lines().get(3).substring(0, 11));
-    assertEquals("wwwwhwwwww", screen.tints().get(3).substring(0, 10));
+    assertEquals("mmmmhmmmmm", screen.tints().get(3).substring(0, 10));
   }
 
   @Test

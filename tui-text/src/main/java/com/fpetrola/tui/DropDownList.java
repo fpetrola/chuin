@@ -8,7 +8,8 @@ import java.util.List;
  * the field, the highlighted item bright. A closed drop down visits no items, so its list draws nothing.
  */
 class DropDownList implements ViewVisitor, Drawing {
-  private static final char TINT = 'w';
+  /** An open list, like an open menu: black on grey. */
+  private static final char TINT = 'm';
   private static final char HIGHLIGHT = 'f';
   private final int column;
   private final int row;

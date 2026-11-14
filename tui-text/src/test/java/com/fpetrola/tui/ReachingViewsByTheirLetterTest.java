@@ -23,7 +23,7 @@ class ReachingViewsByTheirLetterTest {
     press("\u001bA");
     desktop.draw(screen);
 
-    assertEquals("whwwwwwfkffffffffwwwwwww", screen.tints().get(0));
+    assertEquals("mhmmmmmfkffffffffmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -33,7 +33,7 @@ class ReachingViewsByTheirLetterTest {
     desktop.draw(screen);
 
     assertEquals("neu", label());
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0).replace('h', 'w'));
+    assertEquals("mwmmmmmmwmmmmmmmmmmmmmmm", screen.tints().get(0).replace('h', 'w'));
   }
 
   @Test
@@ -84,7 +84,7 @@ class ReachingViewsByTheirLetterTest {
     desktop.draw(screen);
 
     assertEquals("", label());
-    assertEquals("fkfffffwhwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("fkfffffmhmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -93,7 +93,7 @@ class ReachingViewsByTheirLetterTest {
     press(F10 + "\u001ba");
     desktop.draw(screen);
 
-    assertEquals("whwwwwwfkffffffffwwwwwww", screen.tints().get(0));
+    assertEquals("mhmmmmmfkffffffffmmmmmmm", screen.tints().get(0));
   }
 
   @Test

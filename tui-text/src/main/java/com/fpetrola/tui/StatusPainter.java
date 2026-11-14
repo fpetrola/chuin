@@ -2,7 +2,8 @@ package com.fpetrola.tui;
 
 /** Draws the status line across the bottom row: each entry with a blank on each side, its marked key highlighted. */
 class StatusPainter implements StatusVisitor {
-  private static final char TINT = 'w';
+  /** The status line, like the menu bar: black on grey. */
+  private static final char TINT = 'm';
   private static final char LETTER = 'h';
   private final Screen screen;
   /** The bottom row, which takes the entries left to right. */

@@ -31,9 +31,9 @@ class ChoosingFromAMenuTest {
         "│ Salir │               ",
         "└───────┘               ",
         "                        "), screen.lines().subList(0, 6));
-    assertEquals("fffffffffwwwwwwwwwwwwwww", screen.tints().get(0));
-    assertEquals("wfffffffws..............", screen.tints().get(2));
-    assertEquals("wwwwwwwwws..............", screen.tints().get(3));
+    assertEquals("fffffffffmmmmmmmmmmmmmmm", screen.tints().get(0));
+    assertEquals("mfffffffms..............", screen.tints().get(2));
+    assertEquals("mmmmmmmmms..............", screen.tints().get(3));
     assertEquals(".sssssssss..............", screen.tints().get(5));
   }
 
@@ -56,7 +56,7 @@ class ChoosingFromAMenuTest {
     assertEquals("║ok                    ║", screen.lines().get(7));
     assertEquals("                        ", screen.lines().get(1));
     assertEquals(" Archivo  Ayuda         ", screen.lines().get(0));
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -71,8 +71,8 @@ class ChoosingFromAMenuTest {
         "         │ Acerca │     ",
         "         └────────┘     ",
         "                        "), screen.lines().subList(0, 5));
-    assertEquals("wwwwwwwwwfffffffwwwwwwww", screen.tints().get(0));
-    assertEquals(".........wffffffffws....", screen.tints().get(2));
+    assertEquals("mmmmmmmmmfffffffmmmmmmmm", screen.tints().get(0));
+    assertEquals(".........mffffffffms....", screen.tints().get(2));
   }
 
   @Test
@@ -82,7 +82,7 @@ class ChoosingFromAMenuTest {
     desktop.draw(screen);
 
     assertEquals("┌───────┐               ", screen.lines().get(1));
-    assertEquals("fffffffffwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("fffffffffmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -109,12 +109,12 @@ class ChoosingFromAMenuTest {
 
     press(F10);
     desktop.draw(screen);
-    assertEquals("fffffffwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("fffffffmmmmmmmmmmmmmmmmm", screen.tints().get(0));
     assertEquals("                        ", screen.lines().get(1));
 
     press("\r");
     desktop.draw(screen);
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -123,7 +123,7 @@ class ChoosingFromAMenuTest {
     press(F10 + "\u001b");
     desktop.draw(screen);
 
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
     assertEquals("                        ", screen.lines().get(1));
   }
 

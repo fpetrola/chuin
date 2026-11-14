@@ -21,7 +21,7 @@ class SeeingAMenuBarTest {
     desktop.draw(screen);
 
     assertEquals(" Archivo  Ayuda         ", screen.lines().get(0));
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
     assertEquals("╔═ A ══╗                ", screen.lines().get(1));
   }
 
@@ -41,7 +41,7 @@ class SeeingAMenuBarTest {
     desktop.draw(screen);
 
     assertEquals(" Archivo  Ayuda         ", screen.lines().get(0));
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
     assertEquals("║                  ║    ", screen.lines().get(1));
     assertEquals("╚══════════════════╝    ", screen.lines().get(2));
   }

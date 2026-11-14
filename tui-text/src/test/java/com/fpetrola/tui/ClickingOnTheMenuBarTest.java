@@ -20,7 +20,7 @@ class ClickingOnTheMenuBarTest {
 
     assertEquals("         ┌────────┐", screen.lines().get(1).substring(0, 19));
     assertEquals("         │ Acerca │", screen.lines().get(2).substring(0, 19));
-    assertEquals("wwwwwwwwwfffffffwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmfffffffmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -31,7 +31,7 @@ class ClickingOnTheMenuBarTest {
     desktop.draw(screen);
 
     assertEquals("║salir ║ ", screen.lines().get(6).substring(0, 9));
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
   }
 
   @Test
@@ -52,7 +52,7 @@ class ClickingOnTheMenuBarTest {
     click(20, 2);
     desktop.draw(screen);
 
-    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("mmmmmmmmmmmmmmmmmmmmmmmm", screen.tints().get(0));
     assertEquals("║  Ok  ║ ", screen.lines().get(7).substring(0, 9));
     assertEquals("ffffff", screen.tints().get(7).substring(1, 7));
   }

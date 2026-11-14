@@ -9,7 +9,8 @@ import java.util.Optional;
  * it, the selected item highlighted. Items of the menus that are not open are met and left alone.
  */
 class MenuPainter implements MenuVisitor {
-  private static final char BAR_TINT = 'w';
+  /** The menu bar and open menus: black on grey, a tint of their own apart from the windows'. */
+  private static final char BAR_TINT = 'm';
   private static final char CHOSEN_TINT = 'f';
   /** A highlighted letter on grey, and on the green of the open title and the chosen item. */
   private static final char LETTER = 'h';

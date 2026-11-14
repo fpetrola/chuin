@@ -40,7 +40,7 @@ class ChoosingFromADropDownTest {
         "║│Nein      │      ║",
         "║│Vielleicht│      ║",
         "║└──────────┘      ║"), screen.lines().subList(1, 7).stream().map(line -> line.substring(0, 20)).toList());
-    assertEquals("wwffffffffffwswwwww", screen.tints().get(3).substring(0, 19));
+    assertEquals("wmffffffffffmswwwww", screen.tints().get(3).substring(0, 19));
   }
 
   @Test
