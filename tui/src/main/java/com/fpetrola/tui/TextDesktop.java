@@ -20,7 +20,7 @@ class TextDesktop implements Desktop {
 
   @Override
   public void draw(Screen screen) {
-    opened.forEach(window -> window.accept(new Painter(screen)));
+    opened.forEach(window -> window.accept(new Painter(screen, focused)));
   }
 
   /** What each key does to the desktop: Tab moves the focus, Enter presses the focused button. */

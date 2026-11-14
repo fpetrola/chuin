@@ -2,16 +2,19 @@ package com.fpetrola.tui;
 
 import java.util.List;
 
-/** Draws the views it visits on a screen. */
+/** Draws the views it visits on a screen; only the focused button is drawn between brackets. */
 class Painter implements ViewVisitor {
   private final Screen screen;
+  private final int focused;
+  private int seen;
   private int insideColumn;
   private int insideRow;
   private int column;
   private int row;
 
-  Painter(Screen screen) {
+  Painter(Screen screen, int focused) {
     this.screen = screen;
+    this.focused = focused;
   }
 
   @Override
@@ -40,7 +43,9 @@ class Painter implements ViewVisitor {
 
   @Override
   public void button(Button button, String caption, List<ButtonListener> listeners) {
-    screen.write(column, row, "[ " + caption + " ]");
+    String look = seen == focused ? "[ " + caption + " ]" : "  " + caption + "  ";
+    screen.write(column, row, look);
+    seen++;
   }
 
   @Override
