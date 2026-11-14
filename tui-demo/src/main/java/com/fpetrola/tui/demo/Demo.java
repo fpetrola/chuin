@@ -29,7 +29,7 @@ public class Demo {
     Label colorLabel = toolkit.label("Color:");
     ListBox colors = toolkit.listBox(List.of("Rojo", "Verde", "Azul", "Amarillo", "Negro", "Blanco"), 4);
 
-    window.place(toolkit.area(2, 1, 30, 13));
+    window.place(toolkit.area(2, 1, 40, 13));
     window.add(yes, toolkit.point(7, 1));
     window.add(no, toolkit.point(15, 1));
     window.add(remember, toolkit.point(7, 3));
@@ -38,7 +38,7 @@ public class Demo {
     window.add(name, toolkit.point(10, 5));
     window.add(colorLabel, toolkit.point(2, 7));
     window.add(colors, toolkit.point(10, 7));
-    yes.onPress(pressed -> message.text("Elegiste Sí"));
+    yes.onPress(pressed -> message.text("Hola " + name.text() + ", elegiste " + colors.selected().orElse("nada")));
     no.onPress(pressed -> message.text("Elegiste No"));
     desktop.open(help(toolkit));
     desktop.open(window);
@@ -48,7 +48,7 @@ public class Demo {
   /** A window that lists what each key does. */
   private static Window help(Toolkit toolkit) {
     Window help = toolkit.window("Ayuda");
-    help.place(toolkit.area(36, 4, 34, 9));
+    help.place(toolkit.area(45, 4, 34, 9));
     List<String> keys = List.of(
         "Tab      pasa al siguiente",
         "Enter    aprieta el botón",
