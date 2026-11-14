@@ -3,11 +3,8 @@ package com.fpetrola.tui;
 import java.util.function.BiConsumer;
 
 class TextCheckBox implements CheckBox {
-  private static final BiConsumer<ViewVisitor, CheckBox> CHECKED = ViewVisitor::visitChecked;
-  private static final BiConsumer<ViewVisitor, CheckBox> UNCHECKED = ViewVisitor::visitUnchecked;
   private final String text;
-  /** Whether it is checked, told without a flag: which visit of its mark it makes. */
-  private BiConsumer<ViewVisitor, CheckBox> mark = UNCHECKED;
+  private Mark mark = Mark.UNCHECKED;
 
   TextCheckBox(String text) {
     this.text = text;
@@ -21,11 +18,27 @@ class TextCheckBox implements CheckBox {
   @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitCheckBox(this);
-    mark.accept(visitor, this);
+    mark.visit.accept(visitor, this);
   }
 
   @Override
   public void toggle() {
-    mark = mark == CHECKED ? UNCHECKED : CHECKED;
+    mark = mark.opposite();
+  }
+
+  /** Whether a check box is checked, told without a flag: each mark knows its visit and the mark a toggle leads to. */
+  private enum Mark {
+    UNCHECKED(ViewVisitor::visitUnchecked),
+    CHECKED(ViewVisitor::visitChecked);
+
+    private final BiConsumer<ViewVisitor, CheckBox> visit;
+
+    Mark(BiConsumer<ViewVisitor, CheckBox> visit) {
+      this.visit = visit;
+    }
+
+    private Mark opposite() {
+      return values()[(ordinal() + 1) % values().length];
+    }
   }
 }

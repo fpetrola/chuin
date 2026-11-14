@@ -46,7 +46,7 @@ f22ae25950a279ede0af5c0e0e9ebcec03374b085217360cd7e6068e08006914	tui-text/src/ma
 8382cd3f4d7916569eccb9e9140899bf381b6ce2a61c1da7865e6927e218cac4	tui-text/src/main/java/com/fpetrola/tui/StreamKeyboard.java
 c65b26c83ea2e4f192745de964201b7377dc446fb902f1fa819ba462433ded7e	tui-text/src/main/java/com/fpetrola/tui/TextArea.java
 f14d49ec838b7cb3256a1b55860206145cba6f239daf1f7ebb5538dae5e1b1c2	tui-text/src/main/java/com/fpetrola/tui/TextButton.java
-1eca269395e7452a5a4af2484b49423e313221dc2cc2617482a8bc02528a4642	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java
+9436aad983831317e87ab430635add553d0b18f6783667bcb06a5266fca71781	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java
 8cba3df1b6a67d70587d700edae03bb9fbe606facfd9028582b09e7f4ba1233c	tui-text/src/main/java/com/fpetrola/tui/TextConsole.java
 7e4be08a615f22f41f77e9bcd90beba71e9e6845ef82438ce08c1430bc951bb6	tui-text/src/main/java/com/fpetrola/tui/TextDesktop.java
 ddf1fe21cd65212ba7cdc9cb72c0278c691c33f1c4100921054064d60e7f0cee	tui-text/src/main/java/com/fpetrola/tui/TextInputLine.java
