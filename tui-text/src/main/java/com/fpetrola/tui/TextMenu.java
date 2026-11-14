@@ -25,7 +25,7 @@ class TextMenu implements Menu {
 
   @Override
   public int width() {
-    return items.stream().mapToInt(item -> item.text().length()).max().orElse(0) + AROUND_ITEM;
+    return items.stream().mapToInt(item -> new TextCaption(item.text()).shown().length()).max().orElse(0) + AROUND_ITEM;
   }
 
   @Override

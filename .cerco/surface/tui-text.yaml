@@ -7,6 +7,11 @@ types:
       - "bottom(int): String"
       - "middle(int): String"
       - "top(String, int): String"
+  "com.fpetrola.tui.Caption":
+    kind: interface
+    members:
+      - "highlight(Screen, int, int, char): void"
+      - "shown(): String"
   "com.fpetrola.tui.Drawing":
     kind: interface
     members:

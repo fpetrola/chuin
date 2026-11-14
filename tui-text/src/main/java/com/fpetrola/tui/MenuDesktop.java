@@ -60,7 +60,7 @@ class MenuDesktop implements Desktop {
   /** Where each menu's title starts on the bar, left to right, and where the last one ends. */
   private List<Integer> titleStarts() {
     List<Integer> starts = new ArrayList<>(List.of(0));
-    menus().forEach(menu -> starts.add(starts.getLast() + menu.title().length() + 2));
+    menus().forEach(menu -> starts.add(starts.getLast() + new TextCaption(menu.title()).shown().length() + 2));
     return starts;
   }
 

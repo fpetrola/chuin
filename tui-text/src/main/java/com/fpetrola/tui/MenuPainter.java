@@ -11,6 +11,9 @@ import java.util.Optional;
 class MenuPainter implements MenuVisitor {
   private static final char BAR_TINT = 'w';
   private static final char CHOSEN_TINT = 'f';
+  /** A highlighted letter on grey, and on the green of the open title and the chosen item. */
+  private static final char LETTER = 'h';
+  private static final char CHOSEN_LETTER = 'k';
   private final Screen screen;
   private final Optional<Menu> open;
   private final int selected;
@@ -19,7 +22,7 @@ class MenuPainter implements MenuVisitor {
   /** Where the open menu's box starts. */
   private int boxColumn;
   /** The open menu's items met so far; its box is drawn again, one row taller, with each. */
-  private final List<String> shown = new ArrayList<>();
+  private final List<Caption> shown = new ArrayList<>();
 
   MenuPainter(Screen screen, Optional<Menu> open, int selected) {
     this.screen = screen;
@@ -36,12 +39,15 @@ class MenuPainter implements MenuVisitor {
 
   @Override
   public void visitMenu(Menu menu) {
-    String title = " " + menu.title() + " ";
+    Caption caption = new TextCaption(menu.title());
+    String title = " " + caption.shown() + " ";
+    boolean chosen = open.filter(menu::equals).isPresent();
     screen.write(column, 0, title);
-    if (open.filter(menu::equals).isPresent()) {
+    if (chosen) {
       screen.paint(column, 0, title.length(), CHOSEN_TINT);
       boxColumn = column;
     }
+    caption.highlight(screen, column + 1, 0, chosen ? CHOSEN_LETTER : LETTER);
     column += title.length();
   }
 
@@ -51,14 +57,15 @@ class MenuPainter implements MenuVisitor {
     if (open.filter(menu::equals).isEmpty()) {
       return;
     }
-    shown.add(item.text());
+    shown.add(new TextCaption(item.text()));
     Area box = new TextArea(boxColumn, 1, menu.width(), shown.size() + 2);
     new RaisedFrame(box, "", BAR_TINT, Lines.SINGLE).drawOn(screen);
-    for (int at = 0; at < shown.size(); at++) {
-      screen.write(boxColumn + 2, 2 + at, shown.get(at));
-    }
     if (selected < shown.size()) {
       screen.paint(boxColumn + 1, 2 + selected, menu.width() - 2, CHOSEN_TINT);
+    }
+    for (int at = 0; at < shown.size(); at++) {
+      screen.write(boxColumn + 2, 2 + at, shown.get(at).shown());
+      shown.get(at).highlight(screen, boxColumn + 2, 2 + at, at == selected ? CHOSEN_LETTER : LETTER);
     }
   }
 

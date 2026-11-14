@@ -10,6 +10,9 @@ class Painter implements ViewVisitor {
   private static final String SHADE_COVERS = " ▀▄";
   /** The field of an input line, focused or not: white on blue. */
   private static final char FIELD_TINT = 'i';
+  /** A highlighted letter on grey, and on the green face of a button. */
+  private static final char LETTER = 'h';
+  private static final char BUTTON_LETTER = 'k';
   /** The face of a button without the focus: black on green. */
   private static final char BUTTON_TINT = 'b';
   /** The lines the frame of its window is drawn with: double for the window on top, single for the rest. */
@@ -56,7 +59,8 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitButton(Button button) {
-    String face = "  " + button.caption() + "  ";
+    Caption caption = new TextCaption(button.caption());
+    String face = "  " + caption.shown() + "  ";
     inside.write(column, row, face);
     shade(column + face.length(), row, '▄');
     for (int cell = 1; cell <= face.length(); cell++) {
@@ -64,11 +68,14 @@ class Painter implements ViewVisitor {
     }
     inside.paint(column, row, face.length(), BUTTON_TINT);
     next(face.length());
+    caption.highlight(inside, column + 2, row, BUTTON_LETTER);
   }
 
   @Override
   public void visitLabel(Label label) {
-    inside.write(column, row, label.text());
+    Caption caption = new TextCaption(label.text());
+    inside.write(column, row, caption.shown());
+    caption.highlight(inside, column, row, LETTER);
   }
 
   @Override
