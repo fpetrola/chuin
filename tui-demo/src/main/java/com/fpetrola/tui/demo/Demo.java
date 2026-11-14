@@ -16,13 +16,16 @@ public class Demo {
     Toolkit toolkit = new TextToolkit();
     Desktop desktop = toolkit.desktop();
     Window window = toolkit.window("Demo");
-    Button ok = toolkit.button("OK");
-    Label message = toolkit.label("Apretá Enter");
+    Button yes = toolkit.button("Sí");
+    Button no = toolkit.button("No");
+    Label message = toolkit.label("Tab cambia, Enter elige");
 
     window.place(toolkit.area(2, 1, 30, 7));
-    window.add(ok, toolkit.point(11, 1));
-    window.add(message, toolkit.point(8, 3));
-    ok.onPress(pressed -> message.text("¡Presionado!"));
+    window.add(yes, toolkit.point(7, 1));
+    window.add(no, toolkit.point(15, 1));
+    window.add(message, toolkit.point(2, 3));
+    yes.onPress(pressed -> message.text("Elegiste Sí"));
+    no.onPress(pressed -> message.text("Elegiste No"));
     desktop.open(window);
     toolkit.console(System.in, System.out, toolkit.screen(80, 24)).run(desktop);
   }

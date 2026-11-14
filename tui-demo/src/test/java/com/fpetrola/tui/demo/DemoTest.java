@@ -11,12 +11,12 @@ import org.junit.jupiter.api.Test;
 
 class DemoTest {
   @Test
-  void mainShowsTheDemoWindowAndEnterChangesItsMessage() {
+  void tabThenEnterChoosesNoInTheDemo() {
     InputStream originalIn = System.in;
     PrintStream originalOut = System.out;
     ByteArrayOutputStream shown = new ByteArrayOutputStream();
     try {
-      System.setIn(new ByteArrayInputStream("\r".getBytes(StandardCharsets.UTF_8)));
+      System.setIn(new ByteArrayInputStream("\t\r".getBytes(StandardCharsets.UTF_8)));
       System.setOut(new PrintStream(shown, true, StandardCharsets.UTF_8));
 
       Demo.main(new String[0]);
@@ -26,6 +26,6 @@ class DemoTest {
     }
 
     String output = shown.toString(StandardCharsets.UTF_8);
-    assertTrue(output.contains(" Demo ") && output.contains("[ OK ]") && output.contains("¡Presionado!"), output);
+    assertTrue(output.contains(" Demo ") && output.contains("[ No ]") && output.contains("Elegiste No"), output);
   }
 }
