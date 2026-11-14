@@ -8,5 +8,7 @@ interface KeyVisitor {
 
   void space();
 
+  void character(char typed);
+
   void other();
 }

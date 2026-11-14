@@ -1,6 +1,7 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.function.Consumer;
 
 /** Presses the button that has the focus: the one at the focused place among a window's focusable views. */
 class PressFocused implements ViewVisitor {
@@ -33,6 +34,11 @@ class PressFocused implements ViewVisitor {
 
   @Override
   public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
+    seen++;
+  }
+
+  @Override
+  public void inputLine(InputLine line, String text, int width, Consumer<Character> type) {
     seen++;
   }
 }

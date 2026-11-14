@@ -28,6 +28,8 @@ types:
       - "draw(Screen): void"
       - "open(Window): void"
       - "type(Key): void"
+  "com.fpetrola.tui.InputLine":
+    kind: interface
   "com.fpetrola.tui.Key":
     kind: interface
     members:
@@ -35,6 +37,7 @@ types:
   "com.fpetrola.tui.KeyVisitor":
     kind: interface
     members:
+      - "character(char): void"
       - "enter(): void"
       - "other(): void"
       - "space(): void"
@@ -84,6 +87,7 @@ types:
       - "checkBox(String): CheckBox"
       - "console(InputStream, OutputStream, Screen): Console"
       - "desktop(): Desktop"
+      - "inputLine(int): InputLine"
       - "keyboard(InputStream): Keyboard"
       - "keys(): Keys"
       - "label(String): Label"
@@ -101,6 +105,7 @@ types:
       - "button(Button, String, List<ButtonListener>): void"
       - "checkBox(CheckBox, String, Mark, Runnable): void"
       - "child(Point): void"
+      - "inputLine(InputLine, String, int, Consumer<Character>): void"
       - "label(String): void"
       - "window(String, Area): void"
   "com.fpetrola.tui.Window":

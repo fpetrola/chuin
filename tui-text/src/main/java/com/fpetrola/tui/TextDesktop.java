@@ -28,7 +28,7 @@ class TextDesktop implements Desktop {
     return opened.stream().reduce((below, above) -> above);
   }
 
-  /** What each key does to the desktop: Tab moves the focus, Enter presses the focused button, Space toggles the focused check box. */
+  /** What each key does to the desktop: Tab moves the focus, Enter presses the focused button, Space toggles the focused check box, a letter goes into the focused input line. */
   private class Typed implements KeyVisitor {
     @Override
     public void enter() {
@@ -46,6 +46,11 @@ class TextDesktop implements Desktop {
     @Override
     public void space() {
       top().ifPresent(window -> window.accept(new ToggleFocused(focused)));
+    }
+
+    @Override
+    public void character(char typed) {
+      top().ifPresent(window -> window.accept(new TypeIntoFocused(focused, typed)));
     }
 
     @Override

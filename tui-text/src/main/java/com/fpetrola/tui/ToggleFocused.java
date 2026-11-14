@@ -1,8 +1,9 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.function.Consumer;
 
-/** Toggles the check box that has the focus: the one at the focused place among a window's focusable views. */
+/** What Space does to the focused view: toggles a check box, types a blank into an input line. */
 class ToggleFocused implements ViewVisitor {
   private final int focused;
   private int seen;
@@ -32,6 +33,14 @@ class ToggleFocused implements ViewVisitor {
   public void checkBox(CheckBox box, String text, Mark mark, Runnable toggle) {
     if (seen == focused) {
       toggle.run();
+    }
+    seen++;
+  }
+
+  @Override
+  public void inputLine(InputLine line, String text, int width, Consumer<Character> type) {
+    if (seen == focused) {
+      type.accept(' ');
     }
     seen++;
   }

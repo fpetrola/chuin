@@ -36,6 +36,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public InputLine inputLine(int width) {
+    return new TextInputLine(width);
+  }
+
+  @Override
   public Keys keys() {
     return keys;
   }

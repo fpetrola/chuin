@@ -14,6 +14,8 @@ public interface Toolkit {
 
   CheckBox checkBox(String text);
 
+  InputLine inputLine(int width);
+
   Keys keys();
 
   Screen screen(int columns, int rows);

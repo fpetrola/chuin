@@ -11,6 +11,8 @@ class StreamKeyboard implements Keyboard {
   private static final int CARRIAGE_RETURN = '\r';
   private static final int TAB = '\t';
   private static final int SPACE = ' ';
+  private static final int FIRST_PRINTABLE = '!';
+  private static final int LAST_PRINTABLE = '~';
   private final InputStream in;
   private final Keys keys;
 
@@ -31,7 +33,9 @@ class StreamKeyboard implements Keyboard {
   }
 
   private Key keyFor(int read) {
-    Key spaced = read == SPACE ? keys.space() : KeyVisitor::other;
+    boolean printable = read >= FIRST_PRINTABLE && read <= LAST_PRINTABLE;
+    Key written = printable ? visitor -> visitor.character((char) read) : KeyVisitor::other;
+    Key spaced = read == SPACE ? keys.space() : written;
     Key named = read == TAB ? keys.tab() : spaced;
     return read == CARRIAGE_RETURN ? keys.enter() : named;
   }

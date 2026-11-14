@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
+import java.util.function.Consumer;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -86,5 +87,19 @@ class VisitingViewsTest {
     InOrder order = inOrder(marks);
     order.verify(marks).unchecked();
     order.verify(marks).checked();
+  }
+
+  @Test
+  void anInputLineHandsItsTextAndWidthAndKeepsWhatIsTypedIntoIt() {
+    InputLine name = toolkit.inputLine(10);
+    ArgumentCaptor<Consumer<Character>> type = ArgumentCaptor.captor();
+
+    name.accept(visitor);
+    verify(visitor).inputLine(eq(name), eq(""), eq(10), type.capture());
+    type.getValue().accept('h');
+    type.getValue().accept('i');
+    name.accept(visitor);
+
+    verify(visitor).inputLine(eq(name), eq("hi"), eq(10), any());
   }
 }
