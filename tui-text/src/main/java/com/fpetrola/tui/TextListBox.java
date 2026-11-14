@@ -1,6 +1,7 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.Optional;
 
 /** Keeps a selection that stays between the ends, and the first row shown, which follows the selection. */
 class TextListBox implements ListBox {
@@ -17,6 +18,11 @@ class TextListBox implements ListBox {
     }
     this.items = List.copyOf(items);
     this.rows = rows;
+  }
+
+  @Override
+  public Optional<String> selected() {
+    return items.isEmpty() ? Optional.empty() : Optional.of(items.get(selected));
   }
 
   @Override

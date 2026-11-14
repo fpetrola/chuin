@@ -4,13 +4,13 @@
 57ebb02d3d9c4fb70a11de266611e1eb9d62e9880bcc9a13ef309447095fe7db	tui-api/src/main/java/com/fpetrola/tui/CheckBox.java
 cb53a662c9d224e7419a9a2b24eaf8f1b24a6504813da2b9e68748d8795adb14	tui-api/src/main/java/com/fpetrola/tui/Console.java
 44d83cbfce3e677fc972762a9af39fcfaa2b1e212360947e34b0219d4f160a9f	tui-api/src/main/java/com/fpetrola/tui/Desktop.java
-ca2cfb82c397e3d47327c7b2950a23f3f9a139ee2c001b10ee66f4cd891cee74	tui-api/src/main/java/com/fpetrola/tui/InputLine.java
+849db7cbaf62eafc0831f247dc853d12365dc710748d2d969a16441b92bdab8b	tui-api/src/main/java/com/fpetrola/tui/InputLine.java
 6d5e20502476dd447517ae529b6619537a8f7e0a162738a5726af718ca35645a	tui-api/src/main/java/com/fpetrola/tui/Key.java
 2b7be2dd4c1d605930c8f70c907d8201d9a3348e583a85fd22909d1f39a3383c	tui-api/src/main/java/com/fpetrola/tui/KeyVisitor.java
 b8ad987b4fb737e3f5f6f391fa134947ae4c0be170169d893e180911408b2c7d	tui-api/src/main/java/com/fpetrola/tui/Keyboard.java
 eb5aac45aa9c9a6ad697addca7c691e013c7558f6f8eddf1a2a781fe77d3c150	tui-api/src/main/java/com/fpetrola/tui/Keys.java
 87018fb6520f052c615f7f0173227ba28ff9ea8fa0c5694ae7091c187968b627	tui-api/src/main/java/com/fpetrola/tui/Label.java
-c31488001da5bf0680db6a28410ea0889784602b7c4ccd11c0f37314a4874a5d	tui-api/src/main/java/com/fpetrola/tui/ListBox.java
+fc542f6e62de0913c978d78807038a7a2e183d1caa6f41a5a4c4f5aeb53aa065	tui-api/src/main/java/com/fpetrola/tui/ListBox.java
 9b2ac0942d653598e1ff0eb4ea2dab45af9f66d15a6e7264f221bdc632c977df	tui-api/src/main/java/com/fpetrola/tui/Mark.java
 f1bc48c07661aaf440c041aaee669865d42b4e752f08d1ab122aa9809f5aa894	tui-api/src/main/java/com/fpetrola/tui/MarkVisitor.java
 5e749b9e6f6a83a7351a45b718488d2a5a2a17997f054dc101ca5c9dda6d967c	tui-api/src/main/java/com/fpetrola/tui/Point.java
@@ -39,10 +39,10 @@ c65b26c83ea2e4f192745de964201b7377dc446fb902f1fa819ba462433ded7e	tui-text/src/ma
 10e9d9f64d15fa8a033c6e4d5e3d0365e87d65941a16d8b0ebe3ca3dc6dfa81d	tui-text/src/main/java/com/fpetrola/tui/TextCheckBox.java
 32ac37831f851cf211d365dcc9adb355563a8b86288ccfe6a73dfd186996a955	tui-text/src/main/java/com/fpetrola/tui/TextConsole.java
 21c9088b067eaa29496f790c75a0f097bc0d55ae04d059fe5d59bc3aa95f0192	tui-text/src/main/java/com/fpetrola/tui/TextDesktop.java
-c9392b8a09789f440e65bf14facdf8ea220e2190848df2d4de17beefb515369d	tui-text/src/main/java/com/fpetrola/tui/TextInputLine.java
+59e24ff552faa5a5aa064f0d3b8c5c7efb57f4c1f7b49d1308d6ed10896ae09d	tui-text/src/main/java/com/fpetrola/tui/TextInputLine.java
 1ffcc9c3c7f3be9972b624fb255cd5cc5841fde28fe080fc4127326a17d6a535	tui-text/src/main/java/com/fpetrola/tui/TextKeys.java
 1ad846cbbe3b20101118f237f4b57c34bb1f4adc4956a6f645a8dc5a0b4c7af1	tui-text/src/main/java/com/fpetrola/tui/TextLabel.java
-5e04924fb7070dfb1ae640166659eb246837009b6ea0c6af1c245004b54ce679	tui-text/src/main/java/com/fpetrola/tui/TextListBox.java
+c898904350adbbb79cce551c01846597b9cbc5af67dacc1bc54d33850266c554	tui-text/src/main/java/com/fpetrola/tui/TextListBox.java
 9768e3f33bf36364c99a0c04db1439d77099e359a31748df753672f9265a552e	tui-text/src/main/java/com/fpetrola/tui/TextPoint.java
 f642038125b74b40dfdcf926392887663c218675e60976162af98874f5f55493	tui-text/src/main/java/com/fpetrola/tui/TextRadioButtons.java
 80af953abe728075047288893e570cbd8fb0242b8e0e9a05c2f0d2c9b95ef2cb	tui-text/src/main/java/com/fpetrola/tui/TextScreen.java
@@ -61,6 +61,7 @@ d939c3a8c8202b2dd6c1524cfaf9fb3193b05c76c2d9c847bd2bd658323edbe9	tui-text/src/te
 80038a3cb8c1879d7ec1e15f2768e7da4cd87c159f56d1f635812a8aa3ee2898	tui-text/src/test/java/com/fpetrola/tui/MovingFocusWithTabTest.java
 8137411e2947c66df96c55bac7c0beffb37f00c6637344576c455a0048cfdb7c	tui-text/src/test/java/com/fpetrola/tui/PressingAButtonTest.java
 279316d1ca3260c1dfdda0ec2b4d06b4a9098bb3fb5d96b3dc53b85382cd1c8a	tui-text/src/test/java/com/fpetrola/tui/QuittingWithControlQTest.java
+d3e107dbba3d183a774f26251ccf2c93e313c9c94520b2a98ef274d857d2c9e9	tui-text/src/test/java/com/fpetrola/tui/ReadingWhatWasEnteredTest.java
 24f1ec7b415300195216185e1995486f16f10cb5ace948ad7baf5a354de22e44	tui-text/src/test/java/com/fpetrola/tui/RunningOnAConsoleTest.java
 bee4f297141b331b14b980c58200ff3ae26e52d70d35180b14021f31575a38fe	tui-text/src/test/java/com/fpetrola/tui/ScrollingAListBoxTest.java
 9b68fa000703bf7e7e94ce710250459fee4dddf1d20cee28ba3dbe8710361611	tui-text/src/test/java/com/fpetrola/tui/SeeingAWindowShadowTest.java
