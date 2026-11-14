@@ -6,7 +6,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.ArrayList;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
@@ -133,5 +136,97 @@ class TellingKeysApartTest {
     InOrder order = inOrder(visitor);
     order.verify(visitor, times(2)).other();
     order.verify(visitor).tab();
+  }
+
+  @Test
+  void anEscapeWithNothingRightAfterItIsTheEscapeKeyAndAnEscapeBeforeALetterIsAlt() {
+    Keyboard keyboard = toolkit.keyboard(new SlowStream().now("\u001bx\t").now("\u001b"));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(3)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).alt('x');
+    order.verify(visitor).tab();
+    order.verify(visitor).escape();
+  }
+
+  @Test
+  void aSequenceWhoseBytesComeAMomentApartIsStillOneKeyButAnEscapeLeftAloneLongerIsEscape() {
+    SlowStream stream = new SlowStream().now("\u001b").after(10, "[A").now("\u001b").after(300, "x");
+    Keyboard keyboard = toolkit.keyboard(stream);
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(3)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).up();
+    order.verify(visitor).escape();
+    order.verify(visitor).character('x');
+  }
+
+  @Test
+  void anEscapeBeforeAnythingButALetterIsTheEscapeKeyAndThatByteIsReadAsUsual() {
+    Keyboard keyboard = toolkit.keyboard(new SlowStream().now("\u001b\u001b\u001b\t\u001b1"));
+    Desktop desktop = mock(Desktop.class);
+    ArgumentCaptor<Key> typed = ArgumentCaptor.forClass(Key.class);
+
+    keyboard.typeInto(desktop);
+
+    verify(desktop, times(6)).type(typed.capture());
+    typed.getAllValues().forEach(key -> key.accept(visitor));
+    InOrder order = inOrder(visitor);
+    order.verify(visitor, times(3)).escape();
+    order.verify(visitor).tab();
+    order.verify(visitor).escape();
+    order.verify(visitor).character('1');
+  }
+
+  /** A stream whose bytes become available in chunks, each some milliseconds after the one before, as over a slow link. */
+  private static class SlowStream extends InputStream {
+    private final List<Integer> delays = new ArrayList<>();
+    private final List<byte[]> chunks = new ArrayList<>();
+    private long chunkSince = System.nanoTime();
+    private int chunk;
+    private int at;
+
+    SlowStream now(String text) {
+      return after(0, text);
+    }
+
+    SlowStream after(int millis, String text) {
+      delays.add(millis);
+      chunks.add(text.getBytes(StandardCharsets.UTF_8));
+      return this;
+    }
+
+    @Override
+    public int available() {
+      boolean due = chunk < chunks.size() && System.nanoTime() - chunkSince >= delays.get(chunk) * 1_000_000L;
+      return due ? chunks.get(chunk).length - at : 0;
+    }
+
+    @Override
+    public int read() {
+      if (chunk >= chunks.size()) {
+        return -1;
+      }
+      while (available() == 0) {
+        Thread.onSpinWait();
+      }
+      int read = chunks.get(chunk)[at++] & 0xFF;
+      if (at == chunks.get(chunk).length) {
+        chunk++;
+        at = 0;
+        chunkSince = System.nanoTime();
+      }
+      return read;
+    }
   }
 }

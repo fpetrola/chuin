@@ -117,6 +117,16 @@ class ChoosingFromAMenuTest {
     assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
   }
 
+  @Test
+  void escapeClosesTheOpenMenu() {
+    open();
+    press(F10 + "\u001b");
+    desktop.draw(screen);
+
+    assertEquals("wwwwwwwwwwwwwwwwwwwwwwww", screen.tints().get(0));
+    assertEquals("                        ", screen.lines().get(1));
+  }
+
   private void open() {
     MenuBar bar = toolkit.menuBar();
     Menu file = toolkit.menu("Archivo");

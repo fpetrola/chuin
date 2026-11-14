@@ -280,5 +280,10 @@ class MenuDesktop implements Desktop {
         state = new Closed();
       }
     }
+
+    @Override
+    public void escape() {
+      state = new Closed();
+    }
   }
 }

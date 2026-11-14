@@ -39,4 +39,12 @@ interface KeyVisitor {
 
   default void other() {
   }
+
+  /** The escape key alone, with nothing right after it. */
+  default void escape() {
+  }
+
+  /** Alt held with a letter, as terminals send it: an escape right before the letter. */
+  default void alt(char letter) {
+  }
 }

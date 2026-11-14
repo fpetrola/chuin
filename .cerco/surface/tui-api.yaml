@@ -49,11 +49,13 @@ types:
   "com.fpetrola.tui.KeyVisitor":
     kind: interface
     members:
+      - "alt(char): void"
       - "backspace(): void"
       - "character(char): void"
       - "control(char): void"
       - "down(): void"
       - "enter(): void"
+      - "escape(): void"
       - "function(int): void"
       - "left(): void"
       - "other(): void"

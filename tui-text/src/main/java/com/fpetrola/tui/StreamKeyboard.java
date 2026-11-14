@@ -20,6 +20,10 @@ class StreamKeyboard implements Keyboard {
   private static final int LEFT_BUTTON = 0;
   private static final int PRESSED = 'M';
   private static final int ESCAPE = 0x1B;
+  /** No byte: nothing came, or nothing is put back. */
+  private static final int NONE = -2;
+  /** How long to wait after an escape for the rest of a sequence: Turbo Vision and ncurses wait about as long. */
+  private static final long ESCAPE_WAIT_NANOS = 50_000_000L;
   private static final int BACKSPACE = 0x7F;
   /** What several terminals send for backspace instead of 0x7F. */
   private static final int CONTROL_H = 0x08;
@@ -39,7 +43,7 @@ class StreamKeyboard implements Keyboard {
   @Override
   public void typeInto(Desktop desktop) {
     try {
-      for (int read = in.read(); read != END && read != CONTROL_Q; read = in.read()) {
+      for (int read = next(); read != END && read != CONTROL_Q; read = next()) {
         heard(read).accept(desktop);
       }
     } catch (IOException e) {
@@ -54,8 +58,35 @@ class StreamKeyboard implements Keyboard {
     return read == ESCAPE ? escaped() : desktop -> desktop.type(key);
   }
 
+  /** The byte put back after an escape, read again before the stream, or none. */
+  private int pending = NONE;
+
+  private int next() throws IOException {
+    int read = pending == NONE ? in.read() : pending;
+    pending = NONE;
+    return read;
+  }
+
+  /** The byte that comes within a short wait after an escape, or none when nothing does. */
+  private int waited() throws IOException {
+    long deadline = System.nanoTime() + ESCAPE_WAIT_NANOS;
+    while (in.available() == 0 && System.nanoTime() < deadline) {
+      Thread.onSpinWait();
+    }
+    return in.available() > 0 ? in.read() : NONE;
+  }
+
+  /** What follows an escape: a sequence after [ or O, Alt with a letter, or else the escape key alone, the byte after it read as usual. */
   private Consumer<Desktop> escaped() throws IOException {
-    int kind = in.read();
+    int kind = waited();
+    boolean sequence = kind == '[' || kind == 'O';
+    boolean letter = kind != NONE && Character.isLetter(kind);
+    Key alone = letter ? visitor -> visitor.alt((char) kind) : KeyVisitor::escape;
+    pending = sequence || letter ? NONE : kind;
+    return sequence ? sequence(kind) : desktop -> desktop.type(alone);
+  }
+
+  private Consumer<Desktop> sequence(int kind) throws IOException {
     int first = kind == '[' ? in.read() : END;
     Key key = kind == 'O' ? shifted(in.read()) : KeyVisitor::other;
     Key bracketed = kind == '[' && first != '<' ? bracketed(first) : key;
