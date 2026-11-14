@@ -38,7 +38,7 @@ class TextDesktop implements Windows {
 
   @Override
   public void click(Point cell) {
-    closeOpenList(() -> { });
+    closeOpenList();
     int under = windowUnder(cell);
     if (under >= 0 && under < opened.size() - 1) {
       raise(under);
@@ -59,16 +59,14 @@ class TextDesktop implements Windows {
 
   @Override
   public void escape(Runnable otherwise) {
-    boolean[] closed = {false};
-    closeOpenList(() -> closed[0] = true);
-    if (!closed[0]) {
-      otherwise.run();
-    }
+    CloseOpenList close = new CloseOpenList(otherwise);
+    top().ifPresent(window -> window.accept(new AtFocus(focused, close)));
+    close.settle();
   }
 
-  /** Closes the focused drop down's open list, if there is one, and then runs what was asked for that case. */
-  private void closeOpenList(Runnable whenClosed) {
-    top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList(whenClosed))));
+  /** Closes the focused drop down's open list, if there is one. */
+  private void closeOpenList() {
+    top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList())));
   }
 
   @Override
@@ -146,7 +144,7 @@ class TextDesktop implements Windows {
     /** Moves the focus to the next focusable view, back to the first after the last. */
     @Override
     public void tab() {
-      closeOpenList(() -> { });
+      closeOpenList();
       List<View> focusable = new ArrayList<>();
       top().ifPresent(window -> window.accept(new CollectFocusable(focusable)));
       focused = (focused + 1) % Math.max(1, focusable.size());
