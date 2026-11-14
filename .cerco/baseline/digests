@@ -1,5 +1,5 @@
-f818314109c88f9169e63fd1bd58f7c21868a3795548e10361997f2ed5618fba	tui-demo/src/main/java/com/fpetrola/tui/demo/Demo.java
-c0215c9f544c4d4b844a678735cfb6759900965fdf477be0b04284741c7360c5	tui-demo/src/test/java/com/fpetrola/tui/demo/DemoTest.java
+f6e0761c78c355fa2804816fd5571e922e18e2f1dab7cce167fa3eadc4bceb98	tui-demo/src/main/java/com/fpetrola/tui/demo/Demo.java
+32fdb3cbb47df95d116d3d69f402e7702db3bfe315a62c301b5419019ebc012d	tui-demo/src/test/java/com/fpetrola/tui/demo/DemoTest.java
 9a597ef77dc33df475bde1d940fad449b5efe5aace4cfea8cfaf66bcc5a0e290	tui/src/main/java/com/fpetrola/tui/AnsiTerminal.java
 0ab2c8f42cdc726d29965d3b6a0fbbfe22961bd483054adfcc0b70529656c866	tui/src/main/java/com/fpetrola/tui/Area.java
 648c9bcc1e763feb833180c1303124f10cb32bedcd7a81c771e3adc6201665b2	tui/src/main/java/com/fpetrola/tui/Button.java

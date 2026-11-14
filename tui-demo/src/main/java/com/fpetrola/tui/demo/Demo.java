@@ -1,6 +1,7 @@
 package com.fpetrola.tui.demo;
 
 import com.fpetrola.tui.Button;
+import com.fpetrola.tui.CheckBox;
 import com.fpetrola.tui.Desktop;
 import com.fpetrola.tui.Label;
 import com.fpetrola.tui.TextToolkit;
@@ -18,12 +19,14 @@ public class Demo {
     Window window = toolkit.window("Demo");
     Button yes = toolkit.button("Sí");
     Button no = toolkit.button("No");
+    CheckBox remember = toolkit.checkBox("Recordar");
     Label message = toolkit.label("Tab cambia, Enter elige");
 
-    window.place(toolkit.area(2, 1, 30, 7));
+    window.place(toolkit.area(2, 1, 30, 8));
     window.add(yes, toolkit.point(7, 1));
     window.add(no, toolkit.point(15, 1));
-    window.add(message, toolkit.point(2, 3));
+    window.add(remember, toolkit.point(7, 3));
+    window.add(message, toolkit.point(2, 4));
     yes.onPress(pressed -> message.text("Elegiste Sí"));
     no.onPress(pressed -> message.text("Elegiste No"));
     desktop.open(window);
