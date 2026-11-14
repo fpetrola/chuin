@@ -1,0 +1,6 @@
+# What a person signed of this module's surface; cerco:approve grows it.
+module: "tui-demo"
+types:
+  "com.fpetrola.tui.demo.Demo":
+    members:
+      - "main(String[]): void"

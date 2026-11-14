@@ -1,0 +1,111 @@
+# What a person signed of this module's surface; cerco:approve grows it.
+module: "tui-api"
+types:
+  "com.fpetrola.tui.Area":
+    kind: interface
+    members:
+      - "column(): int"
+      - "columns(): int"
+      - "row(): int"
+      - "rows(): int"
+  "com.fpetrola.tui.Button":
+    kind: interface
+    members:
+      - "onPress(ButtonListener): void"
+  "com.fpetrola.tui.ButtonListener":
+    kind: interface
+    members:
+      - "pressed(Button): void"
+  "com.fpetrola.tui.CheckBox":
+    kind: interface
+  "com.fpetrola.tui.Console":
+    kind: interface
+    members:
+      - "run(Desktop): void"
+  "com.fpetrola.tui.Desktop":
+    kind: interface
+    members:
+      - "draw(Screen): void"
+      - "open(Window): void"
+      - "type(Key): void"
+  "com.fpetrola.tui.Key":
+    kind: interface
+    members:
+      - "accept(KeyVisitor): void"
+  "com.fpetrola.tui.KeyVisitor":
+    kind: interface
+    members:
+      - "enter(): void"
+      - "other(): void"
+      - "space(): void"
+      - "tab(): void"
+  "com.fpetrola.tui.Keyboard":
+    kind: interface
+    members:
+      - "typeInto(Desktop): void"
+  "com.fpetrola.tui.Keys":
+    kind: interface
+    members:
+      - "enter(): Key"
+      - "space(): Key"
+      - "tab(): Key"
+  "com.fpetrola.tui.Label":
+    kind: interface
+    members:
+      - "text(String): void"
+  "com.fpetrola.tui.Mark":
+    kind: interface
+    members:
+      - "accept(MarkVisitor): void"
+  "com.fpetrola.tui.MarkVisitor":
+    kind: interface
+    members:
+      - "checked(): void"
+      - "unchecked(): void"
+  "com.fpetrola.tui.Point":
+    kind: interface
+    members:
+      - "column(): int"
+      - "row(): int"
+  "com.fpetrola.tui.Screen":
+    kind: interface
+    members:
+      - "lines(): List<String>"
+      - "write(int, int, String): void"
+  "com.fpetrola.tui.Terminal":
+    kind: interface
+    members:
+      - "show(Screen): void"
+  "com.fpetrola.tui.Toolkit":
+    kind: interface
+    members:
+      - "area(int, int, int, int): Area"
+      - "button(String): Button"
+      - "checkBox(String): CheckBox"
+      - "console(InputStream, OutputStream, Screen): Console"
+      - "desktop(): Desktop"
+      - "keyboard(InputStream): Keyboard"
+      - "keys(): Keys"
+      - "label(String): Label"
+      - "point(int, int): Point"
+      - "screen(int, int): Screen"
+      - "terminal(OutputStream): Terminal"
+      - "window(String): Window"
+  "com.fpetrola.tui.View":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+  "com.fpetrola.tui.ViewVisitor":
+    kind: interface
+    members:
+      - "button(Button, String, List<ButtonListener>): void"
+      - "checkBox(CheckBox, String, Mark, Runnable): void"
+      - "child(Point): void"
+      - "label(String): void"
+      - "window(String, Area): void"
+  "com.fpetrola.tui.Window":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+      - "add(View, Point): void"
+      - "place(Area): void"

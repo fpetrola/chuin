@@ -8,6 +8,6 @@
     <artifactId>cerco-tdd</artifactId>
     <version>0.1.0-SNAPSHOT</version>
   </parent>
-  <artifactId>tui</artifactId>
+  <artifactId>tui-api</artifactId>
   <packaging>jar</packaging>
 </project>

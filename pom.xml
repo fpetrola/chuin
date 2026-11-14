@@ -10,7 +10,8 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>tui</module>
+    <module>tui-api</module>
+    <module>tui-text</module>
     <module>tui-demo</module>
   </modules>
 
@@ -54,7 +55,7 @@
       <plugin>
         <groupId>com.fpetrola</groupId>
         <artifactId>cerco-maven-plugin</artifactId>
-        <version>0.22.2</version>
+        <version>0.23.0</version>
         <configuration>
           <sealedSurface>promises</sealedSurface>
         </configuration>

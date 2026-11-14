@@ -1,0 +1,6 @@
+# What a person signed of this module's surface; cerco:approve grows it.
+module: "tui-text"
+types:
+  "com.fpetrola.tui.TextToolkit":
+    members:
+      - "<init>()"
