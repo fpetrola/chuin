@@ -19,7 +19,7 @@ class ChoosingFromAMenuTest {
   private final Label said = toolkit.label("");
 
   @Test
-  void f10OpensTheFirstMenuUnderItsTitleWithItsFirstItemSelected() {
+  void f10OpensTheFirstMenuUnderItsTitleWithItsFirstItemSelectedAndAShadow() {
     open();
     press(F10 + DOWN + UP + UP);
     desktop.draw(screen);
@@ -27,12 +27,14 @@ class ChoosingFromAMenuTest {
     assertEquals(List.of(
         " Archivo  Ayuda         ",
         "┌───────┐               ",
-        "│ Nuevo │               ",
-        "│ Salir │               ",
-        "└───────┘               "), screen.lines().subList(0, 5));
+        "│ Nuevo │░              ",
+        "│ Salir │░              ",
+        "└───────┘░              ",
+        " ░░░░░░░░░              "), screen.lines().subList(0, 6));
     assertEquals("fffffffffwwwwwwwwwwwwwww", screen.tints().get(0));
-    assertEquals("wfffffffw...............", screen.tints().get(2));
-    assertEquals("wwwwwwwww...............", screen.tints().get(3));
+    assertEquals("wfffffffws..............", screen.tints().get(2));
+    assertEquals("wwwwwwwwws..............", screen.tints().get(3));
+    assertEquals(".sssssssss..............", screen.tints().get(5));
   }
 
   @Test
@@ -66,10 +68,11 @@ class ChoosingFromAMenuTest {
     assertEquals(List.of(
         " Archivo  Ayuda         ",
         "         ┌────────┐     ",
-        "         │ Acerca │     ",
-        "         └────────┘     "), screen.lines().subList(0, 4));
+        "         │ Acerca │░    ",
+        "         └────────┘░    ",
+        "          ░░░░░░░░░░    "), screen.lines().subList(0, 5));
     assertEquals("wwwwwwwwwfffffffwwwwwwww", screen.tints().get(0));
-    assertEquals(".........wffffffffw.....", screen.tints().get(2));
+    assertEquals(".........wffffffffws....", screen.tints().get(2));
   }
 
   @Test

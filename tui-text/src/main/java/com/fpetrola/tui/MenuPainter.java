@@ -52,7 +52,7 @@ class MenuPainter implements MenuVisitor {
       return;
     }
     shown.add(item.text());
-    new Frame(new TextArea(boxColumn, 1, menu.width(), shown.size() + 2), "", BAR_TINT).accept(screen);
+    new RaisedFrame(new TextArea(boxColumn, 1, menu.width(), shown.size() + 2), "", BAR_TINT).accept(screen);
     for (int at = 0; at < shown.size(); at++) {
       screen.write(boxColumn + 2, 2 + at, shown.get(at));
     }
