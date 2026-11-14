@@ -36,4 +36,9 @@ class ListArrow implements ViewVisitor {
   public void visitRadioButtons(RadioButtons group) {
     choose.apply(group::previous, group::next).run();
   }
+
+  @Override
+  public void visitDropDown(DropDown dropDown) {
+    choose.apply(dropDown::up, dropDown::down).run();
+  }
 }

@@ -173,6 +173,14 @@ class MenuDesktop implements Desktop {
   private class Closed extends MenuState {
     @Override
     public void type(Key key) {
+      if (name(key).equals(ESCAPE)) {
+        windows.escape(() -> typeAsUsual(key));
+      } else {
+        typeAsUsual(key);
+      }
+    }
+
+    private void typeAsUsual(Key key) {
       if (!ranBound(key)) {
         key.accept(new ClosedKeys(key));
       }

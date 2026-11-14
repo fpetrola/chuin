@@ -37,6 +37,20 @@ types:
       - "show(MenuBar): void"
       - "show(StatusLine): void"
       - "type(Key): void"
+  "com.fpetrola.tui.DropDown":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "chosen(): Optional<String>"
+      - "close(): void"
+      - "down(): void"
+      - "up(): void"
+      - "width(): int"
+  "com.fpetrola.tui.DropDownItem":
+    kind: interface
+    members:
+      - "dropDown(): DropDown"
+      - "text(): String"
   "com.fpetrola.tui.InputLine":
     kind: interface
     members:
@@ -184,6 +198,7 @@ types:
       - "checkBox(String): CheckBox"
       - "console(InputStream, OutputStream, Screen): Console"
       - "desktop(): Desktop"
+      - "dropDown(List<String>): DropDown"
       - "inputLine(int): InputLine"
       - "keyboard(InputStream): Keyboard"
       - "keys(): Keys"
@@ -209,6 +224,9 @@ types:
       - "visitCheckBox(CheckBox): void"
       - "visitChecked(CheckBox): void"
       - "visitChosenOption(Option): void"
+      - "visitDropDown(DropDown): void"
+      - "visitDropDownItem(DropDownItem): void"
+      - "visitHighlightedDropDownItem(DropDownItem): void"
       - "visitInputLine(InputLine): void"
       - "visitLabel(Label): void"
       - "visitListBox(ListBox): void"

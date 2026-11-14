@@ -17,6 +17,11 @@ class Painter implements ViewVisitor {
   private static final char BUTTON_TINT = 'b';
   /** The lines the frame of its window is drawn with: double for the window on top, single for the rest. */
   private final Border border;
+  /** What floats over every window, drawn after them all, such as a drop down's open list. */
+  private final List<Drawing> popups;
+  /** The list of the drop down visited last. */
+  private ViewVisitor list = new ViewVisitor() {
+  };
   private final Screen screen;
   /** The inside of the window being drawn: its views cannot draw past it. */
   private Screen inside;
@@ -33,7 +38,8 @@ class Painter implements ViewVisitor {
   private int column;
   private int row;
 
-  Painter(Screen screen, int focused, List<Area> drawn, Border border) {
+  Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups) {
+    this.popups = popups;
     this.border = border;
     this.screen = screen;
     this.inside = screen;
@@ -189,4 +195,28 @@ class Painter implements ViewVisitor {
     rows = new RowPainter(inside, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn);
   }
 
+
+  /** The field shows the chosen item and an arrow; the open list is left to be drawn last, over everything. */
+  @Override
+  public void visitDropDown(DropDown dropDown) {
+    int width = dropDown.width();
+    String chosen = dropDown.chosen().orElse("");
+    inside.write(column, row, chosen + " ".repeat(width - chosen.length()) + "↓");
+    inside.paint(column, row, width + 1, FIELD_TINT);
+    drawn.add(new TextArea(column, row, width + 1, 1));
+    seen++;
+    DropDownList opened = new DropDownList(column, row + 1, width);
+    list = opened;
+    popups.add(opened);
+  }
+
+  @Override
+  public void visitDropDownItem(DropDownItem item) {
+    list.visitDropDownItem(item);
+  }
+
+  @Override
+  public void visitHighlightedDropDownItem(DropDownItem item) {
+    list.visitHighlightedDropDownItem(item);
+  }
 }

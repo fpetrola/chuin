@@ -288,4 +288,31 @@ class VisitingViewsTest {
     assertEquals(Optional.of(city), toolkit.label("Or~t~:", city).linked());
     assertEquals(Optional.empty(), toolkit.label("Hola").linked());
   }
+
+  @Test
+  void aDropDownIsVisitedThenWhileOpenEachItemWithTheHighlightedOneApart() {
+    DropDown answer = toolkit.dropDown(List.of("Ja", "Nein"));
+    ArgumentCaptor<DropDownItem> highlighted = ArgumentCaptor.captor();
+
+    answer.accept(visitor);
+    answer.down();
+    answer.down();
+    answer.up();
+    answer.down();
+    answer.accept(visitor);
+
+    InOrder order = inOrder(visitor);
+    order.verify(visitor, times(2)).visitDropDown(answer);
+    order.verify(visitor).visitDropDownItem(argThat(item -> item.text().equals("Ja") && item.dropDown() == answer));
+    order.verify(visitor).visitHighlightedDropDownItem(highlighted.capture());
+    assertEquals("Nein", highlighted.getValue().text());
+    assertEquals(4, answer.width());
+
+    answer.close();
+    assertEquals(Optional.of("Ja"), answer.chosen());
+    answer.down();
+    answer.down();
+    answer.choose();
+    assertEquals(Optional.of("Nein"), answer.chosen());
+  }
 }

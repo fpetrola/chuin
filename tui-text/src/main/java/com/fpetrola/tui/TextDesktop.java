@@ -38,6 +38,7 @@ class TextDesktop implements Windows {
 
   @Override
   public void click(Point cell) {
+    closeOpenList(() -> { });
     int under = windowUnder(cell);
     if (under >= 0 && under < opened.size() - 1) {
       raise(under);
@@ -57,14 +58,30 @@ class TextDesktop implements Windows {
   }
 
   @Override
+  public void escape(Runnable otherwise) {
+    boolean[] closed = {false};
+    closeOpenList(() -> closed[0] = true);
+    if (!closed[0]) {
+      otherwise.run();
+    }
+  }
+
+  /** Closes the focused drop down's open list, if there is one, and then runs what was asked for that case. */
+  private void closeOpenList(Runnable whenClosed) {
+    top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList(whenClosed))));
+  }
+
+  @Override
   public void draw(Screen screen) {
+    List<Drawing> popups = new ArrayList<>();
     clear(screen);
     onTop.clear();
     int last = opened.size() - 1;
     for (int at = 0; at < opened.size(); at++) {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
-      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Lines.DOUBLE) : new Painter(screen, UNFOCUSED, drawn, Lines.SINGLE));
+      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Lines.DOUBLE, popups) : new Painter(screen, UNFOCUSED, drawn, Lines.SINGLE, popups));
     }
+    popups.forEach(popup -> popup.drawOn(screen));
   }
 
   /** Where among the opened windows is the topmost one covering this cell, or -1 when the cell is bare desktop. */
@@ -129,6 +146,7 @@ class TextDesktop implements Windows {
     /** Moves the focus to the next focusable view, back to the first after the last. */
     @Override
     public void tab() {
+      closeOpenList(() -> { });
       List<View> focusable = new ArrayList<>();
       top().ifPresent(window -> window.accept(new CollectFocusable(focusable)));
       focused = (focused + 1) % Math.max(1, focusable.size());

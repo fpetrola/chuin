@@ -7,4 +7,9 @@ class PressFocused implements ViewVisitor {
   public void visitButton(Button button) {
     button.press();
   }
+
+  @Override
+  public void visitDropDown(DropDown dropDown) {
+    dropDown.choose();
+  }
 }

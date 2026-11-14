@@ -83,3 +83,14 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
 54. **Menús con atajo a la derecha y separadores.** `Menu#add(ítem, tecla, comando)` recibe la tecla, no un texto. El nombre de la tecla (`F3`, `Esc`) se muestra alineado a la derecha, y el desktop la asocia al mostrar la barra, como con la línea de estado. Así el menú nunca muestra una tecla que hace otra cosa. Un primer borrador usaba un `String` suelto, y cerco-tdd-97 lo rechazó: en Turbo Vision el `TMenuItem` recibe la tecla. `Menu#separator()` dibuja `├───┤`, y las flechas lo saltean. El ancho de la caja es el ítem más largo, más dos espacios y la tecla más larga cuando hay alguna. El menú `≡` es un menú más con ese título. Propuesta 0049.
 56. **El nombre de una tecla es un `Caption`: `KeyCaption`.** "F3" o "Esc" es un texto que se muestra, sin letra marcada: no resalta nada y no responde a ninguna letra. Lo arma una sola clase con el visitor `KeyLabel`; antes, `TextMenu` y `MenuPainter` repetían cada uno cómo armarlo.
 57. **Un grupo de opciones se dibuja sobre fondo cian (`c`, negro sobre cian), tan ancho como su opción más larga.** Con foco, la opción elegida se ve en `f`. La etiqueta de arriba ("~L~and:") es un `Label` asociado al grupo, así que Alt+su letra le pasa el foco. No hizo falta superficie nueva.
+58. **Lista desplegable (`DropDown`).** Es un campo con la opción elegida y `↓` a la derecha, con el tinte del campo de texto.
+   - Con el foco, ↓ abre la lista debajo, con la elegida resaltada; ↑ y ↓ mueven el resaltado y se frenan en los extremos. Enter elige la resaltada y cierra. Esc cierra sin cambiar la elección.
+   - La lista abierta es una caja elevada (`RaisedFrame`) sobre lo que haya debajo.
+   - Se visita con un solo `accept`: el desplegable y, mientras está abierto, cada ítem, con el resaltado aparte (`DropDownItem`, que sabe su desplegable).
+   - Toca los lugares de DECISIONS 22: `AtFocus`, `CollectFocusable`, `Painter`, `ListArrow` y las teclas.
+   - Una lista abierta flota por encima de todo, como un menú: el `Painter` la anota y el desktop la dibuja después de todas las ventanas, sin recortar, aunque pase el borde de su ventana.
+   - Mientras algo está abierto (menú o lista), Esc lo cierra antes que cualquier tecla asociada. `Windows#escape(otherwise)` cierra lo abierto en las ventanas, o ejecuta `otherwise` (la asociación) si no había nada. Esto extiende la excepción de DECISIONS 50 (lo pidió cerco-tdd-97).
+   - Tab con la lista abierta la cierra y conserva la elección. Un clic afuera la cierra.
+   - Pendiente: abrirla y elegir con el mouse.
+
+   Propuesta 0050.

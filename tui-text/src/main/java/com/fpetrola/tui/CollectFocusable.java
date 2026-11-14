@@ -38,4 +38,9 @@ class CollectFocusable implements ViewVisitor {
   public void visitRadioButtons(RadioButtons group) {
     into.add(group);
   }
+
+  @Override
+  public void visitDropDown(DropDown dropDown) {
+    into.add(dropDown);
+  }
 }

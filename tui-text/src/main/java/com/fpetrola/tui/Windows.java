@@ -10,4 +10,7 @@ interface Windows {
   void click(Point cell);
 
   void draw(Screen screen);
+
+  /** Closes whatever is open in the windows, such as a drop down's list; when nothing is open, runs otherwise instead. */
+  void escape(Runnable otherwise);
 }

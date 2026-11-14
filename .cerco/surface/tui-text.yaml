@@ -30,5 +30,6 @@ types:
     members:
       - "click(Point): void"
       - "draw(Screen): void"
+      - "escape(Runnable): void"
       - "open(Window): void"
       - "type(Key): void"

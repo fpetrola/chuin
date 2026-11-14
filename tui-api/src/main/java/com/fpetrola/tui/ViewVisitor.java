@@ -59,6 +59,16 @@ interface ViewVisitor {
   default void visitNoScrollBar(ListBox box) {
   }
 
+  /** A drop down is visited first, then, while its list is open, each of its items, the highlighted one apart. */
+  default void visitDropDown(DropDown dropDown) {
+  }
+
+  default void visitDropDownItem(DropDownItem item) {
+  }
+
+  default void visitHighlightedDropDownItem(DropDownItem item) {
+  }
+
   /** A group of radio buttons is visited first, then each of its options, top to bottom. */
   default void visitRadioButtons(RadioButtons group) {
   }

@@ -49,6 +49,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public DropDown dropDown(List<String> items) {
+    return new TextDropDown(items);
+  }
+
+  @Override
   public ListBox listBox(List<String> items, int rows) {
     return new TextListBox(items, rows);
   }

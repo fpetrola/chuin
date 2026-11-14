@@ -32,4 +32,16 @@ class DrivingTheWindowsTest {
     assertEquals("no", said.text());
     assertEquals("╔═══════ A ════════╗", screen.lines().getFirst());
   }
+
+  @Test
+  void escapeWithNothingOpenInTheWindowsRunsWhatElseItWasGiven() {
+    Toolkit toolkit = new TextToolkit();
+    Windows windows = new TextDesktop();
+    StringBuilder ran = new StringBuilder();
+    windows.open(toolkit.window("A"));
+
+    windows.escape(() -> ran.append("otherwise"));
+
+    assertEquals("otherwise", ran.toString());
+  }
 }
