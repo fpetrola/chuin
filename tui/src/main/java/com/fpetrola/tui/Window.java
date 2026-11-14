@@ -5,6 +5,8 @@ public interface Window {
 
   void add(Button button, Point position);
 
+  void add(Label label, Point position);
+
   void place(Area area);
 
   void accept(ViewVisitor visitor);

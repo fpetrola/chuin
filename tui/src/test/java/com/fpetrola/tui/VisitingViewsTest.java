@@ -39,4 +39,27 @@ class VisitingViewsTest {
 
     verify(visitor).button(ok, "OK", List.of(listener));
   }
+
+  @Test
+  void aLabelHandsItsCurrentTextToTheVisitor() {
+    Label message = toolkit.label("antes");
+    message.text("después");
+
+    message.accept(visitor);
+
+    verify(visitor).label("después");
+  }
+
+  @Test
+  void aWindowHandsItsPlacedLabelsToTheVisitor() {
+    Window window = toolkit.window("Saludo");
+    Point position = toolkit.point(1, 2);
+    window.add(toolkit.label("hola"), position);
+
+    window.accept(visitor);
+
+    InOrder order = inOrder(visitor);
+    order.verify(visitor).child(position);
+    order.verify(visitor).label("hola");
+  }
 }

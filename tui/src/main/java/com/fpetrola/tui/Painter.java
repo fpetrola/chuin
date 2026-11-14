@@ -42,4 +42,9 @@ class Painter implements ViewVisitor {
   public void button(Button button, String caption, List<ButtonListener> listeners) {
     screen.write(column, row, "[ " + caption + " ]");
   }
+
+  @Override
+  public void label(String text) {
+    screen.write(column, row, text);
+  }
 }

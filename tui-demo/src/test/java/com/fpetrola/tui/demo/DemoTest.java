@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 
 class DemoTest {
   @Test
-  void mainShowsTheDemoWindowOnTheConsoleUntilTheInputEnds() {
+  void mainShowsTheDemoWindowAndEnterChangesItsMessage() {
     InputStream originalIn = System.in;
     PrintStream originalOut = System.out;
     ByteArrayOutputStream shown = new ByteArrayOutputStream();
@@ -26,6 +26,6 @@ class DemoTest {
     }
 
     String output = shown.toString(StandardCharsets.UTF_8);
-    assertTrue(output.contains(" Demo ") && output.contains("[ OK ]"), output);
+    assertTrue(output.contains(" Demo ") && output.contains("[ OK ]") && output.contains("¡Presionado!"), output);
   }
 }

@@ -29,4 +29,8 @@ class KeyDispatch implements ViewVisitor {
       listeners.forEach(listener -> listener.pressed(button));
     }
   }
+
+  @Override
+  public void label(String text) {
+  }
 }

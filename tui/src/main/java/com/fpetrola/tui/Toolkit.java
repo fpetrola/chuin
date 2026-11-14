@@ -10,6 +10,8 @@ public interface Toolkit {
 
   Button button(String caption);
 
+  Label label(String text);
+
   Keys keys();
 
   Screen screen(int columns, int rows);

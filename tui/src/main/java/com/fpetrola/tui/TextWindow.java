@@ -27,6 +27,14 @@ class TextWindow implements Window {
   }
 
   @Override
+  public void add(Label label, Point position) {
+    children.add(visitor -> {
+      visitor.child(position);
+      label.accept(visitor);
+    });
+  }
+
+  @Override
   public void place(Area area) {
     this.area = area;
   }

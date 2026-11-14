@@ -26,6 +26,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public Label label(String text) {
+    return new TextLabel(text);
+  }
+
+  @Override
   public Keys keys() {
     return keys;
   }

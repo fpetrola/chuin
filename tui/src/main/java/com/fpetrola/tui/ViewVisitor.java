@@ -10,4 +10,6 @@ interface ViewVisitor {
   void child(Point position);
 
   void button(Button button, String caption, List<ButtonListener> listeners);
+
+  void label(String text);
 }
