@@ -17,6 +17,8 @@ class TextDesktop implements Windows {
   private static final int NEXT_WINDOW = 6;
   /** Ctrl+W closes the top window. */
   private static final char CLOSE_WINDOW = 'w';
+  /** The smallest a window shrinks to: its frame with one cell inside. */
+  private static final Area SMALLEST = new TextArea(0, 0, 3, 3);
   private int focused;
   /** What a drag does: move the window taken by its title, or nothing. */
   private Consumer<Point> dragging = NOT_DRAGGING;
@@ -49,6 +51,7 @@ class TextDesktop implements Windows {
       raise(under);
     }
     top().filter(window -> under >= 0 && cell.row() == window.area().row()).ifPresent(window -> grab(window, cell));
+    top().filter(window -> under == opened.size() - 1 && atCorner(window.area(), cell)).ifPresent(this::stretch);
     if (below) {
       return;
     }
@@ -81,6 +84,17 @@ class TextDesktop implements Windows {
     int across = held.column() - from.column();
     int down = held.row() - from.row();
     dragging = to -> window.place(new TextArea(to.column() - across, to.row() - down, from.columns(), from.rows()));
+  }
+
+  private static boolean atCorner(Area area, Point cell) {
+    return cell.column() == area.column() + area.columns() - 1 && cell.row() == area.row() + area.rows() - 1;
+  }
+
+  /** Takes a window by its bottom-right corner: dragging puts the corner under the pointer, the top left staying. */
+  private void stretch(Window window) {
+    Area from = window.area();
+    dragging = to -> window.place(new TextArea(from.column(), from.row(),
+        Math.max(SMALLEST.columns(), to.column() - from.column() + 1), Math.max(SMALLEST.rows(), to.row() - from.row() + 1)));
   }
 
   @Override

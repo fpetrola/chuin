@@ -12,8 +12,10 @@ enum Lines implements Border {
     this.drawn = drawn;
   }
 
+  /** A title wider than the room inside is left off, and the line runs across. */
   @Override
-  public String top(String label, int inner) {
+  public String top(String title, int inner) {
+    String label = title.length() > inner ? "" : title;
     int left = (inner - label.length()) / 2;
     return drawn.charAt(0) + across(left) + label + across(inner - label.length() - left) + drawn.charAt(1);
   }

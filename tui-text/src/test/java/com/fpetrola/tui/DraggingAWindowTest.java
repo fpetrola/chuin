@@ -94,6 +94,40 @@ class DraggingAWindowTest {
     assertEquals("║            ║", screen.lines().get(1));
   }
 
+  @Test
+  void draggingTheBottomRightCornerResizesTheWindowAndTheTopLeftStays() {
+    Window window = toolkit.window("A");
+    window.place(toolkit.area(0, 0, 8, 3));
+    desktop.open(window);
+    desktop.draw(screen);
+
+    press(mouse(0, 7, 2, 'M') + mouse(32, 9, 3, 'M') + mouse(32, 10, 4, 'M') + mouse(0, 10, 4, 'm'));
+    desktop.draw(screen);
+
+    assertEquals(List.of(
+        "╔═══ A ═══╗   ",
+        "║         ║   ",
+        "║         ║   ",
+        "║         ║   ",
+        "╚═════════╝   "), screen.lines().subList(0, 5));
+  }
+
+  @Test
+  void aWindowShrinksNoSmallerThanItsFrameWithARoomInside() {
+    Window window = toolkit.window("A");
+    window.place(toolkit.area(2, 1, 8, 4));
+    desktop.open(window);
+    desktop.draw(screen);
+
+    press(mouse(0, 9, 4, 'M') + mouse(32, 0, 0, 'M') + mouse(0, 0, 0, 'm'));
+    desktop.draw(screen);
+
+    assertEquals(List.of(
+        "  ╔═╗         ",
+        "  ║ ║         ",
+        "  ╚═╝         "), screen.lines().subList(1, 4));
+  }
+
   /** A mouse report for a cell counted from 0: the button code, then M when pressed or moved and m when released. */
   private static String mouse(int button, int column, int row, char kind) {
     return "\u001b[<" + button + ";" + (column + 1) + ";" + (row + 1) + kind;
