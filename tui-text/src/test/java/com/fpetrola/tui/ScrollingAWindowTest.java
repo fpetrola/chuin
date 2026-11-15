@@ -262,6 +262,29 @@ class ScrollingAWindowTest {
     assertEquals("7x3", group.size().columns() + "x" + group.size().rows());
   }
 
+  /** A view out of sight takes no click, not even where it would be if the window showed it. */
+  @Test
+  void aClickWhereAViewOutOfSightWouldBePressesNothing() {
+    Toolkit own = new TextToolkit();
+    Desktop alone = own.desktop();
+    Screen tall = own.screen(12, 10);
+    Window held = own.window("H");
+    Button hidden = own.button("No");
+    Label said = own.label("");
+    held.place(own.area(0, 0, 12, 5));
+    held.add(own.button("Ok"), own.point(0, 0));
+    held.add(said, own.point(0, 1));
+    held.add(hidden, own.point(0, 5));
+    hidden.onPress(pressed -> said.text("no"));
+    alone.open(held);
+    alone.draw(tall);
+
+    alone.click(own.point(3, 6));
+    alone.release(own.point(3, 6));
+
+    assertEquals("", said.text());
+  }
+
   /** The scroll panel that is the inside of a window. */
   private static ScrollPanel panelOf(Window window) {
     List<ScrollPanel> panels = new java.util.ArrayList<>();

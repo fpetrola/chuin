@@ -147,7 +147,7 @@ class ClickingWithTheMouseTest {
     desktop.open(window);
     desktop.draw(screen);
 
-    click(0, 1, 4);
+    click(0, 1, 3);
     desktop.draw(screen);
 
     assertEquals(Optional.of("Solo"), one.selected());

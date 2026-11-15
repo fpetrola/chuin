@@ -36,6 +36,8 @@ class Painter implements ViewVisitor {
   /** Where the place 0, 0 of the window drawn last falls on the screen: inside its frame, less how far it is scrolled. */
   /** How to go back to what is around each panel entered and not yet left, the innermost first. */
   private final Deque<Runnable> left = new ArrayDeque<>();
+  /** How to cut what each panel entered and not yet left holds to what it shows, so a click finds only what shows. */
+  private final Deque<Runnable> cuts = new ArrayDeque<>();
   private int insideColumn;
   private int insideRow;
   /** Draws the rows of the list box or the options of the group visited last. */
@@ -83,14 +85,31 @@ class Painter implements ViewVisitor {
       row = panelRow;
     });
     Size size = panel.size();
-    inside = new ClippedScreen(outer, new TextArea(column, row, size.columns() - 1, size.rows() - 1));
+    Area shown = new TextArea(column, row, size.columns() - 1, size.rows() - 1);
+    int first = drawn.size();
+    cuts.push(() -> {
+      for (int at = first; at < drawn.size(); at++) {
+        drawn.set(at, within(drawn.get(at), shown));
+      }
+    });
+    inside = new ClippedScreen(outer, shown);
     insideColumn = column - panel.origin().column();
     insideRow = row - panel.origin().row();
+  }
+
+  /** The part of an area that falls within another; no cells when none does. */
+  private static Area within(Area area, Area shown) {
+    int left = Math.max(area.column(), shown.column());
+    int top = Math.max(area.row(), shown.row());
+    int right = Math.min(area.column() + area.columns(), shown.column() + shown.columns());
+    int bottom = Math.min(area.row() + area.rows(), shown.row() + shown.rows());
+    return new TextArea(left, top, Math.max(0, right - left), Math.max(0, bottom - top));
   }
 
   /** Back to what is around the panel, its bars drawn down its last column and across its last row, where a click finds them. */
   @Override
   public void leaveScrollPanel(ScrollPanel panel) {
+    cuts.pop().run();
     left.pop().run();
     Size size = panel.size();
     Point down = new TextPoint(column + size.columns() - 1, row);
