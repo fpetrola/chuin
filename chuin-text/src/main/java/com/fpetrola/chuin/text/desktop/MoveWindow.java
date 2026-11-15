@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.text.geometry.TextArea;
 import com.fpetrola.chuin.geometry.Area;

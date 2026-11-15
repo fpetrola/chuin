@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.text.paint.FocusOrder;
 import com.fpetrola.chuin.text.paint.TextFocusOrder;

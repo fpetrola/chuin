@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.input.Key;
@@ -7,7 +7,7 @@ import com.fpetrola.chuin.view.Window;
 
 
 /** The windows of a desktop, without its menu bar: they open, take keys and clicks, and draw themselves. */
-interface Windows {
+public interface Windows {
   void open(Window window);
 
   void type(Key key);

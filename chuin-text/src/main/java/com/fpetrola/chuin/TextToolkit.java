@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.desktop.TextDesktop;
+import com.fpetrola.chuin.text.desktop.PointerWindows;
 import com.fpetrola.chuin.text.view.TextButton;
 import com.fpetrola.chuin.text.view.TextCheckBox;
 import com.fpetrola.chuin.text.view.TextInputLine;

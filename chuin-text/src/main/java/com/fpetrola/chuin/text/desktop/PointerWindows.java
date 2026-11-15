@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.input.Key;
@@ -11,13 +11,13 @@ import java.util.function.Consumer;
  * Windows that take a drag and its release only after a click went to them: a drag belongs to the click that started
  * it, so one that started on the menu bar or the status line, which never reached the windows, moves nothing.
  */
-class PointerWindows implements Windows {
+public class PointerWindows implements Windows {
   private static final Consumer<Point> NOWHERE = cell -> { };
   private final Windows windows;
   private Consumer<Point> dragged = NOWHERE;
   private Consumer<Point> released = NOWHERE;
 
-  PointerWindows(Windows windows) {
+  public PointerWindows(Windows windows) {
     this.windows = windows;
   }
 

@@ -1,15 +1,15 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.input.Key;
 import com.fpetrola.chuin.input.KeyVisitor;
 
 
 /** A key that goes on to the windows, whatever key it is; subclasses keep the ones they handle themselves. */
-class ToWindows implements KeyVisitor {
+public class ToWindows implements KeyVisitor {
   private final Key key;
   private final Windows windows;
 
-  ToWindows(Key key, Windows windows) {
+  public ToWindows(Key key, Windows windows) {
     this.key = key;
     this.windows = windows;
   }

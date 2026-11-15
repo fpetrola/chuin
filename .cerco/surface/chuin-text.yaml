@@ -27,7 +27,16 @@ types:
     members:
       - "<init>()"
       - "<init>(Map<String,String>)"
-  "com.fpetrola.chuin.Windows":
+  "com.fpetrola.chuin.text.desktop.PointerWindows":
+    members:
+      - "<init>(Windows)"
+  "com.fpetrola.chuin.text.desktop.TextDesktop":
+    members:
+      - "<init>()"
+  "com.fpetrola.chuin.text.desktop.ToWindows":
+    members:
+      - "<init>(Key, Windows)"
+  "com.fpetrola.chuin.text.desktop.Windows":
     kind: interface
     members:
       - "click(Point): void"

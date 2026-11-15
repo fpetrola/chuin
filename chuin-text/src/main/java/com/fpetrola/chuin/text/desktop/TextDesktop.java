@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.text.paint.Painter;
 import com.fpetrola.chuin.text.paint.Line;
@@ -29,7 +29,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.BinaryOperator;
 
-class TextDesktop implements Windows {
+public class TextDesktop implements Windows {
   private final List<Window> opened = new ArrayList<>();
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
@@ -51,6 +51,10 @@ class TextDesktop implements Windows {
   private final List<Area> onTop = new ArrayList<>();
   /** The focus each window had when it last left the top, by its place in {@link #opened}. */
   private final List<Integer> remembered = new ArrayList<>();
+
+  /** No window open yet: the desktop is bare until one is. */
+  public TextDesktop() {
+  }
 
   @Override
   public void open(Window window) {

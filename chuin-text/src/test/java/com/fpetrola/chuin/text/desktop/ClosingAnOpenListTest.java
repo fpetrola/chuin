@@ -1,4 +1,8 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
+
+import com.fpetrola.chuin.Toolkit;
+
+import com.fpetrola.chuin.TextToolkit;
 
 import com.fpetrola.chuin.text.pointer.Settle;
 import com.fpetrola.chuin.text.pointer.PendingAction;

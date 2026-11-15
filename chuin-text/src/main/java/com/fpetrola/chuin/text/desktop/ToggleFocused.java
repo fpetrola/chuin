@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.view.CheckBox;
 import com.fpetrola.chuin.view.InputLine;
