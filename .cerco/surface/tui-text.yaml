@@ -58,6 +58,7 @@ types:
     members:
       - "answers(char): boolean"
       - "covers(Point): boolean"
+      - "drawOpen(Screen, int): void"
       - "itemAt(Point): Optional<MenuItem>"
       - "items(): List<MenuItem>"
       - "menu(): Menu"

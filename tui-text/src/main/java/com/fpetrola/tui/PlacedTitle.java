@@ -3,6 +3,7 @@ package com.fpetrola.tui;
 import com.fpetrola.tui.geometry.Point;
 import com.fpetrola.tui.menu.Menu;
 import com.fpetrola.tui.menu.MenuItem;
+import com.fpetrola.tui.screen.Screen;
 
 import java.util.List;
 import java.util.Optional;
@@ -22,4 +23,7 @@ interface PlacedTitle {
   Optional<MenuItem> itemAt(Point cell);
 
   List<MenuItem> items();
+
+  /** Draws the menu open under the title, in a raised box, the item at this place among the items highlighted; a menu with no rows shows no box. */
+  void drawOpen(Screen screen, int selected);
 }

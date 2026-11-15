@@ -223,7 +223,7 @@ class MenuDesktop implements Desktop {
     @Override
     public void draw(Screen screen) {
       if (!placed().isEmpty()) {
-        bar.accept(new MenuPainter(screen, Optional.empty(), 0));
+        bar.accept(new MenuPainter(screen, Optional.empty()));
       }
     }
   }
@@ -264,7 +264,8 @@ class MenuDesktop implements Desktop {
     @Override
     public void draw(Screen screen) {
       screen.hideCursor();
-      bar.accept(new MenuPainter(screen, Optional.of(open.menu()), item));
+      bar.accept(new MenuPainter(screen, Optional.of(open.menu())));
+      open.drawOpen(screen, item);
     }
   }
 

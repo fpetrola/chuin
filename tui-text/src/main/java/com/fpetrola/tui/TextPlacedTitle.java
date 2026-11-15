@@ -4,6 +4,7 @@ import com.fpetrola.tui.geometry.Point;
 import com.fpetrola.tui.menu.Menu;
 import com.fpetrola.tui.menu.MenuItem;
 import com.fpetrola.tui.menu.MenuVisitor;
+import com.fpetrola.tui.screen.Screen;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,34 @@ class TextPlacedTitle implements PlacedTitle {
     List<MenuItem> items = new ArrayList<>();
     rows().forEach(row -> row.ifPresent(items::add));
     return items;
+  }
+
+  @Override
+  public void drawOpen(Screen screen, int selected) {
+    List<Optional<MenuItem>> rows = rows();
+    if (rows.isEmpty()) {
+      return;
+    }
+    int width = menu.width();
+    new RaisedFrame(new TextArea(start, ABOVE_ITEMS - 1, width, rows.size() + 2), "", TintRole.MENU, Line.SINGLE).drawOn(screen);
+    int item = 0;
+    for (int row = 0; row < rows.size(); row++) {
+      int line = ABOVE_ITEMS + row;
+      if (rows.get(row).isEmpty()) {
+        screen.write(start, line, "├" + "─".repeat(width - 2) + "┤");
+      } else {
+        boolean chosen = item++ == selected;
+        if (chosen) {
+          TintRole.FOCUS.paint(screen, start + 1, line, width - 2);
+        }
+        MenuItem shown = rows.get(row).get();
+        Caption caption = new TextCaption(shown.text());
+        screen.write(start + 2, line, caption.shown());
+        caption.highlight(screen, start + 2, line, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
+        String key = shown.key().map(bound -> new KeyCaption(bound).shown()).orElse("");
+        screen.write(start + width - 2 - key.length(), line, key);
+      }
+    }
   }
 
   /** The rows of the menu, top to bottom: an item, or nothing for a separator. */

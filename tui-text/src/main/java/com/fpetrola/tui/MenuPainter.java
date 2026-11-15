@@ -2,33 +2,21 @@ package com.fpetrola.tui;
 
 import com.fpetrola.tui.menu.Menu;
 import com.fpetrola.tui.menu.MenuBar;
-import com.fpetrola.tui.menu.MenuItem;
 import com.fpetrola.tui.menu.MenuVisitor;
 import com.fpetrola.tui.screen.Screen;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
-/**
- * Draws the menu bar across the top row and, when a menu is open, its title highlighted and its box of items under
- * it, the selected item highlighted. Items of the menus that are not open are met and left alone.
- */
+/** Draws the menu bar across the top row, the open menu's title highlighted; the open menu's box is its title's to draw. */
 class MenuPainter implements MenuVisitor {
   private final Screen screen;
   private final Optional<Menu> open;
-  private final int selected;
   /** The top row, which takes the titles left to right. */
   private final EntryRow titles;
-  /** Where the open menu's box starts. */
-  private int boxColumn;
-  /** The open menu's rows met so far, in order: an item, or nothing for a separator. */
-  private final List<Optional<MenuItem>> rows = new ArrayList<>();
 
-  MenuPainter(Screen screen, Optional<Menu> open, int selected) {
+  MenuPainter(Screen screen, Optional<Menu> open) {
     this.screen = screen;
     this.open = open;
-    this.selected = selected;
     this.titles = new TextEntryRow(screen, 0);
   }
 
@@ -42,46 +30,6 @@ class MenuPainter implements MenuVisitor {
   @Override
   public void visitMenu(Menu menu) {
     boolean chosen = open.filter(menu::equals).isPresent();
-    boxColumn = chosen ? titles.next() : boxColumn;
     titles.put(new TextCaption(menu.title()), chosen ? TintRole.FOCUS : TintRole.MENU, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
-  }
-
-  @Override
-  public void visitMenuItem(MenuItem item) {
-    if (open.filter(item.menu()::equals).isPresent()) {
-      rows.add(Optional.of(item));
-      box(item.menu());
-    }
-  }
-
-  @Override
-  public void visitMenuSeparator(Menu menu) {
-    if (open.filter(menu::equals).isPresent()) {
-      rows.add(Optional.empty());
-      box(menu);
-    }
-  }
-
-  /** Draws the open menu's box with the rows met so far: it is drawn again, one row taller, with each. */
-  private void box(Menu menu) {
-    int width = menu.width();
-    new RaisedFrame(new TextArea(boxColumn, 1, width, rows.size() + 2), "", TintRole.MENU, Line.SINGLE).drawOn(screen);
-    int item = 0;
-    for (int row = 0; row < rows.size(); row++) {
-      if (rows.get(row).isEmpty()) {
-        screen.write(boxColumn, 2 + row, "├" + "─".repeat(width - 2) + "┤");
-      } else {
-        boolean chosen = item++ == selected;
-        if (chosen) {
-          TintRole.FOCUS.paint(screen, boxColumn + 1, 2 + row, width - 2);
-        }
-        MenuItem shown = rows.get(row).get();
-        Caption caption = new TextCaption(shown.text());
-        screen.write(boxColumn + 2, 2 + row, caption.shown());
-        caption.highlight(screen, boxColumn + 2, 2 + row, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
-        String key = shown.key().map(bound -> new KeyCaption(bound).shown()).orElse("");
-        screen.write(boxColumn + width - 2 - key.length(), 2 + row, key);
-      }
-    }
   }
 }
