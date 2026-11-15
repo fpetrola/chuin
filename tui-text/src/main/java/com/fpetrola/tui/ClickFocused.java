@@ -2,21 +2,21 @@ package com.fpetrola.tui;
 
 /**
  * What a left click does to the view under it, once focused: presses a button, toggles a check box, chooses the option
- * on the row clicked; an input line is only focused. On a list, a click on an item selects it; on its scroll bar, ▲ and
- * ▼ select the item before or after, and the track above or below the thumb moves the selection a page, once the walk
- * reaches ▼ and the page is known.
+ * on the row clicked; an input line is only focused. On a list, the click selects the item on its row, or, on the
+ * scroll bar, the item before (▲) or after (▼), or a page before or after (the track above or below the thumb). Every
+ * action is only noted during the visit, and done once the walk is over.
  */
-class ClickFocused implements ViewVisitor {
+class ClickFocused implements ViewVisitor, Settle {
+  private static final Runnable NOTHING = () -> { };
   /** Which column and row of the view was clicked, counted from its first. */
   private final int column;
   private final int row;
   /** The row of the scroll bar the walk is on. */
   private int walked;
+  /** Whether the walk has met the thumb, so a track cell is below it. */
   private boolean pastThumb;
-  /** Whether the click fell on the list's last column, where its scroll bar is. */
-  private boolean onBar;
-  /** How the selection moves a page, decided at the track and done at ▼. */
-  private int page;
+  /** What the list is to do when the walk is over. */
+  private Runnable due = NOTHING;
 
   ClickFocused(int column, int row) {
     this.column = column;
@@ -25,76 +25,60 @@ class ClickFocused implements ViewVisitor {
 
   @Override
   public void visitButton(Button button) {
-    button.press();
+    due = button::press;
   }
 
   @Override
   public void visitCheckBox(CheckBox box) {
-    box.toggle();
+    due = box::toggle;
   }
 
+  /** An item is selected wherever its row is clicked, unless the bar's column takes the click. */
   @Override
   public void visitListBox(ListBox box) {
-    onBar = column == box.width() - 1;
-    if (!onBar) {
-      box.selectShown(row);
-    }
-  }
-
-  @Override
-  public void visitNoScrollBar(ListBox box) {
-    if (onClicked()) {
-      box.selectShown(row);
-    }
-    walked++;
+    due = () -> box.selectShown(row);
   }
 
   @Override
   public void visitScrollUp(ListBox box) {
-    if (onClicked()) {
-      box.previous();
-    }
-    walked++;
+    onBar(box, box::previous);
   }
 
   @Override
   public void visitScrollTrack(ListBox box) {
-    if (onClicked()) {
-      page = pastThumb ? 1 : -1;
-    }
-    walked++;
+    onBar(box, pastThumb ? box::pageDown : box::pageUp);
   }
 
   @Override
   public void visitScrollThumb(ListBox box) {
     pastThumb = true;
-    walked++;
+    onBar(box, NOTHING);
   }
 
   @Override
   public void visitScrollDown(ListBox box) {
-    for (int step = 0; step < walked; step++) {
-      move(box, page);
-    }
-    if (onClicked()) {
-      box.next();
-    }
+    onBar(box, box::next);
+  }
+
+  @Override
+  public void visitNoScrollBar(ListBox box) {
+    walked++;
   }
 
   @Override
   public void visitRadioButtons(RadioButtons group) {
-    group.choose(row);
+    due = () -> group.choose(row);
   }
 
-  private boolean onClicked() {
-    return onBar && walked == row;
+  @Override
+  public void settle() {
+    due.run();
   }
 
-  private static void move(ListBox box, int toward) {
-    if (toward > 0) {
-      box.next();
-    } else if (toward < 0) {
-      box.previous();
+  /** Notes what the bar's cell on this row does, when it is the one clicked. */
+  private void onBar(ListBox box, Runnable does) {
+    if (walked++ == row && column == box.width() - 1) {
+      due = does;
     }
   }
 }

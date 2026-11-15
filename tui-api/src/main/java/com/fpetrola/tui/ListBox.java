@@ -18,6 +18,12 @@ public interface ListBox extends View {
   /** Selects the item after, staying on the last, and scrolls to keep it in sight. */
   void next();
 
+  /** Selects the item a page before, a page being one fewer than the rows shown, staying on the first. */
+  void pageUp();
+
+  /** Selects the item a page after, a page being one fewer than the rows shown, staying on the last. */
+  void pageDown();
+
   /** Selects the item shown on this row, counted from the first row shown; does nothing on a row with no item. */
   void selectShown(int row);
 }

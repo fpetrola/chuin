@@ -65,6 +65,7 @@ class TextDesktop implements Windows {
         int clicked = view;
         ClickFocused click = new ClickFocused(cell.column() - area.column(), cell.row() - area.row());
         top().ifPresent(window -> window.accept(new AtFocus(clicked, click)));
+        click.settle();
       }
     }
   }

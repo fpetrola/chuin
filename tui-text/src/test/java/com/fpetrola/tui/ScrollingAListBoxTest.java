@@ -205,4 +205,20 @@ class ScrollingAListBoxTest {
     desktop.click(toolkit.point(8, 3));
     assertEquals("tres", numbers.selected().orElseThrow());
   }
+
+  @Test
+  void aPageIsOneFewerThanTheRowsShownAndStopsAtBothEnds() {
+    ListBox numbers = new TextToolkit().listBox(List.of("uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho"), 5);
+
+    numbers.pageUp();
+    assertEquals("uno", numbers.selected().orElseThrow());
+    numbers.pageDown();
+    assertEquals("cinco", numbers.selected().orElseThrow());
+    numbers.pageDown();
+    assertEquals("ocho", numbers.selected().orElseThrow());
+    numbers.pageDown();
+    assertEquals("ocho", numbers.selected().orElseThrow());
+    numbers.pageUp();
+    assertEquals("cuatro", numbers.selected().orElseThrow());
+  }
 }

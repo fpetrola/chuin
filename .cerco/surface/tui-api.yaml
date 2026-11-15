@@ -103,6 +103,8 @@ types:
     kind: interface
     members:
       - "next(): void"
+      - "pageDown(): void"
+      - "pageUp(): void"
       - "previous(): void"
       - "selectShown(int): void"
       - "selected(): Optional<String>"

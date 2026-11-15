@@ -62,6 +62,18 @@ class TextListBox implements ListBox {
     top = Math.max(top, selected - rows + 1);
   }
 
+  @Override
+  public void pageUp() {
+    selected = Math.max(0, selected - (rows - 1));
+    top = Math.min(top, selected);
+  }
+
+  @Override
+  public void pageDown() {
+    selected = Math.max(0, Math.min(items.size() - 1, selected + rows - 1));
+    top = Math.max(top, selected - rows + 1);
+  }
+
   private void item(int at, ViewVisitor visitor) {
     ListItem item = new TextListItem(this, at < items.size() ? items.get(at) : "");
     Consumer<ViewVisitor> present = at == selected ? row -> row.visitSelectedListItem(item) : row -> row.visitListItem(item);
