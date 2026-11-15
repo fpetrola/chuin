@@ -4,3 +4,8 @@ types:
   "com.fpetrola.tui.demo.Demo":
     members:
       - "main(String[]): void"
+  "com.fpetrola.tui.demo.Example":
+    kind: interface
+    members:
+      - "build(Toolkit, Desktop): void"
+      - "name(): String"
