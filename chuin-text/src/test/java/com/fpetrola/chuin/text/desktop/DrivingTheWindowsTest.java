@@ -2,7 +2,7 @@ package com.fpetrola.chuin.text.desktop;
 
 import com.fpetrola.chuin.Toolkit;
 
-import com.fpetrola.chuin.TextToolkit;
+import com.fpetrola.chuin.text.TextToolkit;
 
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.view.Button;

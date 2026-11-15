@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.TextToolkit;
+
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.view.Button;
 import com.fpetrola.chuin.view.InputLine;

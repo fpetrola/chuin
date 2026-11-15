@@ -1,4 +1,8 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.menu;
+
+import com.fpetrola.chuin.Toolkit;
+
+import com.fpetrola.chuin.text.TextToolkit;
 
 import com.fpetrola.chuin.text.view.Caption;
 import com.fpetrola.chuin.text.view.TextCaption;

@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.menu;
 
 import com.fpetrola.chuin.text.view.TextCaption;
 import com.fpetrola.chuin.input.Key;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-class TextMenu implements Menu {
+public class TextMenu implements Menu {
   /** A blank on each side of an item; the frame around the box is the border's. */
   private static final int AROUND_ITEM = 2;
   /** The blanks between an item and the name of its key. */
@@ -21,7 +21,7 @@ class TextMenu implements Menu {
   /** The items and separators in their order, each ready to meet a visitor. */
   private final List<Consumer<MenuVisitor>> rows = new ArrayList<>();
 
-  TextMenu(String title) {
+  public TextMenu(String title) {
     this.title = title;
   }
 

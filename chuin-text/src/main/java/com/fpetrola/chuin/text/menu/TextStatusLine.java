@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.menu;
 
 import com.fpetrola.chuin.input.Key;
 import com.fpetrola.chuin.menu.StatusItem;
@@ -8,8 +8,12 @@ import com.fpetrola.chuin.menu.StatusVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-class TextStatusLine implements StatusLine {
+public class TextStatusLine implements StatusLine {
   private final List<StatusItem> items = new ArrayList<>();
+
+  /** With no entry yet: the line is blank until one is added. */
+  public TextStatusLine() {
+  }
 
   @Override
   public void add(String text, Key key, Runnable command) {

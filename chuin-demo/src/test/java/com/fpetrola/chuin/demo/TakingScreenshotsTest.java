@@ -3,7 +3,7 @@ package com.fpetrola.chuin.demo;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.fpetrola.chuin.Desktop;
-import com.fpetrola.chuin.TextToolkit;
+import com.fpetrola.chuin.text.TextToolkit;
 import com.fpetrola.chuin.Toolkit;
 import com.fpetrola.chuin.screen.Screen;
 import java.io.ByteArrayOutputStream;

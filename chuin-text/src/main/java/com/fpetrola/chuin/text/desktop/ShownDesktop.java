@@ -1,4 +1,6 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
+
+import com.fpetrola.chuin.Desktop;
 
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.input.Key;

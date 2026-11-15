@@ -1,6 +1,6 @@
 package com.fpetrola.chuin.text.input;
 
-import com.fpetrola.chuin.TextToolkit;
+import com.fpetrola.chuin.text.TextToolkit;
 import com.fpetrola.chuin.Toolkit;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

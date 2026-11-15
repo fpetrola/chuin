@@ -1,35 +1,16 @@
 # What a person signed of this module's surface; cerco:approve grows it.
 module: "chuin-text"
 types:
-  "com.fpetrola.chuin.EntryPlacer":
-    kind: interface
-    members:
-      - "place(Caption): PlacedEntry"
-  "com.fpetrola.chuin.EntryRow":
-    kind: interface
-    members:
-      - "put(Caption, Tint, Tint): void"
-  "com.fpetrola.chuin.PlacedEntry":
-    kind: interface
-    members:
-      - "covers(int): boolean"
-      - "start(): int"
-  "com.fpetrola.chuin.PlacedTitle":
-    kind: interface
-    members:
-      - "answers(char): boolean"
-      - "covers(Point): boolean"
-      - "drawOpen(Screen, int): void"
-      - "itemAt(Point): Optional<MenuItem>"
-      - "items(): List<MenuItem>"
-      - "menu(): Menu"
-  "com.fpetrola.chuin.TextToolkit":
+  "com.fpetrola.chuin.text.TextToolkit":
     members:
       - "<init>()"
       - "<init>(Map<String,String>)"
   "com.fpetrola.chuin.text.desktop.PointerWindows":
     members:
       - "<init>(Windows)"
+  "com.fpetrola.chuin.text.desktop.TextConsole":
+    members:
+      - "<init>(Keyboard, Terminal, OutputStream, Screen)"
   "com.fpetrola.chuin.text.desktop.TextDesktop":
     members:
       - "<init>()"
@@ -58,6 +39,43 @@ types:
   "com.fpetrola.chuin.text.input.KeyName":
     members:
       - "<init>(StringBuilder)"
+  "com.fpetrola.chuin.text.input.StreamKeyboard":
+    members:
+      - "<init>(InputStream, Toolkit)"
+  "com.fpetrola.chuin.text.menu.EntryPlacer":
+    kind: interface
+    members:
+      - "place(Caption): PlacedEntry"
+  "com.fpetrola.chuin.text.menu.EntryRow":
+    kind: interface
+    members:
+      - "put(Caption, Tint, Tint): void"
+  "com.fpetrola.chuin.text.menu.MenuDesktop":
+    members:
+      - "<init>(Windows)"
+  "com.fpetrola.chuin.text.menu.PlacedEntry":
+    kind: interface
+    members:
+      - "covers(int): boolean"
+      - "start(): int"
+  "com.fpetrola.chuin.text.menu.PlacedTitle":
+    kind: interface
+    members:
+      - "answers(char): boolean"
+      - "covers(Point): boolean"
+      - "drawOpen(Screen, int): void"
+      - "itemAt(Point): Optional<MenuItem>"
+      - "items(): List<MenuItem>"
+      - "menu(): Menu"
+  "com.fpetrola.chuin.text.menu.TextMenu":
+    members:
+      - "<init>(String)"
+  "com.fpetrola.chuin.text.menu.TextMenuBar":
+    members:
+      - "<init>()"
+  "com.fpetrola.chuin.text.menu.TextStatusLine":
+    members:
+      - "<init>()"
   "com.fpetrola.chuin.text.paint.Border":
     kind: interface
     members:

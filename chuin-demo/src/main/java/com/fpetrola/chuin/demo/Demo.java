@@ -1,7 +1,7 @@
 package com.fpetrola.chuin.demo;
 
 import com.fpetrola.chuin.Desktop;
-import com.fpetrola.chuin.TextToolkit;
+import com.fpetrola.chuin.text.TextToolkit;
 import com.fpetrola.chuin.Toolkit;
 import java.util.List;
 

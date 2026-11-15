@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.TextToolkit;
+
 import com.fpetrola.chuin.input.KeyVisitor;
 import com.fpetrola.chuin.menu.Menu;
 import com.fpetrola.chuin.menu.MenuBar;

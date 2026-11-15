@@ -1,4 +1,8 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.desktop;
+
+import com.fpetrola.chuin.Desktop;
+import com.fpetrola.chuin.Keyboard;
+import com.fpetrola.chuin.Console;
 
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.screen.Terminal;
@@ -9,7 +13,7 @@ import java.io.UncheckedIOException;
 import java.nio.charset.StandardCharsets;
 
 /** Runs a desktop on a console: turns the mouse on, shows the desktop at start and again after every key or click, and turns the mouse off when done. */
-class TextConsole implements Console {
+public class TextConsole implements Console {
   private static final String MOUSE_ON = "\u001b[?1000h\u001b[?1002h\u001b[?1006h";
   /** Turns the mouse off and shows the cursor again, as the console was before. */
   private static final String MOUSE_OFF = "\u001b[?1006l\u001b[?1002l\u001b[?1000l\u001b[?25h";
@@ -18,7 +22,7 @@ class TextConsole implements Console {
   private final OutputStream out;
   private final Screen screen;
 
-  TextConsole(Keyboard keyboard, Terminal terminal, OutputStream out, Screen screen) {
+  public TextConsole(Keyboard keyboard, Terminal terminal, OutputStream out, Screen screen) {
     this.keyboard = keyboard;
     this.terminal = terminal;
     this.out = out;

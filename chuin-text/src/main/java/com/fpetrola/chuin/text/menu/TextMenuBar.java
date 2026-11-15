@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.menu;
 
 import com.fpetrola.chuin.menu.Menu;
 import com.fpetrola.chuin.menu.MenuBar;
@@ -7,8 +7,12 @@ import com.fpetrola.chuin.menu.MenuVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-class TextMenuBar implements MenuBar {
+public class TextMenuBar implements MenuBar {
   private final List<Menu> menus = new ArrayList<>();
+
+  /** With no menu yet: the bar is empty until one is added. */
+  public TextMenuBar() {
+  }
 
   @Override
   public void add(Menu menu) {

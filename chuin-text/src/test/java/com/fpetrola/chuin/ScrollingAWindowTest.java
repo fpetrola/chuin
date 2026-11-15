@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.TextToolkit;
+
 import com.fpetrola.chuin.text.pointer.ClickTarget;
 import com.fpetrola.chuin.text.pointer.Grab;
 import com.fpetrola.chuin.text.pointer.Dragging;

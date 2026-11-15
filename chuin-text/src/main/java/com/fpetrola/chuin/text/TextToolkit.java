@@ -1,5 +1,16 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text;
 
+import com.fpetrola.chuin.text.menu.MenuDesktop;
+import com.fpetrola.chuin.text.input.StreamKeyboard;
+import com.fpetrola.chuin.text.desktop.TextConsole;
+import com.fpetrola.chuin.Toolkit;
+import com.fpetrola.chuin.Desktop;
+import com.fpetrola.chuin.Keyboard;
+import com.fpetrola.chuin.Console;
+
+import com.fpetrola.chuin.text.menu.TextMenu;
+import com.fpetrola.chuin.text.menu.TextMenuBar;
+import com.fpetrola.chuin.text.menu.TextStatusLine;
 import com.fpetrola.chuin.text.desktop.TextDesktop;
 import com.fpetrola.chuin.text.desktop.PointerWindows;
 import com.fpetrola.chuin.text.view.TextButton;

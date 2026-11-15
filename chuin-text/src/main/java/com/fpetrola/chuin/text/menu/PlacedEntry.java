@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.menu;
 
 /** An entry of a row where the row puts it: from its first column, as wide as its caption takes as an entry. */
 interface PlacedEntry {

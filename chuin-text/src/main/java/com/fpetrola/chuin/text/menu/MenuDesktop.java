@@ -1,5 +1,15 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.menu;
 
+import com.fpetrola.chuin.Desktop;
+
+import com.fpetrola.chuin.text.menu.TextMenuBar;
+import com.fpetrola.chuin.text.menu.EntryPlacer;
+import com.fpetrola.chuin.text.menu.TextEntryPlacer;
+import com.fpetrola.chuin.text.menu.PlacedTitle;
+import com.fpetrola.chuin.text.menu.TextPlacedTitle;
+import com.fpetrola.chuin.text.menu.MenuPainter;
+import com.fpetrola.chuin.text.menu.StatusPainter;
+import com.fpetrola.chuin.text.menu.StatusClick;
 import com.fpetrola.chuin.text.desktop.Windows;
 import com.fpetrola.chuin.text.desktop.ToWindows;
 import com.fpetrola.chuin.text.view.Cursor;
@@ -30,7 +40,7 @@ import java.util.Optional;
  * except F10 and clicks on the bar. While a menu is open, keys and clicks stay with the menus: the arrows walk items
  * and menus, Enter or a click on an item runs it, and F10 or a click away closes it. Each of the two is a state.
  */
-class MenuDesktop implements Desktop {
+public class MenuDesktop implements Desktop {
   private static final int MENU_KEY = 10;
   /** The name Escape goes by, which an open menu keeps for itself whatever is bound to it. */
   private static final String ESCAPE = "escape";
@@ -44,7 +54,7 @@ class MenuDesktop implements Desktop {
   /** The command of each bound key, by the key's name. */
   private final Map<String, Runnable> bindings = new HashMap<>();
 
-  MenuDesktop(Windows windows) {
+  public MenuDesktop(Windows windows) {
     this.windows = windows;
   }
 

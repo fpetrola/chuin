@@ -1,5 +1,7 @@
 package com.fpetrola.chuin.demo;
 
+import com.fpetrola.chuin.Keyboard;
+
 import com.fpetrola.chuin.Desktop;
 import com.fpetrola.chuin.Toolkit;
 import com.fpetrola.chuin.menu.Menu;

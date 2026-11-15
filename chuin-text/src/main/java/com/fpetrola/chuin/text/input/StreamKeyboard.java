@@ -1,4 +1,8 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.input;
+
+import com.fpetrola.chuin.Toolkit;
+import com.fpetrola.chuin.Desktop;
+import com.fpetrola.chuin.Keyboard;
 
 import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.text.input.Arrow;
@@ -14,7 +18,7 @@ import java.util.concurrent.locks.LockSupport;
 import java.util.function.Consumer;
 
 /** Reads bytes from a stream until it ends or Ctrl+Q is typed, and types each as a key. */
-class StreamKeyboard implements Keyboard {
+public class StreamKeyboard implements Keyboard {
   private static final int END = -1;
   private static final int CONTROL_Q = 0x11;
   private static final int CARRIAGE_RETURN = '\r';
@@ -49,7 +53,7 @@ class StreamKeyboard implements Keyboard {
   /** Where the keys a program binds by name come from, so the keyboard reads the same ones. */
   private final Toolkit keys;
 
-  StreamKeyboard(InputStream in, Toolkit keys) {
+  public StreamKeyboard(InputStream in, Toolkit keys) {
     this.keys = keys;
     this.in = in;
   }

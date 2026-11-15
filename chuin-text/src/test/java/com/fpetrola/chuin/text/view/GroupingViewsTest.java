@@ -1,6 +1,6 @@
 package com.fpetrola.chuin.text.view;
 
-import com.fpetrola.chuin.TextToolkit;
+import com.fpetrola.chuin.text.TextToolkit;
 import com.fpetrola.chuin.Toolkit;
 import com.fpetrola.chuin.view.Label;
 import com.fpetrola.chuin.view.ViewVisitor;

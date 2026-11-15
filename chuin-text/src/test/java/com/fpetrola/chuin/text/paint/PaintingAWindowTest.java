@@ -1,6 +1,6 @@
 package com.fpetrola.chuin.text.paint;
 
-import com.fpetrola.chuin.TextToolkit;
+import com.fpetrola.chuin.text.TextToolkit;
 import com.fpetrola.chuin.Toolkit;
 import com.fpetrola.chuin.geometry.Area;
 import com.fpetrola.chuin.screen.Screen;
