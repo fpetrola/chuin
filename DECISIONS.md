@@ -92,7 +92,7 @@ Registro corto de por qué el diseño es como es. Una entrada por decisión, la 
    - Una lista abierta flota por encima de todo, como un menú: el `Painter` la anota y el desktop la dibuja después de todas las ventanas, sin recortar, aunque pase el borde de su ventana.
    - Mientras algo está abierto (menú o lista), Esc lo cierra antes que cualquier tecla asociada. `Windows#escape(otherwise)` cierra lo abierto en las ventanas, o ejecuta `otherwise` (la asociación) si no había nada. Esto extiende la excepción de DECISIONS 50 (lo pidió cerco-tdd-97).
    - Tab con la lista abierta la cierra y conserva la elección. Un clic afuera la cierra.
-   - Pendiente: abrirla y elegir con el mouse.
+   - Abrirla y elegir con el mouse se hizo después (63).
    - Esc decide con quien observa: `CloseOpenList` recibe lo que hay que hacer si no cierra nada, lo descarta si cierra una lista, y `Settle#settle()` lo corre al terminar la visita (propuesta 0051). En `5dd1d3a`, `escape` guardaba la respuesta en un `boolean[]`: era el mismo booleano que `no-ignored-result` había marcado, escondido en un array. Es el truco del punto 55, y cerco-tdd-97 lo marcó.
 
    Propuesta 0050.
