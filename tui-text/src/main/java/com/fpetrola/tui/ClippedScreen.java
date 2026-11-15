@@ -51,8 +51,7 @@ class ClippedScreen implements Screen {
 
   @Override
   public void showCursorAt(Point cell) {
-    boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
-    if (across && inside(cell.row())) {
+    if (new TextExtent(area).covers(cell)) {
       screen.showCursorAt(cell);
     }
   }

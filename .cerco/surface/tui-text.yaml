@@ -43,6 +43,12 @@ types:
     kind: interface
     members:
       - "put(Caption, Tint, Tint): void"
+  "com.fpetrola.tui.Extent":
+    kind: interface
+    members:
+      - "covers(Point): boolean"
+      - "from(Point): Point"
+      - "within(Area): Area"
   "com.fpetrola.tui.FocusOrder":
     kind: interface
     members:

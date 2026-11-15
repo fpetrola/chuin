@@ -62,7 +62,8 @@ class TextDesktop implements Windows {
   public void click(Point cell) {
     Area field = focused < onTop.size() ? onTop.get(focused) : new TextArea(0, 0, 0, 0);
     Settle pending = new PendingAction(() -> clickAsUsual(cell));
-    ChooseFromOpenList choose = new ChooseFromOpenList(cell.column() - field.column(), cell.row() - field.row(), pending);
+    Point at = new TextExtent(field).from(cell);
+    ChooseFromOpenList choose = new ChooseFromOpenList(at.column(), at.row(), pending);
     top().ifPresent(window -> window.accept(new AtFocus(focused, choose)));
     pending.settle();
   }
@@ -91,14 +92,13 @@ class TextDesktop implements Windows {
     top().filter(window -> under == opened.size() - 1 && atCorner(window.area(), cell)).ifPresent(this::stretch);
     for (int view = 0; view < onTop.size(); view++) {
       Area area = onTop.get(view);
-      boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
-      boolean down = cell.row() >= area.row() && cell.row() < area.row() + area.rows();
-      if (across && down) {
+      if (new TextExtent(area).covers(cell)) {
         focused = view;
         int clicked = view;
         Settle pending = new PendingAction(NOTHING);
-        ClickFocused click = new ClickFocused(cell.column() - area.column(), cell.row() - area.row(), pending,
-            held -> dragging = to -> held.to(new TextPoint(to.column() - area.column(), to.row() - area.row())));
+        Extent extent = new TextExtent(area);
+        Point at = extent.from(cell);
+        ClickFocused click = new ClickFocused(at.column(), at.row(), pending, held -> dragging = to -> held.to(extent.from(to)));
         top().ifPresent(window -> window.accept(new AtFocus(clicked, click)));
         pending.settle();
       }
@@ -113,16 +113,10 @@ class TextDesktop implements Windows {
   @Override
   public void release(Point cell) {
     dragging = NOT_DRAGGING;
-    boolean over = focused < onTop.size() && within(onTop.get(focused), cell);
+    boolean over = focused < onTop.size() && new TextExtent(onTop.get(focused)).covers(cell);
     Settle pending = new PendingAction(NOTHING);
     top().ifPresent(window -> window.accept(new AtFocus(focused, new LetGo(over, pending))));
     pending.settle();
-  }
-
-  private static boolean within(Area area, Point cell) {
-    boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
-    boolean down = cell.row() >= area.row() && cell.row() < area.row() + area.rows();
-    return across && down;
   }
 
   /** Takes a window by its title at a cell: dragging moves it so that cell stays under the pointer. */
@@ -213,9 +207,7 @@ class TextDesktop implements Windows {
   private int windowUnder(Point cell) {
     for (int at = opened.size() - 1; at >= 0; at--) {
       Area area = opened.get(at).area();
-      boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
-      boolean down = cell.row() >= area.row() && cell.row() < area.row() + area.rows();
-      if (across && down) {
+      if (new TextExtent(area).covers(cell)) {
         return at;
       }
     }

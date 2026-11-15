@@ -102,21 +102,12 @@ class Painter implements ViewVisitor {
     int first = drawn.size();
     cuts.push(() -> {
       for (int at = first; at < drawn.size(); at++) {
-        drawn.set(at, within(drawn.get(at), shown));
+        drawn.set(at, new TextExtent(drawn.get(at)).within(shown));
       }
     });
     inside = new ClippedScreen(outer, shown);
     insideColumn = column - panel.origin().column();
     insideRow = row - panel.origin().row();
-  }
-
-  /** The part of an area that falls within another; no cells when none does. */
-  private static Area within(Area area, Area shown) {
-    int left = Math.max(area.column(), shown.column());
-    int top = Math.max(area.row(), shown.row());
-    int right = Math.min(area.column() + area.columns(), shown.column() + shown.columns());
-    int bottom = Math.min(area.row() + area.rows(), shown.row() + shown.rows());
-    return new TextArea(left, top, Math.max(0, right - left), Math.max(0, bottom - top));
   }
 
   /** Back to what is around the panel, its bars drawn down its last column and across its last row, where a click finds them. */
