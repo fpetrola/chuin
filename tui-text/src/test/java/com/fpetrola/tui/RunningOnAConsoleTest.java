@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class RunningOnAConsoleTest {
@@ -23,7 +24,7 @@ class RunningOnAConsoleTest {
 
   @Test
   void theDesktopIsShownOnceAtStartAndAgainAfterEveryKey() {
-    Toolkit toolkit = new TextToolkit();
+    Toolkit toolkit = new TextToolkit(Map.of("COLORTERM", "truecolor"));
     ByteArrayInputStream typed = new ByteArrayInputStream("x".getBytes(StandardCharsets.UTF_8));
     ByteArrayOutputStream shown = new ByteArrayOutputStream();
     Console console = toolkit.console(typed, shown, toolkit.screen(10, 3));
@@ -39,7 +40,7 @@ class RunningOnAConsoleTest {
 
   @Test
   void theDesktopIsShownAgainAfterAClick() {
-    Toolkit toolkit = new TextToolkit();
+    Toolkit toolkit = new TextToolkit(Map.of("COLORTERM", "truecolor"));
     String leftPressedOnTheTopLeftCell = "\u001b[<0;1;1M";
     ByteArrayInputStream clicked = new ByteArrayInputStream(leftPressedOnTheTopLeftCell.getBytes(StandardCharsets.UTF_8));
     ByteArrayOutputStream shown = new ByteArrayOutputStream();
@@ -56,7 +57,7 @@ class RunningOnAConsoleTest {
 
   @Test
   void theDesktopIsShownAgainAfterEveryPressDragAndReleaseOfTheMouse() {
-    Toolkit toolkit = new TextToolkit();
+    Toolkit toolkit = new TextToolkit(Map.of("COLORTERM", "truecolor"));
     String pressDragRelease = "\u001b[<0;2;1M" + "\u001b[<32;4;2M" + "\u001b[<0;4;2m";
     ByteArrayInputStream mouse = new ByteArrayInputStream(pressDragRelease.getBytes(StandardCharsets.UTF_8));
     ByteArrayOutputStream shown = new ByteArrayOutputStream();

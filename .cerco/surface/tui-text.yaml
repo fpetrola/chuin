@@ -30,6 +30,10 @@ types:
     kind: interface
     members:
       - "add(View, Point): void"
+  "com.fpetrola.tui.Palette":
+    kind: interface
+    members:
+      - "colors(char): String"
   "com.fpetrola.tui.PlacedTitle":
     kind: interface
     members:
@@ -56,6 +60,7 @@ types:
   "com.fpetrola.tui.TextToolkit":
     members:
       - "<init>()"
+      - "<init>(Map<String,String>)"
   "com.fpetrola.tui.Windows":
     kind: interface
     members:

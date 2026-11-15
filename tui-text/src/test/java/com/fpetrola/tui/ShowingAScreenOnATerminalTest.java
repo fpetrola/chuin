@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class ShowingAScreenOnATerminalTest {
@@ -27,7 +28,7 @@ class ShowingAScreenOnATerminalTest {
 
   @Test
   void aScreenIsShownLineByLineWithAnsiSequencesAndTheBareDesktopAsItsPattern() {
-    Toolkit toolkit = new TextToolkit();
+    Toolkit toolkit = new TextToolkit(Map.of("COLORTERM", "truecolor"));
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Terminal terminal = toolkit.terminal(out);
     Screen screen = toolkit.screen(6, 2);
@@ -45,7 +46,7 @@ class ShowingAScreenOnATerminalTest {
 
   @Test
   void eachRunOfCellsWithTheSameTintIsShownInItsColor() {
-    Toolkit toolkit = new TextToolkit();
+    Toolkit toolkit = new TextToolkit(Map.of("COLORTERM", "truecolor"));
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Terminal terminal = toolkit.terminal(out);
     Screen screen = toolkit.screen(7, 1);
@@ -65,7 +66,7 @@ class ShowingAScreenOnATerminalTest {
 
   @Test
   void aButtonIsShownBlackOnTheGreenOfTheDosPaletteWhateverTheTerminalsTheme() {
-    Toolkit toolkit = new TextToolkit();
+    Toolkit toolkit = new TextToolkit(Map.of("COLORTERM", "truecolor"));
     ByteArrayOutputStream out = new ByteArrayOutputStream();
     Terminal terminal = toolkit.terminal(out);
     Screen screen = toolkit.screen(2, 1);

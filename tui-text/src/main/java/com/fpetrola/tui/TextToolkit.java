@@ -1,6 +1,7 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import java.io.InputStream;
@@ -9,7 +10,17 @@ import java.io.OutputStream;
 public class TextToolkit implements Toolkit {
   private final Desktop desktop = new MenuDesktop(new PointerWindows(new TextDesktop()));
 
+  /** Exact RGB when the terminal says it has 24-bit colour, as COLORTERM does with truecolor or 24bit; named otherwise. */
+  private final Palette palette;
+
   public TextToolkit() {
+    this(System.getenv());
+  }
+
+  /** A toolkit for a terminal described by these environment variables. */
+  public TextToolkit(Map<String, String> environment) {
+    String colorterm = environment.getOrDefault("COLORTERM", "");
+    this.palette = colorterm.equals("truecolor") || colorterm.equals("24bit") ? DosPalette.RGB : DosPalette.NAMED;
   }
 
   @Override
@@ -109,7 +120,7 @@ public class TextToolkit implements Toolkit {
 
   @Override
   public Terminal terminal(OutputStream out) {
-    return new AnsiTerminal(out);
+    return new AnsiTerminal(out, palette);
   }
 
   @Override
