@@ -34,4 +34,9 @@ class TextInputLine implements InputLine {
       text.setLength(text.length() - 1);
     }
   }
+
+  @Override
+  public Size size() {
+    return new TextSize(Math.max(width(), text().length()), 1);
+  }
 }

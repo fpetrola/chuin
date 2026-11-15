@@ -5,6 +5,8 @@ import java.util.Optional;
 
 /** Keeps the chosen item and, while the list is open, the highlighted one: no highlight means the list is closed. */
 class TextDropDown implements DropDown {
+  /** The ↓ after the field. */
+  private static final int ARROW = 1;
   private final List<String> items;
   private int chosen;
   private Optional<Integer> highlighted = Optional.empty();
@@ -84,5 +86,10 @@ class TextDropDown implements DropDown {
       highlighted = Optional.of(at);
       TextDropDown.this.choose();
     }
+  }
+
+  @Override
+  public Size size() {
+    return new TextSize(width() + ARROW, 1);
   }
 }

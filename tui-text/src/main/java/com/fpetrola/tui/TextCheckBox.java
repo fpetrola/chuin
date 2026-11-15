@@ -3,6 +3,8 @@ package com.fpetrola.tui;
 import java.util.function.BiConsumer;
 
 class TextCheckBox implements CheckBox {
+  /** The cells "[ ] " takes before the text. */
+  private static final int BOX = 4;
   private final String text;
   private Mark mark = Mark.UNCHECKED;
 
@@ -40,5 +42,10 @@ class TextCheckBox implements CheckBox {
     private Mark opposite() {
       return values()[(ordinal() + 1) % values().length];
     }
+  }
+
+  @Override
+  public Size size() {
+    return new TextSize(BOX + new TextCaption(text).shown().length(), 1);
   }
 }

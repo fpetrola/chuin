@@ -67,4 +67,9 @@ class TextOptionGroup implements OptionGroup {
       chosen = at;
     }
   }
+
+  @Override
+  public Size size() {
+    return new TextSize(width(), options.size());
+  }
 }

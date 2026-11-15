@@ -12,6 +12,12 @@ class TextScrollBar implements ScrollBar {
     this.length = length;
   }
 
+  /** One cell across and its length down; laid across a window's bottom it is drawn the other way. */
+  @Override
+  public Size size() {
+    return new TextSize(1, length);
+  }
+
   @Override
   public void previous() {
     owner.previous();

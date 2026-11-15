@@ -30,4 +30,9 @@ class TextLabel implements Label {
   public Optional<View> linked() {
     return linked;
   }
+
+  @Override
+  public Size size() {
+    return new TextSize(new TextCaption(text).shown().length(), 1);
+  }
 }

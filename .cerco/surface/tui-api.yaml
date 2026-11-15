@@ -176,6 +176,11 @@ types:
       - "pageDown(): void"
       - "pageUp(): void"
       - "previous(): void"
+  "com.fpetrola.tui.Size":
+    kind: interface
+    members:
+      - "columns(): int"
+      - "rows(): int"
   "com.fpetrola.tui.StatusItem":
     kind: interface
     members:
@@ -227,6 +232,7 @@ types:
     kind: interface
     members:
       - "accept(ViewVisitor): void"
+      - "size(): Size"
   "com.fpetrola.tui.ViewVisitor":
     kind: interface
     members:

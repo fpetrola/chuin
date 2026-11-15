@@ -139,7 +139,7 @@ class Painter implements ViewVisitor {
   @Override
   public void visitInputLine(InputLine line) {
     String text = line.text();
-    int cells = Math.max(line.width(), text.length());
+    int cells = line.size().columns();
     inside.write(column, row, text + " ".repeat(cells - text.length()));
     inside.paint(column, row, cells, FIELD_TINT);
     drawn.add(new TextArea(column, row, cells, 1));
@@ -177,7 +177,7 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitListBox(ListBox box) {
-    rows = new RowPainter(inside, new TextArea(column, row, box.width(), 1), seen++ == focused, drawn);
+    rows = new RowPainter(inside, new TextArea(column, row, box.size().columns(), 1), seen++ == focused, drawn);
   }
 
 
@@ -234,7 +234,7 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitOptionGroup(OptionGroup group) {
-    rows = new RowPainter(inside, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn);
+    rows = new RowPainter(inside, new TextArea(column, row, group.size().columns(), 1), seen++ == focused, drawn);
   }
 
 
@@ -244,8 +244,8 @@ class Painter implements ViewVisitor {
     int width = dropDown.width();
     String chosen = dropDown.chosen().orElse("");
     inside.write(column, row, chosen + " ".repeat(width - chosen.length()) + "↓");
-    inside.paint(column, row, width + 1, FIELD_TINT);
-    drawn.add(new TextArea(column, row, width + 1, 1));
+    inside.paint(column, row, dropDown.size().columns(), FIELD_TINT);
+    drawn.add(new TextArea(column, row, dropDown.size().columns(), 1));
     seen++;
     DropDownList opened = new DropDownList(column, row + 1, width);
     list = opened;

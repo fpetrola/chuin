@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 class TextButton implements Button {
+  /** The two blanks on each side of the caption. */
+  private static final int FACE = 4;
+  /** The shadow beside and below the face. */
+  private static final int SHADOW = 1;
   private final String caption;
   private final List<ButtonListener> listeners = new ArrayList<>();
   /** Whether the mouse holds it down. */
@@ -44,5 +48,10 @@ class TextButton implements Button {
     if (held) {
       visitor.visitHeldButton(this);
     }
+  }
+
+  @Override
+  public Size size() {
+    return new TextSize(new TextCaption(caption).shown().length() + FACE + SHADOW, 1 + SHADOW);
   }
 }

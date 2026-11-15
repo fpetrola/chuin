@@ -114,4 +114,9 @@ class TextListBox implements ListBox, Scrollable {
       selected = at;
     }
   }
+
+  @Override
+  public Size size() {
+    return new TextSize(width(), rows);
+  }
 }
