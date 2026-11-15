@@ -1,0 +1,122 @@
+# What a person signed of this module's surface; cerco:approve grows it.
+module: "chuin-text"
+types:
+  "com.fpetrola.chuin.BarLine":
+    kind: interface
+    members:
+      - "along(Point): int"
+      - "cell(int): Point"
+      - "holds(Point): boolean"
+  "com.fpetrola.chuin.Border":
+    kind: interface
+    members:
+      - "around(Area): Area"
+      - "bottom(int): String"
+      - "holding(Point, Size): Area"
+      - "inside(Area): Area"
+      - "middle(int): String"
+      - "top(String, int): String"
+  "com.fpetrola.chuin.Caption":
+    kind: interface
+    members:
+      - "answers(char): boolean"
+      - "entryWidth(): int"
+      - "highlight(Screen, int, int, Tint): void"
+      - "shown(): String"
+  "com.fpetrola.chuin.ClickTarget":
+    kind: interface
+    members:
+      - "click(Point, Runnable): void"
+  "com.fpetrola.chuin.Cursor":
+    kind: interface
+    members:
+      - "at(): int"
+      - "moveTo(int): void"
+      - "step(int): void"
+  "com.fpetrola.chuin.Dragging":
+    kind: interface
+    members:
+      - "to(Point): void"
+  "com.fpetrola.chuin.Drawing":
+    kind: interface
+    members:
+      - "drawOn(Screen): void"
+  "com.fpetrola.chuin.EntryPlacer":
+    kind: interface
+    members:
+      - "place(Caption): PlacedEntry"
+  "com.fpetrola.chuin.EntryRow":
+    kind: interface
+    members:
+      - "put(Caption, Tint, Tint): void"
+  "com.fpetrola.chuin.Extent":
+    kind: interface
+    members:
+      - "covers(Point): boolean"
+      - "from(Point): Point"
+      - "within(Area): Area"
+  "com.fpetrola.chuin.FocusOrder":
+    kind: interface
+    members:
+      - "next(): boolean"
+  "com.fpetrola.chuin.Grab":
+    kind: interface
+    members:
+      - "hold(Dragging): void"
+  "com.fpetrola.chuin.Group":
+    kind: interface
+    members:
+      - "add(View, Point): void"
+  "com.fpetrola.chuin.Palette":
+    kind: interface
+    members:
+      - "colors(char): String"
+  "com.fpetrola.chuin.PlacedEntry":
+    kind: interface
+    members:
+      - "covers(int): boolean"
+      - "start(): int"
+  "com.fpetrola.chuin.PlacedTitle":
+    kind: interface
+    members:
+      - "answers(char): boolean"
+      - "covers(Point): boolean"
+      - "drawOpen(Screen, int): void"
+      - "itemAt(Point): Optional<MenuItem>"
+      - "items(): List<MenuItem>"
+      - "menu(): Menu"
+  "com.fpetrola.chuin.Scrollable":
+    kind: interface
+    members:
+      - "most(): int"
+      - "moveTo(int): void"
+      - "next(): void"
+      - "overflows(): boolean"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "position(): int"
+      - "previous(): void"
+  "com.fpetrola.chuin.Settle":
+    kind: interface
+    members:
+      - "note(Runnable): void"
+      - "settle(): void"
+  "com.fpetrola.chuin.TextToolkit":
+    members:
+      - "<init>()"
+      - "<init>(Map<String,String>)"
+  "com.fpetrola.chuin.Tint":
+    kind: interface
+    members:
+      - "letter(): char"
+      - "paint(Screen, int, int, int): void"
+  "com.fpetrola.chuin.Windows":
+    kind: interface
+    members:
+      - "click(Point): void"
+      - "drag(Point): void"
+      - "draw(Screen): void"
+      - "escape(Runnable): void"
+      - "open(Window): void"
+      - "release(Point): void"
+      - "type(Key): void"

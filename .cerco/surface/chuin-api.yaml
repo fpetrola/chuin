@@ -1,0 +1,282 @@
+# What a person signed of this module's surface; cerco:approve grows it.
+module: "chuin-api"
+types:
+  "com.fpetrola.chuin.Console":
+    kind: interface
+    members:
+      - "run(Desktop): void"
+  "com.fpetrola.chuin.Desktop":
+    kind: interface
+    members:
+      - "bind(Key, Runnable): void"
+      - "click(Point): void"
+      - "drag(Point): void"
+      - "draw(Screen): void"
+      - "open(Window): void"
+      - "release(Point): void"
+      - "show(MenuBar): void"
+      - "show(StatusLine): void"
+      - "type(Key): void"
+  "com.fpetrola.chuin.Keyboard":
+    kind: interface
+    members:
+      - "typeInto(Desktop): void"
+  "com.fpetrola.chuin.Toolkit":
+    kind: interface
+    members:
+      - "area(int, int, int, int): Area"
+      - "button(String): Button"
+      - "checkBox(String): CheckBox"
+      - "console(InputStream, OutputStream, Screen): Console"
+      - "desktop(): Desktop"
+      - "dropDown(List<String>): DropDown"
+      - "enterKey(): Key"
+      - "escapeKey(): Key"
+      - "functionKey(int): Key"
+      - "inputLine(int): InputLine"
+      - "keyboard(InputStream): Keyboard"
+      - "label(String): Label"
+      - "label(String, View): Label"
+      - "listBox(List<String>, int): ListBox"
+      - "menu(String): Menu"
+      - "menuBar(): MenuBar"
+      - "optionGroup(List<String>): OptionGroup"
+      - "point(int, int): Point"
+      - "screen(int, int): Screen"
+      - "scrollPanel(View, int, int): ScrollPanel"
+      - "spaceKey(): Key"
+      - "statusLine(): StatusLine"
+      - "tabKey(): Key"
+      - "terminal(OutputStream): Terminal"
+      - "window(String): Window"
+  "com.fpetrola.chuin.geometry.Area":
+    kind: interface
+    members:
+      - "column(): int"
+      - "columns(): int"
+      - "row(): int"
+      - "rows(): int"
+  "com.fpetrola.chuin.geometry.Point":
+    kind: interface
+    members:
+      - "column(): int"
+      - "row(): int"
+  "com.fpetrola.chuin.geometry.Size":
+    kind: interface
+    members:
+      - "columns(): int"
+      - "rows(): int"
+  "com.fpetrola.chuin.input.Key":
+    kind: interface
+    members:
+      - "accept(KeyVisitor): void"
+  "com.fpetrola.chuin.input.KeyVisitor":
+    kind: interface
+    members:
+      - "alt(char): void"
+      - "backspace(): void"
+      - "character(char): void"
+      - "control(char): void"
+      - "down(): void"
+      - "enter(): void"
+      - "escape(): void"
+      - "function(int): void"
+      - "left(): void"
+      - "other(): void"
+      - "right(): void"
+      - "space(): void"
+      - "tab(): void"
+      - "up(): void"
+  "com.fpetrola.chuin.menu.Menu":
+    kind: interface
+    members:
+      - "accept(MenuVisitor): void"
+      - "add(String, Key, Runnable): void"
+      - "add(String, Runnable): void"
+      - "separator(): void"
+      - "title(): String"
+      - "width(): int"
+  "com.fpetrola.chuin.menu.MenuBar":
+    kind: interface
+    members:
+      - "accept(MenuVisitor): void"
+      - "add(Menu): void"
+  "com.fpetrola.chuin.menu.MenuItem":
+    kind: interface
+    members:
+      - "key(): Optional<Key>"
+      - "menu(): Menu"
+      - "run(): void"
+      - "text(): String"
+  "com.fpetrola.chuin.menu.MenuVisitor":
+    kind: interface
+    members:
+      - "visitMenu(Menu): void"
+      - "visitMenuBar(MenuBar): void"
+      - "visitMenuItem(MenuItem): void"
+      - "visitMenuSeparator(Menu): void"
+  "com.fpetrola.chuin.menu.StatusItem":
+    kind: interface
+    members:
+      - "key(): Key"
+      - "run(): void"
+      - "text(): String"
+  "com.fpetrola.chuin.menu.StatusLine":
+    kind: interface
+    members:
+      - "accept(StatusVisitor): void"
+      - "add(String, Key, Runnable): void"
+  "com.fpetrola.chuin.menu.StatusVisitor":
+    kind: interface
+    members:
+      - "visitStatusItem(StatusItem): void"
+      - "visitStatusLine(StatusLine): void"
+  "com.fpetrola.chuin.screen.Screen":
+    kind: interface
+    members:
+      - "cursor(): Optional<Point>"
+      - "hideCursor(): void"
+      - "lines(): List<String>"
+      - "paint(int, int, int, char): void"
+      - "showCursorAt(Point): void"
+      - "tints(): List<String>"
+      - "write(int, int, String): void"
+  "com.fpetrola.chuin.screen.Terminal":
+    kind: interface
+    members:
+      - "show(Screen): void"
+  "com.fpetrola.chuin.view.Button":
+    kind: interface
+    members:
+      - "caption(): String"
+      - "hold(): void"
+      - "letGo(): void"
+      - "onPress(ButtonListener): void"
+      - "press(): void"
+  "com.fpetrola.chuin.view.ButtonListener":
+    kind: interface
+    members:
+      - "pressed(Button): void"
+  "com.fpetrola.chuin.view.CheckBox":
+    kind: interface
+    members:
+      - "text(): String"
+      - "toggle(): void"
+  "com.fpetrola.chuin.view.DropDown":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "chosen(): Optional<String>"
+      - "close(): void"
+      - "down(): void"
+      - "up(): void"
+      - "width(): int"
+  "com.fpetrola.chuin.view.DropDownItem":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "dropDown(): DropDown"
+      - "text(): String"
+  "com.fpetrola.chuin.view.InputLine":
+    kind: interface
+    members:
+      - "erase(): void"
+      - "text(): String"
+      - "type(char): void"
+      - "width(): int"
+  "com.fpetrola.chuin.view.Label":
+    kind: interface
+    members:
+      - "linked(): Optional<View>"
+      - "text(): String"
+      - "text(String): void"
+  "com.fpetrola.chuin.view.ListBox":
+    kind: interface
+    members:
+      - "next(): void"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "previous(): void"
+      - "selected(): Optional<String>"
+      - "width(): int"
+  "com.fpetrola.chuin.view.ListItem":
+    kind: interface
+    members:
+      - "list(): ListBox"
+      - "select(): void"
+      - "text(): String"
+  "com.fpetrola.chuin.view.Option":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "group(): OptionGroup"
+      - "text(): String"
+  "com.fpetrola.chuin.view.OptionGroup":
+    kind: interface
+    members:
+      - "next(): void"
+      - "previous(): void"
+      - "width(): int"
+  "com.fpetrola.chuin.view.Placement":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+      - "area(): Area"
+      - "position(): Point"
+  "com.fpetrola.chuin.view.ScrollBar":
+    kind: interface
+    members:
+      - "next(): void"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "previous(): void"
+      - "thumbTo(int): void"
+  "com.fpetrola.chuin.view.ScrollPanel":
+    kind: interface
+    members:
+      - "horizontal(): ScrollBar"
+      - "origin(): Point"
+      - "scroll(int, int): void"
+      - "vertical(): ScrollBar"
+  "com.fpetrola.chuin.view.View":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+      - "size(): Size"
+  "com.fpetrola.chuin.view.ViewVisitor":
+    kind: interface
+    members:
+      - "leaveScrollPanel(ScrollPanel): void"
+      - "visitButton(Button): void"
+      - "visitCheckBox(CheckBox): void"
+      - "visitChecked(CheckBox): void"
+      - "visitChosenOption(Option): void"
+      - "visitDropDown(DropDown): void"
+      - "visitDropDownItem(DropDownItem): void"
+      - "visitHeldButton(Button): void"
+      - "visitHighlightedDropDownItem(DropDownItem): void"
+      - "visitInputLine(InputLine): void"
+      - "visitLabel(Label): void"
+      - "visitListBox(ListBox): void"
+      - "visitListItem(ListItem): void"
+      - "visitNoListItem(ListBox): void"
+      - "visitNoScrollBar(ScrollBar): void"
+      - "visitOption(Option): void"
+      - "visitOptionGroup(OptionGroup): void"
+      - "visitPlacement(Placement): void"
+      - "visitScrollDown(ScrollBar): void"
+      - "visitScrollPanel(ScrollPanel): void"
+      - "visitScrollThumb(ScrollBar): void"
+      - "visitScrollTrack(ScrollBar): void"
+      - "visitScrollUp(ScrollBar): void"
+      - "visitSelectedListItem(ListItem): void"
+      - "visitUnchecked(CheckBox): void"
+      - "visitWindow(Window): void"
+  "com.fpetrola.chuin.view.Window":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+      - "add(View, Point): void"
+      - "area(): Area"
+      - "place(Area): void"
+      - "title(): String"

@@ -1,0 +1,12 @@
+package com.fpetrola.chuin.view;
+
+/** An item a list box shows on one of its rows. */
+public interface ListItem {
+  /** The list box that shows it. */
+  ListBox list();
+
+  String text();
+
+  /** Makes this item the selected one of its list. */
+  void select();
+}

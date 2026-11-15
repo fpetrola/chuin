@@ -5,14 +5,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.fpetrola</groupId>
-  <artifactId>cerco-tdd</artifactId>
+  <artifactId>chuin</artifactId>
   <version>0.1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
-    <module>tui-api</module>
-    <module>tui-text</module>
-    <module>tui-demo</module>
+    <module>chuin-api</module>
+    <module>chuin-text</module>
+    <module>chuin-demo</module>
   </modules>
 
   <properties>

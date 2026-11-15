@@ -1,0 +1,53 @@
+package com.fpetrola.chuin;
+
+import com.fpetrola.chuin.screen.Screen;
+import com.fpetrola.chuin.view.Button;
+import com.fpetrola.chuin.view.Label;
+import com.fpetrola.chuin.view.Window;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+
+/** The windows of a desktop, on their own: they open, take keys and clicks, and draw, with no menu bar around them. */
+class DrivingTheWindowsTest {
+  @Test
+  void windowsOpenTakeKeysAndClicksAndDrawWithoutAMenuBar() {
+    Toolkit toolkit = new TextToolkit();
+    Windows windows = new TextDesktop();
+    Screen screen = toolkit.screen(20, 4);
+    Window window = toolkit.window("A");
+    Label said = toolkit.label("");
+    Button yes = toolkit.button("Si");
+    Button no = toolkit.button("No");
+    yes.onPress(pressed -> said.text("si"));
+    no.onPress(pressed -> said.text("no"));
+    window.place(toolkit.area(0, 0, 20, 4));
+    window.add(yes, toolkit.point(0, 0));
+    window.add(no, toolkit.point(8, 0));
+    window.add(said, toolkit.point(0, 1));
+
+    windows.open(window);
+    windows.type(toolkit.enterKey());
+    windows.draw(screen);
+    assertEquals("si", said.text());
+
+    windows.click(toolkit.point(10, 1));
+    windows.release(toolkit.point(10, 1));
+    windows.draw(screen);
+    assertEquals("no", said.text());
+    assertEquals("╔═══════ A ════════╗", screen.lines().getFirst());
+  }
+
+  @Test
+  void escapeWithNothingOpenInTheWindowsRunsWhatElseItWasGiven() {
+    Toolkit toolkit = new TextToolkit();
+    Windows windows = new TextDesktop();
+    StringBuilder ran = new StringBuilder();
+    windows.open(toolkit.window("A"));
+
+    windows.escape(() -> ran.append("otherwise"));
+
+    assertEquals("otherwise", ran.toString());
+  }
+}

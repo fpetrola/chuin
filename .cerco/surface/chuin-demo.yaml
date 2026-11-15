@@ -1,0 +1,11 @@
+# What a person signed of this module's surface; cerco:approve grows it.
+module: "chuin-demo"
+types:
+  "com.fpetrola.chuin.demo.Demo":
+    members:
+      - "main(String[]): void"
+  "com.fpetrola.chuin.demo.Example":
+    kind: interface
+    members:
+      - "build(Toolkit, Desktop): void"
+      - "name(): String"

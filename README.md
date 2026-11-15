@@ -47,17 +47,17 @@ cerco ([how it is built](#how-it-is-built)): every interface was proposed and si
 `demo.sh` builds the project, puts the terminal in raw mode, and runs the example across the whole terminal.
 Ctrl+Q quits and restores the terminal. For the exact DOS colours, run it with `COLORTERM=truecolor`.
 
-The code of every example is in [`tui-demo/src/main/java/com/fpetrola/tui/demo`](tui-demo/src/main/java/com/fpetrola/tui/demo).
+The code of every example is in [`chuin-demo/src/main/java/com/fpetrola/chuin/demo`](chuin-demo/src/main/java/com/fpetrola/chuin/demo).
 
 ## Modules
 
 | Module     | What it holds                                                                                        |
 |------------|------------------------------------------------------------------------------------------------------|
-| `tui-api`  | The interfaces an application is written against: `Toolkit`, `Desktop`, `Window`, the views, menus.   |
-| `tui-text` | Their implementation for ANSI terminals: drawing, keyboard and mouse decoding, the palette.           |
-| `tui-demo` | The examples and demos shown here, and the test that takes these screenshots.                         |
+| `chuin-api`  | The interfaces an application is written against: `Toolkit`, `Desktop`, `Window`, the views, menus.   |
+| `chuin-text` | Their implementation for ANSI terminals: drawing, keyboard and mouse decoding, the palette.           |
+| `chuin-demo` | The examples and demos shown here, and the test that takes these screenshots.                         |
 
-An application depends only on `tui-api`, plus `tui-text` for the single line that creates the toolkit.
+An application depends only on `chuin-api`, plus `chuin-text` for the single line that creates the toolkit.
 
 ## Quick start
 
@@ -118,7 +118,7 @@ dialog.add(ok, toolkit.point(10, 12));
 
 ![A form](docs/screenshots/form.png)
 
-Source: [`FormControls.java`](tui-demo/src/main/java/com/fpetrola/tui/demo/FormControls.java)
+Source: [`FormControls.java`](chuin-demo/src/main/java/com/fpetrola/chuin/demo/FormControls.java)
 
 ### Lists and drop downs
 
@@ -140,7 +140,7 @@ window.add(size, toolkit.point(22, 2));
 
 ![A list box and an open drop down](docs/screenshots/lists.png)
 
-Source: [`ListsAndDropDowns.java`](tui-demo/src/main/java/com/fpetrola/tui/demo/ListsAndDropDowns.java)
+Source: [`ListsAndDropDowns.java`](chuin-demo/src/main/java/com/fpetrola/chuin/demo/ListsAndDropDowns.java)
 
 ### Menus and the status line
 
@@ -168,7 +168,7 @@ desktop.show(status);
 
 ![A menu open under the bar](docs/screenshots/menus.png)
 
-Source: [`MenusAndStatusLine.java`](tui-demo/src/main/java/com/fpetrola/tui/demo/MenusAndStatusLine.java)
+Source: [`MenusAndStatusLine.java`](chuin-demo/src/main/java/com/fpetrola/chuin/demo/MenusAndStatusLine.java)
 
 > A key bound on the status line or with `desktop.bind(key, command)` wins over what the key did before, F10 included.
 
@@ -187,7 +187,7 @@ for (int line = 0; line < poem.size(); line++) {
 
 ![A window with scroll bars](docs/screenshots/scrolling.png)
 
-Source: [`ScrollingWindow.java`](tui-demo/src/main/java/com/fpetrola/tui/demo/ScrollingWindow.java)
+Source: [`ScrollingWindow.java`](chuin-demo/src/main/java/com/fpetrola/chuin/demo/ScrollingWindow.java)
 
 For a scrolling area inside a window, `toolkit.scrollPanel(view, columns, rows)` wraps any view in a panel with its
 own bars.
@@ -199,8 +199,8 @@ check boxes, a drop down and buttons, next to a list of records, under a full me
 
 ![The address book with its Search menu open](docs/screenshots/address-book-menu.png)
 
-Source: [`AddressBook.java`](tui-demo/src/main/java/com/fpetrola/tui/demo/AddressBook.java),
-[`Inventory.java`](tui-demo/src/main/java/com/fpetrola/tui/demo/Inventory.java)
+Source: [`AddressBook.java`](chuin-demo/src/main/java/com/fpetrola/chuin/demo/AddressBook.java),
+[`Inventory.java`](chuin-demo/src/main/java/com/fpetrola/chuin/demo/Inventory.java)
 
 ## Keys and mouse
 
@@ -236,11 +236,11 @@ assertTrue(screen.lines().get(9).contains("Hello, world!"));
 ```
 
 The screenshots in this README are made this way, by
-[`TakingScreenshotsTest`](tui-demo/src/test/java/com/fpetrola/tui/demo/TakingScreenshotsTest.java). To take them
+[`TakingScreenshotsTest`](chuin-demo/src/test/java/com/fpetrola/chuin/demo/TakingScreenshotsTest.java). To take them
 again:
 
 ```sh
-mvn -pl tui-demo -am test -Dtest=TakingScreenshotsTest -Dsurefire.failIfNoSpecifiedTests=false \
+mvn -pl chuin-demo -am test -Dtest=TakingScreenshotsTest -Dsurefire.failIfNoSpecifiedTests=false \
     -Dscreenshots=$PWD/docs/screenshots
 ```
 

@@ -45,7 +45,7 @@ Tests:
 - La ventana de arriba tiene marco doble y las demás, simple.
 - Un test de terminal muestra el color ANSI de cada tinte nuevo.
 
-Superficie: probablemente ninguna, porque `Frame` y `Shadow` son de `tui-text`, salvo que se elija el tipo `Tint`.
+Superficie: probablemente ninguna, porque `Frame` y `Shadow` son de `chuin-text`, salvo que se elija el tipo `Tint`.
 
 ### Paso 2: botón y campo de texto con su aspecto (5 y 6)
 
@@ -120,12 +120,12 @@ Rearmar la demo para que se parezca a la captura:
 
 ## Revisión del modelo: abstraer, unificar, sacar duplicados
 
-Sale de una revisión de tui-api y tui-text. Las reglas son las de siempre:
+Sale de una revisión de chuin-api y chuin-text. Las reglas son las de siempre:
 - Cada paso es un commit (o pocos) que compila solo y no cambia lo que se ve.
 - Lo que haga crecer una superficie sellada va con propuesta y firma.
 - Los tests que hay hoy cuidan el comportamiento. Si un concepto nuevo promete algo, lleva su test de contrato.
 
-### Etapa A: duplicación chica, sin tocar tui-api
+### Etapa A: duplicación chica, sin tocar chuin-api
 
 **A1. La barra de la lista es una barra como las otras.** Hoy el clic está dos veces (`ClickFocused` repite el autómata de `BarClick`: `pastThumb`, `walked++`) y el dibujo también (`RowPainter` repite los glifos `░ ■` de `BarCells`).
 - `ClickFocused`, cuando el clic cae en la columna de la barra, delega en `BarClick`.
@@ -142,7 +142,7 @@ Se decide en la propuesta.
 - Se juntan como constantes con nombre de rol (`FOCUS`, `HOTKEY`, `MENU`, `BARE`…) en un solo lugar, que también usa la paleta.
 - Siguen siendo `char`, como se decidió al principio, porque los tests leen tintes como texto.
 
-### Etapa B: conceptos que faltan, todavía en tui-text
+### Etapa B: conceptos que faltan, todavía en chuin-text
 
 **B1. FocusOrder.** Qué vista es la n-ésima enfocable lo deciden hoy `CollectFocusable`, `AtFocus` y `Painter`, cada uno con su `seen++`. En `Painter` ya hay un parche, `seen - 1 == focused`.
 - Una sola pieza dice si la vista visitada es enfocable y si tiene el foco.
@@ -157,7 +157,7 @@ Se decide en la propuesta.
 - `StatusClick` y `MenuDesktop.placed()` la usan.
 
 **B4. Geometría con nombre.** "El área contiene la celda" está copiado en 6 lugares, y la intersección (`Painter.within`) y el punto relativo están hechos a mano.
-- Primero en tui-text. Pasa a `Area` (tui-api, con propuesta) solo si hace falta.
+- Primero en chuin-text. Pasa a `Area` (chuin-api, con propuesta) solo si hace falta.
 
 **B5. Cursor.** El índice acotado y "desde qué fila se ve" se repiten en `TextListBox`, `TextOptionGroup`, el menú abierto, `TextDropDown` y `PanelAxis`.
 - Un `Cursor` con `previous`, `next`, `page` y `moveTo`, que todos componen.
@@ -177,7 +177,7 @@ Va después de B, porque B ya les saca partes.
 - `ButtonFace`: la cara, la sombra y el botón apretado.
 - `Painter` queda como el despacho por widget.
 
-### Etapa D: toca tui-api, más discutible
+### Etapa D: toca chuin-api, más discutible
 
 **D1. Las filas dicen su índice.** `ListItem` y `Option` exponen su índice, o se unifican en una fila de una vista de filas. Así desaparecen los contadores `x++ == row` de `ClickFocused`, `RowPainter` y `MenuPainter`.
 
@@ -197,4 +197,4 @@ Va después de B, porque B ya les saca partes.
 
 1. ¿El orden A → B → C → D está bien? Recomiendo que sí: lo chico y seguro primero, y lo que toca la API al final.
 2. ¿D entra, o se deja para más adelante? Recomiendo decidirlo al terminar C, viendo cuánto quedó de los contadores.
-3. En B4, ¿la geometría sube a `Area` en tui-api, o queda en tui-text? Recomiendo empezar en tui-text.
+3. En B4, ¿la geometría sube a `Area` en chuin-api, o queda en chuin-text? Recomiendo empezar en chuin-text.
