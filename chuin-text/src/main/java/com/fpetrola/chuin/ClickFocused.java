@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.view.Button;
 import com.fpetrola.chuin.view.CheckBox;
 import com.fpetrola.chuin.view.DropDown;

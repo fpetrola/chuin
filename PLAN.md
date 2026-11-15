@@ -198,3 +198,17 @@ Va después de B, porque B ya les saca partes.
 1. ¿El orden A → B → C → D está bien? Recomiendo que sí: lo chico y seguro primero, y lo que toca la API al final.
 2. ¿D entra, o se deja para más adelante? Recomiendo decidirlo al terminar C, viendo cuánto quedó de los contadores.
 3. En B4, ¿la geometría sube a `Area` en chuin-api, o queda en chuin-text? Recomiendo empezar en chuin-text.
+
+## Paquetes de chuin-text
+
+Las 94 clases de chuin-text estaban todas en un solo paquete. Ahora se reparten en paquetes debajo de `com.fpetrola.chuin.text`, separados de la API para que ningún paquete quede partido entre dos módulos (nota del reviewer: así JPMS no lo impide). Se hace un paso por paquete, de abajo hacia arriba, sin ciclos entre paquetes, y cada paso lleva su propuesta, su firma, el audit, su entrada en DECISIONS y su commit.
+
+1. `text.geometry`: `TextArea`, `TextPoint`, `TextSize`, `Extent`, `TextExtent`.
+2. `text.screen`: `TextScreen`, `ClippedScreen`, `AnsiTerminal`, `Palette`, `DosPalette`, `Tint`, `TintRole`.
+3. `text.input`: `Arrow`, `KeyName`, `StreamKeyboard`.
+4. `text.view`: los modelos de las vistas, `Cursor`, `Group`, `Caption`, `PanelAxis`, `Scrollable`.
+5. `text.pointer`: `ClickTarget`, `Grab`, `Dragging`, `BarTarget`, `BarClick`, `BarLine`/`TextBarLine`, `Settle`/`PendingAction`.
+6. `text.paint`: `Painter`, `RowPainter`, `BarCells`, `FocusOrder`, `Border`, `Line`, `Frame`, `RaisedFrame`, `Shadow`, `Drawing`, `DropDownList`.
+7. `text.desktop`: `TextDesktop`, `Windows`, `ToWindows`, `PointerWindows`, `ShownDesktop`, `TextConsole`, `AtFocus`, `CollectFocusable`, las acciones sobre el foco, `MoveWindow`.
+8. `text.menu`: la barra, el menú, la línea de estado, `EntryPlacer`/`EntryRow`/`PlacedEntry`/`PlacedTitle`, `KeyLabel`, `KeyCaption`, `MenuDesktop` y los painters de menú y estado.
+9. `TextToolkit` pasa a `com.fpetrola.chuin.text`, con los imports de la demo. Así la raíz `com.fpetrola.chuin` queda solo para la API.

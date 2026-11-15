@@ -49,12 +49,6 @@ types:
     kind: interface
     members:
       - "put(Caption, Tint, Tint): void"
-  "com.fpetrola.chuin.Extent":
-    kind: interface
-    members:
-      - "covers(Point): boolean"
-      - "from(Point): Point"
-      - "within(Area): Area"
   "com.fpetrola.chuin.FocusOrder":
     kind: interface
     members:
@@ -120,3 +114,12 @@ types:
       - "open(Window): void"
       - "release(Point): void"
       - "type(Key): void"
+  "com.fpetrola.chuin.text.geometry.Extent":
+    kind: interface
+    members:
+      - "covers(Point): boolean"
+      - "from(Point): Point"
+      - "within(Area): Area"
+  "com.fpetrola.chuin.text.geometry.TextExtent":
+    members:
+      - "<init>(Area)"

@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.geometry.Point;
 
 

@@ -1,10 +1,10 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.geometry;
 
 import com.fpetrola.chuin.geometry.Area;
 import com.fpetrola.chuin.geometry.Point;
 
 /** What an area spans on the screen: which cells fall in it, its part another area shows, and a cell counted from its corner. */
-interface Extent {
+public interface Extent {
   /** Whether a cell falls in the area. */
   boolean covers(Point cell);
 

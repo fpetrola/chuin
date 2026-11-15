@@ -1,12 +1,12 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.geometry;
 
 import com.fpetrola.chuin.geometry.Area;
 import com.fpetrola.chuin.geometry.Point;
 
-class TextExtent implements Extent {
+public class TextExtent implements Extent {
   private final Area area;
 
-  TextExtent(Area area) {
+  public TextExtent(Area area) {
     this.area = area;
   }
 

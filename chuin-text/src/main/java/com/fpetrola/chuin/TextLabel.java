@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
 import com.fpetrola.chuin.view.Label;
 import com.fpetrola.chuin.view.View;

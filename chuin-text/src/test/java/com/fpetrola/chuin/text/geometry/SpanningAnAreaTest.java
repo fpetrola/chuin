@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.geometry;
 
 import com.fpetrola.chuin.geometry.Area;
 import com.fpetrola.chuin.geometry.Point;

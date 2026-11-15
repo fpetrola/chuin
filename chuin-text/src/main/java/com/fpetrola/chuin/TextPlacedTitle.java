@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.geometry.TextPoint;
+import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Area;
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.menu.Menu;
