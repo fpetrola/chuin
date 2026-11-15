@@ -1,0 +1,6 @@
+# cerco baseline v1 plural-name: count, key
+1	tui-api/src/main/java/com/fpetrola/tui/Keys.java|Keys
+1	tui-api/src/main/java/com/fpetrola/tui/RadioButtons.java|RadioButtons
+1	tui-text/src/main/java/com/fpetrola/tui/Lines.java|Lines
+1	tui-text/src/main/java/com/fpetrola/tui/MenuTitles.java|MenuTitles
+1	tui-text/src/main/java/com/fpetrola/tui/TextRadioButtons.java|TextRadioButtons

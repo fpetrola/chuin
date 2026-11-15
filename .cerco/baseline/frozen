@@ -36,6 +36,7 @@ no-utility-class
 notified-by-caller
 one-accept
 parseable
+plural-name
 property-shuffle
 reached-through
 refiltered-by-type
