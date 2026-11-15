@@ -25,12 +25,11 @@ class ClickFocused implements ViewVisitor {
   private final int row;
   /** The row of the list the walk is on, and the cell of its scroll bar. */
   private int rowsWalked;
-  /** Where the list's scroll bar is; no column before a list is met. */
-  private int barColumn = -1;
-  /** The row of the scroll bar the walk is on. */
-  private int walked;
-  /** Whether the walk has met the thumb, so a track cell is below it. */
-  private boolean pastThumb;
+  /** Whether the click fell on the list's scroll bar, which then takes it instead of the row. */
+  private boolean onBarLine;
+  /** What the click does on the list's scroll bar: nothing, unless it fell on the bar. */
+  private ViewVisitor onBar = new ViewVisitor() {
+  };
   /** How many options of a group the walk has met. */
   private int options;
 
@@ -57,7 +56,11 @@ class ClickFocused implements ViewVisitor {
   /** Where a list's scroll bar is, counted from the list's first column. */
   @Override
   public void visitListBox(ListBox box) {
-    barColumn = box.width() - 1;
+    BarLine line = new TextBarLine(new TextPoint(box.width() - 1, 0), new TextPoint(0, 1));
+    onBarLine = line.holds(new TextPoint(column, row));
+    if (onBarLine) {
+      onBar = new BarClick(row, pending, line, grab);
+    }
   }
 
   /** An item is selected wherever its row is clicked, unless the bar's column takes the click. */
@@ -73,28 +76,27 @@ class ClickFocused implements ViewVisitor {
 
   @Override
   public void visitScrollUp(ScrollBar bar) {
-    onBar(bar::previous);
+    onBar.visitScrollUp(bar);
   }
 
   @Override
   public void visitScrollTrack(ScrollBar bar) {
-    onBar(pastThumb ? bar::pageDown : bar::pageUp);
+    onBar.visitScrollTrack(bar);
   }
 
   @Override
   public void visitScrollThumb(ScrollBar bar) {
-    pastThumb = true;
-    onBar(() -> grab.hold(to -> bar.thumbTo(to.row())));
+    onBar.visitScrollThumb(bar);
   }
 
   @Override
   public void visitScrollDown(ScrollBar bar) {
-    onBar(bar::next);
+    onBar.visitScrollDown(bar);
   }
 
   @Override
   public void visitNoScrollBar(ScrollBar bar) {
-    walked++;
+    onBar.visitNoScrollBar(bar);
   }
 
   @Override
@@ -120,7 +122,7 @@ class ClickFocused implements ViewVisitor {
 
   /** Notes selecting the item on this row, when it is the one clicked and the click is off the bar's column. */
   private void onRow(ListItem item) {
-    if (rowsWalked++ == row && column != barColumn) {
+    if (rowsWalked++ == row && !onBarLine) {
       pending.note(item::select);
     }
   }
@@ -129,13 +131,6 @@ class ClickFocused implements ViewVisitor {
   private void onOption(Option option) {
     if (options++ == row) {
       pending.note(option::choose);
-    }
-  }
-
-  /** Notes what the bar's cell on this row does, when it is the one clicked. */
-  private void onBar(Runnable does) {
-    if (walked++ == row && column == barColumn) {
-      pending.note(does);
     }
   }
 }

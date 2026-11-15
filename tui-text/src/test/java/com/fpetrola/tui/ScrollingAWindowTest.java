@@ -182,7 +182,7 @@ class ScrollingAWindowTest {
     ListBox numbers = toolkit.listBox(List.of("uno", "dos", "tres", "cuatro"), 4);
     ScrollPanel panel = toolkit.scrollPanel(numbers, 5, 3);
     StringBuilder otherwise = new StringBuilder();
-    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(4, 0), toolkit.point(0, 1), 2, held -> { });
+    BarTarget down = new BarTarget(panel.vertical(), new TextBarLine(toolkit.point(4, 0), toolkit.point(0, 1)), 2, held -> { });
 
     down.click(toolkit.point(2, 1), () -> otherwise.append("inside "));
     down.click(toolkit.point(4, 1), () -> otherwise.append("bar "));
@@ -326,7 +326,7 @@ class ScrollingAWindowTest {
     ScrollPanel panel = toolkit.scrollPanel(numbers, 3, 6);
     List<Dragging> held = new java.util.ArrayList<>();
     Grab grab = held::add;
-    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(2, 0), toolkit.point(0, 1), 5, grab);
+    BarTarget down = new BarTarget(panel.vertical(), new TextBarLine(toolkit.point(2, 0), toolkit.point(0, 1)), 5, grab);
 
     down.click(toolkit.point(2, 1), () -> { });
     held.getFirst().to(toolkit.point(2, 2));

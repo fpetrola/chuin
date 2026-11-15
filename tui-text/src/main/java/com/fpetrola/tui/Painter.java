@@ -138,10 +138,12 @@ class Painter implements ViewVisitor {
     Size size = panel.size();
     Point down = new TextPoint(column + size.columns() - 1, row);
     Point across = new TextPoint(column, row + size.rows() - 1);
-    panel.vertical().accept(new BarCells(inside, down, new TextPoint(0, 1), "▲", "▼"));
-    panel.horizontal().accept(new BarCells(inside, across, new TextPoint(1, 0), "◄", "►"));
-    targets.add(new BarTarget(panel.vertical(), down, new TextPoint(0, 1), size.rows() - 1, grab));
-    targets.add(new BarTarget(panel.horizontal(), across, new TextPoint(1, 0), size.columns() - 1, grab));
+    BarLine downward = new TextBarLine(down, new TextPoint(0, 1));
+    BarLine sideways = new TextBarLine(across, new TextPoint(1, 0));
+    panel.vertical().accept(new BarCells(inside, downward, "▲", "▼"));
+    panel.horizontal().accept(new BarCells(inside, sideways, "◄", "►"));
+    targets.add(new BarTarget(panel.vertical(), downward, size.rows() - 1, grab));
+    targets.add(new BarTarget(panel.horizontal(), sideways, size.columns() - 1, grab));
   }
 
   /** The view that comes next is drawn at this place inside the window drawn last. */

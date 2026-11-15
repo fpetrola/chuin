@@ -11,16 +11,14 @@ class BarCells implements ViewVisitor {
   private final Screen screen;
   private final String back;
   private final String forward;
-  /** How far each next cell is from the one before. */
-  private final Point step;
-  /** The cell the next one is drawn on. */
-  private Point at;
+  private final BarLine line;
+  /** How many cells along the line the next one is drawn. */
+  private int at;
 
-  /** From this cell, each next cell this many columns and rows further, with these arrows at the ends. */
-  BarCells(Screen screen, Point from, Point step, String back, String forward) {
+  /** Along this line, with these arrows at the ends. */
+  BarCells(Screen screen, BarLine line, String back, String forward) {
     this.screen = screen;
-    this.at = from;
-    this.step = step;
+    this.line = line;
     this.back = back;
     this.forward = forward;
   }
@@ -47,15 +45,12 @@ class BarCells implements ViewVisitor {
 
   @Override
   public void visitNoScrollBar(ScrollBar bar) {
-    advance();
+    at++;
   }
 
   private void cell(String drawn) {
-    screen.write(at.column(), at.row(), drawn);
-    advance();
-  }
-
-  private void advance() {
-    at = new TextPoint(at.column() + step.column(), at.row() + step.row());
+    Point cell = line.cell(at);
+    screen.write(cell.column(), cell.row(), drawn);
+    at++;
   }
 }

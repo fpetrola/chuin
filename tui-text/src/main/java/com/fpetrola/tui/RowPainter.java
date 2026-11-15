@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Draws rows stacked one under the other, the way a list box walks its rows and a group of options its
- * options: a list row is its item padded to the longest, a blank and its scroll bar cell; an option is its mark and
+ * options: a list row is its item padded to the whole width, its last cell left to the scroll bar, if it has one; an option is its mark and
  * its text. The selected row is tinted when the view has the focus.
  */
 class RowPainter implements ViewVisitor {
@@ -31,8 +31,8 @@ class RowPainter implements ViewVisitor {
   private final List<Area> drawn;
   private final int place;
   private int shown;
-  /** The cells of a list's scroll bar drawn so far, one a row, from its first row. */
-  private int barShown;
+  /** Draws a list's scroll bar down its last column. */
+  private final BarCells cells;
 
   RowPainter(Screen screen, Area at, boolean focused, List<Area> drawn) {
     this.screen = screen;
@@ -40,6 +40,7 @@ class RowPainter implements ViewVisitor {
     this.focused = focused;
     this.drawn = drawn;
     this.place = drawn.size();
+    this.cells = new BarCells(screen, new TextBarLine(new TextPoint(at.column() + at.columns() - 1, at.row()), new TextPoint(0, 1)), "▲", "▼");
     drawn.add(new TextArea(at.column(), at.row(), at.columns(), 0));
   }
 
@@ -60,33 +61,32 @@ class RowPainter implements ViewVisitor {
   }
 
   private void itemRow(String text) {
-    int width = at.columns() - BESIDE_ITEM;
-    nextRow(text + " ".repeat(width - text.length() + 1));
+    nextRow(text + " ".repeat(at.columns() - text.length()));
   }
 
   @Override
   public void visitScrollUp(ScrollBar bar) {
-    bar("▲");
+    cells.visitScrollUp(bar);
   }
 
   @Override
   public void visitScrollTrack(ScrollBar bar) {
-    bar("░");
+    cells.visitScrollTrack(bar);
   }
 
   @Override
   public void visitScrollThumb(ScrollBar bar) {
-    bar("■");
+    cells.visitScrollThumb(bar);
   }
 
   @Override
   public void visitScrollDown(ScrollBar bar) {
-    bar("▼");
+    cells.visitScrollDown(bar);
   }
 
   @Override
   public void visitNoScrollBar(ScrollBar bar) {
-    bar(" ");
+    cells.visitNoScrollBar(bar);
   }
 
   @Override
@@ -100,11 +100,6 @@ class RowPainter implements ViewVisitor {
     screen.paint(at.column(), at.row() + shown, at.columns(), GROUP_TINT);
     tint(at.columns());
     optionRow("(•) ", option, focused ? FOCUS_LETTER : GROUP_LETTER);
-  }
-
-  private void bar(String cell) {
-    screen.write(at.column() + at.columns() - 1, at.row() + barShown, cell);
-    barShown++;
   }
 
   /** Writes an option after its mark, its marked letter highlighted. */

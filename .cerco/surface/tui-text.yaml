@@ -1,6 +1,12 @@
 # What a person signed of this module's surface; cerco:approve grows it.
 module: "tui-text"
 types:
+  "com.fpetrola.tui.BarLine":
+    kind: interface
+    members:
+      - "along(Point): int"
+      - "cell(int): Point"
+      - "holds(Point): boolean"
   "com.fpetrola.tui.Border":
     kind: interface
     members:
