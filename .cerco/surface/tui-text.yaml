@@ -35,6 +35,7 @@ types:
   "com.fpetrola.tui.Settle":
     kind: interface
     members:
+      - "note(Runnable): void"
       - "settle(): void"
   "com.fpetrola.tui.TextToolkit":
     members:

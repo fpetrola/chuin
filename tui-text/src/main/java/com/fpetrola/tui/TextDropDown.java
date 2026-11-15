@@ -52,12 +52,37 @@ class TextDropDown implements DropDown {
 
   private void visitItems(ViewVisitor visitor, int highlight) {
     for (int at = 0; at < items.size(); at++) {
-      DropDownItem item = new TextDropDownItem(this, items.get(at));
+      DropDownItem item = new Item(at);
       if (at == highlight) {
         visitor.visitHighlightedDropDownItem(item);
       } else {
         visitor.visitDropDownItem(item);
       }
+    }
+  }
+
+  /** An item of the open list: its place among the items, which gives its text and what choosing it does. */
+  private class Item implements DropDownItem {
+    private final int at;
+
+    Item(int at) {
+      this.at = at;
+    }
+
+    @Override
+    public DropDown dropDown() {
+      return TextDropDown.this;
+    }
+
+    @Override
+    public String text() {
+      return items.get(at);
+    }
+
+    @Override
+    public void choose() {
+      highlighted = Optional.of(at);
+      TextDropDown.this.choose();
     }
   }
 }

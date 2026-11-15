@@ -6,4 +6,7 @@ public interface DropDownItem {
   DropDown dropDown();
 
   String text();
+
+  /** Makes this item the chosen one of its drop down and closes the list. */
+  void choose();
 }

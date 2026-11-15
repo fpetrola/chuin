@@ -16,10 +16,9 @@ class ClosingAnOpenListTest {
     DropDown answer = toolkit.dropDown(List.of("Ja", "Nein"));
     answer.down();
     answer.down();
-    CloseOpenList close = new CloseOpenList(() -> ran.append("otherwise"));
-    Settle settle = close;
+    Settle settle = new PendingAction(() -> ran.append("otherwise"));
 
-    answer.accept(close);
+    answer.accept(new CloseOpenList(settle));
     settle.settle();
 
     assertEquals("", ran.toString());
@@ -29,10 +28,10 @@ class ClosingAnOpenListTest {
   @Test
   void settlingWhenNoListWasOpenRunsWhatElseWasAsked() {
     DropDown answer = toolkit.dropDown(List.of("Ja", "Nein"));
-    CloseOpenList close = new CloseOpenList(() -> ran.append("otherwise"));
+    Settle settle = new PendingAction(() -> ran.append("otherwise"));
 
-    answer.accept(close);
-    close.settle();
+    answer.accept(new CloseOpenList(settle));
+    settle.settle();
 
     assertEquals("otherwise", ran.toString());
   }

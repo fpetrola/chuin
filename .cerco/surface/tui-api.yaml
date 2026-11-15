@@ -51,6 +51,7 @@ types:
   "com.fpetrola.tui.DropDownItem":
     kind: interface
     members:
+      - "choose(): void"
       - "dropDown(): DropDown"
       - "text(): String"
   "com.fpetrola.tui.InputLine":

@@ -12,6 +12,7 @@ class TextDesktop implements Windows {
   private static final char BARE = '.';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
+  private static final Runnable NOTHING = () -> { };
   private static final Consumer<Point> NOT_DRAGGING = cell -> { };
   /** F6 raises the bottom window over the others, as in Turbo Vision. */
   private static final int NEXT_WINDOW = 6;
@@ -43,8 +44,18 @@ class TextDesktop implements Windows {
     key.accept(new Typed());
   }
 
+  /** A click on an item of the focused drop down's open list chooses it; anywhere else it clicks as usual. */
   @Override
   public void click(Point cell) {
+    Area field = focused < onTop.size() ? onTop.get(focused) : new TextArea(0, 0, 0, 0);
+    Settle pending = new PendingAction(() -> clickAsUsual(cell));
+    ChooseFromOpenList choose = new ChooseFromOpenList(cell.column() - field.column(), cell.row() - field.row(), pending);
+    top().ifPresent(window -> window.accept(new AtFocus(focused, choose)));
+    pending.settle();
+  }
+
+  /** Closes any open list, raises the window under the cell or takes it by its title or corner, and clicks the view there. */
+  private void clickAsUsual(Point cell) {
     closeOpenList();
     int under = windowUnder(cell);
     boolean below = under >= 0 && under < opened.size() - 1;
@@ -63,9 +74,10 @@ class TextDesktop implements Windows {
       if (across && down) {
         focused = view;
         int clicked = view;
-        ClickFocused click = new ClickFocused(cell.column() - area.column(), cell.row() - area.row());
+        Settle pending = new PendingAction(NOTHING);
+        ClickFocused click = new ClickFocused(cell.column() - area.column(), cell.row() - area.row(), pending);
         top().ifPresent(window -> window.accept(new AtFocus(clicked, click)));
-        click.settle();
+        pending.settle();
       }
     }
   }
@@ -101,14 +113,16 @@ class TextDesktop implements Windows {
 
   @Override
   public void escape(Runnable otherwise) {
-    CloseOpenList close = new CloseOpenList(otherwise);
-    top().ifPresent(window -> window.accept(new AtFocus(focused, close)));
-    close.settle();
+    Settle pending = new PendingAction(otherwise);
+    top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList(pending))));
+    pending.settle();
   }
 
   /** Closes the focused drop down's open list, if there is one. */
   private void closeOpenList() {
-    top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList())));
+    Settle pending = new PendingAction(NOTHING);
+    top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList(pending))));
+    pending.settle();
   }
 
   @Override

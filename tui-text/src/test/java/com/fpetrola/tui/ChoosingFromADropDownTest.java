@@ -117,6 +117,67 @@ class ChoosingFromADropDownTest {
     assertEquals("║                  ║", screen.lines().get(2));
   }
 
+  @Test
+  void aClickOnTheFieldOpensTheList() {
+    open();
+    desktop.draw(screen);
+    desktop.click(toolkit.point(3, 1));
+    desktop.draw(screen);
+
+    assertEquals("║┌──────────┐      ║", screen.lines().get(2));
+  }
+
+  @Test
+  void aClickOnAnItemOfTheOpenListChoosesItAndClosesTheList() {
+    open();
+    press(DOWN);
+    desktop.draw(screen);
+    desktop.click(toolkit.point(4, 5));
+    desktop.draw(screen);
+
+    assertEquals(Optional.of("Vielleicht"), answer.chosen());
+    assertEquals("║Vielleicht↓       ║", screen.lines().get(1));
+    assertEquals("║                  ║", screen.lines().get(2));
+  }
+
+  @Test
+  void aClickOnTheFrameOfTheOpenListChoosesNothing() {
+    open();
+    press(DOWN);
+    desktop.draw(screen);
+    desktop.click(toolkit.point(1, 4));
+    desktop.draw(screen);
+
+    assertEquals(Optional.of("Ja"), answer.chosen());
+  }
+
+  @Test
+  void anItemOfTheOpenListChoosesItselfAndClosesTheList() {
+    List<DropDownItem> shown = new java.util.ArrayList<>();
+    answer.down();
+    answer.accept(new ViewVisitor() {
+      @Override
+      public void visitDropDownItem(DropDownItem item) {
+        shown.add(item);
+      }
+
+      @Override
+      public void visitHighlightedDropDownItem(DropDownItem item) {
+        shown.add(item);
+      }
+    });
+
+    shown.get(1).choose();
+
+    assertEquals(Optional.of("Nein"), answer.chosen());
+    answer.accept(new ViewVisitor() {
+      @Override
+      public void visitDropDownItem(DropDownItem item) {
+        throw new AssertionError("the list is still open");
+      }
+    });
+  }
+
   private void open() {
     Window window = toolkit.window("W");
     window.place(toolkit.area(0, 0, 20, 8));
