@@ -114,6 +114,9 @@ types:
   "com.fpetrola.chuin.text.geometry.TextExtent":
     members:
       - "<init>(Area)"
+  "com.fpetrola.chuin.text.input.KeyName":
+    members:
+      - "<init>(StringBuilder)"
   "com.fpetrola.chuin.text.screen.AnsiTerminal":
     members:
       - "<init>(OutputStream, Palette)"

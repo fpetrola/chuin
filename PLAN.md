@@ -205,10 +205,10 @@ Las 94 clases de chuin-text estaban todas en un solo paquete. Ahora se reparten 
 
 1. `text.geometry`: `TextArea`, `TextPoint`, `TextSize`, `Extent`, `TextExtent`.
 2. `text.screen`: `TextScreen`, `ClippedScreen`, `AnsiTerminal`, `Palette`, `DosPalette`, `Tint`, `TintRole`.
-3. `text.input`: `Arrow`, `KeyName`, `StreamKeyboard`.
+3. `text.input`: `Arrow`, `KeyName`. `StreamKeyboard` espera al último paso: implementa `Keyboard` y usa `Toolkit` y `Desktop`, que son de la raíz de la API, y mientras la raíz tenga también clases de chuin-text (`MenuDesktop` usa `KeyName`), moverlo ahora arma un ciclo `com.fpetrola.chuin` <-> `text.input`.
 4. `text.view`: los modelos de las vistas, `Cursor`, `Group`, `Caption`, `PanelAxis`, `Scrollable`.
 5. `text.pointer`: `ClickTarget`, `Grab`, `Dragging`, `BarTarget`, `BarClick`, `BarLine`/`TextBarLine`, `Settle`/`PendingAction`.
 6. `text.paint`: `Painter`, `RowPainter`, `BarCells`, `FocusOrder`, `Border`, `Line`, `Frame`, `RaisedFrame`, `Shadow`, `Drawing`, `DropDownList`.
 7. `text.desktop`: `TextDesktop`, `Windows`, `ToWindows`, `PointerWindows`, `ShownDesktop`, `TextConsole`, `AtFocus`, `CollectFocusable`, las acciones sobre el foco, `MoveWindow`.
 8. `text.menu`: la barra, el menú, la línea de estado, `EntryPlacer`/`EntryRow`/`PlacedEntry`/`PlacedTitle`, `KeyLabel`, `KeyCaption`, `MenuDesktop` y los painters de menú y estado.
-9. `TextToolkit` pasa a `com.fpetrola.chuin.text`, con los imports de la demo. Así la raíz `com.fpetrola.chuin` queda solo para la API.
+9. `TextToolkit` pasa a `com.fpetrola.chuin.text`, con los imports de la demo, y `StreamKeyboard` pasa a `text.input`. Así la raíz `com.fpetrola.chuin` queda solo para la API y las dependencias van en un solo sentido, de `text.*` hacia la API. Mover `TextToolkit` antes no corta el ciclo, porque `MenuDesktop` y las demás clases que todavía están en la raíz siguen ahí.

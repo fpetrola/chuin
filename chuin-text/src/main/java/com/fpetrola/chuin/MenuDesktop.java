@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.input.KeyName;
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.input.Key;
 import com.fpetrola.chuin.input.KeyVisitor;

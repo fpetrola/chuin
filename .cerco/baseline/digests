@@ -46,7 +46,6 @@ b91b1d6457051fc321da61c691d9b33a272de75e8d75082a4077952cbff069da	chuin-demo/src/
 c8b8288bdaa9a5a9eb783232eec13fed131a19fb65dd0b2ee21e4f340b053f11	chuin-demo/src/test/java/com/fpetrola/chuin/demo/BuildingTheExamplesTest.java
 b2c8a97ca5caea3bb4c2e390f9e9ab6fa0c0ef37a71c90c7bee4f042103a6956	chuin-demo/src/test/java/com/fpetrola/chuin/demo/DemoTest.java
 4d354a5d76423092ca7dcd930a248e75b102b870d55d336b1cefcedfffa31046	chuin-demo/src/test/java/com/fpetrola/chuin/demo/TakingScreenshotsTest.java
-2aa10377a5182eac1283b6c583b7a76a2d27dda7282836184d10a8f4e6ed2cd4	chuin-text/src/main/java/com/fpetrola/chuin/Arrow.java
 48d22acb64a47865cf850b1a4b11ff481465579f2645871fcda0008a1f5ab99d	chuin-text/src/main/java/com/fpetrola/chuin/AtFocus.java
 1bf9ea3abe52c62976b7e0cf1c945bf4d2d3f817a6affa09f170acbbc9ffd3aa	chuin-text/src/main/java/com/fpetrola/chuin/BarCells.java
 9e472e799e9f664f37321ed5bc769372ba1095f8812bbd8b13fbce0a10b85e45	chuin-text/src/main/java/com/fpetrola/chuin/BarClick.java
@@ -72,11 +71,10 @@ ada03aebaf0d8bd29f3548c32e085c0893d3dfe3ad3fb4fb5108decc7c368f3b	chuin-text/src/
 a0c809c732da983a384da29e9c85074128038c6d45e74e06278ff26148808fb3	chuin-text/src/main/java/com/fpetrola/chuin/Group.java
 008f1a2ed7359f29ae0787f9e75ff9686ab724391d87a1a99ebdca7f8fbdeedd	chuin-text/src/main/java/com/fpetrola/chuin/KeyCaption.java
 9119a74b51506ba3e1ddaa32323b9a9c2ed8da58a2e29fe002a71f30866d05bb	chuin-text/src/main/java/com/fpetrola/chuin/KeyLabel.java
-b0d16b1f0938fd96c874c68e1fd909c815d58de6f3e914eaf59211686efc07c0	chuin-text/src/main/java/com/fpetrola/chuin/KeyName.java
 1e6b5fd09e5b672e53edb5d3e8e3f7bfb8ff2047d236757ff4f7fb5ab8c60f97	chuin-text/src/main/java/com/fpetrola/chuin/LetGo.java
 a6a209bd11d748301d66a8f240f58260d89ab9bacdc04a27e860bca929a96596	chuin-text/src/main/java/com/fpetrola/chuin/Line.java
 b83c804b3dea67a7c7da54000fe472fd2389156040b8602b4b7daaa37a10f7f0	chuin-text/src/main/java/com/fpetrola/chuin/ListArrow.java
-ea56c6d1b74645b76ac1494b7cef5dd916dde203af3430e88e7438fbcffbef69	chuin-text/src/main/java/com/fpetrola/chuin/MenuDesktop.java
+590686ae2dfe4b3ce40eafb8d6b4610b0533f5b88512cc57c415e173056bea15	chuin-text/src/main/java/com/fpetrola/chuin/MenuDesktop.java
 7e07ab77c3a2f4ab5df4c75c0208885dc9e5f2fe34c07db90ea2c13936bda0a0	chuin-text/src/main/java/com/fpetrola/chuin/MenuPainter.java
 561c4554c464671b47e7ac0cc51652419ab88b2ac802907416204d767ac869d3	chuin-text/src/main/java/com/fpetrola/chuin/MoveWindow.java
 7fa1e67b3e5b8fce73980777488471f1c1f792200e32993b596c9d548b7b0673	chuin-text/src/main/java/com/fpetrola/chuin/Painter.java
@@ -95,7 +93,7 @@ ddbf25e2c66efa766daed737e2e2e5a40e47cc038badc5635e4f26d11896064d	chuin-text/src/
 53a329cef47f1a968f1b3b9f57f728b66118a9bd07149aa6fe3fb35fd9f965f7	chuin-text/src/main/java/com/fpetrola/chuin/ShownDesktop.java
 8391c3a01ed9856d4752b58d42eeee5eb55a305538331ff8d57c4f24470f6401	chuin-text/src/main/java/com/fpetrola/chuin/StatusClick.java
 e0fe5bab82f0bc5ab67e97c1a606ec34a6d7a84dcee5f3b28cfc140085a1c424	chuin-text/src/main/java/com/fpetrola/chuin/StatusPainter.java
-f6bd4414b0d66bb3fb02924ae23d5da1ba1a1df794ca1d3aa675985474d6d2c2	chuin-text/src/main/java/com/fpetrola/chuin/StreamKeyboard.java
+f6975e1e22c444161e69df427aa84ea2b709156e000d15ce870dc47ab768d4f7	chuin-text/src/main/java/com/fpetrola/chuin/StreamKeyboard.java
 bf4cd7664fcdcc7bf524d7c5cde76a52416f3e96c187cfd48d0e7b1adda34c5d	chuin-text/src/main/java/com/fpetrola/chuin/TextBarLine.java
 f5effeb13e1bec8219b47ea84cfb902c9334f886c0f87d072305f2c8e2103d11	chuin-text/src/main/java/com/fpetrola/chuin/TextButton.java
 c243308ce8d4f6152619f069a62ceae3c9ef05142afb8c374661abbb96cd30fd	chuin-text/src/main/java/com/fpetrola/chuin/TextCaption.java
@@ -133,6 +131,8 @@ b695683a865e0ae7fd73c8bfaa869737f8d76873efe3bbdc0f8f49e504475ca1	chuin-text/src/
 f87c18689efca451bde3f697b040db9b9377de40ffbc9d88d1d73bbd125283da	chuin-text/src/main/java/com/fpetrola/chuin/text/geometry/TextExtent.java
 861dab6fc57f36effc567d0b5c7c486ca80350c2ef05362446600be83bee6762	chuin-text/src/main/java/com/fpetrola/chuin/text/geometry/TextPoint.java
 ca5c8ff0b04abf4c8c567b13c060252c9dc36e7369bae52a87ef0177fb4a4697	chuin-text/src/main/java/com/fpetrola/chuin/text/geometry/TextSize.java
+a1f948cfd1ca1c4ddd383ea6687f47538dbaaa39678cae9293fee76cda52f7fe	chuin-text/src/main/java/com/fpetrola/chuin/text/input/Arrow.java
+a156d9e5fce54b3efd5c83d171239ead0a68bc4a194b148b064753c0d0a57855	chuin-text/src/main/java/com/fpetrola/chuin/text/input/KeyName.java
 2f896d91e2286ae131620a796adaf73f4c1fc236ec13d8624fb39cbea6f6f98a	chuin-text/src/main/java/com/fpetrola/chuin/text/screen/AnsiTerminal.java
 83e415e770d080c73c9a34082b8243727012836a3bcb36fda153018586e48a39	chuin-text/src/main/java/com/fpetrola/chuin/text/screen/ClippedScreen.java
 d5ae97768a74ed12f0eb34464848ede744fded2e134699a52d137896a3638588	chuin-text/src/main/java/com/fpetrola/chuin/text/screen/DosPalette.java
@@ -201,5 +201,6 @@ b8f6e60f122f465e97be9a077e5941c0a6944a622dadeaddc182d28c161eb7ed	chuin-text/src/
 3cdecde2eca349b192c1de6431d3c2f05f0f35ed36479f5a00ee66076650318f	chuin-text/src/test/java/com/fpetrola/chuin/WrappingFocusAroundTest.java
 b90f41132c7b06934a891732a98f10602a465edeef73514f2a8d4d14ae7356ce	chuin-text/src/test/java/com/fpetrola/chuin/WritingOnAScreenTest.java
 6ce13c10703c8868372b2f66d7ace3cc7a7e3e03a6b7325cd14079e6b2634b1f	chuin-text/src/test/java/com/fpetrola/chuin/text/geometry/SpanningAnAreaTest.java
+60e8a6c0e1f707e7b0169365bcdda3fddfe97401b5bdfac4b2fa350c05b3f090	chuin-text/src/test/java/com/fpetrola/chuin/text/input/ReadingKeysTest.java
 12e0750013f027a30a9e6174449ccbe0a03793b1a1964f413bcf554d6f074a4e	chuin-text/src/test/java/com/fpetrola/chuin/text/screen/MakingScreensTest.java
 9e5d051c49eeb2a69f07b3c2cc1bee20ae340f864f637f36eb1993aa41dfe9dd	chuin-text/src/test/java/com/fpetrola/chuin/text/screen/TintingCellsTest.java
