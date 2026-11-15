@@ -171,8 +171,8 @@ class VisitingViewsTest {
 
 
   @Test
-  void aGroupOfRadioButtonsIsVisitedThenEachOptionAndItsChoiceStopsAtBothEnds() {
-    RadioButtons group = toolkit.radioButtons(List.of("a", "bb", "c"));
+  void aGroupOfOptionGroupIsVisitedThenEachOptionAndItsChoiceStopsAtBothEnds() {
+    OptionGroup group = toolkit.optionGroup(List.of("a", "bb", "c"));
     ArgumentCaptor<Option> chosen = ArgumentCaptor.captor();
 
     group.previous();
@@ -183,7 +183,7 @@ class VisitingViewsTest {
 
     assertEquals(6, group.width());
     InOrder order = inOrder(visitor);
-    order.verify(visitor).visitRadioButtons(group);
+    order.verify(visitor).visitOptionGroup(group);
     order.verify(visitor).visitOption(argThat(option -> option.text().equals("a") && option.group() == group));
     order.verify(visitor).visitOption(argThat(option -> option.text().equals("bb") && option.group() == group));
     order.verify(visitor).visitChosenOption(chosen.capture());
@@ -244,7 +244,7 @@ class VisitingViewsTest {
 
   @Test
   void anOptionOfAGroupChoosesItself() {
-    RadioButtons group = toolkit.radioButtons(List.of("a", "b"));
+    OptionGroup group = toolkit.optionGroup(List.of("a", "b"));
     group.accept(new ViewVisitor() {
       @Override
       public void visitOption(Option option) {

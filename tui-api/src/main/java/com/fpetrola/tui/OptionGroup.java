@@ -1,7 +1,7 @@
 package com.fpetrola.tui;
 
 /** A group of options of which exactly one is chosen; visiting it goes on to each option. */
-public interface RadioButtons extends View {
+public interface OptionGroup extends View {
   /** How many cells its longest option takes, mark included. */
   int width();
 

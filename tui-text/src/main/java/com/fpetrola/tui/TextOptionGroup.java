@@ -3,15 +3,15 @@ package com.fpetrola.tui;
 import java.util.List;
 
 /** Keeps which one of its options is chosen, between the first and the last. */
-class TextRadioButtons implements RadioButtons {
+class TextOptionGroup implements OptionGroup {
   /** The cells "(•) " takes before each option. */
   private static final int MARK = 4;
   private final List<String> options;
   private int chosen;
 
-  TextRadioButtons(List<String> options) {
+  TextOptionGroup(List<String> options) {
     if (options.isEmpty()) {
-      throw new IllegalArgumentException("a group of radio buttons needs at least one option");
+      throw new IllegalArgumentException("a group needs at least one option");
     }
     this.options = List.copyOf(options);
   }
@@ -23,7 +23,7 @@ class TextRadioButtons implements RadioButtons {
 
   @Override
   public void accept(ViewVisitor visitor) {
-    visitor.visitRadioButtons(this);
+    visitor.visitOptionGroup(this);
     for (int at = 0; at < options.size(); at++) {
       Option option = new Place(at);
       if (at == chosen) {
@@ -53,8 +53,8 @@ class TextRadioButtons implements RadioButtons {
     }
 
     @Override
-    public RadioButtons group() {
-      return TextRadioButtons.this;
+    public OptionGroup group() {
+      return TextOptionGroup.this;
     }
 
     @Override

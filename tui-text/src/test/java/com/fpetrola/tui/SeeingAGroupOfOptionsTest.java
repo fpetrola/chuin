@@ -36,7 +36,7 @@ class SeeingAGroupOfOptionsTest {
 
   private void open() {
     Window window = toolkit.window("W");
-    RadioButtons land = toolkit.radioButtons(java.util.List.of("Deutschland", "U.S.A."));
+    OptionGroup land = toolkit.optionGroup(java.util.List.of("Deutschland", "U.S.A."));
     window.place(toolkit.area(0, 0, 20, 6));
     window.add(toolkit.button("Ok"), toolkit.point(10, 3));
     window.add(toolkit.label("~L~and:", land), toolkit.point(0, 0));

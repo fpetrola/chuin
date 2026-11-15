@@ -8,7 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-class ChoosingARadioButtonTest {
+class ChoosingAnOptionOfAGroupTest {
   private static final String DOWN = "\u001b[B";
   private static final String UP = "\u001b[A";
 
@@ -18,7 +18,7 @@ class ChoosingARadioButtonTest {
     Screen screen = toolkit.screen(14, 6);
     Desktop desktop = toolkit.desktop();
     Window window = toolkit.window("R");
-    RadioButtons sizes = toolkit.radioButtons(List.of("Uno", "Dos", "Tres"));
+    OptionGroup sizes = toolkit.optionGroup(List.of("Uno", "Dos", "Tres"));
 
     window.place(toolkit.area(0, 0, 12, 5));
     window.add(sizes, toolkit.point(1, 0));
@@ -42,7 +42,7 @@ class ChoosingARadioButtonTest {
 
     window.place(toolkit.area(0, 0, 12, 5));
     window.add(toolkit.button("Ok"), toolkit.point(0, 0));
-    window.add(toolkit.radioButtons(List.of("Si", "No")), toolkit.point(0, 1));
+    window.add(toolkit.optionGroup(List.of("Si", "No")), toolkit.point(0, 1));
     desktop.open(window);
     press(toolkit, desktop, DOWN);
     desktop.draw(screen);
@@ -61,7 +61,7 @@ class ChoosingARadioButtonTest {
 
   @Test
   void aGroupNeedsAtLeastOneOption() {
-    assertThrows(IllegalArgumentException.class, () -> new TextToolkit().radioButtons(List.of()));
+    assertThrows(IllegalArgumentException.class, () -> new TextToolkit().optionGroup(List.of()));
   }
 
   @Test
@@ -74,7 +74,7 @@ class ChoosingARadioButtonTest {
     Button ok = toolkit.button("Ok");
 
     window.place(toolkit.area(0, 0, 20, 8));
-    window.add(toolkit.radioButtons(List.of("a", "b", "c")), toolkit.point(0, 0));
+    window.add(toolkit.optionGroup(List.of("a", "b", "c")), toolkit.point(0, 0));
     window.add(ok, toolkit.point(0, 3));
     window.add(said, toolkit.point(0, 4));
     ok.onPress(pressed -> said.text("ok"));

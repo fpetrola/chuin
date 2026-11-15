@@ -120,7 +120,7 @@ class ClickingWithTheMouseTest {
     window.place(toolkit.area(0, 0, 22, 5));
     window.add(toolkit.button("Ok"), toolkit.point(0, 0));
     window.add(colors, toolkit.point(0, 1));
-    window.add(toolkit.radioButtons(List.of("Si", "No")), toolkit.point(8, 1));
+    window.add(toolkit.optionGroup(List.of("Si", "No")), toolkit.point(8, 1));
     desktop.open(window);
     desktop.draw(screen);
 

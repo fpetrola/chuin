@@ -44,8 +44,8 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
-  public RadioButtons radioButtons(List<String> options) {
-    return new TextRadioButtons(options);
+  public OptionGroup optionGroup(List<String> options) {
+    return new TextOptionGroup(options);
   }
 
   @Override

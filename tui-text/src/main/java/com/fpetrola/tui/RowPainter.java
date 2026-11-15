@@ -3,7 +3,7 @@ package com.fpetrola.tui;
 import java.util.List;
 
 /**
- * Draws rows stacked one under the other, the way a list box walks its rows and a group of radio buttons its
+ * Draws rows stacked one under the other, the way a list box walks its rows and a group of options its
  * options: a list row is its item padded to the longest, a blank and its scroll bar cell; an option is its mark and
  * its text. The selected row is tinted when the view has the focus.
  */

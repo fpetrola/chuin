@@ -147,8 +147,14 @@ types:
     kind: interface
     members:
       - "choose(): void"
-      - "group(): RadioButtons"
+      - "group(): OptionGroup"
       - "text(): String"
+  "com.fpetrola.tui.OptionGroup":
+    kind: interface
+    members:
+      - "next(): void"
+      - "previous(): void"
+      - "width(): int"
   "com.fpetrola.tui.Placement":
     kind: interface
     members:
@@ -159,12 +165,6 @@ types:
     members:
       - "column(): int"
       - "row(): int"
-  "com.fpetrola.tui.RadioButtons":
-    kind: interface
-    members:
-      - "next(): void"
-      - "previous(): void"
-      - "width(): int"
   "com.fpetrola.tui.Screen":
     kind: interface
     members:
@@ -212,8 +212,8 @@ types:
       - "listBox(List<String>, int): ListBox"
       - "menu(String): Menu"
       - "menuBar(): MenuBar"
+      - "optionGroup(List<String>): OptionGroup"
       - "point(int, int): Point"
-      - "radioButtons(List<String>): RadioButtons"
       - "screen(int, int): Screen"
       - "statusLine(): StatusLine"
       - "terminal(OutputStream): Terminal"
@@ -239,8 +239,8 @@ types:
       - "visitNoListItem(ListBox): void"
       - "visitNoScrollBar(ListBox): void"
       - "visitOption(Option): void"
+      - "visitOptionGroup(OptionGroup): void"
       - "visitPlacement(Placement): void"
-      - "visitRadioButtons(RadioButtons): void"
       - "visitScrollDown(ListBox): void"
       - "visitScrollThumb(ListBox): void"
       - "visitScrollTrack(ListBox): void"

@@ -69,8 +69,8 @@ interface ViewVisitor {
   default void visitHighlightedDropDownItem(DropDownItem item) {
   }
 
-  /** A group of radio buttons is visited first, then each of its options, top to bottom. */
-  default void visitRadioButtons(RadioButtons group) {
+  /** A group of options is visited first, then each of its options, top to bottom. */
+  default void visitOptionGroup(OptionGroup group) {
   }
 
   default void visitOption(Option option) {

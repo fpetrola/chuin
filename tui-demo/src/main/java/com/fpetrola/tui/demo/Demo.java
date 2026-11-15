@@ -8,7 +8,7 @@ import com.fpetrola.tui.Keys;
 import com.fpetrola.tui.Label;
 import com.fpetrola.tui.Menu;
 import com.fpetrola.tui.MenuBar;
-import com.fpetrola.tui.RadioButtons;
+import com.fpetrola.tui.OptionGroup;
 import com.fpetrola.tui.StatusLine;
 import com.fpetrola.tui.TextToolkit;
 import com.fpetrola.tui.Toolkit;
@@ -26,7 +26,7 @@ public class Demo {
   private final Label message = toolkit.label("Alt+letra va al campo; F10 abre el menú");
   private final InputLine name = toolkit.inputLine(28);
   private final InputLine city = toolkit.inputLine(20);
-  private final RadioButtons country = toolkit.radioButtons(List.of("Argentina", "Uruguay", "Chile", "Otro ..."));
+  private final OptionGroup country = toolkit.optionGroup(List.of("Argentina", "Uruguay", "Chile", "Otro ..."));
   private final DropDown state = toolkit.dropDown(List.of("Activo", "Inactivo", "Pendiente"));
 
   private Demo() {

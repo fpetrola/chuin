@@ -16,7 +16,7 @@ class SeeingClustersLikeTurboCTest {
     Window window = toolkit.window("P");
     window.place(toolkit.area(0, 0, 24, 6));
     window.add(toolkit.button("Ok"), toolkit.point(17, 0));
-    window.add(toolkit.radioButtons(List.of("~2~5 lines", "~4~3/50 lines")), toolkit.point(0, 0));
+    window.add(toolkit.optionGroup(List.of("~2~5 lines", "~4~3/50 lines")), toolkit.point(0, 0));
     window.add(toolkit.checkBox("~E~ditor files"), toolkit.point(0, 3));
     desktop.open(window);
     desktop.draw(screen);
@@ -32,7 +32,7 @@ class SeeingClustersLikeTurboCTest {
     Window window = toolkit.window("P");
     window.place(toolkit.area(0, 0, 24, 6));
     window.add(toolkit.button("Ok"), toolkit.point(17, 0));
-    window.add(toolkit.radioButtons(List.of("~N~ew window", "~C~urrent")), toolkit.point(0, 0));
+    window.add(toolkit.optionGroup(List.of("~N~ew window", "~C~urrent")), toolkit.point(0, 0));
     window.add(toolkit.checkBox("~E~ditor files"), toolkit.point(0, 3));
     desktop.open(window);
 

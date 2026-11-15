@@ -28,7 +28,7 @@ public interface Toolkit {
   DropDown dropDown(List<String> items);
 
   /** A group of options, one per row, with the first one chosen. */
-  RadioButtons radioButtons(List<String> options);
+  OptionGroup optionGroup(List<String> options);
 
   /** An empty menu bar; menus are added to it left to right. */
   MenuBar menuBar();

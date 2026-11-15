@@ -200,7 +200,7 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void visitRadioButtons(RadioButtons group) {
+  public void visitOptionGroup(OptionGroup group) {
     rows = new RowPainter(inside, new TextArea(column, row, group.width(), 1), seen++ == focused, drawn);
   }
 

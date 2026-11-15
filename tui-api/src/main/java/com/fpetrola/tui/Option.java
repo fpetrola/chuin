@@ -1,9 +1,9 @@
 package com.fpetrola.tui;
 
-/** One option of a group of radio buttons. */
+/** One option of a group, of which exactly one is chosen. */
 public interface Option {
   /** The group it belongs to. */
-  RadioButtons group();
+  OptionGroup group();
 
   String text();
 

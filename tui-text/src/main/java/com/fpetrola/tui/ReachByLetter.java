@@ -41,8 +41,8 @@ class ReachByLetter implements ViewVisitor {
   }
 
   @Override
-  public void visitRadioButtons(RadioButtons group) {
-    state.visitRadioButtons(group);
+  public void visitOptionGroup(OptionGroup group) {
+    state.visitOptionGroup(group);
   }
 
   @Override
