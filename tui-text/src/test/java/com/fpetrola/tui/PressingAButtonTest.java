@@ -13,8 +13,7 @@ class PressingAButtonTest {
     Window window = toolkit.window("Saludo");
     Button ok = toolkit.button("OK");
     ButtonListener listener = mock(ButtonListener.class);
-    Keys keys = toolkit.keys();
-    Key enter = keys.enter();
+    Key enter = toolkit.enterKey();
 
     ok.onPress(listener);
     window.add(ok, toolkit.point(0, 0));

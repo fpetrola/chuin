@@ -13,7 +13,6 @@ class UsingTheStatusLineTest {
   private final Toolkit toolkit = new TextToolkit();
   private final Screen screen = toolkit.screen(24, 5);
   private final Desktop desktop = toolkit.desktop();
-  private final Keys keys = toolkit.keys();
   private final Label said = toolkit.label("");
   private final Window window = toolkit.window("W");
 
@@ -74,7 +73,7 @@ class UsingTheStatusLineTest {
   @Test
   void aStatusLineIsVisitedThenEachEntryWithItsKey() {
     StatusLine status = toolkit.statusLine();
-    status.add("~F3~ Laden", keys.function(3), () -> said.text("laden"));
+    status.add("~F3~ Laden", toolkit.functionKey(3), () -> said.text("laden"));
     List<String> seen = new ArrayList<>();
 
     status.accept(new StatusVisitor() {
@@ -103,8 +102,8 @@ class UsingTheStatusLineTest {
   /** A status line with ~Esc~ Raus and ~F3~ Laden over a window that reaches the bottom row. */
   private void open() {
     StatusLine status = toolkit.statusLine();
-    status.add("~Esc~ Raus", keys.escape(), () -> said.text("raus"));
-    status.add("~F3~ Laden", keys.function(3), () -> said.text("laden"));
+    status.add("~Esc~ Raus", toolkit.escapeKey(), () -> said.text("raus"));
+    status.add("~F3~ Laden", toolkit.functionKey(3), () -> said.text("laden"));
     desktop.show(status);
     window.place(toolkit.area(0, 0, 24, 5));
     window.add(said, toolkit.point(0, 0));

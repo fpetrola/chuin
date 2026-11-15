@@ -39,11 +39,13 @@ class StreamKeyboard implements Keyboard {
   private static final int FIRST_PRINTABLE = '!';
   private static final int LAST_PRINTABLE = '~';
   private final InputStream in;
-  private final Keys keys;
 
-  StreamKeyboard(InputStream in, Keys keys) {
-    this.in = in;
+  /** Where the keys a program binds by name come from, so the keyboard reads the same ones. */
+  private final Toolkit keys;
+
+  StreamKeyboard(InputStream in, Toolkit keys) {
     this.keys = keys;
+    this.in = in;
   }
 
   @Override
@@ -156,8 +158,8 @@ class StreamKeyboard implements Keyboard {
     Key written = printable ? visitor -> visitor.character((char) read) : controlled;
     boolean erasing = read == BACKSPACE || read == CONTROL_H;
     Key erased = erasing ? KeyVisitor::backspace : written;
-    Key spaced = read == SPACE ? keys.space() : erased;
-    Key named = read == TAB ? keys.tab() : spaced;
-    return read == CARRIAGE_RETURN ? keys.enter() : named;
+    Key spaced = read == SPACE ? keys.spaceKey() : erased;
+    Key named = read == TAB ? keys.tabKey() : spaced;
+    return read == CARRIAGE_RETURN ? keys.enterKey() : named;
   }
 }

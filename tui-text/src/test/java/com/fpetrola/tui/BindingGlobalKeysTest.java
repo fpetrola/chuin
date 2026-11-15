@@ -13,13 +13,12 @@ class BindingGlobalKeysTest {
   private static final String F10 = "\u001b[21~";
   private final Toolkit toolkit = new TextToolkit();
   private final Desktop desktop = toolkit.desktop();
-  private final Keys keys = toolkit.keys();
   private final Label said = toolkit.label("");
 
   @Test
   void aBoundFunctionKeyRunsItsCommandWithTheFocusAnywhere() {
     open();
-    desktop.bind(keys.function(3), () -> said.text("laden"));
+    desktop.bind(toolkit.functionKey(3), () -> said.text("laden"));
     press("\t" + F3);
 
     assertEquals("laden", said.text());
@@ -28,7 +27,7 @@ class BindingGlobalKeysTest {
   @Test
   void aFunctionKeyNothingIsBoundToStillReachesTheWindowsAsBefore() {
     open();
-    desktop.bind(keys.function(3), () -> said.text("laden"));
+    desktop.bind(toolkit.functionKey(3), () -> said.text("laden"));
     press(F5 + "\r");
 
     assertEquals("ok", said.text());
@@ -37,7 +36,7 @@ class BindingGlobalKeysTest {
   @Test
   void theSameFunctionKeyIsTheSameWhicheverWayTheTerminalSendsIt() {
     open();
-    desktop.bind(keys.function(1), () -> said.text("hilfe"));
+    desktop.bind(toolkit.functionKey(1), () -> said.text("hilfe"));
     press("\u001b[11~");
 
     assertEquals("hilfe", said.text());
@@ -47,7 +46,7 @@ class BindingGlobalKeysTest {
   void withAMenuOpenABoundKeyRunsItsCommandAndClosesTheMenu() {
     open();
     showMenu();
-    desktop.bind(keys.function(3), () -> said.text("laden"));
+    desktop.bind(toolkit.functionKey(3), () -> said.text("laden"));
     press(F10 + F3);
     Screen screen = toolkit.screen(20, 6);
     desktop.draw(screen);
@@ -60,7 +59,7 @@ class BindingGlobalKeysTest {
   void aBindingWinsOverWhatTheKeyDidBeforeSoBindingF10KeepsTheMenuClosed() {
     open();
     showMenu();
-    desktop.bind(keys.function(10), () -> said.text("eigenes"));
+    desktop.bind(toolkit.functionKey(10), () -> said.text("eigenes"));
     press(F10);
     Screen screen = toolkit.screen(20, 6);
     desktop.draw(screen);
@@ -72,8 +71,8 @@ class BindingGlobalKeysTest {
   @Test
   void bindingAKeyAgainReplacesItsCommand() {
     open();
-    desktop.bind(keys.function(3), () -> said.text("laden"));
-    desktop.bind(keys.function(3), () -> said.text("öffnen"));
+    desktop.bind(toolkit.functionKey(3), () -> said.text("laden"));
+    desktop.bind(toolkit.functionKey(3), () -> said.text("öffnen"));
     press(F3);
 
     assertEquals("öffnen", said.text());

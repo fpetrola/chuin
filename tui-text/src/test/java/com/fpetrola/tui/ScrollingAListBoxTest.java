@@ -61,7 +61,6 @@ class ScrollingAListBoxTest {
     Screen screen = toolkit.screen(14, 8);
     Desktop desktop = toolkit.desktop();
     Window window = toolkit.window("C");
-    Keys keys = toolkit.keys();
 
     window.place(toolkit.area(0, 0, 12, 7));
     window.add(toolkit.button("Ok"), toolkit.point(0, 0));
@@ -73,7 +72,7 @@ class ScrollingAListBoxTest {
     assertEquals("╔═══ C ════╗  ", screen.lines().get(1));
     assertEquals(List.of("wwwwwwwwwwwws.", "wwwwwwwwwwwws.", "wwwwwwwwwwwws."), screen.tints().subList(3, 6));
 
-    desktop.type(keys.tab());
+    desktop.type(toolkit.tabKey());
     desktop.type(visitor -> visitor.down());
     desktop.draw(screen);
 
@@ -136,7 +135,6 @@ class ScrollingAListBoxTest {
     Toolkit toolkit = new TextToolkit();
     Desktop desktop = toolkit.desktop();
     Window window = toolkit.window("A");
-    Keys keys = toolkit.keys();
     Label said = toolkit.label("");
     Button ok = toolkit.button("Ok");
     Screen screen = toolkit.screen(20, 8);
@@ -147,12 +145,12 @@ class ScrollingAListBoxTest {
     window.add(said, toolkit.point(0, 4));
     ok.onPress(pressed -> said.text("ok"));
     desktop.open(window);
-    desktop.type(keys.enter());
-    desktop.type(keys.tab());
+    desktop.type(toolkit.enterKey());
+    desktop.type(toolkit.tabKey());
     desktop.draw(screen);
     assertEquals("║ ▀▀▀▀▀▀           ║", screen.lines().get(5));
 
-    desktop.type(keys.enter());
+    desktop.type(toolkit.enterKey());
     desktop.draw(screen);
     assertEquals("║ok▀▀▀▀▀           ║", screen.lines().get(5));
   }

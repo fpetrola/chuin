@@ -23,7 +23,7 @@ class DrivingTheWindowsTest {
     window.add(said, toolkit.point(0, 1));
 
     windows.open(window);
-    windows.type(toolkit.keys().enter());
+    windows.type(toolkit.enterKey());
     windows.draw(screen);
     assertEquals("si", said.text());
 

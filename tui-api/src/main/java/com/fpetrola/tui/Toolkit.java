@@ -38,7 +38,17 @@ public interface Toolkit {
 
   Menu menu(String title);
 
-  Keys keys();
+  Key enterKey();
+
+  Key tabKey();
+
+  Key spaceKey();
+
+  /** The function key F1 to F12 by its number, named as the one the keyboard reads, so it can be bound. */
+  Key functionKey(int number);
+
+  /** The escape key alone. */
+  Key escapeKey();
 
   Screen screen(int columns, int rows);
 

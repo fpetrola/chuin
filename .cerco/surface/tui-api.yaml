@@ -86,14 +86,6 @@ types:
     kind: interface
     members:
       - "typeInto(Desktop): void"
-  "com.fpetrola.tui.Keys":
-    kind: interface
-    members:
-      - "enter(): Key"
-      - "escape(): Key"
-      - "function(int): Key"
-      - "space(): Key"
-      - "tab(): Key"
   "com.fpetrola.tui.Label":
     kind: interface
     members:
@@ -204,9 +196,11 @@ types:
       - "console(InputStream, OutputStream, Screen): Console"
       - "desktop(): Desktop"
       - "dropDown(List<String>): DropDown"
+      - "enterKey(): Key"
+      - "escapeKey(): Key"
+      - "functionKey(int): Key"
       - "inputLine(int): InputLine"
       - "keyboard(InputStream): Keyboard"
-      - "keys(): Keys"
       - "label(String): Label"
       - "label(String, View): Label"
       - "listBox(List<String>, int): ListBox"
@@ -215,7 +209,9 @@ types:
       - "optionGroup(List<String>): OptionGroup"
       - "point(int, int): Point"
       - "screen(int, int): Screen"
+      - "spaceKey(): Key"
       - "statusLine(): StatusLine"
+      - "tabKey(): Key"
       - "terminal(OutputStream): Terminal"
       - "window(String): Window"
   "com.fpetrola.tui.View":

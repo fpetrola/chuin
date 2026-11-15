@@ -33,7 +33,6 @@ class SeeingColorsTest {
     Screen screen = toolkit.screen(14, 5);
     Desktop desktop = toolkit.desktop();
     Window window = toolkit.window("A");
-    Keys keys = toolkit.keys();
 
     window.place(toolkit.area(0, 0, 12, 4));
     window.add(toolkit.button("Ok"), toolkit.point(1, 0));
@@ -48,7 +47,7 @@ class SeeingColorsTest {
         "wwwwwwwwwwwws.",
         ".ssssssssssss."), screen.tints());
 
-    desktop.type(keys.tab());
+    desktop.type(toolkit.tabKey());
     desktop.draw(screen);
 
     assertEquals(List.of(

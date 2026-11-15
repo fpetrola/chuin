@@ -10,7 +10,6 @@ class MovingFocusWithTabTest {
   @Test
   void tabMovesTheFocusToTheNextButtonSoEnterPressesThatOne() {
     Toolkit toolkit = new TextToolkit();
-    Keys keys = toolkit.keys();
     Desktop desktop = toolkit.desktop();
     Window window = toolkit.window("A");
     Button yes = toolkit.button("Sí");
@@ -23,8 +22,8 @@ class MovingFocusWithTabTest {
     window.add(yes, toolkit.point(1, 1));
     window.add(no, toolkit.point(8, 1));
     desktop.open(window);
-    desktop.type(keys.tab());
-    desktop.type(keys.enter());
+    desktop.type(toolkit.tabKey());
+    desktop.type(toolkit.enterKey());
 
     verify(noListener).pressed(no);
     verifyNoInteractions(yesListener);

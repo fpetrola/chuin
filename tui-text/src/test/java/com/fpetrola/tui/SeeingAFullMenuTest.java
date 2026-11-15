@@ -52,7 +52,7 @@ class SeeingAFullMenuTest {
   @Test
   void aMenuIsVisitedThenItsItemsWithTheirShortcutsAndItsSeparatorsInOrder() {
     Menu file = toolkit.menu("Datei");
-    file.add("Laden", toolkit.keys().function(3), () -> { });
+    file.add("Laden", toolkit.functionKey(3), () -> { });
     file.separator();
     MenuVisitor visitor = org.mockito.Mockito.mock(MenuVisitor.class);
     org.mockito.ArgumentCaptor<MenuItem> item = org.mockito.ArgumentCaptor.captor();
@@ -77,9 +77,9 @@ class SeeingAFullMenuTest {
     MenuBar bar = toolkit.menuBar();
     Menu file = toolkit.menu("Datei");
     file.add("Neu", () -> said.text("neu"));
-    file.add("Laden", toolkit.keys().function(3), () -> said.text("laden"));
+    file.add("Laden", toolkit.functionKey(3), () -> said.text("laden"));
     file.separator();
-    file.add("Beenden", toolkit.keys().escape(), () -> said.text("beenden"));
+    file.add("Beenden", toolkit.escapeKey(), () -> said.text("beenden"));
     bar.add(file);
     desktop.show(bar);
   }

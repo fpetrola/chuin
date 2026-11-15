@@ -5,7 +5,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class ReadingAMarkedTextTest {
-  private final Screen screen = new TextToolkit().screen(10, 1);
+  private final Toolkit toolkit = new TextToolkit();
+  private final Screen screen = toolkit.screen(10, 1);
 
   @Test
   void aCaptionShowsItsTextWithoutTheMarksAndHighlightsTheMarkedLetter() {
@@ -59,13 +60,12 @@ class ReadingAMarkedTextTest {
 
   @Test
   void theCaptionOfAKeyIsItsNameAndHasNoMarkedLetter() {
-    Keys keys = new TextToolkit().keys();
-    Caption f3 = new KeyCaption(keys.function(3));
+    Caption f3 = new KeyCaption(toolkit.functionKey(3));
 
     f3.highlight(screen, 0, 0, 'h');
 
     assertEquals("F3", f3.shown());
-    assertEquals("Esc", new KeyCaption(keys.escape()).shown());
+    assertEquals("Esc", new KeyCaption(toolkit.escapeKey()).shown());
     assertEquals(false, f3.answers('f'));
     assertEquals("..........", screen.tints().getFirst());
   }

@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class TextToolkit implements Toolkit {
-  private final TextKeys keys = new TextKeys();
   private final Desktop desktop = new MenuDesktop(new PointerWindows(new TextDesktop()));
 
   public TextToolkit() {
@@ -64,8 +63,28 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
-  public Keys keys() {
-    return keys;
+  public Key enterKey() {
+    return KeyVisitor::enter;
+  }
+
+  @Override
+  public Key tabKey() {
+    return KeyVisitor::tab;
+  }
+
+  @Override
+  public Key spaceKey() {
+    return KeyVisitor::space;
+  }
+
+  @Override
+  public Key functionKey(int number) {
+    return visitor -> visitor.function(number);
+  }
+
+  @Override
+  public Key escapeKey() {
+    return KeyVisitor::escape;
   }
 
   @Override
@@ -105,7 +124,7 @@ public class TextToolkit implements Toolkit {
 
   @Override
   public Keyboard keyboard(InputStream in) {
-    return new StreamKeyboard(in, keys);
+    return new StreamKeyboard(in, this);
   }
 
   @Override

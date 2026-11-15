@@ -68,7 +68,7 @@ class ChoosingFromADropDownTest {
   void escapeClosesAnOpenListBeforeAnyBindingButRunsTheBindingWhenNothingIsOpen() {
     Label said = toolkit.label("");
     StatusLine status = toolkit.statusLine();
-    status.add("~Esc~ Raus", toolkit.keys().escape(), () -> said.text("raus"));
+    status.add("~Esc~ Raus", toolkit.escapeKey(), () -> said.text("raus"));
     desktop.show(status);
     open();
     press(DOWN + "\u001b");

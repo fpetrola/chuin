@@ -40,7 +40,7 @@ class SeeingTheCursorTest {
     desktop.draw(screen);
     assertEquals(Optional.of(toolkit.point(5, 2)), screen.cursor());
 
-    desktop.type(toolkit.keys().tab());
+    desktop.type(toolkit.tabKey());
     desktop.draw(screen);
 
     assertEquals(Optional.empty(), screen.cursor());

@@ -20,7 +20,7 @@ class ChangingALabelTest {
     window.add(message, toolkit.point(1, 2));
     ok.onPress(pressed -> message.text("¡Presionado!"));
     desktop.open(window);
-    desktop.type(toolkit.keys().enter());
+    desktop.type(toolkit.enterKey());
     desktop.draw(screen);
 
     assertEquals(List.of(

@@ -20,21 +20,21 @@ class TellingKeysApartTest {
 
   @Test
   void enterTellsTheVisitorItIsEnter() {
-    toolkit.keys().enter().accept(visitor);
+    toolkit.enterKey().accept(visitor);
 
     verify(visitor).enter();
   }
 
   @Test
   void tabTellsTheVisitorItIsTab() {
-    toolkit.keys().tab().accept(visitor);
+    toolkit.tabKey().accept(visitor);
 
     verify(visitor).tab();
   }
 
   @Test
   void spaceTellsTheVisitorItIsSpace() {
-    toolkit.keys().space().accept(visitor);
+    toolkit.spaceKey().accept(visitor);
 
     verify(visitor).space();
   }

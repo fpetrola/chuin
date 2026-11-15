@@ -20,7 +20,7 @@ class SeeingTheFocusOnACheckBoxTest {
     desktop.draw(screen);
     List<String> beforeTab = screen.lines();
     String okBeforeTab = screen.tints().get(1).substring(2, 8);
-    desktop.type(toolkit.keys().tab());
+    desktop.type(toolkit.tabKey());
     desktop.draw(screen);
 
     assertEquals(List.of("║   OK  ▄          ║", "║  [ ] Recordar    ║"), beforeTab.subList(1, 3));

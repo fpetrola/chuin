@@ -19,7 +19,7 @@ class TogglingACheckBoxTest {
     desktop.open(window);
     desktop.draw(screen);
     List<String> before = screen.lines();
-    desktop.type(toolkit.keys().space());
+    desktop.type(toolkit.spaceKey());
     desktop.draw(screen);
 
     assertEquals("║>[ ] Recordar     ║", before.get(1));

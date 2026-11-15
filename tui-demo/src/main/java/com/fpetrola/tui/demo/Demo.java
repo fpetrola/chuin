@@ -4,7 +4,6 @@ import com.fpetrola.tui.Button;
 import com.fpetrola.tui.Desktop;
 import com.fpetrola.tui.DropDown;
 import com.fpetrola.tui.InputLine;
-import com.fpetrola.tui.Keys;
 import com.fpetrola.tui.Label;
 import com.fpetrola.tui.Menu;
 import com.fpetrola.tui.MenuBar;
@@ -22,7 +21,6 @@ import java.util.List;
 public class Demo {
   private final Toolkit toolkit = new TextToolkit();
   private final Desktop desktop = toolkit.desktop();
-  private final Keys keys = toolkit.keys();
   private final Label message = toolkit.label("Alt+letra va al campo; F10 abre el menú");
   private final InputLine name = toolkit.inputLine(28);
   private final InputLine city = toolkit.inputLine(20);
@@ -77,10 +75,10 @@ public class Demo {
     Menu system = toolkit.menu("≡");
     system.add("~A~cerca de", () -> message.text("Una TUI hecha con cerco"));
     Menu file = toolkit.menu("~A~rchivo");
-    file.add("~G~uardar", keys.function(2), this::save);
-    file.add("~L~impiar", keys.function(3), () -> message.text(""));
+    file.add("~G~uardar", toolkit.functionKey(2), this::save);
+    file.add("~L~impiar", toolkit.functionKey(3), () -> message.text(""));
     file.separator();
-    file.add("~A~yuda", keys.function(1), () -> desktop.open(help()));
+    file.add("~A~yuda", toolkit.functionKey(1), () -> desktop.open(help()));
     bar.add(system);
     bar.add(file);
     return bar;
@@ -89,9 +87,9 @@ public class Demo {
   /** The keys bound on the status line; each one does what it says. */
   private StatusLine status() {
     StatusLine status = toolkit.statusLine();
-    status.add("~F1~ Ayuda", keys.function(1), () -> desktop.open(help()));
-    status.add("~F2~ Guardar", keys.function(2), this::save);
-    status.add("~F3~ Limpiar", keys.function(3), () -> message.text(""));
+    status.add("~F1~ Ayuda", toolkit.functionKey(1), () -> desktop.open(help()));
+    status.add("~F2~ Guardar", toolkit.functionKey(2), this::save);
+    status.add("~F3~ Limpiar", toolkit.functionKey(3), () -> message.text(""));
     return status;
   }
 

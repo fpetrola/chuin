@@ -20,7 +20,7 @@ class SeeingTheFocusTest {
     desktop.draw(screen);
     List<String> beforeTab = screen.lines();
     String tintsBeforeTab = screen.tints().get(1);
-    desktop.type(toolkit.keys().tab());
+    desktop.type(toolkit.tabKey());
     desktop.draw(screen);
 
     assertEquals(List.of(
