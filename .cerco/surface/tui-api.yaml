@@ -253,5 +253,7 @@ types:
       - "accept(ViewVisitor): void"
       - "add(View, Point): void"
       - "area(): Area"
+      - "origin(): Point"
       - "place(Area): void"
+      - "scroll(int, int): void"
       - "title(): String"

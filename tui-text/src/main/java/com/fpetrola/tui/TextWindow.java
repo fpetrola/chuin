@@ -7,6 +7,7 @@ class TextWindow implements Window {
   private final String title;
   private final List<Placement> placements = new ArrayList<>();
   private Area area = new TextArea(0, 0, 0, 0);
+  private Point origin = new TextPoint(0, 0);
 
   TextWindow(String title) {
     this.title = title;
@@ -36,5 +37,15 @@ class TextWindow implements Window {
   @Override
   public Area area() {
     return area;
+  }
+
+  @Override
+  public Point origin() {
+    return origin;
+  }
+
+  @Override
+  public void scroll(int columns, int rows) {
+    origin = new TextPoint(Math.max(0, origin.column() + columns), Math.max(0, origin.row() + rows));
   }
 }

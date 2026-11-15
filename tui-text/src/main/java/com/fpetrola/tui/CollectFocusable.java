@@ -1,18 +1,33 @@
 package com.fpetrola.tui;
 
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
-/** Collects the views that can take the focus, in the order they are visited. */
+/** Collects the views that can take the focus, in the order they are visited, and where each is placed in its window. */
 class CollectFocusable implements ViewVisitor {
-  private final List<View> into;
+  /** What is done with each view that can take the focus. */
+  private final Consumer<View> found;
+  /** Where the view met next is placed. */
+  private Point placed;
 
   CollectFocusable(List<View> into) {
-    this.into = into;
+    this.found = into::add;
+  }
+
+  /** Collects each such view with where it is placed, keeping them in the order they are visited. */
+  CollectFocusable(Map<View, Point> into) {
+    this.found = view -> into.put(view, placed);
+  }
+
+  @Override
+  public void visitPlacement(Placement placement) {
+    placed = placement.position();
   }
 
   @Override
   public void visitButton(Button button) {
-    into.add(button);
+    add(button);
   }
 
   @Override
@@ -21,26 +36,30 @@ class CollectFocusable implements ViewVisitor {
 
   @Override
   public void visitCheckBox(CheckBox box) {
-    into.add(box);
+    add(box);
   }
 
   @Override
   public void visitInputLine(InputLine line) {
-    into.add(line);
+    add(line);
   }
 
   @Override
   public void visitListBox(ListBox box) {
-    into.add(box);
+    add(box);
   }
 
   @Override
   public void visitOptionGroup(OptionGroup group) {
-    into.add(group);
+    add(group);
   }
 
   @Override
   public void visitDropDown(DropDown dropDown) {
-    into.add(dropDown);
+    add(dropDown);
+  }
+
+  private void add(View view) {
+    found.accept(view);
   }
 }

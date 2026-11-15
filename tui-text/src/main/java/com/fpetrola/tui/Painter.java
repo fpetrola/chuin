@@ -29,7 +29,7 @@ class Painter implements ViewVisitor {
   private final Screen screen;
   /** The inside of the window being drawn: its views cannot draw past it. */
   private Screen inside;
-  /** The top left cell inside the frame of the window drawn last. */
+  /** Where the place 0, 0 of the window drawn last falls on the screen: inside its frame, less how far it is scrolled. */
   private int insideColumn;
   private int insideRow;
   /** Draws the rows of the list box or the options of the group visited last. */
@@ -55,9 +55,9 @@ class Painter implements ViewVisitor {
   public void visitWindow(Window window) {
     Area area = window.area();
     new RaisedFrame(area, window.title(), WINDOW_TINT, border).drawOn(screen);
-    insideColumn = area.column() + 1;
-    insideRow = area.row() + 1;
-    inside = new ClippedScreen(screen, new TextArea(insideColumn, insideRow, area.columns() - 2, area.rows() - 2));
+    inside = new ClippedScreen(screen, new TextArea(area.column() + 1, area.row() + 1, area.columns() - 2, area.rows() - 2));
+    insideColumn = area.column() + 1 - window.origin().column();
+    insideRow = area.row() + 1 - window.origin().row();
   }
 
   /** The view that comes next is drawn at this place inside the window drawn last. */

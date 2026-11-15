@@ -1,7 +1,9 @@
 package com.fpetrola.tui;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.BinaryOperator;
@@ -12,6 +14,8 @@ class TextDesktop implements Windows {
   private static final char BARE = '.';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
+  /** How big a view is taken to be before it was ever drawn. */
+  private static final int ONE_CELL = 1;
   private static final Runnable NOTHING = () -> { };
   private static final Consumer<Point> NOT_DRAGGING = cell -> { };
   /** F6 raises the bottom window over the others, as in Turbo Vision. */
@@ -42,6 +46,7 @@ class TextDesktop implements Windows {
   @Override
   public void type(Key key) {
     key.accept(new Typed());
+    scrollToFocus();
   }
 
   /** A click on an item of the focused drop down's open list chooses it; anywhere else it clicks as usual. */
@@ -133,6 +138,38 @@ class TextDesktop implements Windows {
     Settle pending = new PendingAction(NOTHING);
     top().ifPresent(window -> window.accept(new AtFocus(focused, new CloseOpenList(pending))));
     pending.settle();
+  }
+
+  /**
+   * Scrolls the top window so the focused view comes into sight when its first cell is out of it. Where the view is
+   * comes from its placement and the window's origin; how big it is, from where it was last drawn, which scrolling
+   * does not change, or a single cell before it ever was.
+   */
+  private void scrollToFocus() {
+    top().ifPresent(window -> {
+      Map<View, Point> placed = new LinkedHashMap<>();
+      window.accept(new CollectFocusable(placed));
+      List<Point> at = List.copyOf(placed.values());
+      if (focused < at.size()) {
+        Area frame = window.area();
+        Point place = at.get(focused);
+        boolean drawn = focused < onTop.size();
+        int wide = drawn ? onTop.get(focused).columns() : ONE_CELL;
+        int high = drawn ? onTop.get(focused).rows() : ONE_CELL;
+        int columns = intoSight(place.column() - window.origin().column(), wide, frame.columns() - 2);
+        int rows = intoSight(place.row() - window.origin().row(), high, frame.rows() - 2);
+        window.scroll(columns, rows);
+      }
+    });
+  }
+
+  /**
+   * How far to scroll so a view whose first cell is out of sight comes into it, showing as much of the view as fits;
+   * nothing when its first cell already shows, even if the rest is cut off. Counted from the inside's first cell.
+   */
+  private static int intoSight(int start, int length, int inside) {
+    int past = Math.min(start, start + length - inside);
+    return start < 0 ? start : start >= inside ? past : 0;
   }
 
   @Override
