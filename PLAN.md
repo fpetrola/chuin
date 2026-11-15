@@ -117,3 +117,84 @@ Rearmar la demo para que se parezca a la captura:
 1. ¿Los tintes siguen siendo un `char` por celda, con la paleta documentada, o pasan a ser un tipo? Recomiendo seguir con `char`, por cómo leen los tests.
 2. ¿Usamos `~` para marcar la letra resaltada, como Turbo Vision? Recomiendo que sí.
 3. ¿El orden de los pasos está bien, o hay algo que quieras ver antes? Por ejemplo, la línea de estado no depende de los pasos 2 a 4 y se podría adelantar.
+
+## Revisión del modelo: abstraer, unificar, sacar duplicados
+
+Sale de una revisión de tui-api y tui-text. Las reglas son las de siempre:
+- Cada paso es un commit (o pocos) que compila solo y no cambia lo que se ve.
+- Lo que haga crecer una superficie sellada va con propuesta y firma.
+- Los tests que hay hoy cuidan el comportamiento. Si un concepto nuevo promete algo, lleva su test de contrato.
+
+### Etapa A: duplicación chica, sin tocar tui-api
+
+**A1. La barra de la lista es una barra como las otras.** Hoy el clic está dos veces (`ClickFocused` repite el autómata de `BarClick`: `pastThumb`, `walked++`) y el dibujo también (`RowPainter` repite los glifos `░ ■` de `BarCells`).
+- `ClickFocused`, cuando el clic cae en la columna de la barra, delega en `BarClick`.
+- `RowPainter` delega los `visitScroll*` en `BarCells`.
+- Los glifos quedan en un solo lugar.
+
+**A2. El ancho de una entrada, una sola vez.** `TextCaption` y `KeyCaption` repiten `shown().length() + 2`.
+- Opción 1: un `default` en `Caption`.
+- Opción 2: que lo diga quien pone entradas en fila.
+
+Se decide en la propuesta.
+
+**A3. Colores por rol.** Hoy son letras sueltas (`'f'`, `'h'`, `'m'`, `'.'`) en cada clase que dibuja y en `DosPalette`.
+- Se juntan como constantes con nombre de rol (`FOCUS`, `HOTKEY`, `MENU`, `BARE`…) en un solo lugar, que también usa la paleta.
+- Siguen siendo `char`, como se decidió al principio, porque los tests leen tintes como texto.
+
+### Etapa B: conceptos que faltan, todavía en tui-text
+
+**B1. FocusOrder.** Qué vista es la n-ésima enfocable lo deciden hoy `CollectFocusable`, `AtFocus` y `Painter`, cada uno con su `seen++`. En `Painter` ya hay un parche, `seen - 1 == focused`.
+- Una sola pieza dice si la vista visitada es enfocable y si tiene el foco.
+- `AtFocus` y `Painter` se apoyan en ella.
+
+**B2. MenuBox y el borde de un marco.** El menú abierto se dibuja en `2 + fila` (`MenuPainter`) y se clickea en `fila - 2` (`TextPlacedTitle`), y los dos arman la misma lista de filas.
+- Un `MenuBox` con el área del menú, sus filas y la fila de cada ítem, que comparten dibujo y clic.
+- `Frame.inside(area)` / `Frame.around(area)` reemplazan los `+1/+2/-2` sueltos en `Painter`, `TextWindow`, `DropDownList`, `MenuPainter` y `Frame`.
+
+**B3. La entrada ubicada.** La línea de estado y la barra de menú recalculan dónde empieza cada entrada, y solo la barra tiene `PlacedTitle`.
+- Una entrada ubicada común (caption, columna y `covers`) para títulos y entradas de estado.
+- `StatusClick` y `MenuDesktop.placed()` la usan.
+
+**B4. Geometría con nombre.** "El área contiene la celda" está copiado en 6 lugares, y la intersección (`Painter.within`) y el punto relativo están hechos a mano.
+- Primero en tui-text. Pasa a `Area` (tui-api, con propuesta) solo si hace falta.
+
+**B5. Cursor.** El índice acotado y "desde qué fila se ve" se repiten en `TextListBox`, `TextOptionGroup`, el menú abierto, `TextDropDown` y `PanelAxis`.
+- Un `Cursor` con `previous`, `next`, `page` y `moveTo`, que todos componen.
+
+### Etapa C: partir las clases grandes
+
+Va después de B, porque B ya les saca partes.
+
+**C1. `TextDesktop`.**
+- `WindowStack`: cada ventana junto con su foco, en vez de las dos listas paralelas `opened` y `remembered`.
+- `atFocus(acción, si no)`: reemplaza el patrón Settle + AtFocus que hoy se repite 5 veces.
+- `WindowDrag`: mover y agrandar una ventana.
+
+**C2. `Painter`.**
+- `Viewport`: el recorte, el origen y la pila de paneles.
+- `HitMap`: las áreas dibujadas y los blancos de clic.
+- `ButtonFace`: la cara, la sombra y el botón apretado.
+- `Painter` queda como el despacho por widget.
+
+### Etapa D: toca tui-api, más discutible
+
+**D1. Las filas dicen su índice.** `ListItem` y `Option` exponen su índice, o se unifican en una fila de una vista de filas. Así desaparecen los contadores `x++ == row` de `ClickFocused`, `RowPainter` y `MenuPainter`.
+
+**D2. `KeyId`.** Un valor con igualdad en vez del string de `KeyName` como clave de los atajos y de `"escape"`.
+
+**D3. Nombres.**
+- `ToWindows` y `PointerWindows` por algo que diga lo que hacen.
+- Los campos `list`, `rows` y `place` de los painters.
+
+### Lo que no se toca
+
+- `Scrollable`, `PanelAxis` y `TextScrollBar`.
+- La composición `Frame`, `Shadow` y `RaisedFrame`.
+- `Settle`/`PendingAction` y los estados `Closed`/`Opened` del menú.
+
+### Para decidir
+
+1. ¿El orden A → B → C → D está bien? Recomiendo que sí: lo chico y seguro primero, y lo que toca la API al final.
+2. ¿D entra, o se deja para más adelante? Recomiendo decidirlo al terminar C, viendo cuánto quedó de los contadores.
+3. En B4, ¿la geometría sube a `Area` en tui-api, o queda en tui-text? Recomiendo empezar en tui-text.
