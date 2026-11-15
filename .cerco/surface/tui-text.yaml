@@ -46,6 +46,7 @@ types:
     kind: interface
     members:
       - "most(): int"
+      - "moveTo(int): void"
       - "next(): void"
       - "overflows(): boolean"
       - "pageDown(): void"

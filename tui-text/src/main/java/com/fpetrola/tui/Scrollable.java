@@ -17,4 +17,7 @@ interface Scrollable {
   void pageUp();
 
   void pageDown();
+
+  /** Goes to this position, staying between 0 and most(). */
+  void moveTo(int position);
 }

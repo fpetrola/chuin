@@ -219,4 +219,24 @@ class ScrollingAListBoxTest {
     numbers.pageUp();
     assertEquals("cuatro", numbers.selected().orElseThrow());
   }
+
+  /**
+   * Eight items in five rows: ▲ on row 1, the track on rows 2 to 4, ▼ on row 5. Pressing on the thumb, on row 2 while
+   * the first item is selected, and dragging it to row 4 selects the last item; after the release a drag does nothing.
+   */
+  @Test
+  void draggingTheThumbOfAListSelectsTheItemAsFarAlong() {
+    Toolkit toolkit = new TextToolkit();
+    Desktop desktop = toolkit.desktop();
+    ListBox numbers = eightInFive(toolkit, desktop);
+
+    desktop.click(toolkit.point(9, 2));
+    desktop.drag(toolkit.point(9, 4));
+    assertEquals("ocho", numbers.selected().orElseThrow());
+
+    desktop.drag(toolkit.point(9, 3));
+    desktop.release(toolkit.point(9, 3));
+    desktop.drag(toolkit.point(9, 2));
+    assertEquals("cinco", numbers.selected().orElseThrow());
+  }
 }

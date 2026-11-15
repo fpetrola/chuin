@@ -177,6 +177,7 @@ types:
       - "pageDown(): void"
       - "pageUp(): void"
       - "previous(): void"
+      - "thumbTo(int): void"
   "com.fpetrola.tui.ScrollPanel":
     kind: interface
     members:

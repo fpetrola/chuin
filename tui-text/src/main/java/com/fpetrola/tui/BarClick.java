@@ -2,18 +2,20 @@ package com.fpetrola.tui;
 
 /**
  * A click on a cell of a scroll bar, counted from its first: ▲ scrolls a step back, ▼ a step forward, the track a page
- * toward the click, the thumb nothing. What it does is noted while the bar walks its cells, and done after.
+ * toward the click, and a press on the thumb takes it. What it does is noted while the bar walks its cells, and done after.
  */
 class BarClick implements ViewVisitor {
-  private static final Runnable NOTHING = () -> { };
   private final int at;
   private final Settle pending;
+  /** What a press on the thumb does: takes it, for the drag that follows. */
+  private final Runnable onThumb;
   private int walked;
   private boolean pastThumb;
 
-  BarClick(int at, Settle pending) {
+  BarClick(int at, Settle pending, Runnable onThumb) {
     this.at = at;
     this.pending = pending;
+    this.onThumb = onThumb;
   }
 
   @Override
@@ -29,7 +31,7 @@ class BarClick implements ViewVisitor {
   @Override
   public void visitScrollThumb(ScrollBar bar) {
     pastThumb = true;
-    on(NOTHING);
+    on(onThumb);
   }
 
   @Override

@@ -89,7 +89,8 @@ class TextDesktop implements Windows {
         focused = view;
         int clicked = view;
         Settle pending = new PendingAction(NOTHING);
-        ClickFocused click = new ClickFocused(cell.column() - area.column(), cell.row() - area.row(), pending);
+        ClickFocused click = new ClickFocused(cell.column() - area.column(), cell.row() - area.row(), pending,
+            rows -> dragging = to -> rows.accept(to.row() - area.row()));
         top().ifPresent(window -> window.accept(new AtFocus(clicked, click)));
         pending.settle();
       }
@@ -195,7 +196,7 @@ class TextDesktop implements Windows {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
       List<ClickTarget> targets = at == last ? onTopTargets : new ArrayList<>();
       targets.clear();
-      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups, targets) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups, targets));
+      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups, targets, drag -> dragging = drag) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups, targets, drag -> dragging = drag));
     }
     popups.forEach(popup -> popup.drawOn(screen));
   }

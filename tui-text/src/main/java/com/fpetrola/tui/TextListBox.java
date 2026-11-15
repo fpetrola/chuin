@@ -76,6 +76,13 @@ class TextListBox implements ListBox, Scrollable {
     shown.accept(visitor);
   }
 
+  /** Selects the item at this position among them, and scrolls to keep it in sight. */
+  @Override
+  public void moveTo(int position) {
+    selected = Math.max(0, Math.min(most(), position));
+    top = Math.max(Math.min(top, selected), selected - rows + 1);
+  }
+
   @Override
   public int position() {
     return selected;

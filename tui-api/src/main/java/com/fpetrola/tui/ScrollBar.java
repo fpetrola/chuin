@@ -16,4 +16,7 @@ public interface ScrollBar extends View {
 
   /** Scrolls what it is beside a page forward, as the track after the thumb does. */
   void pageDown();
+
+  /** Puts the thumb on this cell of the bar, counted from ▲, and what it is beside as far along; the track's ends hold it. */
+  void thumbTo(int cell);
 }

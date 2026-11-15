@@ -38,6 +38,13 @@ class TextScrollBar implements ScrollBar {
     owner.pageDown();
   }
 
+  /** The track runs from the cell after ▲ to the one before ▼; a cell past either end holds the thumb there. */
+  @Override
+  public void thumbTo(int cell) {
+    int track = Math.max(0, Math.min(length - ENDS, cell - 1));
+    owner.moveTo((track * owner.most() + (length - ENDS) / 2) / Math.max(1, length - ENDS));
+  }
+
   /** Each cell, first to last: ▲, the track with its thumb, ▼; blank cells when what it is beside shows all it holds. */
   @Override
   public void accept(ViewVisitor visitor) {

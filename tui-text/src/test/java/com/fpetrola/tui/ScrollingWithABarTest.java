@@ -70,4 +70,20 @@ class ScrollingWithABarTest {
 
     assertEquals("▲■░▼" + "▲░■▼", cells.toString());
   }
+
+  /** Six items in four rows: the track is cells 1 and 2, so the thumb on the last of them goes to the last item. */
+  @Test
+  void puttingTheThumbOnACellMovesWhatTheBarIsBesideAsFarAlongAndTheEndsHoldIt() {
+    bar.thumbTo(2);
+    assertEquals("seis", numbers.selected().orElseThrow());
+
+    bar.thumbTo(0);
+    assertEquals("uno", numbers.selected().orElseThrow());
+
+    list.moveTo(3);
+    assertEquals("cuatro", numbers.selected().orElseThrow());
+
+    list.moveTo(9);
+    assertEquals("seis", numbers.selected().orElseThrow());
+  }
 }

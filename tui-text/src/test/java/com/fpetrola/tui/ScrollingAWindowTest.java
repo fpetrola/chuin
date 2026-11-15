@@ -173,7 +173,7 @@ class ScrollingAWindowTest {
     ListBox numbers = toolkit.listBox(List.of("uno", "dos", "tres", "cuatro"), 4);
     ScrollPanel panel = toolkit.scrollPanel(numbers, 5, 3);
     StringBuilder otherwise = new StringBuilder();
-    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(4, 0), toolkit.point(0, 1), 2);
+    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(4, 0), toolkit.point(0, 1), 2, drag -> { });
 
     down.click(toolkit.point(2, 1), () -> otherwise.append("inside "));
     down.click(toolkit.point(4, 1), () -> otherwise.append("bar "));
@@ -283,6 +283,31 @@ class ScrollingAWindowTest {
     alone.release(own.point(3, 6));
 
     assertEquals("", said.text());
+  }
+
+  /**
+   * Seven rows held in five, so the window scrolls at most two and the thumb walks three cells of track, rows 2 to 4
+   * of the screen: pressing on the thumb and dragging it to the last track cell scrolls to the end, and back to the first.
+   */
+  @Test
+  void draggingTheThumbOfTheRightBarScrollsTheWindowAsFarAlong() {
+    Screen tall = toolkit.screen(10, 8);
+    window.place(toolkit.area(0, 0, 10, 7));
+    desktop.draw(tall);
+
+    desktop.click(toolkit.point(9, 2));
+    desktop.drag(toolkit.point(9, 4));
+    desktop.draw(tall);
+    assertEquals(toolkit.point(0, 2), panelOf(window).origin());
+    assertEquals("▲░░■▼", rightSide(tall));
+
+    desktop.drag(toolkit.point(9, 2));
+    desktop.release(toolkit.point(9, 2));
+    desktop.draw(tall);
+    assertEquals(toolkit.point(0, 0), panelOf(window).origin());
+
+    desktop.drag(toolkit.point(9, 4));
+    assertEquals(toolkit.point(0, 0), panelOf(window).origin());
   }
 
   /** The scroll panel that is the inside of a window. */

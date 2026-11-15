@@ -52,6 +52,11 @@ class PanelAxis implements Scrollable {
     by(shown - 1);
   }
 
+  @Override
+  public void moveTo(int position) {
+    by(position - position());
+  }
+
   /** Scrolls by these many cells, staying between 0 and the most. */
   private void by(int cells) {
     scroll.accept(Math.max(0, Math.min(most(), position() + cells)) - position());
