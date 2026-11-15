@@ -1,5 +1,6 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
 import com.fpetrola.tui.geometry.Point;
 import com.fpetrola.tui.menu.Menu;
 import com.fpetrola.tui.menu.MenuItem;
@@ -12,8 +13,8 @@ import java.util.Optional;
 
 /** A title starting at a column of the top row, as wide as its caption takes as an entry. */
 class TextPlacedTitle implements PlacedTitle {
-  /** The bar's row and the open menu's top frame line, above its first item. */
-  private static final int ABOVE_ITEMS = 2;
+  /** The bar's row, above the open menu's frame. */
+  private static final int BAR_ROWS = 1;
   private final Menu menu;
   private final int start;
 
@@ -41,8 +42,9 @@ class TextPlacedTitle implements PlacedTitle {
   @Override
   public Optional<MenuItem> itemAt(Point cell) {
     List<Optional<MenuItem>> rows = rows();
-    int row = cell.row() - ABOVE_ITEMS;
-    boolean across = cell.column() >= start && cell.column() < start + menu.width();
+    int row = cell.row() - items(rows.size()).row();
+    Area framed = Line.SINGLE.around(items(rows.size()));
+    boolean across = cell.column() >= framed.column() && cell.column() < framed.column() + framed.columns();
     return across && row >= 0 && row < rows.size() ? rows.get(row) : Optional.empty();
   }
 
@@ -59,26 +61,32 @@ class TextPlacedTitle implements PlacedTitle {
     if (rows.isEmpty()) {
       return;
     }
-    int width = menu.width();
-    new RaisedFrame(new TextArea(start, ABOVE_ITEMS - 1, width, rows.size() + 2), "", TintRole.MENU, Line.SINGLE).drawOn(screen);
+    Area held = items(rows.size());
+    Area framed = Line.SINGLE.around(held);
+    new RaisedFrame(framed, "", TintRole.MENU, Line.SINGLE).drawOn(screen);
     int item = 0;
     for (int row = 0; row < rows.size(); row++) {
-      int line = ABOVE_ITEMS + row;
+      int line = held.row() + row;
       if (rows.get(row).isEmpty()) {
-        screen.write(start, line, "├" + "─".repeat(width - 2) + "┤");
+        screen.write(framed.column(), line, "├" + "─".repeat(held.columns()) + "┤");
       } else {
         boolean chosen = item++ == selected;
         if (chosen) {
-          TintRole.FOCUS.paint(screen, start + 1, line, width - 2);
+          TintRole.FOCUS.paint(screen, held.column(), line, held.columns());
         }
         MenuItem shown = rows.get(row).get();
         Caption caption = new TextCaption(shown.text());
-        screen.write(start + 2, line, caption.shown());
-        caption.highlight(screen, start + 2, line, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
+        screen.write(held.column() + 1, line, caption.shown());
+        caption.highlight(screen, held.column() + 1, line, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
         String key = shown.key().map(bound -> new KeyCaption(bound).shown()).orElse("");
-        screen.write(start + width - 2 - key.length(), line, key);
+        screen.write(held.column() + held.columns() - 1 - key.length(), line, key);
       }
     }
+  }
+
+  /** What the open menu's frame holds, this many rows of items and separators: under the bar and the frame's top line. */
+  private Area items(int rows) {
+    return Line.SINGLE.holding(new TextPoint(start, BAR_ROWS), new TextSize(menu.width(), rows));
   }
 
   /** The rows of the menu, top to bottom: an item, or nothing for a separator. */

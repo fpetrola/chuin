@@ -52,4 +52,20 @@ class DrawingFramesAndShadowsTest {
 
     assertEquals(List.of("        ", " ╔══╗   ", " ║  ║   ", " ╚══╝   ", "        "), screen.lines());
   }
+
+  @Test
+  void aBorderTakesACellOnEachSideOfWhatItHolds() {
+    Area held = Line.SINGLE.inside(new TextArea(2, 1, 10, 5));
+    Area framed = Line.DOUBLE.around(new TextArea(3, 2, 8, 3));
+
+    assertEquals(List.of(3, 2, 8, 3), List.of(held.column(), held.row(), held.columns(), held.rows()));
+    assertEquals(List.of(2, 1, 10, 5), List.of(framed.column(), framed.row(), framed.columns(), framed.rows()));
+  }
+
+  @Test
+  void aFramePlacedAtACornerHoldsWhatItHoldsFromTheCellInsideTheCorner() {
+    Area held = Line.SINGLE.holding(new TextPoint(4, 2), new TextSize(6, 3));
+
+    assertEquals(List.of(5, 3, 6, 3), List.of(held.column(), held.row(), held.columns(), held.rows()));
+  }
 }

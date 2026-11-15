@@ -302,7 +302,7 @@ class VisitingViewsTest {
     assertEquals(List.of("Nuevo", "Salir", "Acerca"), items.getAllValues().stream().map(MenuItem::text).toList());
     assertEquals(List.of(file, file, help), items.getAllValues().stream().map(MenuItem::menu).toList());
     assertEquals("Archivo", file.title());
-    assertEquals(9, file.width());
+    assertEquals(7, file.width());
     items.getAllValues().getFirst().run();
     verify(create).run();
   }

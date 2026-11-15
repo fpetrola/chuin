@@ -16,7 +16,7 @@ public interface Menu {
   /** Adds a line between the items above and below it; the arrows step over it. */
   void separator();
 
-  /** How many cells across its open box takes: its longest item, a blank on each side and the two borders. */
+  /** How many cells across its items take in its open box: its longest item and a blank on each side; the frame around them is the border's. */
   int width();
 
   /** Visits the menu, then each of its items, top to bottom. */

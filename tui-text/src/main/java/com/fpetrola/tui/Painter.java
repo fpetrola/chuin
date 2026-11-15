@@ -77,8 +77,9 @@ class Painter implements ViewVisitor {
     Area area = window.area();
     new RaisedFrame(area, window.title(), TintRole.WINDOW, border).drawOn(screen);
     inside = screen;
-    column = area.column() + 1;
-    row = area.row() + 1;
+    Area held = border.inside(area);
+    column = held.column();
+    row = held.row();
   }
 
   /** What a panel holds is drawn shifted by its origin and cut to the panel, less the last column and row its bars take. */

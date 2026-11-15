@@ -10,7 +10,10 @@ types:
   "com.fpetrola.tui.Border":
     kind: interface
     members:
+      - "around(Area): Area"
       - "bottom(int): String"
+      - "holding(Point, Size): Area"
+      - "inside(Area): Area"
       - "middle(int): String"
       - "top(String, int): String"
   "com.fpetrola.tui.Caption":

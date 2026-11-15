@@ -11,8 +11,8 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 class TextMenu implements Menu {
-  /** A blank on each side of an item and the two borders of the box. */
-  private static final int AROUND_ITEM = 4;
+  /** A blank on each side of an item; the frame around the box is the border's. */
+  private static final int AROUND_ITEM = 2;
   /** The blanks between an item and the name of its key. */
   private static final int BEFORE_KEY = 2;
   private final String title;

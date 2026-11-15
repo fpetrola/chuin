@@ -20,7 +20,7 @@ class Frame implements Drawing {
 
   @Override
   public void drawOn(Screen screen) {
-    int inner = area.columns() - 2;
+    int inner = border.inside(area).columns();
     int last = area.rows() - 1;
     screen.write(area.column(), area.row(), border.top(title.isEmpty() ? "" : " " + title + " ", inner));
     for (int line = 1; line < last; line++) {
