@@ -13,6 +13,10 @@ types:
       - "answers(char): boolean"
       - "highlight(Screen, int, int, char): void"
       - "shown(): String"
+  "com.fpetrola.tui.ClickTarget":
+    kind: interface
+    members:
+      - "click(Point, Runnable): void"
   "com.fpetrola.tui.Drawing":
     kind: interface
     members:

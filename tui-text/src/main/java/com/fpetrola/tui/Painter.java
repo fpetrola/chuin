@@ -25,6 +25,8 @@ class Painter implements ViewVisitor {
   private final List<Drawing> popups;
   /** What is drawn on a window's frame once its views are: its scroll bars. */
   private final List<Drawing> frames;
+  /** What a click on a window's frame may fall on: its scroll bars. */
+  private final List<ClickTarget> targets;
   /** The list of the drop down visited last. */
   private ViewVisitor list = new ViewVisitor() {
   };
@@ -44,9 +46,10 @@ class Painter implements ViewVisitor {
   private int column;
   private int row;
 
-  Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<Drawing> frames) {
+  Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<Drawing> frames, List<ClickTarget> targets) {
     this.popups = popups;
     this.frames = frames;
+    this.targets = targets;
     this.border = border;
     this.screen = screen;
     this.inside = screen;
@@ -58,7 +61,7 @@ class Painter implements ViewVisitor {
   public void visitWindow(Window window) {
     Area area = window.area();
     new RaisedFrame(area, window.title(), WINDOW_TINT, border).drawOn(screen);
-    ScrollBars bars = new ScrollBars(new ClippedScreen(screen, new TextArea(area.column() + 1, area.row() + 1, area.columns() - 2, area.rows() - 2)), area, window.origin());
+    ScrollBars bars = new ScrollBars(new ClippedScreen(screen, new TextArea(area.column() + 1, area.row() + 1, area.columns() - 2, area.rows() - 2)), window, targets);
     frames.add(bars);
     inside = bars;
     insideColumn = area.column() + 1 - window.origin().column();

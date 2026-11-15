@@ -28,6 +28,8 @@ class TextDesktop implements Windows {
   private int focused;
   /** What a drag does: move the window taken by its title, or nothing. */
   private Consumer<Point> dragging = NOT_DRAGGING;
+  /** What a click on the top window's frame may fall on, as it was last drawn: its scroll bars. */
+  private final List<ClickTarget> onTopTargets = new ArrayList<>();
   /** Where the focusable views of the top window were last drawn, in focus order. */
   private final List<Area> onTop = new ArrayList<>();
   /** The focus each window had when it last left the top, by its place in {@link #opened}. */
@@ -59,19 +61,28 @@ class TextDesktop implements Windows {
     pending.settle();
   }
 
-  /** Closes any open list, raises the window under the cell or takes it by its title or corner, and clicks the view there. */
+  /** Closes any open list; raises the window under the cell, or hands the click to the top window's bars, then to the window. */
   private void clickAsUsual(Point cell) {
     closeOpenList();
     int under = windowUnder(cell);
     boolean below = under >= 0 && under < opened.size() - 1;
     if (below) {
       raise(under);
+      top().filter(window -> cell.row() == window.area().row()).ifPresent(window -> grab(window, cell));
+    } else {
+      Runnable chain = () -> clickOnTop(cell, under);
+      for (ClickTarget target : onTopTargets.reversed()) {
+        Runnable next = chain;
+        chain = () -> target.click(cell, next);
+      }
+      chain.run();
     }
+  }
+
+  /** A click on the top window, past its scroll bars: its title takes it, or its corner, or the view under it. */
+  private void clickOnTop(Point cell, int under) {
     top().filter(window -> under >= 0 && cell.row() == window.area().row()).ifPresent(window -> grab(window, cell));
     top().filter(window -> under == opened.size() - 1 && atCorner(window.area(), cell)).ifPresent(this::stretch);
-    if (below) {
-      return;
-    }
     for (int view = 0; view < onTop.size(); view++) {
       Area area = onTop.get(view);
       boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
@@ -181,7 +192,9 @@ class TextDesktop implements Windows {
     for (int at = 0; at < opened.size(); at++) {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
       List<Drawing> frames = new ArrayList<>();
-      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups, frames) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups, frames));
+      List<ClickTarget> targets = at == last ? onTopTargets : new ArrayList<>();
+      targets.clear();
+      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups, frames, targets) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups, frames, targets));
       frames.forEach(frame -> frame.drawOn(screen));
     }
     popups.forEach(popup -> popup.drawOn(screen));
