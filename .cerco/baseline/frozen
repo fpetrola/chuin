@@ -10,6 +10,7 @@ file-length
 flag-argument
 flag-driven-from-outside
 handed-out-whole
+kept-by-index
 kept-together
 key-holds-value
 maps-keyed-alike

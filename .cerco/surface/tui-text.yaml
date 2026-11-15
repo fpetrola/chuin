@@ -22,16 +22,14 @@ types:
     members:
       - "next(): int"
       - "put(Caption, char, char): void"
-  "com.fpetrola.tui.MenuTitles":
+  "com.fpetrola.tui.PlacedTitle":
     kind: interface
     members:
-      - "answering(char): OptionalInt"
-      - "count(): int"
-      - "items(int): List<MenuItem>"
-      - "menu(int): Menu"
-      - "rows(int): List<Optional<MenuItem>>"
-      - "start(int): int"
-      - "titleAt(Point): OptionalInt"
+      - "answers(char): boolean"
+      - "covers(Point): boolean"
+      - "itemAt(Point): Optional<MenuItem>"
+      - "items(): List<MenuItem>"
+      - "menu(): Menu"
   "com.fpetrola.tui.Settle":
     kind: interface
     members:
