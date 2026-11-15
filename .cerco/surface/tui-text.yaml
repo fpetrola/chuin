@@ -17,6 +17,10 @@ types:
     kind: interface
     members:
       - "click(Point, Runnable): void"
+  "com.fpetrola.tui.Dragging":
+    kind: interface
+    members:
+      - "to(Point): void"
   "com.fpetrola.tui.Drawing":
     kind: interface
     members:
@@ -26,6 +30,10 @@ types:
     members:
       - "next(): int"
       - "put(Caption, char, char): void"
+  "com.fpetrola.tui.Grab":
+    kind: interface
+    members:
+      - "hold(Dragging): void"
   "com.fpetrola.tui.Group":
     kind: interface
     members:

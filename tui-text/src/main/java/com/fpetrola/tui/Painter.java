@@ -3,7 +3,6 @@ package com.fpetrola.tui;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;
-import java.util.function.Consumer;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
 class Painter implements ViewVisitor {
@@ -29,7 +28,7 @@ class Painter implements ViewVisitor {
   /** What a click on a window's frame may fall on: its scroll bars. */
   private final List<ClickTarget> targets;
   /** Hands a drag on to whoever follows the pointer, as a press on a bar's thumb does. */
-  private final Consumer<Consumer<Point>> grab;
+  private final Grab grab;
   /** The list of the drop down visited last. */
   private ViewVisitor list = new ViewVisitor() {
   };
@@ -54,7 +53,7 @@ class Painter implements ViewVisitor {
   private int row;
 
   Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<ClickTarget> targets,
-      Consumer<Consumer<Point>> grab) {
+      Grab grab) {
     this.grab = grab;
     this.popups = popups;
     this.targets = targets;

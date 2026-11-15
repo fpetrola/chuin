@@ -1,6 +1,5 @@
 package com.fpetrola.tui;
 
-import java.util.function.Consumer;
 
 /** Where a scroll bar was drawn, from its first cell on, down or across, so a click on one of its cells goes to it. */
 class BarTarget implements ClickTarget {
@@ -9,9 +8,9 @@ class BarTarget implements ClickTarget {
   private final Point step;
   private final int length;
   /** Hands the drag that follows a press on the thumb to whoever follows the pointer. */
-  private final Consumer<Consumer<Point>> grab;
+  private final Grab grab;
 
-  BarTarget(ScrollBar bar, Point from, Point step, int length, Consumer<Consumer<Point>> grab) {
+  BarTarget(ScrollBar bar, Point from, Point step, int length, Grab grab) {
     this.grab = grab;
     this.bar = bar;
     this.from = from;
@@ -26,7 +25,7 @@ class BarTarget implements ClickTarget {
     boolean inLine = step.column() == 0 ? cell.column() == from.column() : cell.row() == from.row();
     Settle pending = new PendingAction(otherwise);
     if (inLine && at >= 0 && at < length) {
-      bar.accept(new BarClick(at, pending, () -> grab.accept(to -> bar.thumbTo(along(to)))));
+      bar.accept(new BarClick(at, pending, () -> grab.hold(to -> bar.thumbTo(along(to)))));
     }
     pending.settle();
   }

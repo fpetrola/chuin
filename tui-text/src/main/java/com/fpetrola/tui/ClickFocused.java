@@ -1,7 +1,5 @@
 package com.fpetrola.tui;
 
-import java.util.function.Consumer;
-import java.util.function.IntConsumer;
 
 /**
  * What a left click does to the view under it, once focused: holds a button down until the release, toggles a check box, chooses the option
@@ -26,10 +24,10 @@ class ClickFocused implements ViewVisitor {
   /** How many options of a group the walk has met. */
   private int options;
 
-  /** Hands the drag that follows a press on a list's thumb to whoever follows the pointer, as rows of the list. */
-  private final Consumer<IntConsumer> grab;
+  /** Follows the drag that comes after a press on a list's thumb, in cells counted from the list's first. */
+  private final Grab grab;
 
-  ClickFocused(int column, int row, Settle pending, Consumer<IntConsumer> grab) {
+  ClickFocused(int column, int row, Settle pending, Grab grab) {
     this.pending = pending;
     this.grab = grab;
     this.column = column;
@@ -76,7 +74,7 @@ class ClickFocused implements ViewVisitor {
   @Override
   public void visitScrollThumb(ScrollBar bar) {
     pastThumb = true;
-    onBar(() -> grab.accept(bar::thumbTo));
+    onBar(() -> grab.hold(to -> bar.thumbTo(to.row())));
   }
 
   @Override

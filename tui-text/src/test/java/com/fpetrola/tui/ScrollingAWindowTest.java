@@ -173,7 +173,7 @@ class ScrollingAWindowTest {
     ListBox numbers = toolkit.listBox(List.of("uno", "dos", "tres", "cuatro"), 4);
     ScrollPanel panel = toolkit.scrollPanel(numbers, 5, 3);
     StringBuilder otherwise = new StringBuilder();
-    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(4, 0), toolkit.point(0, 1), 2, drag -> { });
+    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(4, 0), toolkit.point(0, 1), 2, held -> { });
 
     down.click(toolkit.point(2, 1), () -> otherwise.append("inside "));
     down.click(toolkit.point(4, 1), () -> otherwise.append("bar "));
@@ -308,6 +308,37 @@ class ScrollingAWindowTest {
 
     desktop.drag(toolkit.point(9, 4));
     assertEquals(toolkit.point(0, 0), panelOf(window).origin());
+  }
+
+  /** A press on a bar's thumb hands a drag to whoever follows the pointer, which puts the thumb under it at each move. */
+  @Test
+  void aPressOnTheThumbHandsADragThatPutsTheThumbUnderThePointer() {
+    ListBox numbers = toolkit.listBox(List.of("a", "b", "c", "d", "e", "f", "g", "h"), 8);
+    ScrollPanel panel = toolkit.scrollPanel(numbers, 3, 6);
+    List<Dragging> held = new java.util.ArrayList<>();
+    Grab grab = held::add;
+    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(2, 0), toolkit.point(0, 1), 5, grab);
+
+    down.click(toolkit.point(2, 1), () -> { });
+    held.getFirst().to(toolkit.point(2, 2));
+    assertEquals(toolkit.point(0, 2), panel.origin());
+
+    held.getFirst().to(toolkit.point(7, 9));
+    assertEquals(toolkit.point(0, 3), panel.origin());
+  }
+
+  /** A grab holds the drag it is given, which is done each time the pointer moves. */
+  @Test
+  void aGrabHoldsADragThatIsDoneAtEachMove() {
+    List<Dragging> held = new java.util.ArrayList<>();
+    List<Point> moves = new java.util.ArrayList<>();
+    Grab grab = held::add;
+
+    grab.hold(moves::add);
+    held.getFirst().to(toolkit.point(1, 2));
+    held.getFirst().to(toolkit.point(3, 4));
+
+    assertEquals(List.of(toolkit.point(1, 2), toolkit.point(3, 4)), moves);
   }
 
   /** The scroll panel that is the inside of a window. */
