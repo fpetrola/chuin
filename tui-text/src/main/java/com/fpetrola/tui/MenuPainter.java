@@ -65,7 +65,7 @@ class MenuPainter implements MenuVisitor {
   /** Draws the open menu's box with the rows met so far: it is drawn again, one row taller, with each. */
   private void box(Menu menu) {
     int width = menu.width();
-    new RaisedFrame(new TextArea(boxColumn, 1, width, rows.size() + 2), "", BAR_TINT, Lines.SINGLE).drawOn(screen);
+    new RaisedFrame(new TextArea(boxColumn, 1, width, rows.size() + 2), "", BAR_TINT, Line.SINGLE).drawOn(screen);
     int item = 0;
     for (int row = 0; row < rows.size(); row++) {
       if (rows.get(row).isEmpty()) {

@@ -1,14 +1,14 @@
 package com.fpetrola.tui;
 
 /** Single lines for most frames, double lines for the window on top. */
-enum Lines implements Border {
+enum Line implements Border {
   SINGLE("┌┐└┘─│"),
   DOUBLE("╔╗╚╝═║");
 
   /** Corners top left, top right, bottom left, bottom right, then the line across and the line down. */
   private final String drawn;
 
-  Lines(String drawn) {
+  Line(String drawn) {
     this.drawn = drawn;
   }
 

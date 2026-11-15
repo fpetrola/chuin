@@ -133,7 +133,7 @@ class TextDesktop implements Windows {
     int last = opened.size() - 1;
     for (int at = 0; at < opened.size(); at++) {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
-      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Lines.DOUBLE, popups) : new Painter(screen, UNFOCUSED, drawn, Lines.SINGLE, popups));
+      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups));
     }
     popups.forEach(popup -> popup.drawOn(screen));
   }
