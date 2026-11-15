@@ -23,6 +23,11 @@ public class TextToolkit implements Toolkit {
   }
 
   @Override
+  public ScrollPanel scrollPanel(View content, int columns, int rows) {
+    return new TextScrollPanel(content, () -> new TextSize(columns, rows));
+  }
+
+  @Override
   public Button button(String caption) {
     return new TextButton(caption);
   }

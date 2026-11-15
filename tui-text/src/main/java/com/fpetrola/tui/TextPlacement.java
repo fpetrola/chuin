@@ -15,6 +15,12 @@ class TextPlacement implements Placement {
   }
 
   @Override
+  public Area area() {
+    Size size = view.size();
+    return new TextArea(position.column(), position.row(), size.columns(), size.rows());
+  }
+
+  @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitPlacement(this);
     view.accept(visitor);

@@ -3,14 +3,14 @@ package com.fpetrola.tui;
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;
 
-/** One way a window scrolls, down or across: how far it is, as far as what it holds goes past what it shows. */
-class WindowAxis implements Scrollable {
+/** One way a panel scrolls, down or across: how far it is, as far as what it holds goes past what it shows. */
+class PanelAxis implements Scrollable {
   private final IntSupplier scrolled;
   private final IntConsumer scroll;
   private final int shown;
   private final int held;
 
-  WindowAxis(IntSupplier scrolled, IntConsumer scroll, int shown, int held) {
+  PanelAxis(IntSupplier scrolled, IntConsumer scroll, int shown, int held) {
     this.scrolled = scrolled;
     this.scroll = scroll;
     this.shown = shown;

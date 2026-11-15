@@ -153,6 +153,7 @@ types:
     kind: interface
     members:
       - "accept(ViewVisitor): void"
+      - "area(): Area"
       - "position(): Point"
   "com.fpetrola.tui.Point":
     kind: interface
@@ -176,6 +177,13 @@ types:
       - "pageDown(): void"
       - "pageUp(): void"
       - "previous(): void"
+  "com.fpetrola.tui.ScrollPanel":
+    kind: interface
+    members:
+      - "horizontal(): ScrollBar"
+      - "origin(): Point"
+      - "scroll(int, int): void"
+      - "vertical(): ScrollBar"
   "com.fpetrola.tui.Size":
     kind: interface
     members:
@@ -223,6 +231,7 @@ types:
       - "optionGroup(List<String>): OptionGroup"
       - "point(int, int): Point"
       - "screen(int, int): Screen"
+      - "scrollPanel(View, int, int): ScrollPanel"
       - "spaceKey(): Key"
       - "statusLine(): StatusLine"
       - "tabKey(): Key"
@@ -236,6 +245,7 @@ types:
   "com.fpetrola.tui.ViewVisitor":
     kind: interface
     members:
+      - "leaveScrollPanel(ScrollPanel): void"
       - "visitButton(Button): void"
       - "visitCheckBox(CheckBox): void"
       - "visitChecked(CheckBox): void"
@@ -254,6 +264,7 @@ types:
       - "visitOptionGroup(OptionGroup): void"
       - "visitPlacement(Placement): void"
       - "visitScrollDown(ScrollBar): void"
+      - "visitScrollPanel(ScrollPanel): void"
       - "visitScrollThumb(ScrollBar): void"
       - "visitScrollTrack(ScrollBar): void"
       - "visitScrollUp(ScrollBar): void"
@@ -266,7 +277,5 @@ types:
       - "accept(ViewVisitor): void"
       - "add(View, Point): void"
       - "area(): Area"
-      - "origin(): Point"
       - "place(Area): void"
-      - "scroll(int, int): void"
       - "title(): String"

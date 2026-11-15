@@ -1,5 +1,7 @@
 package com.fpetrola.tui;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.List;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
@@ -23,8 +25,6 @@ class Painter implements ViewVisitor {
   private final Border border;
   /** What floats over every window, drawn after them all, such as a drop down's open list. */
   private final List<Drawing> popups;
-  /** What is drawn on a window's frame once its views are: its scroll bars. */
-  private final List<Drawing> frames;
   /** What a click on a window's frame may fall on: its scroll bars. */
   private final List<ClickTarget> targets;
   /** The list of the drop down visited last. */
@@ -34,6 +34,8 @@ class Painter implements ViewVisitor {
   /** The inside of the window being drawn: its views cannot draw past it. */
   private Screen inside;
   /** Where the place 0, 0 of the window drawn last falls on the screen: inside its frame, less how far it is scrolled. */
+  /** How to go back to what is around each panel entered and not yet left, the innermost first. */
+  private final Deque<Runnable> left = new ArrayDeque<>();
   private int insideColumn;
   private int insideRow;
   /** Draws the rows of the list box or the options of the group visited last. */
@@ -46,9 +48,8 @@ class Painter implements ViewVisitor {
   private int column;
   private int row;
 
-  Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<Drawing> frames, List<ClickTarget> targets) {
+  Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<ClickTarget> targets) {
     this.popups = popups;
-    this.frames = frames;
     this.targets = targets;
     this.border = border;
     this.screen = screen;
@@ -61,11 +62,43 @@ class Painter implements ViewVisitor {
   public void visitWindow(Window window) {
     Area area = window.area();
     new RaisedFrame(area, window.title(), WINDOW_TINT, border).drawOn(screen);
-    ScrollBars bars = new ScrollBars(new ClippedScreen(screen, new TextArea(area.column() + 1, area.row() + 1, area.columns() - 2, area.rows() - 2)), window, targets);
-    frames.add(bars);
-    inside = bars;
-    insideColumn = area.column() + 1 - window.origin().column();
-    insideRow = area.row() + 1 - window.origin().row();
+    inside = screen;
+    column = area.column() + 1;
+    row = area.row() + 1;
+  }
+
+  /** What a panel holds is drawn shifted by its origin and cut to the panel, less the last column and row its bars take. */
+  @Override
+  public void visitScrollPanel(ScrollPanel panel) {
+    Screen outer = inside;
+    int outerColumn = insideColumn;
+    int outerRow = insideRow;
+    int panelColumn = column;
+    int panelRow = row;
+    left.push(() -> {
+      inside = outer;
+      insideColumn = outerColumn;
+      insideRow = outerRow;
+      column = panelColumn;
+      row = panelRow;
+    });
+    Size size = panel.size();
+    inside = new ClippedScreen(outer, new TextArea(column, row, size.columns() - 1, size.rows() - 1));
+    insideColumn = column - panel.origin().column();
+    insideRow = row - panel.origin().row();
+  }
+
+  /** Back to what is around the panel, its bars drawn down its last column and across its last row, where a click finds them. */
+  @Override
+  public void leaveScrollPanel(ScrollPanel panel) {
+    left.pop().run();
+    Size size = panel.size();
+    Point down = new TextPoint(column + size.columns() - 1, row);
+    Point across = new TextPoint(column, row + size.rows() - 1);
+    panel.vertical().accept(new BarCells(inside, down, new TextPoint(0, 1), "▲", "▼"));
+    panel.horizontal().accept(new BarCells(inside, across, new TextPoint(1, 0), "◄", "►"));
+    targets.add(new BarTarget(panel.vertical(), down, new TextPoint(0, 1), size.rows() - 1));
+    targets.add(new BarTarget(panel.horizontal(), across, new TextPoint(1, 0), size.columns() - 1));
   }
 
   /** The view that comes next is drawn at this place inside the window drawn last. */

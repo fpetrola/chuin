@@ -5,7 +5,7 @@ public interface Window {
 
   void place(Area area);
 
-  /** Visits itself, then each of its placements, which go on to their views. */
+  /** Visits itself, then the scroll panel of its inside, which goes on to its placements and their views. */
   void accept(ViewVisitor visitor);
 
   /** The title on its top border. */
@@ -13,10 +13,4 @@ public interface Window {
 
   /** Where it is placed on the screen. */
   Area area();
-
-  /** The place of what it holds that shows at the top left inside its frame; 0, 0 until it is scrolled. */
-  Point origin();
-
-  /** Moves what shows inside its frame by these many cells to the right and down; it never goes before 0, 0. */
-  void scroll(int columns, int rows);
 }

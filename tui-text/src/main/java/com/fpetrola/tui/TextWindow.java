@@ -1,13 +1,12 @@
 package com.fpetrola.tui;
 
-import java.util.ArrayList;
-import java.util.List;
-
 class TextWindow implements Window {
   private final String title;
-  private final List<Placement> placements = new ArrayList<>();
+  /** The views placed in it. */
+  private final Group group = new TextGroup();
   private Area area = new TextArea(0, 0, 0, 0);
-  private Point origin = new TextPoint(0, 0);
+  /** Its inside, which shows its views from an origin, with its bars on the right and bottom of the frame. */
+  private final ScrollPanel panel = new TextScrollPanel(group, () -> new TextSize(area.columns() - 1, area.rows() - 1));
 
   TextWindow(String title) {
     this.title = title;
@@ -15,7 +14,7 @@ class TextWindow implements Window {
 
   @Override
   public void add(View view, Point position) {
-    placements.add(new TextPlacement(view, position));
+    group.add(view, position);
   }
 
   @Override
@@ -26,7 +25,7 @@ class TextWindow implements Window {
   @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitWindow(this);
-    placements.forEach(placement -> placement.accept(visitor));
+    panel.accept(visitor);
   }
 
   @Override
@@ -37,15 +36,5 @@ class TextWindow implements Window {
   @Override
   public Area area() {
     return area;
-  }
-
-  @Override
-  public Point origin() {
-    return origin;
-  }
-
-  @Override
-  public void scroll(int columns, int rows) {
-    origin = new TextPoint(Math.max(0, origin.column() + columns), Math.max(0, origin.row() + rows));
   }
 }

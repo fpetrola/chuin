@@ -4,25 +4,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-/** Collects the views that can take the focus, in the order they are visited, and where each is placed in its window. */
+/** Collects the views that can take the focus, in the order they are visited, and where each is placed and how big. */
 class CollectFocusable implements ViewVisitor {
   /** What is done with each view that can take the focus. */
   private final Consumer<View> found;
   /** Where the view met next is placed. */
-  private Point placed;
+  private Area placed;
 
   CollectFocusable(List<View> into) {
     this.found = into::add;
   }
 
-  /** Collects each such view with where it is placed, keeping them in the order they are visited. */
-  CollectFocusable(Map<View, Point> into) {
+  /** Collects each such view with where it is placed and how big it is, keeping them in the order they are visited. */
+  CollectFocusable(Map<View, Area> into) {
     this.found = view -> into.put(view, placed);
   }
 
   @Override
   public void visitPlacement(Placement placement) {
-    placed = placement.position();
+    placed = placement.area();
   }
 
   @Override

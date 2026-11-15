@@ -10,6 +10,9 @@ public interface Toolkit {
 
   Window window(String title);
 
+  /** A panel this many columns and rows that shows what it holds from its top left, with its bars in them. */
+  ScrollPanel scrollPanel(View content, int columns, int rows);
+
   Button button(String caption);
 
   Label label(String text);

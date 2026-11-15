@@ -10,6 +10,14 @@ interface ViewVisitor {
   default void visitPlacement(Placement placement) {
   }
 
+  /** A scroll panel is entered before what it holds is visited. */
+  default void visitScrollPanel(ScrollPanel panel) {
+  }
+
+  /** And left after it. */
+  default void leaveScrollPanel(ScrollPanel panel) {
+  }
+
   default void visitButton(Button button) {
   }
 

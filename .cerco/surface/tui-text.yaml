@@ -26,6 +26,10 @@ types:
     members:
       - "next(): int"
       - "put(Caption, char, char): void"
+  "com.fpetrola.tui.Group":
+    kind: interface
+    members:
+      - "add(View, Point): void"
   "com.fpetrola.tui.PlacedTitle":
     kind: interface
     members:

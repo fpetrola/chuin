@@ -62,11 +62,11 @@ class ScrollingAWindowTest {
   }
 
   @Test
-  void aWindowScrollsFromItsOriginAndNeverBeforeTheTopLeft() {
-    window.scroll(2, 3);
-    window.scroll(-5, -1);
+  void aWindowScrollsFromItsOriginNeitherBeforeTheTopLeftNorPastWhatItHolds() {
+    panelOf(window).scroll(2, 3);
+    panelOf(window).scroll(-5, -1);
 
-    assertEquals(toolkit.point(0, 2), window.origin());
+    assertEquals(toolkit.point(0, 2), panelOf(window).origin());
   }
 
   /** Seven rows held in five: the right side of the frame carries ▲, a track with the thumb where the origin is, and ▼. */
@@ -103,24 +103,24 @@ class ScrollingAWindowTest {
 
     desktop.click(toolkit.point(9, 5));
     desktop.draw(tall);
-    assertEquals(toolkit.point(0, 1), window.origin());
+    assertEquals(toolkit.point(0, 1), panelOf(window).origin());
 
     desktop.click(toolkit.point(9, 1));
     desktop.draw(tall);
-    assertEquals(toolkit.point(0, 0), window.origin());
+    assertEquals(toolkit.point(0, 0), panelOf(window).origin());
 
     desktop.click(toolkit.point(9, 4));
     desktop.draw(tall);
-    assertEquals(toolkit.point(0, 2), window.origin());
+    assertEquals(toolkit.point(0, 2), panelOf(window).origin());
     assertEquals("▲░░■▼", rightSide(tall));
 
     desktop.click(toolkit.point(9, 5));
     desktop.draw(tall);
-    assertEquals(toolkit.point(0, 2), window.origin());
+    assertEquals(toolkit.point(0, 2), panelOf(window).origin());
 
     desktop.click(toolkit.point(9, 2));
     desktop.draw(tall);
-    assertEquals(toolkit.point(0, 0), window.origin());
+    assertEquals(toolkit.point(0, 0), panelOf(window).origin());
   }
 
   @Test
@@ -131,7 +131,7 @@ class ScrollingAWindowTest {
     desktop.click(toolkit.point(8, 4));
     desktop.draw(screen);
 
-    assertEquals(toolkit.point(1, 0), window.origin());
+    assertEquals(toolkit.point(1, 0), panelOf(window).origin());
   }
 
   @Test
@@ -142,7 +142,7 @@ class ScrollingAWindowTest {
 
     desktop.click(toolkit.point(9, 7));
 
-    assertEquals(toolkit.point(0, 0), window.origin());
+    assertEquals(toolkit.point(0, 0), panelOf(window).origin());
   }
 
   /** A button's shadow falls past it; with the button on the last row and column of the inside, everything still fits. */
@@ -163,22 +163,115 @@ class ScrollingAWindowTest {
         "╚══════╝  "), small.lines().subList(0, 3));
   }
 
-  /** The bars of a window holding a row more than it shows take a click on ▼; one on the window's inside goes otherwise. */
+  /**
+   * A panel of any view: five columns by three, holding a list four rows high, shows two rows and a column less than
+   * it is, its bars taking its last column and row; ▼ scrolls it a row, and the bar beside a click on the inside lets it
+   * go otherwise.
+   */
   @Test
-  void theBarsOfAWindowTellWhetherAClickFellOnThemAndScrollIt() {
-    Window held = toolkit.window("H");
-    held.place(toolkit.area(0, 0, 10, 4));
-    List<ClickTarget> targets = new java.util.ArrayList<>();
-    new ScrollBars(toolkit.screen(10, 6), held, targets).write(1, 3, "mas abajo");
-    ClickTarget bars = targets.getFirst();
-
+  void aPanelOfAnyViewShowsPartOfItAndItsBarsScrollIt() {
+    ListBox numbers = toolkit.listBox(List.of("uno", "dos", "tres", "cuatro"), 4);
+    ScrollPanel panel = toolkit.scrollPanel(numbers, 5, 3);
     StringBuilder otherwise = new StringBuilder();
+    BarTarget down = new BarTarget(panel.vertical(), toolkit.point(4, 0), toolkit.point(0, 1), 2);
 
-    bars.click(toolkit.point(3, 1), () -> otherwise.append("inside "));
-    bars.click(toolkit.point(9, 2), () -> otherwise.append("bar "));
+    down.click(toolkit.point(2, 1), () -> otherwise.append("inside "));
+    down.click(toolkit.point(4, 1), () -> otherwise.append("bar "));
+    panel.scroll(0, 5);
 
+    assertEquals("5x3", panel.size().columns() + "x" + panel.size().rows());
     assertEquals("inside ", otherwise.toString());
-    assertEquals(toolkit.point(0, 1), held.origin());
+    assertEquals(toolkit.point(0, 2), panel.origin());
+  }
+
+  /** A panel placed in a window draws part of what it holds and its bars in its last column and row. */
+  @Test
+  void aPanelPlacedInAWindowDrawsPartOfWhatItHoldsAndItsBars() {
+    Toolkit own = new TextToolkit();
+    Desktop alone = own.desktop();
+    Screen small = own.screen(12, 6);
+    Window holder = own.window("P");
+    holder.place(own.area(0, 0, 12, 6));
+    holder.add(own.scrollPanel(own.listBox(List.of("uno", "dos", "tres", "cuatro"), 4), 5, 3), own.point(0, 0));
+    alone.open(holder);
+    alone.draw(small);
+
+    assertEquals(List.of(
+        "║uno ▲     ║",
+        "║dos ▼     ║",
+        "║◄■░►      ║"), small.lines().subList(1, 4));
+  }
+
+  /** A panel is entered, what it holds is visited, and it is left. */
+  @Test
+  void aPanelIsEnteredThenWhatItHoldsThenLeft() {
+    Label held = toolkit.label("x");
+    ScrollPanel panel = toolkit.scrollPanel(held, 3, 3);
+    StringBuilder met = new StringBuilder();
+
+    panel.accept(new ViewVisitor() {
+      @Override
+      public void visitScrollPanel(ScrollPanel visited) {
+        met.append("enter ");
+      }
+
+      @Override
+      public void visitLabel(Label visited) {
+        met.append("label ");
+      }
+
+      @Override
+      public void leaveScrollPanel(ScrollPanel visited) {
+        met.append("leave");
+      }
+    });
+
+    assertEquals("enter label leave", met.toString());
+  }
+
+  /** The bar across a panel's last row scrolls it by columns, a page being the columns shown less one, as far as it goes. */
+  @Test
+  void theHorizontalBarOfAPanelScrollsItByColumns() {
+    ScrollPanel panel = toolkit.scrollPanel(toolkit.label("una linea larga"), 6, 2);
+
+    panel.horizontal().next();
+    panel.horizontal().pageDown();
+    panel.horizontal().pageDown();
+    assertEquals(toolkit.point(9, 0), panel.origin());
+
+    panel.horizontal().pageDown();
+    assertEquals(toolkit.point(10, 0), panel.origin());
+  }
+
+  /** A group keeps the views placed in it, visits them in the order added, and reaches as far as its farthest view. */
+  @Test
+  void aGroupVisitsItsViewsInOrderAndIsAsBigAsItsFarthestView() {
+    Group group = new TextGroup();
+    StringBuilder met = new StringBuilder();
+    group.add(toolkit.label("uno"), toolkit.point(4, 0));
+    group.add(toolkit.label("dos"), toolkit.point(0, 2));
+
+    group.accept(new ViewVisitor() {
+      @Override
+      public void visitLabel(Label label) {
+        met.append(label.text()).append(' ');
+      }
+    });
+
+    assertEquals("uno dos ", met.toString());
+    assertEquals("7x3", group.size().columns() + "x" + group.size().rows());
+  }
+
+  /** The scroll panel that is the inside of a window. */
+  private static ScrollPanel panelOf(Window window) {
+    List<ScrollPanel> panels = new java.util.ArrayList<>();
+    window.accept(new ViewVisitor() {
+      @Override
+      public void visitScrollPanel(ScrollPanel panel) {
+        panels.add(panel);
+      }
+    });
+    return panels.getFirst();
   }
 
   /** The cells of the window's right side between its corners. */

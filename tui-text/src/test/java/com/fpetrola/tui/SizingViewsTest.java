@@ -7,11 +7,13 @@ import org.junit.jupiter.api.Test;
 
 /** Each view tells how many columns and rows it takes where it is placed, as it is drawn. */
 class SizingViewsTest {
+  /** What a button's shadow is drawn with, over what is around it. */
+  private static final List<String> SHADOW = List.of("▄", "▀");
   private final Toolkit toolkit = new TextToolkit();
 
   @Test
-  void aButtonTakesItsFaceAndItsShadowBesideAndBelow() {
-    assertEquals("7x2", of(toolkit.button("~O~k")));
+  void aButtonTakesItsFaceAndItsShadowTakesNoRoom() {
+    assertEquals("6x1", of(toolkit.button("~O~k")));
   }
 
   @Test
@@ -75,7 +77,8 @@ class SizingViewsTest {
   /**
    * Draws the view alone at 2, 1 inside a window under another, and gives the columns and rows its drawing wrote or
    * tinted, blanks included. Clearing the screen and drawing the frame write whole rows from the first column, and the
-   * window's shadow falls past its right side; what a view draws starts inside the frame.
+   * window's shadow falls past its right side; what a view draws starts inside the frame. A button's shadow, like the
+   * window's, falls on what is around it and is not counted.
    */
   private static String drawn(View view) {
     Toolkit own = new TextToolkit();
@@ -89,7 +92,9 @@ class SizingViewsTest {
 
       @Override
       public void write(int column, int row, String text) {
-        record(column, row, text.length());
+        if (!SHADOW.contains(text)) {
+          record(column, row, text.length());
+        }
         screen.write(column, row, text);
       }
 

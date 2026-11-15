@@ -14,8 +14,6 @@ class TextDesktop implements Windows {
   private static final char BARE = '.';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
-  /** How big a view is taken to be before it was ever drawn. */
-  private static final int ONE_CELL = 1;
   private static final Runnable NOTHING = () -> { };
   private static final Consumer<Point> NOT_DRAGGING = cell -> { };
   /** F6 raises the bottom window over the others, as in Turbo Vision. */
@@ -152,24 +150,28 @@ class TextDesktop implements Windows {
   }
 
   /**
-   * Scrolls the top window so the focused view comes into sight when its first cell is out of it. Where the view is
-   * comes from its placement and the window's origin; how big it is, from where it was last drawn, which scrolling
-   * does not change, or a single cell before it ever was.
+   * Scrolls the top window's panel so the focused view comes into sight when its first cell is out of it. Where the
+   * view is and how big come from its placement; what shows, from the panel's origin and size.
    */
   private void scrollToFocus() {
     top().ifPresent(window -> {
-      Map<View, Point> placed = new LinkedHashMap<>();
+      Map<View, Area> placed = new LinkedHashMap<>();
+      List<ScrollPanel> panels = new ArrayList<>();
       window.accept(new CollectFocusable(placed));
-      List<Point> at = List.copyOf(placed.values());
-      if (focused < at.size()) {
-        Area frame = window.area();
-        Point place = at.get(focused);
-        boolean drawn = focused < onTop.size();
-        int wide = drawn ? onTop.get(focused).columns() : ONE_CELL;
-        int high = drawn ? onTop.get(focused).rows() : ONE_CELL;
-        int columns = intoSight(place.column() - window.origin().column(), wide, frame.columns() - 2);
-        int rows = intoSight(place.row() - window.origin().row(), high, frame.rows() - 2);
-        window.scroll(columns, rows);
+      window.accept(new ViewVisitor() {
+        @Override
+        public void visitScrollPanel(ScrollPanel panel) {
+          panels.add(panel);
+        }
+      });
+      List<Area> at = List.copyOf(placed.values());
+      if (focused < at.size() && !panels.isEmpty()) {
+        ScrollPanel panel = panels.getFirst();
+        Area view = at.get(focused);
+        Size shown = panel.size();
+        int columns = intoSight(view.column() - panel.origin().column(), view.columns(), shown.columns() - 1);
+        int rows = intoSight(view.row() - panel.origin().row(), view.rows(), shown.rows() - 1);
+        panel.scroll(columns, rows);
       }
     });
   }
@@ -191,11 +193,9 @@ class TextDesktop implements Windows {
     int last = opened.size() - 1;
     for (int at = 0; at < opened.size(); at++) {
       List<Area> drawn = at == last ? onTop : new ArrayList<>();
-      List<Drawing> frames = new ArrayList<>();
       List<ClickTarget> targets = at == last ? onTopTargets : new ArrayList<>();
       targets.clear();
-      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups, frames, targets) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups, frames, targets));
-      frames.forEach(frame -> frame.drawOn(screen));
+      opened.get(at).accept(at == last ? new Painter(screen, focused, drawn, Line.DOUBLE, popups, targets) : new Painter(screen, UNFOCUSED, drawn, Line.SINGLE, popups, targets));
     }
     popups.forEach(popup -> popup.drawOn(screen));
   }
