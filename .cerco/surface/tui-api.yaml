@@ -169,6 +169,13 @@ types:
       - "showCursorAt(Point): void"
       - "tints(): List<String>"
       - "write(int, int, String): void"
+  "com.fpetrola.tui.ScrollBar":
+    kind: interface
+    members:
+      - "next(): void"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "previous(): void"
   "com.fpetrola.tui.StatusItem":
     kind: interface
     members:
@@ -236,14 +243,14 @@ types:
       - "visitListBox(ListBox): void"
       - "visitListItem(ListItem): void"
       - "visitNoListItem(ListBox): void"
-      - "visitNoScrollBar(ListBox): void"
+      - "visitNoScrollBar(ScrollBar): void"
       - "visitOption(Option): void"
       - "visitOptionGroup(OptionGroup): void"
       - "visitPlacement(Placement): void"
-      - "visitScrollDown(ListBox): void"
-      - "visitScrollThumb(ListBox): void"
-      - "visitScrollTrack(ListBox): void"
-      - "visitScrollUp(ListBox): void"
+      - "visitScrollDown(ScrollBar): void"
+      - "visitScrollThumb(ScrollBar): void"
+      - "visitScrollTrack(ScrollBar): void"
+      - "visitScrollUp(ScrollBar): void"
       - "visitSelectedListItem(ListItem): void"
       - "visitUnchecked(CheckBox): void"
       - "visitWindow(Window): void"

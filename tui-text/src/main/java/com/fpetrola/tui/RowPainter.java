@@ -23,6 +23,8 @@ class RowPainter implements ViewVisitor {
   private final List<Area> drawn;
   private final int place;
   private int shown;
+  /** The cells of a list's scroll bar drawn so far, one a row, from its first row. */
+  private int barShown;
 
   RowPainter(Screen screen, Area at, boolean focused, List<Area> drawn) {
     this.screen = screen;
@@ -40,8 +42,8 @@ class RowPainter implements ViewVisitor {
 
   @Override
   public void visitSelectedListItem(ListItem item) {
-    itemRow(item.text());
     tint(at.columns() - BESIDE_ITEM);
+    itemRow(item.text());
   }
 
   @Override
@@ -51,31 +53,31 @@ class RowPainter implements ViewVisitor {
 
   private void itemRow(String text) {
     int width = at.columns() - BESIDE_ITEM;
-    screen.write(at.column(), at.row() + shown, text + " ".repeat(width - text.length() + 1));
+    nextRow(text + " ".repeat(width - text.length() + 1));
   }
 
   @Override
-  public void visitScrollUp(ListBox box) {
+  public void visitScrollUp(ScrollBar bar) {
     bar("▲");
   }
 
   @Override
-  public void visitScrollTrack(ListBox box) {
+  public void visitScrollTrack(ScrollBar bar) {
     bar("░");
   }
 
   @Override
-  public void visitScrollThumb(ListBox box) {
+  public void visitScrollThumb(ScrollBar bar) {
     bar("■");
   }
 
   @Override
-  public void visitScrollDown(ListBox box) {
+  public void visitScrollDown(ScrollBar bar) {
     bar("▼");
   }
 
   @Override
-  public void visitNoScrollBar(ListBox box) {
+  public void visitNoScrollBar(ScrollBar bar) {
     bar(" ");
   }
 
@@ -93,9 +95,8 @@ class RowPainter implements ViewVisitor {
   }
 
   private void bar(String cell) {
-    screen.write(at.column() + at.columns() - 1, at.row() + shown, cell);
-    shown++;
-    drawn.set(place, new TextArea(at.column(), at.row(), at.columns(), shown));
+    screen.write(at.column() + at.columns() - 1, at.row() + barShown, cell);
+    barShown++;
   }
 
   /** Writes an option after its mark, its marked letter highlighted. */

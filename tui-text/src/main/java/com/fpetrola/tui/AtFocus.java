@@ -89,28 +89,28 @@ class AtFocus implements ViewVisitor {
 
   /** The cells of the focused list's scroll bar go on to the action too. */
   @Override
-  public void visitScrollUp(ListBox box) {
-    parts.visitScrollUp(box);
+  public void visitScrollUp(ScrollBar bar) {
+    parts.visitScrollUp(bar);
   }
 
   @Override
-  public void visitScrollTrack(ListBox box) {
-    parts.visitScrollTrack(box);
+  public void visitScrollTrack(ScrollBar bar) {
+    parts.visitScrollTrack(bar);
   }
 
   @Override
-  public void visitScrollThumb(ListBox box) {
-    parts.visitScrollThumb(box);
+  public void visitScrollThumb(ScrollBar bar) {
+    parts.visitScrollThumb(bar);
   }
 
   @Override
-  public void visitScrollDown(ListBox box) {
-    parts.visitScrollDown(box);
+  public void visitScrollDown(ScrollBar bar) {
+    parts.visitScrollDown(bar);
   }
 
   @Override
-  public void visitNoScrollBar(ListBox box) {
-    parts.visitNoScrollBar(box);
+  public void visitNoScrollBar(ScrollBar bar) {
+    parts.visitNoScrollBar(bar);
   }
 
   /** The options of the focused group and the rows of the focused list go on to the action too. */

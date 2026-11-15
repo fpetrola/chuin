@@ -47,20 +47,20 @@ interface ViewVisitor {
   default void visitNoListItem(ListBox box) {
   }
 
-  default void visitScrollUp(ListBox box) {
+  default void visitScrollUp(ScrollBar bar) {
   }
 
-  default void visitScrollTrack(ListBox box) {
+  default void visitScrollTrack(ScrollBar bar) {
   }
 
-  default void visitScrollThumb(ListBox box) {
+  default void visitScrollThumb(ScrollBar bar) {
   }
 
-  default void visitScrollDown(ListBox box) {
+  default void visitScrollDown(ScrollBar bar) {
   }
 
   /** Every item fits, so there is no scroll bar. */
-  default void visitNoScrollBar(ListBox box) {
+  default void visitNoScrollBar(ScrollBar bar) {
   }
 
   /** A drop down is visited first, then, while its list is open, each of its items, the highlighted one apart. */

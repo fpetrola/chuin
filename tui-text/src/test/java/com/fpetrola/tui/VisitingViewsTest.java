@@ -143,7 +143,7 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aListBoxHandsItselfToTheVisitorAndWalksItsRowsWithTheSelectionAndScrollBar() {
+  void aListBoxHandsItselfToTheVisitorAndWalksItsRowsWithTheSelectionThenItsScrollBar() {
     ListBox letters = toolkit.listBox(List.of("a", "bb", "c", "d"), 3);
 
     letters.previous();
@@ -158,14 +158,14 @@ class VisitingViewsTest {
     InOrder order = inOrder(visitor);
     order.verify(visitor).visitListBox(letters);
     order.verify(visitor).visitListItem(argThat(item -> item.text().equals("bb") && item.list() == letters));
-    order.verify(visitor).visitScrollUp(letters);
     order.verify(visitor).visitListItem(argThat(item -> item.text().equals("c") && item.list() == letters));
-    order.verify(visitor).visitScrollThumb(letters);
     ArgumentCaptor<ListItem> selected = ArgumentCaptor.captor();
     order.verify(visitor).visitSelectedListItem(selected.capture());
     assertEquals("d", selected.getValue().text());
     assertEquals(letters, selected.getValue().list());
-    order.verify(visitor).visitScrollDown(letters);
+    order.verify(visitor).visitScrollUp(any(ScrollBar.class));
+    order.verify(visitor).visitScrollThumb(any(ScrollBar.class));
+    order.verify(visitor).visitScrollDown(any(ScrollBar.class));
   }
 
 
@@ -201,11 +201,8 @@ class VisitingViewsTest {
 
     InOrder order = inOrder(visitor);
     order.verify(visitor).visitSelectedListItem(argThat(item -> item.text().equals("a") && item.list() == one));
-    order.verify(visitor).visitNoScrollBar(one);
-    order.verify(visitor).visitNoListItem(one);
-    order.verify(visitor).visitNoScrollBar(one);
-    order.verify(visitor).visitNoListItem(one);
-    order.verify(visitor).visitNoScrollBar(one);
+    order.verify(visitor, times(2)).visitNoListItem(one);
+    order.verify(visitor, times(3)).visitNoScrollBar(any(ScrollBar.class));
   }
 
   @Test
@@ -215,10 +212,10 @@ class VisitingViewsTest {
     five.accept(visitor);
 
     InOrder order = inOrder(visitor);
-    order.verify(visitor).visitScrollUp(five);
-    order.verify(visitor).visitScrollThumb(five);
-    order.verify(visitor).visitScrollTrack(five);
-    order.verify(visitor).visitScrollDown(five);
+    order.verify(visitor).visitScrollUp(any(ScrollBar.class));
+    order.verify(visitor).visitScrollThumb(any(ScrollBar.class));
+    order.verify(visitor).visitScrollTrack(any(ScrollBar.class));
+    order.verify(visitor).visitScrollDown(any(ScrollBar.class));
   }
 
   @Test

@@ -198,28 +198,28 @@ class Painter implements ViewVisitor {
   }
 
   @Override
-  public void visitScrollUp(ListBox box) {
-    rows.visitScrollUp(box);
+  public void visitScrollUp(ScrollBar bar) {
+    rows.visitScrollUp(bar);
   }
 
   @Override
-  public void visitScrollTrack(ListBox box) {
-    rows.visitScrollTrack(box);
+  public void visitScrollTrack(ScrollBar bar) {
+    rows.visitScrollTrack(bar);
   }
 
   @Override
-  public void visitScrollThumb(ListBox box) {
-    rows.visitScrollThumb(box);
+  public void visitScrollThumb(ScrollBar bar) {
+    rows.visitScrollThumb(bar);
   }
 
   @Override
-  public void visitScrollDown(ListBox box) {
-    rows.visitScrollDown(box);
+  public void visitScrollDown(ScrollBar bar) {
+    rows.visitScrollDown(bar);
   }
 
   @Override
-  public void visitNoScrollBar(ListBox box) {
-    rows.visitNoScrollBar(box);
+  public void visitNoScrollBar(ScrollBar bar) {
+    rows.visitNoScrollBar(bar);
   }
 
   @Override

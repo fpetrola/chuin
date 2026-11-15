@@ -5,13 +5,15 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /** Keeps a selection that stays between the ends, and the first row shown, which follows the selection. */
-class TextListBox implements ListBox {
+class TextListBox implements ListBox, Scrollable {
   /** ▲, at least one cell of track, and ▼. */
   private static final int FEWEST_ROWS = 3;
   /** The blank and the scroll bar cell after the longest item. */
   private static final int BESIDE_ITEM = 2;
   private final List<String> items;
   private final int rows;
+  /** Beside the rows, its thumb where the selection is among the items. */
+  private final ScrollBar bar;
   private int top;
   private int selected;
 
@@ -21,6 +23,7 @@ class TextListBox implements ListBox {
     }
     this.items = List.copyOf(items);
     this.rows = rows;
+    this.bar = new TextScrollBar(this, rows);
   }
 
   @Override
@@ -38,8 +41,8 @@ class TextListBox implements ListBox {
     visitor.visitListBox(this);
     for (int shown = 0; shown < rows; shown++) {
       item(top + shown, visitor);
-      bar(shown, visitor);
     }
+    bar.accept(visitor);
   }
 
   @Override
@@ -73,14 +76,19 @@ class TextListBox implements ListBox {
     shown.accept(visitor);
   }
 
-  /** ▲ on the first row, ▼ on the last, the thumb where the selection sits on the track between; nothing when every item fits. */
-  private void bar(int shown, ViewVisitor visitor) {
-    int thumb = 1 + selected * (rows - 3) / Math.max(1, items.size() - 1);
-    Consumer<ViewVisitor> track = shown == thumb ? row -> row.visitScrollThumb(this) : row -> row.visitScrollTrack(this);
-    Consumer<ViewVisitor> down = shown == rows - 1 ? row -> row.visitScrollDown(this) : track;
-    Consumer<ViewVisitor> up = shown == 0 ? row -> row.visitScrollUp(this) : down;
-    Consumer<ViewVisitor> cell = items.size() > rows ? up : row -> row.visitNoScrollBar(this);
-    cell.accept(visitor);
+  @Override
+  public int position() {
+    return selected;
+  }
+
+  @Override
+  public int most() {
+    return Math.max(0, items.size() - 1);
+  }
+
+  @Override
+  public boolean overflows() {
+    return items.size() > rows;
   }
 
   /** An item on a row: its place among the items, which gives its text and what selecting it does. */

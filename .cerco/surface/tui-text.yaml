@@ -34,6 +34,16 @@ types:
       - "itemAt(Point): Optional<MenuItem>"
       - "items(): List<MenuItem>"
       - "menu(): Menu"
+  "com.fpetrola.tui.Scrollable":
+    kind: interface
+    members:
+      - "most(): int"
+      - "next(): void"
+      - "overflows(): boolean"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "position(): int"
+      - "previous(): void"
   "com.fpetrola.tui.Settle":
     kind: interface
     members:
