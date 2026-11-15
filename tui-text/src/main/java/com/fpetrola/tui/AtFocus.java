@@ -20,22 +20,19 @@ class AtFocus implements ViewVisitor {
   /** A visitor that does nothing with what it meets. */
   private static final ViewVisitor NOWHERE = new ViewVisitor() {
   };
-  private final int focused;
+  private final FocusOrder order;
   private final ViewVisitor action;
-  private int seen;
   /** Where the parts of the view met last go, a drop down's items, a group's options or a list's rows and scroll bar: on to the action when it is the focused one, nowhere otherwise. */
   private ViewVisitor parts = NOWHERE;
 
   AtFocus(int focused, ViewVisitor action) {
-    this.focused = focused;
+    this.order = new TextFocusOrder(focused);
     this.action = action;
   }
 
   @Override
   public void visitButton(Button button) {
-    boolean onFocused = seen++ == focused;
-    parts = onFocused ? action : NOWHERE;
-    if (onFocused) {
+    if (reach()) {
       action.visitButton(button);
     }
   }
@@ -51,41 +48,35 @@ class AtFocus implements ViewVisitor {
 
   @Override
   public void visitCheckBox(CheckBox box) {
-    if (seen++ == focused) {
+    if (order.next()) {
       action.visitCheckBox(box);
     }
   }
 
   @Override
   public void visitInputLine(InputLine line) {
-    if (seen++ == focused) {
+    if (order.next()) {
       action.visitInputLine(line);
     }
   }
 
   @Override
   public void visitListBox(ListBox box) {
-    boolean onFocused = seen++ == focused;
-    parts = onFocused ? action : NOWHERE;
-    if (onFocused) {
+    if (reach()) {
       action.visitListBox(box);
     }
   }
 
   @Override
   public void visitOptionGroup(OptionGroup group) {
-    boolean onFocused = seen++ == focused;
-    parts = onFocused ? action : NOWHERE;
-    if (onFocused) {
+    if (reach()) {
       action.visitOptionGroup(group);
     }
   }
 
   @Override
   public void visitDropDown(DropDown dropDown) {
-    boolean onFocused = seen++ == focused;
-    parts = onFocused ? action : NOWHERE;
-    if (onFocused) {
+    if (reach()) {
       action.visitDropDown(dropDown);
     }
   }
@@ -146,5 +137,12 @@ class AtFocus implements ViewVisitor {
   @Override
   public void visitSelectedListItem(ListItem item) {
     parts.visitSelectedListItem(item);
+  }
+
+  /** Counts the focusable view just met; its parts go on to the action only when it is the focused one. */
+  private boolean reach() {
+    boolean onFocused = order.next();
+    parts = onFocused ? action : NOWHERE;
+    return onFocused;
   }
 }

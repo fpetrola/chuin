@@ -53,10 +53,10 @@ class Painter implements ViewVisitor {
   /** Draws the rows of the list box or the options of the group visited last. */
   private ViewVisitor rows = new ViewVisitor() {
   };
-  private final int focused;
   /** Where each focusable view was drawn, in focus order, so a click can find what is under it. */
   private final List<Area> drawn;
-  private int seen;
+  /** Which focusable view the walk is on, and whether it is the focused one. */
+  private final FocusOrder order;
   private int column;
   private int row;
 
@@ -68,7 +68,7 @@ class Painter implements ViewVisitor {
     this.border = border;
     this.screen = screen;
     this.inside = screen;
-    this.focused = focused;
+    this.order = new TextFocusOrder(focused);
     this.drawn = drawn;
   }
 
@@ -151,7 +151,7 @@ class Painter implements ViewVisitor {
       shade(column + cell, row + 1, '▀');
     }
     TintRole.BUTTON.paint(inside, column, row, face.length());
-    next(face.length());
+    next(face.length(), () -> { });
     caption.highlight(inside, column + 2, row, TintRole.FOCUS_LETTER);
   }
 
@@ -182,12 +182,12 @@ class Painter implements ViewVisitor {
   public void visitCheckBox(CheckBox box) {
     Caption caption = new TextCaption(box.text());
     int cells = BOX.length() + caption.shown().length();
-    if (seen == focused) {
-      inside.write(column - 1, row, ">");
-    }
     TintRole.GROUP.paint(inside, column, row, cells);
-    next(cells);
-    caption.highlight(inside, column + BOX.length(), row, seen - 1 == focused ? TintRole.FOCUS_LETTER : TintRole.GROUP_LETTER);
+    caption.highlight(inside, column + BOX.length(), row, TintRole.GROUP_LETTER);
+    next(cells, () -> {
+      inside.write(column - 1, row, ">");
+      caption.highlight(inside, column + BOX.length(), row, TintRole.FOCUS_LETTER);
+    });
   }
 
   @Override
@@ -209,7 +209,7 @@ class Painter implements ViewVisitor {
     inside.write(column, row, text + " ".repeat(cells - text.length()));
     TintRole.FIELD.paint(inside, column, row, cells);
     drawn.add(new TextArea(column, row, cells, 1));
-    if (seen++ == focused) {
+    if (order.next()) {
       inside.showCursorAt(new TextPoint(column + Math.min(text.length(), cells - 1), row));
     }
   }
@@ -233,17 +233,18 @@ class Painter implements ViewVisitor {
     }
   }
 
-  /** Passes a focusable view of this many cells, tinting it when it is the focused one. */
-  private void next(int cells) {
+  /** Passes a focusable view of this many cells; when it is the focused one, tints it and then does what the focus adds. */
+  private void next(int cells, Runnable onFocus) {
     drawn.add(new TextArea(column, row, cells, 1));
-    if (seen++ == focused) {
+    if (order.next()) {
       TintRole.FOCUS.paint(inside, column, row, cells);
+      onFocus.run();
     }
   }
 
   @Override
   public void visitListBox(ListBox box) {
-    rows = new RowPainter(inside, new TextArea(column, row, box.size().columns(), 1), seen++ == focused, drawn);
+    rows = new RowPainter(inside, new TextArea(column, row, box.size().columns(), 1), order.next(), drawn);
   }
 
 
@@ -300,7 +301,7 @@ class Painter implements ViewVisitor {
 
   @Override
   public void visitOptionGroup(OptionGroup group) {
-    rows = new RowPainter(inside, new TextArea(column, row, group.size().columns(), 1), seen++ == focused, drawn);
+    rows = new RowPainter(inside, new TextArea(column, row, group.size().columns(), 1), order.next(), drawn);
   }
 
 
@@ -312,7 +313,8 @@ class Painter implements ViewVisitor {
     inside.write(column, row, chosen + " ".repeat(width - chosen.length()) + "↓");
     TintRole.FIELD.paint(inside, column, row, dropDown.size().columns());
     drawn.add(new TextArea(column, row, dropDown.size().columns(), 1));
-    seen++;
+    // It takes its place in the focus order, but its field keeps its own tint when focused.
+    order.next();
     DropDownList opened = new DropDownList(column, row + 1, width);
     list = opened;
     popups.add(opened);

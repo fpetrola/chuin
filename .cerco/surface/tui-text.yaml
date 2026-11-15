@@ -37,6 +37,10 @@ types:
     members:
       - "next(): int"
       - "put(Caption, Tint, Tint): void"
+  "com.fpetrola.tui.FocusOrder":
+    kind: interface
+    members:
+      - "next(): boolean"
   "com.fpetrola.tui.Grab":
     kind: interface
     members:
