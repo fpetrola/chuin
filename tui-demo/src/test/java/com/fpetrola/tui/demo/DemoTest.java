@@ -1,5 +1,6 @@
 package com.fpetrola.tui.demo;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -25,19 +26,35 @@ class DemoTest {
     assertTrue(output.contains("(•) Argentina"), output);
   }
 
+  @Test
+  void theDemoTakesTheRowsAndColumnsItIsGivenAndPutsTheStatusLineOnTheLastRow() {
+    String output = run("", "30", "100");
+
+    String plain = output.replaceAll("\u001b\\[[0-9;?]*[a-zA-Z]", "");
+
+    assertTrue(output.contains("\u001b[30;1H"), "no row 30");
+    assertFalse(output.contains("\u001b[31;1H"), "a row 31");
+    assertTrue(plain.contains(" F1 Ayuda  F2 Guardar  F3 Limpiar " + " ".repeat(100 - 34)), "the status line is not 100 wide");
+  }
+
   /** Runs the demo on these keys and returns what it showed, without the colour codes. */
   private static String run(String typed) {
+    return run(typed, new String[0]).replaceAll("\u001b\\[[0-9;?]*[a-zA-Z]", "");
+  }
+
+  /** Runs the demo with these arguments on these keys and returns all it wrote, colour codes included. */
+  private static String run(String typed, String... args) {
     InputStream originalIn = System.in;
     PrintStream originalOut = System.out;
     ByteArrayOutputStream shown = new ByteArrayOutputStream();
     try {
       System.setIn(new ByteArrayInputStream(typed.getBytes(StandardCharsets.UTF_8)));
       System.setOut(new PrintStream(shown, true, StandardCharsets.UTF_8));
-      Demo.main(new String[0]);
+      Demo.main(args);
     } finally {
       System.setIn(originalIn);
       System.setOut(originalOut);
     }
-    return shown.toString(StandardCharsets.UTF_8).replaceAll("\u001b\\[[0-9;?]*[a-zA-Z]", "");
+    return shown.toString(StandardCharsets.UTF_8);
   }
 }

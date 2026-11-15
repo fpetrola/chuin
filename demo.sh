@@ -5,6 +5,6 @@ set -euo pipefail
 cd "$(dirname "$0")"
 mvn -q -pl tui-demo -am package -DskipTests
 saved=$(stty -g)
-trap 'stty "$saved"; printf "\033[?1006l\033[?1000l\033[?25h\033[0m\033[2J\033[H"' EXIT
+trap 'stty "$saved"; printf "\033[?1006l\033[?1002l\033[?1000l\033[?25h\033[0m\033[2J\033[H"' EXIT
 stty -icanon -echo -icrnl -ixon
-java -cp tui-api/target/classes:tui-text/target/classes:tui-demo/target/classes com.fpetrola.tui.demo.Demo
+java -cp tui-api/target/classes:tui-text/target/classes:tui-demo/target/classes com.fpetrola.tui.demo.Demo $(stty size)

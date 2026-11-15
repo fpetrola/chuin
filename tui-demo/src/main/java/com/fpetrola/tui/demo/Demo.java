@@ -16,7 +16,8 @@ import java.util.List;
 
 /**
  * An address card in the style of a Turbo Vision application: labelled fields, a group of options, a drop down, a
- * check box and buttons, under a menu bar and over a status line. Launch it through demo.sh; Ctrl+Q quits.
+ * check box and buttons, under a menu bar and over a status line, across the whole terminal. Launch it through
+ * demo.sh, which tells it the terminal's size; Ctrl+Q quits.
  */
 public class Demo {
   private final Toolkit toolkit = new TextToolkit();
@@ -30,12 +31,14 @@ public class Demo {
   private Demo() {
   }
 
+  /** Takes the terminal's rows and columns, as stty size gives them; 24 by 80 when it is not told. */
   public static void main(String[] args) {
+    List<String> size = args.length == 2 ? List.of(args) : List.of("24", "80");
     Demo demo = new Demo();
     demo.desktop.show(demo.menus());
     demo.desktop.show(demo.status());
     demo.desktop.open(demo.card());
-    demo.toolkit.console(System.in, System.out, demo.toolkit.screen(80, 24)).run(demo.desktop);
+    demo.toolkit.console(System.in, System.out, demo.toolkit.screen(Integer.parseInt(size.get(1)), Integer.parseInt(size.get(0)))).run(demo.desktop);
   }
 
   /** The card: labelled fields on the left, the country group on the right, buttons along the bottom. */
