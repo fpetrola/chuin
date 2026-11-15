@@ -10,6 +10,8 @@ import java.util.Optional;
  * A click on an arrow scrolls the window a cell, and on the track a page toward the click, never past what it holds.
  */
 class ScrollBars implements Screen, Drawing {
+  /** What a click off the bars goes to: a bar walking no cell, so the click goes otherwise. */
+  private static final ScrollBar NO_BAR = new TextScrollBar(new WindowAxis(() -> 0, cells -> { }, 0, 0), 0);
   private final Screen inside;
   private final Window window;
   private final Area frame;
@@ -67,30 +69,21 @@ class ScrollBars implements Screen, Drawing {
     return inside.cursor();
   }
 
-  /** Draws the bars on the frame where what was written did not fit inside it. */
+  /** Draws the bars on the frame where what was written did not fit inside it; a bar that is not needed draws nothing. */
   @Override
   public void drawOn(Screen screen) {
-    if (heldRows() > shownRows()) {
-      String bar = bar("▲", "▼", shownRows(), origin.row(), heldRows() - shownRows());
-      int side = frame.column() + frame.columns() - 1;
-      for (int at = 0; at < bar.length(); at++) {
-        screen.write(side, frame.row() + 1 + at, bar.substring(at, at + 1));
-      }
-    }
-    if (heldColumns() > shownColumns()) {
-      screen.write(frame.column() + 1, frame.row() + frame.rows() - 1, bar("◄", "►", shownColumns(), origin.column(), heldColumns() - shownColumns()));
-    }
+    Point right = new TextPoint(frame.column() + frame.columns() - 1, frame.row() + 1);
+    Point bottom = new TextPoint(frame.column() + 1, frame.row() + frame.rows() - 1);
+    rightBar().accept(new BarCells(screen, right, new TextPoint(0, 1), "▲", "▼"));
+    bottomBar().accept(new BarCells(screen, bottom, new TextPoint(1, 0), "◄", "►"));
   }
 
   /** The bar on the right side, which a click between its corners scrolls by rows. */
   private ClickTarget right() {
     return (cell, otherwise) -> {
       boolean between = cell.row() > frame.row() && cell.row() < frame.row() + frame.rows() - 1;
-      if (cell.column() == frame.column() + frame.columns() - 1 && between && heldRows() > shownRows()) {
-        window.scroll(0, step(cell.row() - frame.row() - 1, shownRows(), origin.row(), heldRows() - shownRows()));
-      } else {
-        otherwise.run();
-      }
+      boolean onSide = cell.column() == frame.column() + frame.columns() - 1 && between;
+      click(onSide ? rightBar() : NO_BAR, cell.row() - frame.row() - 1, otherwise);
     };
   }
 
@@ -98,25 +91,24 @@ class ScrollBars implements Screen, Drawing {
   private ClickTarget bottom() {
     return (cell, otherwise) -> {
       boolean between = cell.column() > frame.column() && cell.column() < frame.column() + frame.columns() - 1;
-      if (cell.row() == frame.row() + frame.rows() - 1 && between && heldColumns() > shownColumns()) {
-        window.scroll(step(cell.column() - frame.column() - 1, shownColumns(), origin.column(), heldColumns() - shownColumns()), 0);
-      } else {
-        otherwise.run();
-      }
+      boolean onSide = cell.row() == frame.row() + frame.rows() - 1 && between;
+      click(onSide ? bottomBar() : NO_BAR, cell.column() - frame.column() - 1, otherwise);
     };
   }
 
-  /**
-   * How far a click on this cell of a bar this long scrolls: a cell back on the first arrow and on the last forward, a
-   * page toward the click on the track, nothing on the thumb; never past 0 nor past the most it can be scrolled.
-   */
-  private static int step(int at, int length, int scrolled, int most) {
-    int thumb = 1 + thumb(length, scrolled, most);
-    int page = length - 1;
-    int back = at == 0 ? -1 : at < thumb ? -page : 0;
-    int forward = at == length - 1 ? 1 : at > thumb ? page : 0;
-    int wanted = scrolled + back + forward;
-    return Math.max(0, Math.min(most, wanted)) - scrolled;
+  /** Clicks this cell of a bar; when the bar does nothing with it, as one that is not needed, runs otherwise. */
+  private static void click(ScrollBar bar, int at, Runnable otherwise) {
+    Settle pending = new PendingAction(otherwise);
+    bar.accept(new BarClick(at, pending));
+    pending.settle();
+  }
+
+  private ScrollBar rightBar() {
+    return new TextScrollBar(new WindowAxis(() -> window.origin().row(), rows -> window.scroll(0, rows), shownRows(), heldRows()), shownRows());
+  }
+
+  private ScrollBar bottomBar() {
+    return new TextScrollBar(new WindowAxis(() -> window.origin().column(), columns -> window.scroll(columns, 0), shownColumns(), heldColumns()), shownColumns());
   }
 
   private int shownRows() {
@@ -135,23 +127,8 @@ class ScrollBars implements Screen, Drawing {
     return lastColumn - frame.column() + origin.column();
   }
 
-  private static int thumb(int length, int scrolled, int most) {
-    return scrolled * Math.max(0, length - 3) / Math.max(1, most);
-  }
-
   private void reach(int column, int row) {
     lastColumn = Math.max(lastColumn, column);
     lastRow = Math.max(lastRow, row);
-  }
-
-  /** An arrow at each end and a track between, with the thumb as far along it as the window is scrolled. */
-  private static String bar(String first, String last, int length, int scrolled, int most) {
-    int track = Math.max(0, length - 2);
-    int thumb = thumb(length, scrolled, most);
-    StringBuilder cells = new StringBuilder(first);
-    for (int at = 0; at < track; at++) {
-      cells.append(at == thumb ? "■" : "░");
-    }
-    return cells.append(last).toString();
   }
 }
