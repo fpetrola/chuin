@@ -81,6 +81,22 @@ class Painter implements ViewVisitor {
     caption.highlight(inside, column + 2, row, BUTTON_LETTER);
   }
 
+  /** Moves the face just drawn a cell to the right and takes its shadow away, the button tint going with it. */
+  @Override
+  public void visitHeldButton(Button button) {
+    Caption caption = new TextCaption(button.caption());
+    String face = "  " + caption.shown() + "  ";
+    char tint = inside.tints().get(row).charAt(column);
+    unshade(column + face.length(), row);
+    for (int cell = 1; cell <= face.length(); cell++) {
+      unshade(column + cell, row + 1);
+    }
+    inside.write(column, row, " " + face);
+    inside.paint(column, row, 1, WINDOW_TINT);
+    inside.paint(column + 1, row, face.length(), tint);
+    caption.highlight(inside, column + 3, row, BUTTON_LETTER);
+  }
+
   @Override
   public void visitLabel(Label label) {
     Caption caption = new TextCaption(label.text());
@@ -131,6 +147,15 @@ class Painter implements ViewVisitor {
     boolean free = onScreen && SHADE_COVERS.indexOf(lines.get(line).charAt(at)) >= 0;
     if (free && inside.tints().get(line).charAt(at) == WINDOW_TINT) {
       inside.write(at, line, String.valueOf(cell));
+    }
+  }
+
+  /** Takes away a button's shadow from a cell, if it is there. */
+  private void unshade(int at, int line) {
+    List<String> lines = inside.lines();
+    boolean onScreen = line >= 0 && line < lines.size() && at >= 0 && at < lines.get(line).length();
+    if (onScreen && "▄▀".indexOf(lines.get(line).charAt(at)) >= 0) {
+      inside.write(at, line, " ");
     }
   }
 

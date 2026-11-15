@@ -19,9 +19,16 @@ class AtFocus implements ViewVisitor {
 
   @Override
   public void visitButton(Button button) {
-    if (seen++ == focused) {
+    boolean onFocused = seen++ == focused;
+    parts = onFocused ? action : NOWHERE;
+    if (onFocused) {
       action.visitButton(button);
     }
+  }
+
+  @Override
+  public void visitHeldButton(Button button) {
+    parts.visitHeldButton(button);
   }
 
   @Override

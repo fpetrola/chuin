@@ -28,6 +28,7 @@ class DrivingTheWindowsTest {
     assertEquals("si", said.text());
 
     windows.click(toolkit.point(10, 1));
+    windows.release(toolkit.point(10, 1));
     windows.draw(screen);
     assertEquals("no", said.text());
     assertEquals("╔═══════ A ════════╗", screen.lines().getFirst());

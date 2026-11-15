@@ -1,7 +1,7 @@
 package com.fpetrola.tui;
 
 /**
- * What a left click does to the view under it, once focused: presses a button, toggles a check box, chooses the option
+ * What a left click does to the view under it, once focused: holds a button down until the release, toggles a check box, chooses the option
  * on the row clicked, opens a drop down's list; an input line is only focused. On a list, the click selects the item on its row, or, on the
  * scroll bar, the item before (▲) or after (▼), or a page before or after (the track above or below the thumb). Every
  * action is only noted during the visit, and done once the walk is over.
@@ -28,7 +28,7 @@ class ClickFocused implements ViewVisitor {
 
   @Override
   public void visitButton(Button button) {
-    pending.note(button::press);
+    pending.note(button::hold);
   }
 
   @Override

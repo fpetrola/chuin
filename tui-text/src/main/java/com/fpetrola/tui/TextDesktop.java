@@ -90,6 +90,16 @@ class TextDesktop implements Windows {
   @Override
   public void release(Point cell) {
     dragging = NOT_DRAGGING;
+    boolean over = focused < onTop.size() && within(onTop.get(focused), cell);
+    Settle pending = new PendingAction(NOTHING);
+    top().ifPresent(window -> window.accept(new AtFocus(focused, new LetGo(over, pending))));
+    pending.settle();
+  }
+
+  private static boolean within(Area area, Point cell) {
+    boolean across = cell.column() >= area.column() && cell.column() < area.column() + area.columns();
+    boolean down = cell.row() >= area.row() && cell.row() < area.row() + area.rows();
+    return across && down;
   }
 
   /** Takes a window by its title at a cell: dragging moves it so that cell stays under the pointer. */

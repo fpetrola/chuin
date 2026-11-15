@@ -13,6 +13,10 @@ interface ViewVisitor {
   default void visitButton(Button button) {
   }
 
+  /** A button held down is visited again after visitButton, before it is let go. */
+  default void visitHeldButton(Button button) {
+  }
+
   default void visitLabel(Label label) {
   }
 

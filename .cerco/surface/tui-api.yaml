@@ -12,6 +12,8 @@ types:
     kind: interface
     members:
       - "caption(): String"
+      - "hold(): void"
+      - "letGo(): void"
       - "onPress(ButtonListener): void"
       - "press(): void"
   "com.fpetrola.tui.ButtonListener":
@@ -227,6 +229,7 @@ types:
       - "visitChosenOption(Option): void"
       - "visitDropDown(DropDown): void"
       - "visitDropDownItem(DropDownItem): void"
+      - "visitHeldButton(Button): void"
       - "visitHighlightedDropDownItem(DropDownItem): void"
       - "visitInputLine(InputLine): void"
       - "visitLabel(Label): void"

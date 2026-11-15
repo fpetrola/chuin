@@ -8,4 +8,10 @@ public interface Button extends View {
 
   /** Tells every listener it was pressed, in the order they were added. */
   void press();
+
+  /** Holds it down, as the mouse does before it is released; it is drawn down until let go. */
+  void hold();
+
+  /** Lets it come back up, pressed or not. */
+  void letGo();
 }
