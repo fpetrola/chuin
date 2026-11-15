@@ -1,10 +1,10 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
 
 import com.fpetrola.chuin.screen.Screen;
 
 
 /** What a cell is tinted for, kept by the screen as one letter, which the palette turns into colours. */
-interface Tint {
+public interface Tint {
   /** Tints this many cells of a row from a cell on. */
   void paint(Screen screen, int column, int row, int cells);
 

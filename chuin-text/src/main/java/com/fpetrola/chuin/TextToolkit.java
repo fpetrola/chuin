@@ -1,5 +1,9 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.screen.TextScreen;
+import com.fpetrola.chuin.text.screen.AnsiTerminal;
+import com.fpetrola.chuin.text.screen.Palette;
+import com.fpetrola.chuin.text.screen.DosPalette;
 import com.fpetrola.chuin.text.geometry.TextArea;
 import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.text.geometry.TextSize;

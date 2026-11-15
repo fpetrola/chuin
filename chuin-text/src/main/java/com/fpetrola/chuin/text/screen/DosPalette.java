@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
 
 import java.util.Map;
 import java.util.function.BinaryOperator;
@@ -8,7 +8,7 @@ import java.util.function.BinaryOperator;
  * yellow and bright white: as exact RGB, which no terminal theme can change, or as the 16 named colours, for a terminal
  * without 24-bit colour, whose theme may tint them.
  */
-enum DosPalette implements Palette {
+public enum DosPalette implements Palette {
   RGB((foreground, background) -> "0;38;2;" + foreground + ";48;2;" + background,
       "0;0;0", "0;0;168", "0;168;0", "0;168;168", "168;0;0", "168;168;168", "84;84;84", "252;252;84", "252;252;252"),
   NAMED((foreground, background) -> "0;" + named(foreground, 30) + ";" + named(background, 40),

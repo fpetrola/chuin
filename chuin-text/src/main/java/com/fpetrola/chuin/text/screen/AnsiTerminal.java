@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
 
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.screen.Terminal;
@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /** Shows screens on a console that understands ANSI escape sequences. */
-class AnsiTerminal implements Terminal {
+public class AnsiTerminal implements Terminal {
   private static final String ESC = "\u001b[";
   private static final String RESET = ESC + "0m";
   /** What a blank cell of the bare desktop is shown as, the way Turbo Vision fills its background. */
@@ -20,7 +20,7 @@ class AnsiTerminal implements Terminal {
   private final Palette palette;
   private final OutputStream out;
 
-  AnsiTerminal(OutputStream out, Palette palette) {
+  public AnsiTerminal(OutputStream out, Palette palette) {
     this.out = out;
     this.palette = palette;
   }

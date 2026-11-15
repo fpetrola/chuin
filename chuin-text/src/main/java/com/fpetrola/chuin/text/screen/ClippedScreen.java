@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
 
 import com.fpetrola.chuin.text.geometry.TextExtent;
 import com.fpetrola.chuin.geometry.Area;
@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Optional;
 
 /** A screen seen through an area of another: whatever is written or painted outside the area is cut off. */
-class ClippedScreen implements Screen {
+public class ClippedScreen implements Screen {
   private final Screen screen;
   private final Area area;
 
-  ClippedScreen(Screen screen, Area area) {
+  public ClippedScreen(Screen screen, Area area) {
     this.screen = screen;
     this.area = area;
   }

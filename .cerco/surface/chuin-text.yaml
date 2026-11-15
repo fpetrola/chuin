@@ -61,10 +61,6 @@ types:
     kind: interface
     members:
       - "add(View, Point): void"
-  "com.fpetrola.chuin.Palette":
-    kind: interface
-    members:
-      - "colors(char): String"
   "com.fpetrola.chuin.PlacedEntry":
     kind: interface
     members:
@@ -99,11 +95,6 @@ types:
     members:
       - "<init>()"
       - "<init>(Map<String,String>)"
-  "com.fpetrola.chuin.Tint":
-    kind: interface
-    members:
-      - "letter(): char"
-      - "paint(Screen, int, int, int): void"
   "com.fpetrola.chuin.Windows":
     kind: interface
     members:
@@ -123,3 +114,21 @@ types:
   "com.fpetrola.chuin.text.geometry.TextExtent":
     members:
       - "<init>(Area)"
+  "com.fpetrola.chuin.text.screen.AnsiTerminal":
+    members:
+      - "<init>(OutputStream, Palette)"
+  "com.fpetrola.chuin.text.screen.ClippedScreen":
+    members:
+      - "<init>(Screen, Area)"
+  "com.fpetrola.chuin.text.screen.Palette":
+    kind: interface
+    members:
+      - "colors(char): String"
+  "com.fpetrola.chuin.text.screen.TextScreen":
+    members:
+      - "<init>(int, int)"
+  "com.fpetrola.chuin.text.screen.Tint":
+    kind: interface
+    members:
+      - "letter(): char"
+      - "paint(Screen, int, int, int): void"

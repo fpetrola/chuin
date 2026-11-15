@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.screen.Palette;
+import com.fpetrola.chuin.text.screen.DosPalette;
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.view.Window;
 

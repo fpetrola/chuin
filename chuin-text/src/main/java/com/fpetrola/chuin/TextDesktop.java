@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.screen.TintRole;
 import com.fpetrola.chuin.text.geometry.TextArea;
 import com.fpetrola.chuin.text.geometry.Extent;
 import com.fpetrola.chuin.text.geometry.TextExtent;

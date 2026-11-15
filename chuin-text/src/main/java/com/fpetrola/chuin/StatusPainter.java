@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.screen.TintRole;
 import com.fpetrola.chuin.menu.StatusItem;
 import com.fpetrola.chuin.menu.StatusLine;
 import com.fpetrola.chuin.menu.StatusVisitor;

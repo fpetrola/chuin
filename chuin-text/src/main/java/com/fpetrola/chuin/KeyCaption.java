@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.screen.Tint;
 import com.fpetrola.chuin.input.Key;
 import com.fpetrola.chuin.screen.Screen;
 

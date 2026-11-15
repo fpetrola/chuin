@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
 
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.screen.Screen;
@@ -8,13 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 /** A grid of cells; whatever is written outside it is cut off. */
-class TextScreen implements Screen {
+public class TextScreen implements Screen {
   private final char[][] cells;
   private final char[][] tints;
   /** Where typing goes, or nothing while the cursor is hidden. */
   private Optional<Point> cursor = Optional.empty();
 
-  TextScreen(int columns, int rows) {
+  public TextScreen(int columns, int rows) {
     cells = new char[rows][columns];
     Arrays.stream(cells).forEach(line -> Arrays.fill(line, ' '));
     tints = new char[rows][columns];

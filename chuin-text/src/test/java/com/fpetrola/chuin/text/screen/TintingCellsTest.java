@@ -1,4 +1,6 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
+
+import com.fpetrola.chuin.TextToolkit;
 
 import com.fpetrola.chuin.screen.Screen;
 

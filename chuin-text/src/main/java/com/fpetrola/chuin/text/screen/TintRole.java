@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.screen;
 
 import com.fpetrola.chuin.screen.Screen;
 
@@ -6,7 +6,7 @@ import com.fpetrola.chuin.screen.Screen;
  * What each cell is tinted for, one letter a role, as the screen keeps it and the tests read it; the palette says which
  * colours each is shown in.
  */
-enum TintRole implements Tint {
+public enum TintRole implements Tint {
   /** The desktop and whatever nothing else tints: grey on blue. */
   BARE('.'),
   /** A window's inside and frame: black on grey. */
