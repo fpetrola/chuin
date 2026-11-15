@@ -9,8 +9,8 @@ class AtFocus implements ViewVisitor {
   private final int focused;
   private final ViewVisitor action;
   private int seen;
-  /** Where the items of the drop down met last go: on to the action when it is the focused one, nowhere otherwise. */
-  private ViewVisitor items = NOWHERE;
+  /** Where the parts of the view met last go, a drop down's items or a list's scroll bar: on to the action when it is the focused one, nowhere otherwise. */
+  private ViewVisitor parts = NOWHERE;
 
   AtFocus(int focused, ViewVisitor action) {
     this.focused = focused;
@@ -44,7 +44,9 @@ class AtFocus implements ViewVisitor {
 
   @Override
   public void visitListBox(ListBox box) {
-    if (seen++ == focused) {
+    boolean onFocused = seen++ == focused;
+    parts = onFocused ? action : NOWHERE;
+    if (onFocused) {
       action.visitListBox(box);
     }
   }
@@ -59,7 +61,7 @@ class AtFocus implements ViewVisitor {
   @Override
   public void visitDropDown(DropDown dropDown) {
     boolean onFocused = seen++ == focused;
-    items = onFocused ? action : NOWHERE;
+    parts = onFocused ? action : NOWHERE;
     if (onFocused) {
       action.visitDropDown(dropDown);
     }
@@ -68,11 +70,37 @@ class AtFocus implements ViewVisitor {
   /** The items of the focused drop down's open list go on to the action too. */
   @Override
   public void visitDropDownItem(DropDownItem item) {
-    items.visitDropDownItem(item);
+    parts.visitDropDownItem(item);
   }
 
   @Override
   public void visitHighlightedDropDownItem(DropDownItem item) {
-    items.visitHighlightedDropDownItem(item);
+    parts.visitHighlightedDropDownItem(item);
+  }
+
+  /** The cells of the focused list's scroll bar go on to the action too. */
+  @Override
+  public void visitScrollUp(ListBox box) {
+    parts.visitScrollUp(box);
+  }
+
+  @Override
+  public void visitScrollTrack(ListBox box) {
+    parts.visitScrollTrack(box);
+  }
+
+  @Override
+  public void visitScrollThumb(ListBox box) {
+    parts.visitScrollThumb(box);
+  }
+
+  @Override
+  public void visitScrollDown(ListBox box) {
+    parts.visitScrollDown(box);
+  }
+
+  @Override
+  public void visitNoScrollBar(ListBox box) {
+    parts.visitNoScrollBar(box);
   }
 }

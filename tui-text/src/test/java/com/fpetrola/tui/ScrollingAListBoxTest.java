@@ -156,4 +156,53 @@ class ScrollingAListBoxTest {
     desktop.draw(screen);
     assertEquals("║ok▀▀▀▀▀           ║", screen.lines().get(5));
   }
+
+  /** The list sits in a window at the top left, its scroll bar in column 9 from row 1 (▲) to row 5 (▼). */
+  private static ListBox eightInFive(Toolkit toolkit, Desktop desktop) {
+    Window window = toolkit.window("L");
+    ListBox numbers = toolkit.listBox(List.of("uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho"), 5);
+    window.place(toolkit.area(0, 0, 12, 7));
+    window.add(numbers, toolkit.point(1, 0));
+    desktop.open(window);
+    desktop.draw(toolkit.screen(14, 7));
+    return numbers;
+  }
+
+  @Test
+  void clickingTheArrowsOfTheScrollBarSelectsTheItemAfterOrBefore() {
+    Toolkit toolkit = new TextToolkit();
+    Desktop desktop = toolkit.desktop();
+    ListBox numbers = eightInFive(toolkit, desktop);
+
+    desktop.click(toolkit.point(9, 5));
+    desktop.click(toolkit.point(9, 5));
+    desktop.click(toolkit.point(9, 5));
+    assertEquals("cuatro", numbers.selected().orElseThrow());
+
+    desktop.click(toolkit.point(9, 1));
+    assertEquals("tres", numbers.selected().orElseThrow());
+  }
+
+  @Test
+  void clickingTheTrackBelowOrAboveTheThumbMovesTheSelectionAPage() {
+    Toolkit toolkit = new TextToolkit();
+    Desktop desktop = toolkit.desktop();
+    ListBox numbers = eightInFive(toolkit, desktop);
+
+    desktop.click(toolkit.point(9, 4));
+    assertEquals("cinco", numbers.selected().orElseThrow());
+
+    desktop.click(toolkit.point(9, 2));
+    assertEquals("uno", numbers.selected().orElseThrow());
+  }
+
+  @Test
+  void clickingAnItemBesideTheScrollBarStillSelectsIt() {
+    Toolkit toolkit = new TextToolkit();
+    Desktop desktop = toolkit.desktop();
+    ListBox numbers = eightInFive(toolkit, desktop);
+
+    desktop.click(toolkit.point(8, 3));
+    assertEquals("tres", numbers.selected().orElseThrow());
+  }
 }
