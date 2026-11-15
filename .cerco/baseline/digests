@@ -123,7 +123,7 @@ d3a3b1ed6d7d17c2118447ab75bd101a795d1047b4b9ca76a264d5adf371e7e5	chuin-text/src/
 339eb2a8e410cfd39d485d4998eb3fb18b9253d5a4b2b908fbe935eb718778f2	chuin-text/src/main/java/com/fpetrola/chuin/text/screen/TintRole.java
 bdbef26f01ff29a94d6a29260d716edc8b18c4463c5b5927a053b34bf8650402	chuin-text/src/main/java/com/fpetrola/chuin/text/view/Caption.java
 312fd772f4cd41aa1d43d06e26054d3658c7efc06c6ac636854482a3c6d4e39f	chuin-text/src/main/java/com/fpetrola/chuin/text/view/Cursor.java
-ea76c46575a2562f44bcd1226eaec074c84a96d248774e0ea9211fa22cfbc18a	chuin-text/src/main/java/com/fpetrola/chuin/text/view/Group.java
+3014389fbd63b64da540ad35c87a79fbb334d669df02f8803d88a83aa6e4ea53	chuin-text/src/main/java/com/fpetrola/chuin/text/view/Group.java
 9b853a656ad06389e1ad6c91ff257569523896d562f823f54bed06e384ecb9d8	chuin-text/src/main/java/com/fpetrola/chuin/text/view/PanelAxis.java
 94e631eab9963a2309e90b3b598f2aac0ed5fa585323ddae99fbc57cdfd32f13	chuin-text/src/main/java/com/fpetrola/chuin/text/view/Scrollable.java
 516c905b6a00268545cfd7cf6227ab15559977b8f0dca75e001178d29e38f608	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextButton.java
