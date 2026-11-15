@@ -49,11 +49,6 @@ class TextCaption implements Caption {
   }
 
   @Override
-  public int entryWidth() {
-    return shown.length() + 2;
-  }
-
-  @Override
   public boolean answers(char letter) {
     return length == 1 && Character.toLowerCase(shown.charAt(marked)) == Character.toLowerCase(letter);
   }

@@ -15,7 +15,9 @@ interface Caption {
   void highlight(Screen screen, int column, int row, char tint);
 
   /** How many columns the text takes as an entry of a row: what is shown, and a blank on each side. */
-  int entryWidth();
+  default int entryWidth() {
+    return shown().length() + 2;
+  }
 
   /** Whether this letter, in upper or lower case, is the one marked; a mark of several letters answers to none. */
   boolean answers(char letter);
