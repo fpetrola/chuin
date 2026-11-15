@@ -133,8 +133,8 @@ class ClickingWithTheMouseTest {
 
     click(0, 9, 3);
     desktop.draw(screen);
-    assertEquals("║Rojo    ( ) Si      ║", screen.lines().get(2));
-    assertEquals("║Verde   (•) No      ║", screen.lines().get(3));
+    assertEquals("║Rojo    ( ) Si      ■", screen.lines().get(2));
+    assertEquals("║Verde   (•) No      ▼", screen.lines().get(3));
     assertEquals("wwwwwwwwwffffffwwwwwww", screen.tints().get(3));
   }
 

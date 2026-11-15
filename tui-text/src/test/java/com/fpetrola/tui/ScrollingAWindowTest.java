@@ -32,9 +32,9 @@ class ScrollingAWindowTest {
   void aWindowShowsWhatFitsInsideItsFrameFromTheTop() {
     assertEquals(List.of(
         "╔══ W ═══╗",
-        "║l 0     ║",
-        "║l 1     ║",
-        "║l 2     ║",
+        "║l 0     ▲",
+        "║l 1     ■",
+        "║l 2     ▼",
         "╚════════╝"), screen.lines().subList(0, 5));
   }
 
@@ -45,9 +45,9 @@ class ScrollingAWindowTest {
 
     assertEquals(List.of(
         "╔══ W ═══╗",
-        "║l 4     ║",
-        "║l 5     ║",
-        "║ok      ║",
+        "║l 4     ▲",
+        "║l 5     ■",
+        "║ok      ▼",
         "╚════════╝"), screen.lines().subList(0, 5));
   }
 
@@ -58,7 +58,7 @@ class ScrollingAWindowTest {
     type("\t");
     desktop.draw(screen);
 
-    assertEquals("║l 0     ║", screen.lines().get(1));
+    assertEquals("║l 0     ▲", screen.lines().get(1));
   }
 
   @Test
@@ -67,6 +67,41 @@ class ScrollingAWindowTest {
     window.scroll(-5, -1);
 
     assertEquals(toolkit.point(0, 2), window.origin());
+  }
+
+  /** Seven rows held in five: the right side of the frame carries ▲, a track with the thumb where the origin is, and ▼. */
+  @Test
+  void aWindowThatHoldsMoreRowsThanItShowsHasAScrollBarOnItsRightSide() {
+    Screen tall = toolkit.screen(10, 8);
+    window.place(toolkit.area(0, 0, 10, 7));
+    desktop.draw(tall);
+
+    assertEquals("▲■░░▼", rightSide(tall));
+
+    type("\t");
+    desktop.draw(tall);
+
+    assertEquals("▲░░■▼", rightSide(tall));
+    assertEquals("╚════════╝", tall.lines().get(6));
+  }
+
+  @Test
+  void aWindowThatShowsAllItHoldsHasNoScrollBar() {
+    Screen tall = toolkit.screen(10, 9);
+    window.place(toolkit.area(0, 0, 10, 9));
+    desktop.draw(tall);
+
+    assertEquals("║║║║║║║", rightSide(tall));
+  }
+
+  /** The cells of the window's right side between its corners. */
+  private static String rightSide(Screen screen) {
+    StringBuilder side = new StringBuilder();
+    List<String> lines = screen.lines();
+    for (int row = 1; row < lines.size() && lines.get(row).charAt(9) != '╝'; row++) {
+      side.append(lines.get(row).charAt(9));
+    }
+    return side.toString();
   }
 
   private void type(String typed) {
