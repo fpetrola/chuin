@@ -20,8 +20,9 @@ class TextListBox implements ListBox, Scrollable {
   private final int rows;
   /** Beside the rows, its thumb where the selection is among the items. */
   private final ScrollBar bar;
+  /** The first item shown. */
   private int top;
-  private int selected;
+  private final Cursor selected;
 
   TextListBox(List<String> items, int rows) {
     if (rows < FEWEST_ROWS) {
@@ -29,12 +30,13 @@ class TextListBox implements ListBox, Scrollable {
     }
     this.items = List.copyOf(items);
     this.rows = rows;
+    this.selected = new TextCursor(this.items.size());
     this.bar = new TextScrollBar(this, rows);
   }
 
   @Override
   public Optional<String> selected() {
-    return items.isEmpty() ? Optional.empty() : Optional.of(items.get(selected));
+    return items.isEmpty() ? Optional.empty() : Optional.of(items.get(selected.at()));
   }
 
   @Override
@@ -53,31 +55,32 @@ class TextListBox implements ListBox, Scrollable {
 
   @Override
   public void previous() {
-    selected = Math.max(0, selected - 1);
-    top = Math.min(top, selected);
+    move(-1);
   }
 
   @Override
   public void next() {
-    selected = Math.max(0, Math.min(items.size() - 1, selected + 1));
-    top = Math.max(top, selected - rows + 1);
+    move(1);
   }
 
   @Override
   public void pageUp() {
-    selected = Math.max(0, selected - (rows - 1));
-    top = Math.min(top, selected);
+    move(-(rows - 1));
   }
 
   @Override
   public void pageDown() {
-    selected = Math.max(0, Math.min(items.size() - 1, selected + rows - 1));
-    top = Math.max(top, selected - rows + 1);
+    move(rows - 1);
+  }
+
+  /** Moves the selection this many items on or back, and scrolls to keep it in sight. */
+  private void move(int items) {
+    moveTo(selected.at() + items);
   }
 
   private void item(int at, ViewVisitor visitor) {
     ListItem item = new Row(at);
-    Consumer<ViewVisitor> present = at == selected ? row -> row.visitSelectedListItem(item) : row -> row.visitListItem(item);
+    Consumer<ViewVisitor> present = at == selected.at() ? row -> row.visitSelectedListItem(item) : row -> row.visitListItem(item);
     Consumer<ViewVisitor> shown = at < items.size() ? present : row -> row.visitNoListItem(this);
     shown.accept(visitor);
   }
@@ -85,13 +88,13 @@ class TextListBox implements ListBox, Scrollable {
   /** Selects the item at this position among them, and scrolls to keep it in sight. */
   @Override
   public void moveTo(int position) {
-    selected = Math.max(0, Math.min(most(), position));
-    top = Math.max(Math.min(top, selected), selected - rows + 1);
+    selected.moveTo(position);
+    top = Math.max(Math.min(top, selected.at()), selected.at() - rows + 1);
   }
 
   @Override
   public int position() {
-    return selected;
+    return selected.at();
   }
 
   @Override
@@ -124,7 +127,7 @@ class TextListBox implements ListBox, Scrollable {
 
     @Override
     public void select() {
-      selected = at;
+      selected.moveTo(at);
     }
   }
 

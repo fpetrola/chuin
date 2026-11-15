@@ -229,10 +229,12 @@ class MenuDesktop implements Desktop {
   /** A menu is open, with one of its items selected: keys and clicks stay with the menus. */
   private class Opened extends MenuState {
     private final PlacedTitle open;
-    private int item;
+    /** Which of its items is selected. */
+    private final Cursor item;
 
     Opened(PlacedTitle open) {
       this.open = open;
+      this.item = new TextCursor(open.items().size());
     }
 
     @Override
@@ -263,7 +265,7 @@ class MenuDesktop implements Desktop {
     public void draw(Screen screen) {
       screen.hideCursor();
       bar.accept(new MenuPainter(screen, Optional.of(open.menu())));
-      open.drawOpen(screen, item);
+      open.drawOpen(screen, item.at());
     }
   }
 
@@ -301,19 +303,19 @@ class MenuDesktop implements Desktop {
     public void enter() {
       List<MenuItem> items = opened.items();
       state = new Closed();
-      if (opened.item < items.size()) {
-        items.get(opened.item).run();
+      if (opened.item.at() < items.size()) {
+        items.get(opened.item.at()).run();
       }
     }
 
     @Override
     public void up() {
-      opened.item = Math.max(0, opened.item - 1);
+      opened.item.step(-1);
     }
 
     @Override
     public void down() {
-      opened.item = Math.max(0, Math.min(opened.items().size() - 1, opened.item + 1));
+      opened.item.step(1);
     }
 
     @Override

@@ -12,13 +12,14 @@ class TextOptionGroup implements OptionGroup {
   /** The cells "(•) " takes before each option. */
   private static final int MARK = 4;
   private final List<String> options;
-  private int chosen;
+  private final Cursor chosen;
 
   TextOptionGroup(List<String> options) {
     if (options.isEmpty()) {
       throw new IllegalArgumentException("a group needs at least one option");
     }
     this.options = List.copyOf(options);
+    this.chosen = new TextCursor(this.options.size());
   }
 
   @Override
@@ -31,7 +32,7 @@ class TextOptionGroup implements OptionGroup {
     visitor.visitOptionGroup(this);
     for (int at = 0; at < options.size(); at++) {
       Option option = new Place(at);
-      if (at == chosen) {
+      if (at == chosen.at()) {
         visitor.visitChosenOption(option);
       } else {
         visitor.visitOption(option);
@@ -41,12 +42,12 @@ class TextOptionGroup implements OptionGroup {
 
   @Override
   public void previous() {
-    chosen = Math.max(0, chosen - 1);
+    chosen.step(-1);
   }
 
   @Override
   public void next() {
-    chosen = Math.min(options.size() - 1, chosen + 1);
+    chosen.step(1);
   }
 
   /** An option of the group: its place among the options, which gives its text and what choosing it does. */
@@ -69,7 +70,7 @@ class TextOptionGroup implements OptionGroup {
 
     @Override
     public void choose() {
-      chosen = at;
+      chosen.moveTo(at);
     }
   }
 

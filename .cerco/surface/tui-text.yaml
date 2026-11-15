@@ -27,6 +27,12 @@ types:
     kind: interface
     members:
       - "click(Point, Runnable): void"
+  "com.fpetrola.tui.Cursor":
+    kind: interface
+    members:
+      - "at(): int"
+      - "moveTo(int): void"
+      - "step(int): void"
   "com.fpetrola.tui.Dragging":
     kind: interface
     members:
