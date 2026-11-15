@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -7,13 +7,13 @@ import com.fpetrola.chuin.view.ViewVisitor;
 
 import java.util.function.BiConsumer;
 
-class TextCheckBox implements CheckBox {
+public class TextCheckBox implements CheckBox {
   /** The cells "[ ] " takes before the text. */
   private static final int BOX = 4;
   private final String text;
   private Mark mark = Mark.UNCHECKED;
 
-  TextCheckBox(String text) {
+  public TextCheckBox(String text) {
     this.text = text;
   }
 

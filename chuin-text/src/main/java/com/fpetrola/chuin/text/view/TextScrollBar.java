@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;

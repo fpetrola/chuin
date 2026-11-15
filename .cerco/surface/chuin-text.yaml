@@ -16,23 +16,10 @@ types:
       - "inside(Area): Area"
       - "middle(int): String"
       - "top(String, int): String"
-  "com.fpetrola.chuin.Caption":
-    kind: interface
-    members:
-      - "answers(char): boolean"
-      - "entryWidth(): int"
-      - "highlight(Screen, int, int, Tint): void"
-      - "shown(): String"
   "com.fpetrola.chuin.ClickTarget":
     kind: interface
     members:
       - "click(Point, Runnable): void"
-  "com.fpetrola.chuin.Cursor":
-    kind: interface
-    members:
-      - "at(): int"
-      - "moveTo(int): void"
-      - "step(int): void"
   "com.fpetrola.chuin.Dragging":
     kind: interface
     members:
@@ -57,10 +44,6 @@ types:
     kind: interface
     members:
       - "hold(Dragging): void"
-  "com.fpetrola.chuin.Group":
-    kind: interface
-    members:
-      - "add(View, Point): void"
   "com.fpetrola.chuin.PlacedEntry":
     kind: interface
     members:
@@ -75,17 +58,6 @@ types:
       - "itemAt(Point): Optional<MenuItem>"
       - "items(): List<MenuItem>"
       - "menu(): Menu"
-  "com.fpetrola.chuin.Scrollable":
-    kind: interface
-    members:
-      - "most(): int"
-      - "moveTo(int): void"
-      - "next(): void"
-      - "overflows(): boolean"
-      - "pageDown(): void"
-      - "pageUp(): void"
-      - "position(): int"
-      - "previous(): void"
   "com.fpetrola.chuin.Settle":
     kind: interface
     members:
@@ -135,3 +107,64 @@ types:
     members:
       - "letter(): char"
       - "paint(Screen, int, int, int): void"
+  "com.fpetrola.chuin.text.view.Caption":
+    kind: interface
+    members:
+      - "answers(char): boolean"
+      - "entryWidth(): int"
+      - "highlight(Screen, int, int, Tint): void"
+      - "shown(): String"
+  "com.fpetrola.chuin.text.view.Cursor":
+    kind: interface
+    members:
+      - "at(): int"
+      - "moveTo(int): void"
+      - "step(int): void"
+  "com.fpetrola.chuin.text.view.Group":
+    kind: interface
+    members:
+      - "add(View, Point): void"
+  "com.fpetrola.chuin.text.view.Scrollable":
+    kind: interface
+    members:
+      - "most(): int"
+      - "moveTo(int): void"
+      - "next(): void"
+      - "overflows(): boolean"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "position(): int"
+      - "previous(): void"
+  "com.fpetrola.chuin.text.view.TextButton":
+    members:
+      - "<init>(String)"
+  "com.fpetrola.chuin.text.view.TextCaption":
+    members:
+      - "<init>(String)"
+  "com.fpetrola.chuin.text.view.TextCheckBox":
+    members:
+      - "<init>(String)"
+  "com.fpetrola.chuin.text.view.TextCursor":
+    members:
+      - "<init>(int)"
+  "com.fpetrola.chuin.text.view.TextDropDown":
+    members:
+      - "<init>(List<String>)"
+  "com.fpetrola.chuin.text.view.TextInputLine":
+    members:
+      - "<init>(int)"
+  "com.fpetrola.chuin.text.view.TextLabel":
+    members:
+      - "<init>(String, Optional<View>)"
+  "com.fpetrola.chuin.text.view.TextListBox":
+    members:
+      - "<init>(List<String>, int)"
+  "com.fpetrola.chuin.text.view.TextOptionGroup":
+    members:
+      - "<init>(List<String>)"
+  "com.fpetrola.chuin.text.view.TextScrollPanel":
+    members:
+      - "<init>(View, Supplier<Size>)"
+  "com.fpetrola.chuin.text.view.TextWindow":
+    members:
+      - "<init>(String)"

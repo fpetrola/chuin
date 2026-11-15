@@ -1,11 +1,11 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.screen.Tint;
 import com.fpetrola.chuin.screen.Screen;
 
 
 /** Reads a marked text once: what is shown, and where in it the marked letter or letters are. */
-class TextCaption implements Caption {
+public class TextCaption implements Caption {
   private static final char MARK = '~';
   private static final int NONE = -1;
   private final String shown;
@@ -13,7 +13,7 @@ class TextCaption implements Caption {
   /** How many letters are marked: one answers to Alt, several are only highlighted. */
   private final int length;
 
-  TextCaption(String text) {
+  public TextCaption(String text) {
     StringBuilder visible = new StringBuilder();
     int start = NONE;
     int length = 0;

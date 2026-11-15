@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.TextCaption;
 import com.fpetrola.chuin.text.screen.TintRole;
 import com.fpetrola.chuin.menu.Menu;
 import com.fpetrola.chuin.menu.MenuBar;

@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.geometry.Point;
@@ -11,14 +11,14 @@ import com.fpetrola.chuin.view.ViewVisitor;
 import java.util.function.Supplier;
 
 /** Keeps its origin within what it holds; its size is given, or follows something else's, as a window's inside does. */
-class TextScrollPanel implements ScrollPanel {
+public class TextScrollPanel implements ScrollPanel {
   /** The last column and the last row, which its bars take. */
   private static final int BAR = 1;
   private final View content;
   private final Supplier<Size> size;
   private Point origin = new TextPoint(0, 0);
 
-  TextScrollPanel(View content, Supplier<Size> size) {
+  public TextScrollPanel(View content, Supplier<Size> size) {
     this.content = content;
     this.size = size;
   }

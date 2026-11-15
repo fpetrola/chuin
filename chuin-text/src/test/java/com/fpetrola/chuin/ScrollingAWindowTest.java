@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.TextGroup;
+import com.fpetrola.chuin.text.view.Group;
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.view.Button;

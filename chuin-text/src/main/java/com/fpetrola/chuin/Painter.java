@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.TextCaption;
+import com.fpetrola.chuin.text.view.Caption;
 import com.fpetrola.chuin.text.screen.ClippedScreen;
 import com.fpetrola.chuin.text.screen.TintRole;
 import com.fpetrola.chuin.text.geometry.TextArea;

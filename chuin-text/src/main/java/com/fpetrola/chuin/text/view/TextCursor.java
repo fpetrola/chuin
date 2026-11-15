@@ -1,11 +1,11 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
-class TextCursor implements Cursor {
+public class TextCursor implements Cursor {
   private final int places;
   private int at;
 
   /** Among this many places, on the first; with none, it stays at the first all the same. */
-  TextCursor(int places) {
+  public TextCursor(int places) {
     this.places = places;
   }
 

@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.Caption;
+
 class TextPlacedEntry implements PlacedEntry {
   private final int start;
   private final int width;

@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.view.ScrollBar;
 import com.fpetrola.chuin.view.ViewVisitor;

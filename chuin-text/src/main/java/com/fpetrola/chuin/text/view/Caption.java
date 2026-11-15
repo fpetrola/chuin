@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.screen.Tint;
 import com.fpetrola.chuin.screen.Screen;
@@ -8,7 +8,7 @@ import com.fpetrola.chuin.screen.Screen;
  * A text with a part marked between tildes, shown without the marks and the marked part highlighted: one letter,
  * "~D~atei", which Alt with that letter reaches, or several, "~F3~ Laden", which are only highlighted.
  */
-interface Caption {
+public interface Caption {
   /** The text as it is shown: without the marking tildes, "~~" as one tilde. */
   String shown();
 

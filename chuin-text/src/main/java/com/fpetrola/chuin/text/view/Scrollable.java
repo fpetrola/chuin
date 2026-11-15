@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 /** What a scroll bar is beside: how far it is scrolled and can be, whether it holds more than it shows, and its moves. */
 interface Scrollable {

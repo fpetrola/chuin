@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextArea;
 import com.fpetrola.chuin.text.geometry.TextSize;
@@ -10,7 +10,7 @@ import com.fpetrola.chuin.view.ViewVisitor;
 import com.fpetrola.chuin.view.Window;
 
 
-class TextWindow implements Window {
+public class TextWindow implements Window {
   private final String title;
   /** The views placed in it. */
   private final Group group = new TextGroup();
@@ -18,7 +18,7 @@ class TextWindow implements Window {
   /** Its inside, which shows its views from an origin, with its bars on the right and bottom of the frame. */
   private final ScrollPanel panel = new TextScrollPanel(group, () -> new TextSize(area.columns() - 1, area.rows() - 1));
 
-  TextWindow(String title) {
+  public TextWindow(String title) {
     this.title = title;
   }
 

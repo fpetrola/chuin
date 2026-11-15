@@ -1,10 +1,10 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 /**
  * Which one of a fixed number of places is the current one, kept among them: the selected item of a list, the chosen
  * option of a group, the item of an open menu. Moving past either end stops at it.
  */
-interface Cursor {
+public interface Cursor {
   /** The current place, counted from the first. */
   int at();
 

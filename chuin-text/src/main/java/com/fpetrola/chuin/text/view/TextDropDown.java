@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 /** Keeps the chosen item and, while the list is open, the highlighted one: no highlight means the list is closed. */
-class TextDropDown implements DropDown {
+public class TextDropDown implements DropDown {
   /** The ↓ after the field. */
   private static final int ARROW = 1;
   private final List<String> items;
   private int chosen;
   private Optional<Integer> highlighted = Optional.empty();
 
-  TextDropDown(List<String> items) {
+  public TextDropDown(List<String> items) {
     this.items = List.copyOf(items);
   }
 

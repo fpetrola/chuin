@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -12,7 +12,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 /** Keeps a selection that stays between the ends, and the first row shown, which follows the selection. */
-class TextListBox implements ListBox, Scrollable {
+public class TextListBox implements ListBox, Scrollable {
   /** ▲, at least one cell of track, and ▼. */
   private static final int FEWEST_ROWS = 3;
   /** The blank and the scroll bar cell after the longest item. */
@@ -25,7 +25,7 @@ class TextListBox implements ListBox, Scrollable {
   private int top;
   private final Cursor selected;
 
-  TextListBox(List<String> items, int rows) {
+  public TextListBox(List<String> items, int rows) {
     if (rows < FEWEST_ROWS) {
       throw new IllegalArgumentException("a list box needs " + FEWEST_ROWS + " rows for its scroll bar, not " + rows);
     }

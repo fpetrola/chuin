@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -6,11 +6,11 @@ import com.fpetrola.chuin.view.InputLine;
 import com.fpetrola.chuin.view.ViewVisitor;
 
 
-class TextInputLine implements InputLine {
+public class TextInputLine implements InputLine {
   private final StringBuilder text = new StringBuilder();
   private final int width;
 
-  TextInputLine(int width) {
+  public TextInputLine(int width) {
     this.width = width;
   }
 

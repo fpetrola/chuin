@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -9,13 +9,13 @@ import com.fpetrola.chuin.view.ViewVisitor;
 import java.util.List;
 
 /** Keeps which one of its options is chosen, between the first and the last. */
-class TextOptionGroup implements OptionGroup {
+public class TextOptionGroup implements OptionGroup {
   /** The cells "(•) " takes before each option. */
   private static final int MARK = 4;
   private final List<String> options;
   private final Cursor chosen;
 
-  TextOptionGroup(List<String> options) {
+  public TextOptionGroup(List<String> options) {
     if (options.isEmpty()) {
       throw new IllegalArgumentException("a group needs at least one option");
     }

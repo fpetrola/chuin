@@ -1,5 +1,8 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.Cursor;
+import com.fpetrola.chuin.text.view.TextCursor;
+import com.fpetrola.chuin.text.view.TextCaption;
 import com.fpetrola.chuin.text.input.KeyName;
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.input.Key;

@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import java.util.function.IntConsumer;
 import java.util.function.IntSupplier;

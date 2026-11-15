@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -8,11 +8,11 @@ import com.fpetrola.chuin.view.ViewVisitor;
 
 import java.util.Optional;
 
-class TextLabel implements Label {
+public class TextLabel implements Label {
   private String text;
   private final Optional<View> linked;
 
-  TextLabel(String text, Optional<View> linked) {
+  public TextLabel(String text, Optional<View> linked) {
     this.text = text;
     this.linked = linked;
   }

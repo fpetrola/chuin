@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import com.fpetrola.chuin.text.geometry.TextSize;
 import com.fpetrola.chuin.geometry.Size;
@@ -9,7 +9,7 @@ import com.fpetrola.chuin.view.ViewVisitor;
 import java.util.ArrayList;
 import java.util.List;
 
-class TextButton implements Button {
+public class TextButton implements Button {
   /** The two blanks on each side of the caption. */
   private static final int FACE = 4;
   private final String caption;
@@ -17,7 +17,7 @@ class TextButton implements Button {
   /** Whether the mouse holds it down. */
   private boolean held;
 
-  TextButton(String caption) {
+  public TextButton(String caption) {
     this.caption = caption;
   }
 

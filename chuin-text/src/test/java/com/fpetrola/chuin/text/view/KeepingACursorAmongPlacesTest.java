@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.view;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

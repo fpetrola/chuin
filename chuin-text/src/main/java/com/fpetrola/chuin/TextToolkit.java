@@ -1,5 +1,14 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.TextButton;
+import com.fpetrola.chuin.text.view.TextCheckBox;
+import com.fpetrola.chuin.text.view.TextInputLine;
+import com.fpetrola.chuin.text.view.TextLabel;
+import com.fpetrola.chuin.text.view.TextListBox;
+import com.fpetrola.chuin.text.view.TextOptionGroup;
+import com.fpetrola.chuin.text.view.TextDropDown;
+import com.fpetrola.chuin.text.view.TextScrollPanel;
+import com.fpetrola.chuin.text.view.TextWindow;
 import com.fpetrola.chuin.text.screen.TextScreen;
 import com.fpetrola.chuin.text.screen.AnsiTerminal;
 import com.fpetrola.chuin.text.screen.Palette;

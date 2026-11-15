@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.view.Caption;
+
 class TextEntryPlacer implements EntryPlacer {
   /** Where the next entry starts. */
   private int column;
