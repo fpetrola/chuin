@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 import com.fpetrola.chuin.text.pointer.BarLine;
 import com.fpetrola.chuin.geometry.Point;

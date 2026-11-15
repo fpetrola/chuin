@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 import com.fpetrola.chuin.text.geometry.TextArea;
 import com.fpetrola.chuin.geometry.Area;
@@ -6,7 +6,7 @@ import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.geometry.Size;
 
 /** The lines a frame is drawn with, each row of it drawn by the border itself. */
-interface Border {
+public interface Border {
   /** The top row: a corner, the line across with a label in the middle, a corner. */
   String top(String label, int inner);
 

@@ -1,5 +1,8 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.paint.Painter;
+import com.fpetrola.chuin.text.paint.Line;
+import com.fpetrola.chuin.text.paint.Drawing;
 import com.fpetrola.chuin.text.pointer.ClickTarget;
 import com.fpetrola.chuin.text.pointer.Dragging;
 import com.fpetrola.chuin.text.pointer.Settle;

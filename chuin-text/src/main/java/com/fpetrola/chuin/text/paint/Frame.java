@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 import com.fpetrola.chuin.text.screen.Tint;
 import com.fpetrola.chuin.geometry.Area;

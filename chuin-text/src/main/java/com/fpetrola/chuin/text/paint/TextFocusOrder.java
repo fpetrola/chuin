@@ -1,11 +1,11 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 /** Counts focusable views from the first, the focused one at a place in that count. */
-class TextFocusOrder implements FocusOrder {
+public class TextFocusOrder implements FocusOrder {
   private final int focused;
   private int seen;
 
-  TextFocusOrder(int focused) {
+  public TextFocusOrder(int focused) {
     this.focused = focused;
   }
 

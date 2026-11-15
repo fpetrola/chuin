@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 import com.fpetrola.chuin.text.pointer.TextBarLine;
 import com.fpetrola.chuin.text.view.TextCaption;

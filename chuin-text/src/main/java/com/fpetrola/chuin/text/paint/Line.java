@@ -1,7 +1,7 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 /** Single lines for most frames, double lines for the window on top. */
-enum Line implements Border {
+public enum Line implements Border {
   SINGLE("┌┐└┘─│"),
   DOUBLE("╔╗╚╝═║");
 

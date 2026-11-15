@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.paint.FocusOrder;
+import com.fpetrola.chuin.text.paint.TextFocusOrder;
 import com.fpetrola.chuin.view.Button;
 import com.fpetrola.chuin.view.CheckBox;
 import com.fpetrola.chuin.view.DropDown;

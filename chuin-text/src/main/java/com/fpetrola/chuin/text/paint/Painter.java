@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.paint;
 
 import com.fpetrola.chuin.text.pointer.ClickTarget;
 import com.fpetrola.chuin.text.pointer.Grab;
@@ -37,7 +37,7 @@ import java.util.Deque;
 import java.util.List;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
-class Painter implements ViewVisitor {
+public class Painter implements ViewVisitor {
   /** What a button's shadow may be drawn over: a blank cell or another button's shadow. */
   private static final String SHADE_COVERS = " ▀▄";
   private static final String BOX = "[ ] ";
@@ -72,7 +72,7 @@ class Painter implements ViewVisitor {
   private int column;
   private int row;
 
-  Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<ClickTarget> targets,
+  public Painter(Screen screen, int focused, List<Area> drawn, Border border, List<Drawing> popups, List<ClickTarget> targets,
       Grab grab) {
     this.grab = grab;
     this.popups = popups;

@@ -1,19 +1,6 @@
 # What a person signed of this module's surface; cerco:approve grows it.
 module: "chuin-text"
 types:
-  "com.fpetrola.chuin.Border":
-    kind: interface
-    members:
-      - "around(Area): Area"
-      - "bottom(int): String"
-      - "holding(Point, Size): Area"
-      - "inside(Area): Area"
-      - "middle(int): String"
-      - "top(String, int): String"
-  "com.fpetrola.chuin.Drawing":
-    kind: interface
-    members:
-      - "drawOn(Screen): void"
   "com.fpetrola.chuin.EntryPlacer":
     kind: interface
     members:
@@ -22,10 +9,6 @@ types:
     kind: interface
     members:
       - "put(Caption, Tint, Tint): void"
-  "com.fpetrola.chuin.FocusOrder":
-    kind: interface
-    members:
-      - "next(): boolean"
   "com.fpetrola.chuin.PlacedEntry":
     kind: interface
     members:
@@ -66,6 +49,32 @@ types:
   "com.fpetrola.chuin.text.input.KeyName":
     members:
       - "<init>(StringBuilder)"
+  "com.fpetrola.chuin.text.paint.Border":
+    kind: interface
+    members:
+      - "around(Area): Area"
+      - "bottom(int): String"
+      - "holding(Point, Size): Area"
+      - "inside(Area): Area"
+      - "middle(int): String"
+      - "top(String, int): String"
+  "com.fpetrola.chuin.text.paint.Drawing":
+    kind: interface
+    members:
+      - "drawOn(Screen): void"
+  "com.fpetrola.chuin.text.paint.FocusOrder":
+    kind: interface
+    members:
+      - "next(): boolean"
+  "com.fpetrola.chuin.text.paint.Painter":
+    members:
+      - "<init>(Screen, int, List<Area>, Border, List<Drawing>, List<ClickTarget>, Grab)"
+  "com.fpetrola.chuin.text.paint.RaisedFrame":
+    members:
+      - "<init>(Area, String, Tint, Border)"
+  "com.fpetrola.chuin.text.paint.TextFocusOrder":
+    members:
+      - "<init>(int)"
   "com.fpetrola.chuin.text.pointer.BarClick":
     members:
       - "<init>(int, Settle, BarLine, Grab)"
