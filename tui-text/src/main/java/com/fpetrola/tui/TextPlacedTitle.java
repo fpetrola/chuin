@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/** A title starting at a column of the top row, as wide as its caption and a space on both sides. */
+/** A title starting at a column of the top row, as wide as its caption takes as an entry. */
 class TextPlacedTitle implements PlacedTitle {
   /** The bar's row and the open menu's top frame line, above its first item. */
   private static final int ABOVE_ITEMS = 2;
@@ -28,7 +28,7 @@ class TextPlacedTitle implements PlacedTitle {
 
   @Override
   public boolean covers(Point cell) {
-    int width = new TextCaption(menu.title()).shown().length() + 2;
+    int width = new TextCaption(menu.title()).entryWidth();
     return cell.row() == 0 && cell.column() >= start && cell.column() < start + width;
   }
 

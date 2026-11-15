@@ -15,7 +15,7 @@ class StatusClick implements StatusVisitor {
 
   @Override
   public void visitStatusItem(StatusItem item) {
-    int width = new TextCaption(item.text()).shown().length() + 2;
+    int width = new TextCaption(item.text()).entryWidth();
     if (clicked >= column && clicked < column + width) {
       item.run();
     }

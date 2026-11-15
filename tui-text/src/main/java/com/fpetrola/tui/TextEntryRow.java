@@ -22,8 +22,8 @@ class TextEntryRow implements EntryRow {
   public void put(Caption caption, char tint, char letter) {
     String entry = " " + caption.shown() + " ";
     screen.write(column, row, entry);
-    screen.paint(column, row, entry.length(), tint);
+    screen.paint(column, row, caption.entryWidth(), tint);
     caption.highlight(screen, column + 1, row, letter);
-    column += entry.length();
+    column += caption.entryWidth();
   }
 }

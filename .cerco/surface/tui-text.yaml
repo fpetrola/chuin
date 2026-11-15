@@ -11,6 +11,7 @@ types:
     kind: interface
     members:
       - "answers(char): boolean"
+      - "entryWidth(): int"
       - "highlight(Screen, int, int, char): void"
       - "shown(): String"
   "com.fpetrola.tui.ClickTarget":

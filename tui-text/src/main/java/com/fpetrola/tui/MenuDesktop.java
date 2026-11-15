@@ -139,7 +139,7 @@ class MenuDesktop implements Desktop {
       @Override
       public void visitMenu(Menu menu) {
         placed.add(new TextPlacedTitle(menu, start));
-        start += new TextCaption(menu.title()).shown().length() + 2;
+        start += new TextCaption(menu.title()).entryWidth();
       }
     });
     return placed;

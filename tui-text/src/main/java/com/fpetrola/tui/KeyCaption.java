@@ -24,6 +24,11 @@ class KeyCaption implements Caption {
   }
 
   @Override
+  public int entryWidth() {
+    return shown.length() + 2;
+  }
+
+  @Override
   public boolean answers(char letter) {
     return false;
   }

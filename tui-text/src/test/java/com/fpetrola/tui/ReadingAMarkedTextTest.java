@@ -71,4 +71,10 @@ class ReadingAMarkedTextTest {
     assertEquals(false, f3.answers('f'));
     assertEquals("..........", screen.tints().getFirst());
   }
+
+  @Test
+  void asAnEntryOfARowACaptionTakesItsShownTextAndABlankOnEachSide() {
+    assertEquals(7, new TextCaption("~D~atei").entryWidth());
+    assertEquals(10, new TextCaption("~F3~ Laden").entryWidth());
+  }
 }
