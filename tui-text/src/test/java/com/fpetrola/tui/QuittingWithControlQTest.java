@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.ButtonListener;
+import com.fpetrola.tui.view.Window;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 

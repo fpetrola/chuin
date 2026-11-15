@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.screen.Screen;
+
+
 /**
  * A text with a part marked between tildes, shown without the marks and the marked part highlighted: one letter,
  * "~D~atei", which Alt with that letter reaches, or several, "~F3~ Laden", which are only highlighted.

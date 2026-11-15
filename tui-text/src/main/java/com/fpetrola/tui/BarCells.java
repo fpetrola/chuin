@@ -1,5 +1,11 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 /** Draws the cells of a scroll bar one after the other from a cell on, down or across; blank cells leave what is there. */
 class BarCells implements ViewVisitor {
   private final Screen screen;

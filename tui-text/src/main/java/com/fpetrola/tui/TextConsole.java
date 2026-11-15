@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.screen.Terminal;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UncheckedIOException;

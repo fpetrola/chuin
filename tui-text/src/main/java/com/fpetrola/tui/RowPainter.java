@@ -1,5 +1,13 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.ListItem;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.List;
 
 /**

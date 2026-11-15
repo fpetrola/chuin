@@ -1,5 +1,13 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.Placement;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 class TextPlacement implements Placement {
   private final View view;
   private final Point position;

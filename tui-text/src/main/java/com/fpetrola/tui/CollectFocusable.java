@@ -1,5 +1,17 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.Placement;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;

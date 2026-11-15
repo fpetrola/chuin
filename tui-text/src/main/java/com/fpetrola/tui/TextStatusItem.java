@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.menu.StatusItem;
+
+
 /** An entry of the status line: its marked text, its key and its command. */
 class TextStatusItem implements StatusItem {
   private final String label;

@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.input.KeyVisitor;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UncheckedIOException;

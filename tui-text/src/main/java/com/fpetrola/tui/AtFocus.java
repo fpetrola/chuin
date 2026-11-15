@@ -1,5 +1,19 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.ListItem;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 
 /** Counts a window's focusable views and hands only the focused one to an action. */
 class AtFocus implements ViewVisitor {

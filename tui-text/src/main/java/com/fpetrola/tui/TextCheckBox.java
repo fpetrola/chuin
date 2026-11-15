@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.function.BiConsumer;
 
 class TextCheckBox implements CheckBox {

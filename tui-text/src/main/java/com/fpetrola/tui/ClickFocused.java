@@ -1,5 +1,15 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.ListItem;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 
 /**
  * What a left click does to the view under it, once focused: holds a button down until the release, toggles a check box, chooses the option

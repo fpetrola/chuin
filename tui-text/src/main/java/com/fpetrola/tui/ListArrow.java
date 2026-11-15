@@ -1,5 +1,13 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.function.BinaryOperator;
 
 /** What ↑ or ↓ does to the focused view: a list selects the item before or after, any other view lets the window move. Every focusable view must be overridden here, or ↑ and ↓ do nothing while it has the focus. */

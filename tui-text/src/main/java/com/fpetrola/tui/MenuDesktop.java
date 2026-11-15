@@ -1,5 +1,18 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.input.KeyVisitor;
+import com.fpetrola.tui.menu.Menu;
+import com.fpetrola.tui.menu.MenuBar;
+import com.fpetrola.tui.menu.MenuItem;
+import com.fpetrola.tui.menu.MenuVisitor;
+import com.fpetrola.tui.menu.StatusItem;
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.menu.StatusVisitor;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.Window;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

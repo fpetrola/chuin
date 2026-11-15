@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.screen.Screen;
+
 import java.util.List;
 import java.util.Optional;
 

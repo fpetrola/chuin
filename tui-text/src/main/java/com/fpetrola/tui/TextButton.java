@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.ButtonListener;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.ArrayList;
 import java.util.List;
 

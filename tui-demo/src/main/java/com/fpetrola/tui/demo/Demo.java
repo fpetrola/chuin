@@ -1,17 +1,17 @@
 package com.fpetrola.tui.demo;
 
-import com.fpetrola.tui.Button;
 import com.fpetrola.tui.Desktop;
-import com.fpetrola.tui.DropDown;
-import com.fpetrola.tui.InputLine;
-import com.fpetrola.tui.Label;
-import com.fpetrola.tui.Menu;
-import com.fpetrola.tui.MenuBar;
-import com.fpetrola.tui.OptionGroup;
-import com.fpetrola.tui.StatusLine;
-import com.fpetrola.tui.TextToolkit;
 import com.fpetrola.tui.Toolkit;
-import com.fpetrola.tui.Window;
+import com.fpetrola.tui.menu.Menu;
+import com.fpetrola.tui.menu.MenuBar;
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.Window;
+import com.fpetrola.tui.TextToolkit;
 import java.util.List;
 
 /**

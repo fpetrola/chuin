@@ -1,30 +1,6 @@
 # What a person signed of this module's surface; cerco:approve grows it.
 module: "tui-api"
 types:
-  "com.fpetrola.tui.Area":
-    kind: interface
-    members:
-      - "column(): int"
-      - "columns(): int"
-      - "row(): int"
-      - "rows(): int"
-  "com.fpetrola.tui.Button":
-    kind: interface
-    members:
-      - "caption(): String"
-      - "hold(): void"
-      - "letGo(): void"
-      - "onPress(ButtonListener): void"
-      - "press(): void"
-  "com.fpetrola.tui.ButtonListener":
-    kind: interface
-    members:
-      - "pressed(Button): void"
-  "com.fpetrola.tui.CheckBox":
-    kind: interface
-    members:
-      - "text(): String"
-      - "toggle(): void"
   "com.fpetrola.tui.Console":
     kind: interface
     members:
@@ -41,175 +17,10 @@ types:
       - "show(MenuBar): void"
       - "show(StatusLine): void"
       - "type(Key): void"
-  "com.fpetrola.tui.DropDown":
-    kind: interface
-    members:
-      - "choose(): void"
-      - "chosen(): Optional<String>"
-      - "close(): void"
-      - "down(): void"
-      - "up(): void"
-      - "width(): int"
-  "com.fpetrola.tui.DropDownItem":
-    kind: interface
-    members:
-      - "choose(): void"
-      - "dropDown(): DropDown"
-      - "text(): String"
-  "com.fpetrola.tui.InputLine":
-    kind: interface
-    members:
-      - "erase(): void"
-      - "text(): String"
-      - "type(char): void"
-      - "width(): int"
-  "com.fpetrola.tui.Key":
-    kind: interface
-    members:
-      - "accept(KeyVisitor): void"
-  "com.fpetrola.tui.KeyVisitor":
-    kind: interface
-    members:
-      - "alt(char): void"
-      - "backspace(): void"
-      - "character(char): void"
-      - "control(char): void"
-      - "down(): void"
-      - "enter(): void"
-      - "escape(): void"
-      - "function(int): void"
-      - "left(): void"
-      - "other(): void"
-      - "right(): void"
-      - "space(): void"
-      - "tab(): void"
-      - "up(): void"
   "com.fpetrola.tui.Keyboard":
     kind: interface
     members:
       - "typeInto(Desktop): void"
-  "com.fpetrola.tui.Label":
-    kind: interface
-    members:
-      - "linked(): Optional<View>"
-      - "text(): String"
-      - "text(String): void"
-  "com.fpetrola.tui.ListBox":
-    kind: interface
-    members:
-      - "next(): void"
-      - "pageDown(): void"
-      - "pageUp(): void"
-      - "previous(): void"
-      - "selected(): Optional<String>"
-      - "width(): int"
-  "com.fpetrola.tui.ListItem":
-    kind: interface
-    members:
-      - "list(): ListBox"
-      - "select(): void"
-      - "text(): String"
-  "com.fpetrola.tui.Menu":
-    kind: interface
-    members:
-      - "accept(MenuVisitor): void"
-      - "add(String, Key, Runnable): void"
-      - "add(String, Runnable): void"
-      - "separator(): void"
-      - "title(): String"
-      - "width(): int"
-  "com.fpetrola.tui.MenuBar":
-    kind: interface
-    members:
-      - "accept(MenuVisitor): void"
-      - "add(Menu): void"
-  "com.fpetrola.tui.MenuItem":
-    kind: interface
-    members:
-      - "key(): Optional<Key>"
-      - "menu(): Menu"
-      - "run(): void"
-      - "text(): String"
-  "com.fpetrola.tui.MenuVisitor":
-    kind: interface
-    members:
-      - "visitMenu(Menu): void"
-      - "visitMenuBar(MenuBar): void"
-      - "visitMenuItem(MenuItem): void"
-      - "visitMenuSeparator(Menu): void"
-  "com.fpetrola.tui.Option":
-    kind: interface
-    members:
-      - "choose(): void"
-      - "group(): OptionGroup"
-      - "text(): String"
-  "com.fpetrola.tui.OptionGroup":
-    kind: interface
-    members:
-      - "next(): void"
-      - "previous(): void"
-      - "width(): int"
-  "com.fpetrola.tui.Placement":
-    kind: interface
-    members:
-      - "accept(ViewVisitor): void"
-      - "area(): Area"
-      - "position(): Point"
-  "com.fpetrola.tui.Point":
-    kind: interface
-    members:
-      - "column(): int"
-      - "row(): int"
-  "com.fpetrola.tui.Screen":
-    kind: interface
-    members:
-      - "cursor(): Optional<Point>"
-      - "hideCursor(): void"
-      - "lines(): List<String>"
-      - "paint(int, int, int, char): void"
-      - "showCursorAt(Point): void"
-      - "tints(): List<String>"
-      - "write(int, int, String): void"
-  "com.fpetrola.tui.ScrollBar":
-    kind: interface
-    members:
-      - "next(): void"
-      - "pageDown(): void"
-      - "pageUp(): void"
-      - "previous(): void"
-      - "thumbTo(int): void"
-  "com.fpetrola.tui.ScrollPanel":
-    kind: interface
-    members:
-      - "horizontal(): ScrollBar"
-      - "origin(): Point"
-      - "scroll(int, int): void"
-      - "vertical(): ScrollBar"
-  "com.fpetrola.tui.Size":
-    kind: interface
-    members:
-      - "columns(): int"
-      - "rows(): int"
-  "com.fpetrola.tui.StatusItem":
-    kind: interface
-    members:
-      - "key(): Key"
-      - "run(): void"
-      - "text(): String"
-  "com.fpetrola.tui.StatusLine":
-    kind: interface
-    members:
-      - "accept(StatusVisitor): void"
-      - "add(String, Key, Runnable): void"
-  "com.fpetrola.tui.StatusVisitor":
-    kind: interface
-    members:
-      - "visitStatusItem(StatusItem): void"
-      - "visitStatusLine(StatusLine): void"
-  "com.fpetrola.tui.Terminal":
-    kind: interface
-    members:
-      - "show(Screen): void"
   "com.fpetrola.tui.Toolkit":
     kind: interface
     members:
@@ -238,12 +49,201 @@ types:
       - "tabKey(): Key"
       - "terminal(OutputStream): Terminal"
       - "window(String): Window"
-  "com.fpetrola.tui.View":
+  "com.fpetrola.tui.geometry.Area":
+    kind: interface
+    members:
+      - "column(): int"
+      - "columns(): int"
+      - "row(): int"
+      - "rows(): int"
+  "com.fpetrola.tui.geometry.Point":
+    kind: interface
+    members:
+      - "column(): int"
+      - "row(): int"
+  "com.fpetrola.tui.geometry.Size":
+    kind: interface
+    members:
+      - "columns(): int"
+      - "rows(): int"
+  "com.fpetrola.tui.input.Key":
+    kind: interface
+    members:
+      - "accept(KeyVisitor): void"
+  "com.fpetrola.tui.input.KeyVisitor":
+    kind: interface
+    members:
+      - "alt(char): void"
+      - "backspace(): void"
+      - "character(char): void"
+      - "control(char): void"
+      - "down(): void"
+      - "enter(): void"
+      - "escape(): void"
+      - "function(int): void"
+      - "left(): void"
+      - "other(): void"
+      - "right(): void"
+      - "space(): void"
+      - "tab(): void"
+      - "up(): void"
+  "com.fpetrola.tui.menu.Menu":
+    kind: interface
+    members:
+      - "accept(MenuVisitor): void"
+      - "add(String, Key, Runnable): void"
+      - "add(String, Runnable): void"
+      - "separator(): void"
+      - "title(): String"
+      - "width(): int"
+  "com.fpetrola.tui.menu.MenuBar":
+    kind: interface
+    members:
+      - "accept(MenuVisitor): void"
+      - "add(Menu): void"
+  "com.fpetrola.tui.menu.MenuItem":
+    kind: interface
+    members:
+      - "key(): Optional<Key>"
+      - "menu(): Menu"
+      - "run(): void"
+      - "text(): String"
+  "com.fpetrola.tui.menu.MenuVisitor":
+    kind: interface
+    members:
+      - "visitMenu(Menu): void"
+      - "visitMenuBar(MenuBar): void"
+      - "visitMenuItem(MenuItem): void"
+      - "visitMenuSeparator(Menu): void"
+  "com.fpetrola.tui.menu.StatusItem":
+    kind: interface
+    members:
+      - "key(): Key"
+      - "run(): void"
+      - "text(): String"
+  "com.fpetrola.tui.menu.StatusLine":
+    kind: interface
+    members:
+      - "accept(StatusVisitor): void"
+      - "add(String, Key, Runnable): void"
+  "com.fpetrola.tui.menu.StatusVisitor":
+    kind: interface
+    members:
+      - "visitStatusItem(StatusItem): void"
+      - "visitStatusLine(StatusLine): void"
+  "com.fpetrola.tui.screen.Screen":
+    kind: interface
+    members:
+      - "cursor(): Optional<Point>"
+      - "hideCursor(): void"
+      - "lines(): List<String>"
+      - "paint(int, int, int, char): void"
+      - "showCursorAt(Point): void"
+      - "tints(): List<String>"
+      - "write(int, int, String): void"
+  "com.fpetrola.tui.screen.Terminal":
+    kind: interface
+    members:
+      - "show(Screen): void"
+  "com.fpetrola.tui.view.Button":
+    kind: interface
+    members:
+      - "caption(): String"
+      - "hold(): void"
+      - "letGo(): void"
+      - "onPress(ButtonListener): void"
+      - "press(): void"
+  "com.fpetrola.tui.view.ButtonListener":
+    kind: interface
+    members:
+      - "pressed(Button): void"
+  "com.fpetrola.tui.view.CheckBox":
+    kind: interface
+    members:
+      - "text(): String"
+      - "toggle(): void"
+  "com.fpetrola.tui.view.DropDown":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "chosen(): Optional<String>"
+      - "close(): void"
+      - "down(): void"
+      - "up(): void"
+      - "width(): int"
+  "com.fpetrola.tui.view.DropDownItem":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "dropDown(): DropDown"
+      - "text(): String"
+  "com.fpetrola.tui.view.InputLine":
+    kind: interface
+    members:
+      - "erase(): void"
+      - "text(): String"
+      - "type(char): void"
+      - "width(): int"
+  "com.fpetrola.tui.view.Label":
+    kind: interface
+    members:
+      - "linked(): Optional<View>"
+      - "text(): String"
+      - "text(String): void"
+  "com.fpetrola.tui.view.ListBox":
+    kind: interface
+    members:
+      - "next(): void"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "previous(): void"
+      - "selected(): Optional<String>"
+      - "width(): int"
+  "com.fpetrola.tui.view.ListItem":
+    kind: interface
+    members:
+      - "list(): ListBox"
+      - "select(): void"
+      - "text(): String"
+  "com.fpetrola.tui.view.Option":
+    kind: interface
+    members:
+      - "choose(): void"
+      - "group(): OptionGroup"
+      - "text(): String"
+  "com.fpetrola.tui.view.OptionGroup":
+    kind: interface
+    members:
+      - "next(): void"
+      - "previous(): void"
+      - "width(): int"
+  "com.fpetrola.tui.view.Placement":
+    kind: interface
+    members:
+      - "accept(ViewVisitor): void"
+      - "area(): Area"
+      - "position(): Point"
+  "com.fpetrola.tui.view.ScrollBar":
+    kind: interface
+    members:
+      - "next(): void"
+      - "pageDown(): void"
+      - "pageUp(): void"
+      - "previous(): void"
+      - "thumbTo(int): void"
+  "com.fpetrola.tui.view.ScrollPanel":
+    kind: interface
+    members:
+      - "horizontal(): ScrollBar"
+      - "origin(): Point"
+      - "scroll(int, int): void"
+      - "vertical(): ScrollBar"
+  "com.fpetrola.tui.view.View":
     kind: interface
     members:
       - "accept(ViewVisitor): void"
       - "size(): Size"
-  "com.fpetrola.tui.ViewVisitor":
+  "com.fpetrola.tui.view.ViewVisitor":
     kind: interface
     members:
       - "leaveScrollPanel(ScrollPanel): void"
@@ -272,7 +272,7 @@ types:
       - "visitSelectedListItem(ListItem): void"
       - "visitUnchecked(CheckBox): void"
       - "visitWindow(Window): void"
-  "com.fpetrola.tui.Window":
+  "com.fpetrola.tui.view.Window":
     kind: interface
     members:
       - "accept(ViewVisitor): void"

@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.screen.Screen;
+
+
 class TextEntryRow implements EntryRow {
   private final Screen screen;
   private final int row;

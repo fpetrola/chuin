@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.menu.StatusItem;
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.menu.StatusVisitor;
+
 import java.util.ArrayList;
 import java.util.List;
 

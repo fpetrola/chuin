@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.screen.Screen;
+
+
 /** A box drawn around an area with a border: a title centred on the top row when it has one, and a blank inside, all in one tint. */
 class Frame implements Drawing {
   private final Area area;

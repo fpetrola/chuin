@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.List;
 
 /** Keeps which one of its options is chosen, between the first and the last. */

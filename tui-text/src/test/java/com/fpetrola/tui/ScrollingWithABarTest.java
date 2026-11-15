@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;

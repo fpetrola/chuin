@@ -1,5 +1,14 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.menu.MenuBar;
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.screen.Terminal;
+import com.fpetrola.tui.view.Window;
+
+
 /** A desktop that is drawn and shown on a terminal every time it is drawn or typed into. */
 class ShownDesktop implements Desktop {
   private final Desktop desktop;

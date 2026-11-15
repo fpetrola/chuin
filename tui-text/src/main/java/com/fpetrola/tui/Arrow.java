@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.input.KeyVisitor;
+
+
 /** The arrow keys, in the order of the bytes that end their escape sequences: ESC [ A, B, C, D. */
 enum Arrow implements Key {
   UP(KeyVisitor::up),

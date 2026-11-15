@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.view.ViewVisitor;
+import com.fpetrola.tui.view.Window;
+
+
 /** Places a window a few cells away from where it is. */
 class MoveWindow implements ViewVisitor {
   private final int columns;

@@ -1,5 +1,25 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.ListItem;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.Placement;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ScrollPanel;
+import com.fpetrola.tui.view.ViewVisitor;
+import com.fpetrola.tui.view.Window;
+
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.List;

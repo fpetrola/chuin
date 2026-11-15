@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.input.KeyVisitor;
+
+
 /** A key that goes on to the windows, whatever key it is; subclasses keep the ones they handle themselves. */
 class ToWindows implements KeyVisitor {
   private final Key key;

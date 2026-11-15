@@ -1,5 +1,13 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.ViewVisitor;
+import com.fpetrola.tui.view.Window;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.io.ByteArrayInputStream;

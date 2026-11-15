@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.view.ScrollBar;
+
+
 
 /** Where a scroll bar was drawn, from its first cell on, down or across, so a click on one of its cells goes to it. */
 class BarTarget implements ClickTarget {

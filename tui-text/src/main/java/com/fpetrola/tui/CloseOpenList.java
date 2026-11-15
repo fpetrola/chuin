@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 /**
  * Closes the open list of the drop down it meets. What to do when it closes nothing is kept until the visit is over:
  * closing a list drops it, and settling runs it if it is still due.

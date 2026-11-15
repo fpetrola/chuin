@@ -1,5 +1,11 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.Window;
+
+
 /** The windows of a desktop, without its menu bar: they open, take keys and clicks, and draw themselves. */
 interface Windows {
   void open(Window window);

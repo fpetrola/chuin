@@ -1,5 +1,12 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ScrollPanel;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.function.Supplier;
 
 /** Keeps its origin within what it holds; its size is given, or follows something else's, as a window's inside does. */

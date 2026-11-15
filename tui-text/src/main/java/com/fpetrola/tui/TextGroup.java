@@ -1,5 +1,12 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.Placement;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.ArrayList;
 import java.util.List;
 

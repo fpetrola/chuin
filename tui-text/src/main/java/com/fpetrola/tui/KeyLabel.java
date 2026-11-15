@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.KeyVisitor;
+
+
 /** Writes the name a key is shown by, as in a menu or a status line: "F3", "Esc", "Alt+X", "Ctrl+W". */
 class KeyLabel implements KeyVisitor {
   private final StringBuilder label;

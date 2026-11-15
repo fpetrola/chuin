@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 /** A release of the mouse: the button it held is let go, and pressed when the release is over it. */
 class LetGo implements ViewVisitor {
   /** What the release does once the walk is over. */

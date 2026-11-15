@@ -1,5 +1,12 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.Window;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;

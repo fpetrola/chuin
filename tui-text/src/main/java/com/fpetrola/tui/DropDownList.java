@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.ArrayList;
 import java.util.List;
 

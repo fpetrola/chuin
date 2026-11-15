@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.KeyVisitor;
+
+
 /** Names a key by what it is, so two keys are the same key when their names are equal, however they were made. */
 class KeyName implements KeyVisitor {
   private final StringBuilder name;

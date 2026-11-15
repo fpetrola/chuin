@@ -1,5 +1,13 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.menu.MenuBar;
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.Window;
+
+
 public interface Desktop {
   void open(Window window);
 

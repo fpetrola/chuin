@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.menu.Menu;
+import com.fpetrola.tui.menu.MenuItem;
+
 import java.util.Optional;
 
 /** An item of a menu, with the menu it belongs to and the command it runs. */

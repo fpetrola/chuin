@@ -1,5 +1,16 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.input.Key;
+import com.fpetrola.tui.input.KeyVisitor;
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.ScrollPanel;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+import com.fpetrola.tui.view.Window;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

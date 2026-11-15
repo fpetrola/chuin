@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 /** A bar this many cells long beside what it scrolls: ▲, a track with the thumb as far along as that is, and ▼. */
 class TextScrollBar implements ScrollBar {
   /** ▲, at least one cell of track, and ▼. */

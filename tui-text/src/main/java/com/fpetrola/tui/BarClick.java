@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 /**
  * A click on a cell of a scroll bar, counted from its first: ▲ scrolls a step back, ▼ a step forward, the track a page
  * toward the click, and a press on the thumb takes it. What it does is noted while the bar walks its cells, and done after.

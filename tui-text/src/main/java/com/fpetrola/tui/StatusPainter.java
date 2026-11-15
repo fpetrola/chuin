@@ -1,5 +1,11 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.menu.StatusItem;
+import com.fpetrola.tui.menu.StatusLine;
+import com.fpetrola.tui.menu.StatusVisitor;
+import com.fpetrola.tui.screen.Screen;
+
+
 /** Draws the status line across the bottom row: each entry with a blank on each side, its marked key highlighted. */
 class StatusPainter implements StatusVisitor {
   /** The status line, like the menu bar: black on grey. */

@@ -1,5 +1,28 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.geometry.Point;
+import com.fpetrola.tui.menu.Menu;
+import com.fpetrola.tui.menu.MenuBar;
+import com.fpetrola.tui.menu.MenuItem;
+import com.fpetrola.tui.menu.MenuVisitor;
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.ButtonListener;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.ListBox;
+import com.fpetrola.tui.view.ListItem;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.Placement;
+import com.fpetrola.tui.view.ScrollBar;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+import com.fpetrola.tui.view.Window;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.argThat;

@@ -1,5 +1,13 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.Button;
+import com.fpetrola.tui.view.CheckBox;
+import com.fpetrola.tui.view.Label;
+import com.fpetrola.tui.view.Option;
+import com.fpetrola.tui.view.OptionGroup;
+import com.fpetrola.tui.view.View;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.List;
 import java.util.function.IntConsumer;
 

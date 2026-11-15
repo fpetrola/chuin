@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 class TextInputLine implements InputLine {
   private final StringBuilder text = new StringBuilder();
   private final int width;

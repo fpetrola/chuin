@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.screen.Screen;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;

@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.screen.Screen;
+import com.fpetrola.tui.view.InputLine;
+import com.fpetrola.tui.view.Window;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;

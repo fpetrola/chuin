@@ -1,5 +1,10 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Size;
+import com.fpetrola.tui.view.DropDown;
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.ViewVisitor;
+
 import java.util.List;
 import java.util.Optional;
 

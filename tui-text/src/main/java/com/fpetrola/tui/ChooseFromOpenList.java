@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.view.DropDownItem;
+import com.fpetrola.tui.view.ViewVisitor;
+
+
 /**
  * A click that may fall on an item of the focused drop down's open list, which is drawn under its field inside a frame.
  * The item under the click is chosen once the walk is over; when the click is on none, what it does otherwise runs.

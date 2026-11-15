@@ -1,5 +1,9 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.geometry.Area;
+import com.fpetrola.tui.screen.Screen;
+
+
 /** The shadow an area casts, one cell to its right and one cell below it: what is under it keeps its characters, greyed. */
 class Shadow implements Drawing {
   private static final char TINT = 's';

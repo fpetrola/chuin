@@ -1,5 +1,8 @@
 package com.fpetrola.tui;
 
+import com.fpetrola.tui.screen.Screen;
+
+
 /** Reads a marked text once: what is shown, and where in it the marked letter or letters are. */
 class TextCaption implements Caption {
   private static final char MARK = '~';
