@@ -222,27 +222,35 @@ class VisitingViewsTest {
   }
 
   @Test
-  void aListBoxSelectsTheItemOnARowCountedFromTheFirstRowShown() {
+  void anItemOnARowOfAListSelectsItself() {
     ListBox letters = toolkit.listBox(List.of("a", "b", "c", "d", "e"), 3);
+    List<ListItem> shown = new java.util.ArrayList<>();
     letters.next();
     letters.next();
     letters.next();
     letters.next();
+    letters.accept(new ViewVisitor() {
+      @Override
+      public void visitListItem(ListItem item) {
+        shown.add(item);
+      }
+    });
 
-    letters.selectShown(0);
-    assertEquals(Optional.of("c"), letters.selected());
+    shown.getFirst().select();
 
-    letters.selectShown(3);
-    letters.selectShown(-1);
+    assertEquals("c", shown.getFirst().text());
     assertEquals(Optional.of("c"), letters.selected());
   }
 
   @Test
-  void aGroupOfRadioButtonsChoosesAnOptionByItsPlaceAndIgnoresPlacesItDoesNotHave() {
+  void anOptionOfAGroupChoosesItself() {
     RadioButtons group = toolkit.radioButtons(List.of("a", "b"));
-    group.choose(1);
-    group.choose(5);
-    group.choose(-1);
+    group.accept(new ViewVisitor() {
+      @Override
+      public void visitOption(Option option) {
+        option.choose();
+      }
+    });
     group.accept(visitor);
 
     verify(visitor).visitOption(argThat(option -> option.text().equals("a")));

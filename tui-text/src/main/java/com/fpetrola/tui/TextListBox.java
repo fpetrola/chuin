@@ -34,14 +34,6 @@ class TextListBox implements ListBox {
   }
 
   @Override
-  public void selectShown(int row) {
-    int at = top + row;
-    if (row >= 0 && row < rows && at < items.size()) {
-      selected = at;
-    }
-  }
-
-  @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitListBox(this);
     for (int shown = 0; shown < rows; shown++) {
@@ -75,7 +67,7 @@ class TextListBox implements ListBox {
   }
 
   private void item(int at, ViewVisitor visitor) {
-    ListItem item = new TextListItem(this, at < items.size() ? items.get(at) : "");
+    ListItem item = new Row(at);
     Consumer<ViewVisitor> present = at == selected ? row -> row.visitSelectedListItem(item) : row -> row.visitListItem(item);
     Consumer<ViewVisitor> shown = at < items.size() ? present : row -> row.visitNoListItem(this);
     shown.accept(visitor);
@@ -89,5 +81,29 @@ class TextListBox implements ListBox {
     Consumer<ViewVisitor> up = shown == 0 ? row -> row.visitScrollUp(this) : down;
     Consumer<ViewVisitor> cell = items.size() > rows ? up : row -> row.visitNoScrollBar(this);
     cell.accept(visitor);
+  }
+
+  /** An item on a row: its place among the items, which gives its text and what selecting it does. */
+  private class Row implements ListItem {
+    private final int at;
+
+    Row(int at) {
+      this.at = at;
+    }
+
+    @Override
+    public ListBox list() {
+      return TextListBox.this;
+    }
+
+    @Override
+    public String text() {
+      return items.get(at);
+    }
+
+    @Override
+    public void select() {
+      selected = at;
+    }
   }
 }

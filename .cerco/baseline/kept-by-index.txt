@@ -1,3 +1,0 @@
-# cerco baseline v1 kept-by-index: count, key
-1	tui-text/src/main/java/com/fpetrola/tui/TextListBox.java|TextListBox
-1	tui-text/src/main/java/com/fpetrola/tui/TextRadioButtons.java|TextRadioButtons

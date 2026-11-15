@@ -12,6 +12,4 @@ public interface RadioButtons extends View {
   /** Chooses the option after, staying on the last. */
   void next();
 
-  /** Chooses the option in this place, counted from 0; does nothing for a place it does not have. */
-  void choose(int option);
 }

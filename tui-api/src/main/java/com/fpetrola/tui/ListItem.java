@@ -6,4 +6,7 @@ public interface ListItem {
   ListBox list();
 
   String text();
+
+  /** Makes this item the selected one of its list. */
+  void select();
 }

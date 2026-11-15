@@ -17,6 +17,8 @@ class ClickFocused implements ViewVisitor {
   private int walked;
   /** Whether the walk has met the thumb, so a track cell is below it. */
   private boolean pastThumb;
+  /** How many options of a group the walk has met. */
+  private int options;
 
   ClickFocused(int column, int row, Settle pending) {
     this.pending = pending;
@@ -36,8 +38,13 @@ class ClickFocused implements ViewVisitor {
 
   /** An item is selected wherever its row is clicked, unless the bar's column takes the click. */
   @Override
-  public void visitListBox(ListBox box) {
-    pending.note(() -> box.selectShown(row));
+  public void visitListItem(ListItem item) {
+    onRow(item);
+  }
+
+  @Override
+  public void visitSelectedListItem(ListItem item) {
+    onRow(item);
   }
 
   @Override
@@ -72,10 +79,29 @@ class ClickFocused implements ViewVisitor {
   }
 
   @Override
-  public void visitRadioButtons(RadioButtons group) {
-    pending.note(() -> group.choose(row));
+  public void visitOption(Option option) {
+    onOption(option);
   }
 
+  @Override
+  public void visitChosenOption(Option option) {
+    onOption(option);
+  }
+
+
+  /** Notes selecting the item on this row, when it is the one clicked and the click is off the bar's column. */
+  private void onRow(ListItem item) {
+    if (walked == row && column != item.list().width() - 1) {
+      pending.note(item::select);
+    }
+  }
+
+  /** Notes choosing the option on this row, when it is the one clicked; options take one row each. */
+  private void onOption(Option option) {
+    if (options++ == row) {
+      pending.note(option::choose);
+    }
+  }
 
   /** Notes what the bar's cell on this row does, when it is the one clicked. */
   private void onBar(ListBox box, Runnable does) {

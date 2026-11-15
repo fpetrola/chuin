@@ -24,6 +24,4 @@ public interface ListBox extends View {
   /** Selects the item a page after, a page being one fewer than the rows shown, staying on the last. */
   void pageDown();
 
-  /** Selects the item shown on this row, counted from the first row shown; does nothing on a row with no item. */
-  void selectShown(int row);
 }

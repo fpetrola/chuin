@@ -6,4 +6,7 @@ public interface Option {
   RadioButtons group();
 
   String text();
+
+  /** Makes this option the chosen one of its group. */
+  void choose();
 }

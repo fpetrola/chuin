@@ -22,17 +22,10 @@ class TextRadioButtons implements RadioButtons {
   }
 
   @Override
-  public void choose(int option) {
-    if (option >= 0 && option < options.size()) {
-      chosen = option;
-    }
-  }
-
-  @Override
   public void accept(ViewVisitor visitor) {
     visitor.visitRadioButtons(this);
     for (int at = 0; at < options.size(); at++) {
-      Option option = new TextOption(this, options.get(at));
+      Option option = new Place(at);
       if (at == chosen) {
         visitor.visitChosenOption(option);
       } else {
@@ -49,5 +42,29 @@ class TextRadioButtons implements RadioButtons {
   @Override
   public void next() {
     chosen = Math.min(options.size() - 1, chosen + 1);
+  }
+
+  /** An option of the group: its place among the options, which gives its text and what choosing it does. */
+  private class Place implements Option {
+    private final int at;
+
+    Place(int at) {
+      this.at = at;
+    }
+
+    @Override
+    public RadioButtons group() {
+      return TextRadioButtons.this;
+    }
+
+    @Override
+    public String text() {
+      return options.get(at);
+    }
+
+    @Override
+    public void choose() {
+      chosen = at;
+    }
   }
 }

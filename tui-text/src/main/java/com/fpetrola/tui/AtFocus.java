@@ -9,7 +9,7 @@ class AtFocus implements ViewVisitor {
   private final int focused;
   private final ViewVisitor action;
   private int seen;
-  /** Where the parts of the view met last go, a drop down's items or a list's scroll bar: on to the action when it is the focused one, nowhere otherwise. */
+  /** Where the parts of the view met last go, a drop down's items, a group's options or a list's rows and scroll bar: on to the action when it is the focused one, nowhere otherwise. */
   private ViewVisitor parts = NOWHERE;
 
   AtFocus(int focused, ViewVisitor action) {
@@ -53,7 +53,9 @@ class AtFocus implements ViewVisitor {
 
   @Override
   public void visitRadioButtons(RadioButtons group) {
-    if (seen++ == focused) {
+    boolean onFocused = seen++ == focused;
+    parts = onFocused ? action : NOWHERE;
+    if (onFocused) {
       action.visitRadioButtons(group);
     }
   }
@@ -102,5 +104,26 @@ class AtFocus implements ViewVisitor {
   @Override
   public void visitNoScrollBar(ListBox box) {
     parts.visitNoScrollBar(box);
+  }
+
+  /** The options of the focused group and the rows of the focused list go on to the action too. */
+  @Override
+  public void visitOption(Option option) {
+    parts.visitOption(option);
+  }
+
+  @Override
+  public void visitChosenOption(Option option) {
+    parts.visitChosenOption(option);
+  }
+
+  @Override
+  public void visitListItem(ListItem item) {
+    parts.visitListItem(item);
+  }
+
+  @Override
+  public void visitSelectedListItem(ListItem item) {
+    parts.visitSelectedListItem(item);
   }
 }

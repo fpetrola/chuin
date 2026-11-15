@@ -107,13 +107,13 @@ types:
       - "pageDown(): void"
       - "pageUp(): void"
       - "previous(): void"
-      - "selectShown(int): void"
       - "selected(): Optional<String>"
       - "width(): int"
   "com.fpetrola.tui.ListItem":
     kind: interface
     members:
       - "list(): ListBox"
+      - "select(): void"
       - "text(): String"
   "com.fpetrola.tui.Menu":
     kind: interface
@@ -146,6 +146,7 @@ types:
   "com.fpetrola.tui.Option":
     kind: interface
     members:
+      - "choose(): void"
       - "group(): RadioButtons"
       - "text(): String"
   "com.fpetrola.tui.Placement":
@@ -161,7 +162,6 @@ types:
   "com.fpetrola.tui.RadioButtons":
     kind: interface
     members:
-      - "choose(int): void"
       - "next(): void"
       - "previous(): void"
       - "width(): int"

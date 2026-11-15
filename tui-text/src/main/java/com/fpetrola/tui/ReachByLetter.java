@@ -57,10 +57,6 @@ class ReachByLetter implements ViewVisitor {
 
   /** Looks for the first view whose marked letter answers, and reaches it. */
   private class Searching implements ViewVisitor {
-    /** The group whose options are being met, and the place of the next one. */
-    private RadioButtons group;
-    private int option;
-
     @Override
     public void visitButton(Button button) {
       if (answers(button.caption())) {
@@ -86,12 +82,6 @@ class ReachByLetter implements ViewVisitor {
     }
 
     @Override
-    public void visitRadioButtons(RadioButtons met) {
-      group = met;
-      option = 0;
-    }
-
-    @Override
     public void visitOption(Option met) {
       choose(met);
     }
@@ -102,10 +92,9 @@ class ReachByLetter implements ViewVisitor {
     }
 
     private void choose(Option met) {
-      int place = option++;
       if (answers(met.text())) {
-        reach(focusable.indexOf(group));
-        group.choose(place);
+        reach(focusable.indexOf(met.group()));
+        met.choose();
       }
     }
 
