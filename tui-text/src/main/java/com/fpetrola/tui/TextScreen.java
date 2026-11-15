@@ -9,7 +9,6 @@ import java.util.Optional;
 
 /** A grid of cells; whatever is written outside it is cut off. */
 class TextScreen implements Screen {
-  private static final char UNTINTED = '.';
   private final char[][] cells;
   private final char[][] tints;
   /** Where typing goes, or nothing while the cursor is hidden. */
@@ -19,7 +18,7 @@ class TextScreen implements Screen {
     cells = new char[rows][columns];
     Arrays.stream(cells).forEach(line -> Arrays.fill(line, ' '));
     tints = new char[rows][columns];
-    Arrays.stream(tints).forEach(line -> Arrays.fill(line, UNTINTED));
+    Arrays.stream(tints).forEach(line -> Arrays.fill(line, TintRole.BARE.letter()));
   }
 
   @Override

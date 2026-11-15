@@ -26,21 +26,9 @@ import java.util.List;
 
 /** Draws the views it visits on a screen; the focused button is drawn between brackets, the focused check box with a pointer before it. */
 class Painter implements ViewVisitor {
-  private static final char WINDOW_TINT = 'w';
-  private static final char FOCUS_TINT = 'f';
   /** What a button's shadow may be drawn over: a blank cell or another button's shadow. */
   private static final String SHADE_COVERS = " ▀▄";
-  /** The field of an input line, focused or not: white on blue. */
-  private static final char FIELD_TINT = 'i';
-  /** A highlighted letter on grey, and on the green face of a button. */
-  private static final char LETTER = 'h';
-  /** Check boxes sit on cyan like groups of options, their marked letter yellow on cyan. */
-  private static final char GROUP_TINT = 'c';
-  private static final char GROUP_LETTER = 'q';
   private static final String BOX = "[ ] ";
-  private static final char BUTTON_LETTER = 'k';
-  /** The face of a button without the focus: black on green. */
-  private static final char BUTTON_TINT = 'b';
   /** The lines the frame of its window is drawn with: double for the window on top, single for the rest. */
   private final Border border;
   /** What floats over every window, drawn after them all, such as a drop down's open list. */
@@ -87,7 +75,7 @@ class Painter implements ViewVisitor {
   @Override
   public void visitWindow(Window window) {
     Area area = window.area();
-    new RaisedFrame(area, window.title(), WINDOW_TINT, border).drawOn(screen);
+    new RaisedFrame(area, window.title(), TintRole.WINDOW, border).drawOn(screen);
     inside = screen;
     column = area.column() + 1;
     row = area.row() + 1;
@@ -162,9 +150,9 @@ class Painter implements ViewVisitor {
     for (int cell = 1; cell <= face.length(); cell++) {
       shade(column + cell, row + 1, '▀');
     }
-    inside.paint(column, row, face.length(), BUTTON_TINT);
+    TintRole.BUTTON.paint(inside, column, row, face.length());
     next(face.length());
-    caption.highlight(inside, column + 2, row, BUTTON_LETTER);
+    caption.highlight(inside, column + 2, row, TintRole.FOCUS_LETTER);
   }
 
   /** Moves the face just drawn a cell to the right and takes its shadow away, the button tint going with it. */
@@ -178,16 +166,16 @@ class Painter implements ViewVisitor {
       unshade(column + cell, row + 1);
     }
     inside.write(column, row, " " + face);
-    inside.paint(column, row, 1, WINDOW_TINT);
+    TintRole.WINDOW.paint(inside, column, row, 1);
     inside.paint(column + 1, row, face.length(), tint);
-    caption.highlight(inside, column + 3, row, BUTTON_LETTER);
+    caption.highlight(inside, column + 3, row, TintRole.FOCUS_LETTER);
   }
 
   @Override
   public void visitLabel(Label label) {
     Caption caption = new TextCaption(label.text());
     inside.write(column, row, caption.shown());
-    caption.highlight(inside, column, row, LETTER);
+    caption.highlight(inside, column, row, TintRole.LETTER);
   }
 
   @Override
@@ -197,9 +185,9 @@ class Painter implements ViewVisitor {
     if (seen == focused) {
       inside.write(column - 1, row, ">");
     }
-    inside.paint(column, row, cells, GROUP_TINT);
+    TintRole.GROUP.paint(inside, column, row, cells);
     next(cells);
-    caption.highlight(inside, column + BOX.length(), row, seen - 1 == focused ? BUTTON_LETTER : GROUP_LETTER);
+    caption.highlight(inside, column + BOX.length(), row, seen - 1 == focused ? TintRole.FOCUS_LETTER : TintRole.GROUP_LETTER);
   }
 
   @Override
@@ -219,7 +207,7 @@ class Painter implements ViewVisitor {
     String text = line.text();
     int cells = line.size().columns();
     inside.write(column, row, text + " ".repeat(cells - text.length()));
-    inside.paint(column, row, cells, FIELD_TINT);
+    TintRole.FIELD.paint(inside, column, row, cells);
     drawn.add(new TextArea(column, row, cells, 1));
     if (seen++ == focused) {
       inside.showCursorAt(new TextPoint(column + Math.min(text.length(), cells - 1), row));
@@ -231,7 +219,7 @@ class Painter implements ViewVisitor {
     List<String> lines = inside.lines();
     boolean onScreen = line >= 0 && line < lines.size() && at >= 0 && at < lines.get(line).length();
     boolean free = onScreen && SHADE_COVERS.indexOf(lines.get(line).charAt(at)) >= 0;
-    if (free && inside.tints().get(line).charAt(at) == WINDOW_TINT) {
+    if (free && inside.tints().get(line).charAt(at) == TintRole.WINDOW.letter()) {
       inside.write(at, line, String.valueOf(cell));
     }
   }
@@ -249,7 +237,7 @@ class Painter implements ViewVisitor {
   private void next(int cells) {
     drawn.add(new TextArea(column, row, cells, 1));
     if (seen++ == focused) {
-      inside.paint(column, row, cells, FOCUS_TINT);
+      TintRole.FOCUS.paint(inside, column, row, cells);
     }
   }
 
@@ -322,7 +310,7 @@ class Painter implements ViewVisitor {
     int width = dropDown.width();
     String chosen = dropDown.chosen().orElse("");
     inside.write(column, row, chosen + " ".repeat(width - chosen.length()) + "↓");
-    inside.paint(column, row, dropDown.size().columns(), FIELD_TINT);
+    TintRole.FIELD.paint(inside, column, row, dropDown.size().columns());
     drawn.add(new TextArea(column, row, dropDown.size().columns(), 1));
     seen++;
     DropDownList opened = new DropDownList(column, row + 1, width);

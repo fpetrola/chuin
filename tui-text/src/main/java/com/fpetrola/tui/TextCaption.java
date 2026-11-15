@@ -42,9 +42,9 @@ class TextCaption implements Caption {
   }
 
   @Override
-  public void highlight(Screen screen, int column, int row, char tint) {
+  public void highlight(Screen screen, int column, int row, Tint tint) {
     if (marked != NONE) {
-      screen.paint(column + marked, row, length, tint);
+      tint.paint(screen, column + marked, row, length);
     }
   }
 

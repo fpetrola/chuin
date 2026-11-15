@@ -15,12 +15,6 @@ import java.util.Optional;
  * it, the selected item highlighted. Items of the menus that are not open are met and left alone.
  */
 class MenuPainter implements MenuVisitor {
-  /** The menu bar and open menus: black on grey, a tint of their own apart from the windows'. */
-  private static final char BAR_TINT = 'm';
-  private static final char CHOSEN_TINT = 'f';
-  /** A highlighted letter on grey, and on the green of the open title and the chosen item. */
-  private static final char LETTER = 'h';
-  private static final char CHOSEN_LETTER = 'k';
   private final Screen screen;
   private final Optional<Menu> open;
   private final int selected;
@@ -42,14 +36,14 @@ class MenuPainter implements MenuVisitor {
   public void visitMenuBar(MenuBar bar) {
     int columns = screen.lines().getFirst().length();
     screen.write(0, 0, " ".repeat(columns));
-    screen.paint(0, 0, columns, BAR_TINT);
+    TintRole.MENU.paint(screen, 0, 0, columns);
   }
 
   @Override
   public void visitMenu(Menu menu) {
     boolean chosen = open.filter(menu::equals).isPresent();
     boxColumn = chosen ? titles.next() : boxColumn;
-    titles.put(new TextCaption(menu.title()), chosen ? CHOSEN_TINT : BAR_TINT, chosen ? CHOSEN_LETTER : LETTER);
+    titles.put(new TextCaption(menu.title()), chosen ? TintRole.FOCUS : TintRole.MENU, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
   }
 
   @Override
@@ -71,7 +65,7 @@ class MenuPainter implements MenuVisitor {
   /** Draws the open menu's box with the rows met so far: it is drawn again, one row taller, with each. */
   private void box(Menu menu) {
     int width = menu.width();
-    new RaisedFrame(new TextArea(boxColumn, 1, width, rows.size() + 2), "", BAR_TINT, Line.SINGLE).drawOn(screen);
+    new RaisedFrame(new TextArea(boxColumn, 1, width, rows.size() + 2), "", TintRole.MENU, Line.SINGLE).drawOn(screen);
     int item = 0;
     for (int row = 0; row < rows.size(); row++) {
       if (rows.get(row).isEmpty()) {
@@ -79,12 +73,12 @@ class MenuPainter implements MenuVisitor {
       } else {
         boolean chosen = item++ == selected;
         if (chosen) {
-          screen.paint(boxColumn + 1, 2 + row, width - 2, CHOSEN_TINT);
+          TintRole.FOCUS.paint(screen, boxColumn + 1, 2 + row, width - 2);
         }
         MenuItem shown = rows.get(row).get();
         Caption caption = new TextCaption(shown.text());
         screen.write(boxColumn + 2, 2 + row, caption.shown());
-        caption.highlight(screen, boxColumn + 2, 2 + row, chosen ? CHOSEN_LETTER : LETTER);
+        caption.highlight(screen, boxColumn + 2, 2 + row, chosen ? TintRole.FOCUS_LETTER : TintRole.LETTER);
         String key = shown.key().map(bound -> new KeyCaption(bound).shown()).orElse("");
         screen.write(boxColumn + width - 2 - key.length(), 2 + row, key);
       }

@@ -9,5 +9,5 @@ interface EntryRow {
   int next();
 
   /** Draws the next entry in a tint, its marked letters in another, and moves past it. */
-  void put(Caption caption, char tint, char letter);
+  void put(Caption caption, Tint tint, Tint letter);
 }

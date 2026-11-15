@@ -18,7 +18,7 @@ types:
     members:
       - "answers(char): boolean"
       - "entryWidth(): int"
-      - "highlight(Screen, int, int, char): void"
+      - "highlight(Screen, int, int, Tint): void"
       - "shown(): String"
   "com.fpetrola.tui.ClickTarget":
     kind: interface
@@ -36,7 +36,7 @@ types:
     kind: interface
     members:
       - "next(): int"
-      - "put(Caption, char, char): void"
+      - "put(Caption, Tint, Tint): void"
   "com.fpetrola.tui.Grab":
     kind: interface
     members:
@@ -77,6 +77,11 @@ types:
     members:
       - "<init>()"
       - "<init>(Map<String,String>)"
+  "com.fpetrola.tui.Tint":
+    kind: interface
+    members:
+      - "letter(): char"
+      - "paint(Screen, int, int, int): void"
   "com.fpetrola.tui.Windows":
     kind: interface
     members:

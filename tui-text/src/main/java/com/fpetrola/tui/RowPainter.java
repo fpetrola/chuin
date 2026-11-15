@@ -16,12 +16,6 @@ import java.util.List;
  * its text. The selected row is tinted when the view has the focus.
  */
 class RowPainter implements ViewVisitor {
-  private static final char FOCUS_TINT = 'f';
-  /** The field a group of options sits on: black on cyan. */
-  private static final char GROUP_TINT = 'c';
-  /** A marked letter on cyan, and on the green of a focused choice. */
-  private static final char GROUP_LETTER = 'q';
-  private static final char FOCUS_LETTER = 'k';
   /** The blank and the scroll bar cell after a list item. */
   private static final int BESIDE_ITEM = 2;
   private final Screen screen;
@@ -91,19 +85,19 @@ class RowPainter implements ViewVisitor {
 
   @Override
   public void visitOption(Option option) {
-    screen.paint(at.column(), at.row() + shown, at.columns(), GROUP_TINT);
-    optionRow("( ) ", option, GROUP_LETTER);
+    TintRole.GROUP.paint(screen, at.column(), at.row() + shown, at.columns());
+    optionRow("( ) ", option, TintRole.GROUP_LETTER);
   }
 
   @Override
   public void visitChosenOption(Option option) {
-    screen.paint(at.column(), at.row() + shown, at.columns(), GROUP_TINT);
+    TintRole.GROUP.paint(screen, at.column(), at.row() + shown, at.columns());
     tint(at.columns());
-    optionRow("(•) ", option, focused ? FOCUS_LETTER : GROUP_LETTER);
+    optionRow("(•) ", option, focused ? TintRole.FOCUS_LETTER : TintRole.GROUP_LETTER);
   }
 
   /** Writes an option after its mark, its marked letter highlighted. */
-  private void optionRow(String mark, Option option, char letter) {
+  private void optionRow(String mark, Option option, Tint letter) {
     Caption caption = new TextCaption(option.text());
     caption.highlight(screen, at.column() + mark.length(), at.row() + shown, letter);
     nextRow(mark + caption.shown());
@@ -117,7 +111,7 @@ class RowPainter implements ViewVisitor {
 
   private void tint(int cells) {
     if (focused) {
-      screen.paint(at.column(), at.row() + shown, cells, FOCUS_TINT);
+      TintRole.FOCUS.paint(screen, at.column(), at.row() + shown, cells);
     }
   }
 }

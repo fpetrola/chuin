@@ -12,9 +12,9 @@ class PuttingEntriesInARowTest {
     Screen screen = new TextToolkit().screen(16, 1);
     EntryRow row = new TextEntryRow(screen, 0);
 
-    row.put(new TextCaption("~D~atei"), 'w', 'h');
+    row.put(new TextCaption("~D~atei"), TintRole.WINDOW, TintRole.LETTER);
     int second = row.next();
-    row.put(new TextCaption("~F3~ X"), 'f', 'k');
+    row.put(new TextCaption("~F3~ X"), TintRole.FOCUS, TintRole.FOCUS_LETTER);
 
     assertEquals(7, second);
     assertEquals(13, row.next());

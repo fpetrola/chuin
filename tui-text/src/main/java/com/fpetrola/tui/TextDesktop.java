@@ -20,8 +20,6 @@ import java.util.function.BinaryOperator;
 
 class TextDesktop implements Windows {
   private final List<Window> opened = new ArrayList<>();
-  /** The tint of a cell no window covers. */
-  private static final char BARE = '.';
   /** A focus no view has: windows below the top one are drawn with it. */
   private static final int UNFOCUSED = -1;
   private static final Runnable NOTHING = () -> { };
@@ -250,7 +248,7 @@ class TextDesktop implements Windows {
     for (int row = 0; row < lines.size(); row++) {
       int columns = lines.get(row).length();
       screen.write(0, row, " ".repeat(columns));
-      screen.paint(0, row, columns, BARE);
+      TintRole.BARE.paint(screen, 0, row, columns);
     }
   }
 

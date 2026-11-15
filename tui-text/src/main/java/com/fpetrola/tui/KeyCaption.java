@@ -20,7 +20,7 @@ class KeyCaption implements Caption {
   }
 
   @Override
-  public void highlight(Screen screen, int column, int row, char tint) {
+  public void highlight(Screen screen, int column, int row, Tint tint) {
   }
 
   @Override

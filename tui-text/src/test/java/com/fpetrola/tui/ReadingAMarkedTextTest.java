@@ -14,7 +14,7 @@ class ReadingAMarkedTextTest {
   void aCaptionShowsItsTextWithoutTheMarksAndHighlightsTheMarkedLetter() {
     Caption caption = new TextCaption("Be~e~nden");
 
-    caption.highlight(screen, 1, 0, 'h');
+    caption.highlight(screen, 1, 0, TintRole.LETTER);
 
     assertEquals("Beenden", caption.shown());
     assertEquals("...h......", screen.tints().getFirst());
@@ -24,7 +24,7 @@ class ReadingAMarkedTextTest {
   void twoTildesAreOneTildeAndATextWithNoMarkHighlightsNothing() {
     Caption caption = new TextCaption("a~~b");
 
-    caption.highlight(screen, 0, 0, 'h');
+    caption.highlight(screen, 0, 0, TintRole.LETTER);
 
     assertEquals("a~b", caption.shown());
     assertEquals("..........", screen.tints().getFirst());
@@ -51,7 +51,7 @@ class ReadingAMarkedTextTest {
     Caption key = new TextCaption("~F3~ Laden");
     Caption odd = new TextCaption("~Ab~c");
 
-    key.highlight(screen, 0, 0, 'h');
+    key.highlight(screen, 0, 0, TintRole.LETTER);
 
     assertEquals("F3 Laden", key.shown());
     assertEquals("hh........", screen.tints().getFirst());
@@ -64,7 +64,7 @@ class ReadingAMarkedTextTest {
   void theCaptionOfAKeyIsItsNameAndHasNoMarkedLetter() {
     Caption f3 = new KeyCaption(toolkit.functionKey(3));
 
-    f3.highlight(screen, 0, 0, 'h');
+    f3.highlight(screen, 0, 0, TintRole.LETTER);
 
     assertEquals("F3", f3.shown());
     assertEquals("Esc", new KeyCaption(toolkit.escapeKey()).shown());

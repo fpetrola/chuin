@@ -21,17 +21,17 @@ enum DosPalette implements Palette {
   DosPalette(BinaryOperator<String> pair, String black, String blue, String green, String cyan, String red, String grey,
       String darkGrey, String brightYellow, String brightWhite) {
     this.tints = Map.ofEntries(
-        Map.entry('.', pair.apply(grey, blue)),
-        Map.entry('w', pair.apply(black, grey)),
-        Map.entry('m', pair.apply(black, grey)),
-        Map.entry('f', pair.apply(brightWhite, green)),
-        Map.entry('b', pair.apply(black, green)),
-        Map.entry('i', pair.apply(brightWhite, blue)),
-        Map.entry('h', pair.apply(red, grey)),
-        Map.entry('k', pair.apply(brightYellow, green)),
-        Map.entry('c', pair.apply(black, cyan)),
-        Map.entry('q', pair.apply(brightYellow, cyan)),
-        Map.entry('s', pair.apply(darkGrey, black)));
+        Map.entry(TintRole.BARE.letter(), pair.apply(grey, blue)),
+        Map.entry(TintRole.WINDOW.letter(), pair.apply(black, grey)),
+        Map.entry(TintRole.MENU.letter(), pair.apply(black, grey)),
+        Map.entry(TintRole.FOCUS.letter(), pair.apply(brightWhite, green)),
+        Map.entry(TintRole.BUTTON.letter(), pair.apply(black, green)),
+        Map.entry(TintRole.FIELD.letter(), pair.apply(brightWhite, blue)),
+        Map.entry(TintRole.LETTER.letter(), pair.apply(red, grey)),
+        Map.entry(TintRole.FOCUS_LETTER.letter(), pair.apply(brightYellow, green)),
+        Map.entry(TintRole.GROUP.letter(), pair.apply(black, cyan)),
+        Map.entry(TintRole.GROUP_LETTER.letter(), pair.apply(brightYellow, cyan)),
+        Map.entry(TintRole.SHADOW.letter(), pair.apply(darkGrey, black)));
   }
 
   @Override

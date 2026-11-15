@@ -8,10 +8,10 @@ import com.fpetrola.tui.screen.Screen;
 class Frame implements Drawing {
   private final Area area;
   private final String title;
-  private final char tint;
+  private final Tint tint;
   private final Border border;
 
-  Frame(Area area, String title, char tint, Border border) {
+  Frame(Area area, String title, Tint tint, Border border) {
     this.area = area;
     this.title = title;
     this.tint = tint;
@@ -28,7 +28,7 @@ class Frame implements Drawing {
     }
     screen.write(area.column(), area.row() + last, border.bottom(inner));
     for (int line = 0; line <= last; line++) {
-      screen.paint(area.column(), area.row() + line, area.columns(), tint);
+      tint.paint(screen, area.column(), area.row() + line, area.columns());
     }
   }
 }

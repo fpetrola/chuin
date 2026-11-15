@@ -19,10 +19,10 @@ class TextEntryRow implements EntryRow {
   }
 
   @Override
-  public void put(Caption caption, char tint, char letter) {
+  public void put(Caption caption, Tint tint, Tint letter) {
     String entry = " " + caption.shown() + " ";
     screen.write(column, row, entry);
-    screen.paint(column, row, caption.entryWidth(), tint);
+    tint.paint(screen, column, row, caption.entryWidth());
     caption.highlight(screen, column + 1, row, letter);
     column += caption.entryWidth();
   }

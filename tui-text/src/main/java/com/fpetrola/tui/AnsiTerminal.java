@@ -14,8 +14,6 @@ import java.util.stream.IntStream;
 class AnsiTerminal implements Terminal {
   private static final String ESC = "\u001b[";
   private static final String RESET = ESC + "0m";
-  /** The tint of a cell no window or menu covers. */
-  private static final char BARE = '.';
   /** What a blank cell of the bare desktop is shown as, the way Turbo Vision fills its background. */
   private static final char PATTERN = '░';
   /** The colours each tint is shown in. */
@@ -53,7 +51,7 @@ class AnsiTerminal implements Terminal {
         text.append(ESC).append(palette.colors(current)).append('m');
       }
       char cell = line.charAt(column);
-      text.append(cell == ' ' && current == BARE ? PATTERN : cell);
+      text.append(cell == ' ' && current == TintRole.BARE.letter() ? PATTERN : cell);
     }
   }
 }

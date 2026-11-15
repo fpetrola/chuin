@@ -8,9 +8,6 @@ import com.fpetrola.tui.screen.Screen;
 
 /** Draws the status line across the bottom row: each entry with a blank on each side, its marked key highlighted. */
 class StatusPainter implements StatusVisitor {
-  /** The status line, like the menu bar: black on grey. */
-  private static final char TINT = 'm';
-  private static final char LETTER = 'h';
   private final Screen screen;
   /** The bottom row, which takes the entries left to right. */
   private final EntryRow entries;
@@ -25,11 +22,11 @@ class StatusPainter implements StatusVisitor {
     int columns = screen.lines().getFirst().length();
     int row = screen.lines().size() - 1;
     screen.write(0, row, " ".repeat(columns));
-    screen.paint(0, row, columns, TINT);
+    TintRole.MENU.paint(screen, 0, row, columns);
   }
 
   @Override
   public void visitStatusItem(StatusItem item) {
-    entries.put(new TextCaption(item.text()), TINT, LETTER);
+    entries.put(new TextCaption(item.text()), TintRole.MENU, TintRole.LETTER);
   }
 }

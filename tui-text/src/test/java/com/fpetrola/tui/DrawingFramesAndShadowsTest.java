@@ -14,7 +14,7 @@ class DrawingFramesAndShadowsTest {
   @Test
   void aRaisedFrameDrawsItsBorderTitleAndInsideInItsTintAndCastsAShadow() {
     Area area = new TextArea(0, 0, 6, 3);
-    Drawing raised = new RaisedFrame(area, "A", 'w', Line.SINGLE);
+    Drawing raised = new RaisedFrame(area, "A", TintRole.WINDOW, Line.SINGLE);
 
     raised.drawOn(screen);
 
@@ -34,7 +34,7 @@ class DrawingFramesAndShadowsTest {
 
   @Test
   void aFrameWithNoTitleIsAPlainBorder() {
-    Drawing frame = new Frame(new TextArea(1, 1, 4, 3), "", 'w', Line.SINGLE);
+    Drawing frame = new Frame(new TextArea(1, 1, 4, 3), "", TintRole.WINDOW, Line.SINGLE);
 
     frame.drawOn(screen);
 
@@ -44,7 +44,7 @@ class DrawingFramesAndShadowsTest {
   @Test
   void aDoubledFrameIsDrawnWithDoubleLines() {
     Border border = Line.DOUBLE;
-    new Frame(new TextArea(1, 1, 4, 3), "", 'w', border).drawOn(screen);
+    new Frame(new TextArea(1, 1, 4, 3), "", TintRole.WINDOW, border).drawOn(screen);
 
     assertEquals("╔══╗", border.top("", 2));
     assertEquals("║  ║", border.middle(2));
