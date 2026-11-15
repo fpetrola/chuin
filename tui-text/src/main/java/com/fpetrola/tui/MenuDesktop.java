@@ -133,13 +133,11 @@ class MenuDesktop implements Desktop {
   private List<PlacedTitle> placed() {
     List<PlacedTitle> placed = new ArrayList<>();
     bar.accept(new MenuVisitor() {
-      /** Where the next title starts: where the one before ends. */
-      private int start;
+      private final EntryPlacer placer = new TextEntryPlacer();
 
       @Override
       public void visitMenu(Menu menu) {
-        placed.add(new TextPlacedTitle(menu, start));
-        start += new TextCaption(menu.title()).entryWidth();
+        placed.add(new TextPlacedTitle(menu, placer.place(new TextCaption(menu.title()))));
       }
     });
     return placed;

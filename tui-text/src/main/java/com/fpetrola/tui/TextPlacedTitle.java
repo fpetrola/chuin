@@ -16,11 +16,11 @@ class TextPlacedTitle implements PlacedTitle {
   /** The bar's row, above the open menu's frame. */
   private static final int BAR_ROWS = 1;
   private final Menu menu;
-  private final int start;
+  private final PlacedEntry entry;
 
-  TextPlacedTitle(Menu menu, int start) {
+  TextPlacedTitle(Menu menu, PlacedEntry entry) {
     this.menu = menu;
-    this.start = start;
+    this.entry = entry;
   }
 
   @Override
@@ -30,8 +30,7 @@ class TextPlacedTitle implements PlacedTitle {
 
   @Override
   public boolean covers(Point cell) {
-    int width = new TextCaption(menu.title()).entryWidth();
-    return cell.row() == 0 && cell.column() >= start && cell.column() < start + width;
+    return cell.row() == 0 && entry.covers(cell.column());
   }
 
   @Override
@@ -86,7 +85,7 @@ class TextPlacedTitle implements PlacedTitle {
 
   /** What the open menu's frame holds, this many rows of items and separators: under the bar and the frame's top line. */
   private Area items(int rows) {
-    return Line.SINGLE.holding(new TextPoint(start, BAR_ROWS), new TextSize(menu.width(), rows));
+    return Line.SINGLE.holding(new TextPoint(entry.start(), BAR_ROWS), new TextSize(menu.width(), rows));
   }
 
   /** The rows of the menu, top to bottom: an item, or nothing for a separator. */

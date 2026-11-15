@@ -35,10 +35,13 @@ types:
     kind: interface
     members:
       - "drawOn(Screen): void"
+  "com.fpetrola.tui.EntryPlacer":
+    kind: interface
+    members:
+      - "place(Caption): PlacedEntry"
   "com.fpetrola.tui.EntryRow":
     kind: interface
     members:
-      - "next(): int"
       - "put(Caption, Tint, Tint): void"
   "com.fpetrola.tui.FocusOrder":
     kind: interface
@@ -56,6 +59,11 @@ types:
     kind: interface
     members:
       - "colors(char): String"
+  "com.fpetrola.tui.PlacedEntry":
+    kind: interface
+    members:
+      - "covers(int): boolean"
+      - "start(): int"
   "com.fpetrola.tui.PlacedTitle":
     kind: interface
     members:

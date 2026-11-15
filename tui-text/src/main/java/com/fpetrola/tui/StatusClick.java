@@ -7,7 +7,7 @@ import com.fpetrola.tui.menu.StatusVisitor;
 /** Runs the entry of the status line that covers a column of the bottom row, if any does. */
 class StatusClick implements StatusVisitor {
   private final int clicked;
-  private int column;
+  private final EntryPlacer placer = new TextEntryPlacer();
 
   StatusClick(int clicked) {
     this.clicked = clicked;
@@ -15,10 +15,8 @@ class StatusClick implements StatusVisitor {
 
   @Override
   public void visitStatusItem(StatusItem item) {
-    int width = new TextCaption(item.text()).entryWidth();
-    if (clicked >= column && clicked < column + width) {
+    if (placer.place(new TextCaption(item.text())).covers(clicked)) {
       item.run();
     }
-    column += width;
   }
 }

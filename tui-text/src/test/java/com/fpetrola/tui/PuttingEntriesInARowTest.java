@@ -13,12 +13,24 @@ class PuttingEntriesInARowTest {
     EntryRow row = new TextEntryRow(screen, 0);
 
     row.put(new TextCaption("~D~atei"), TintRole.WINDOW, TintRole.LETTER);
-    int second = row.next();
     row.put(new TextCaption("~F3~ X"), TintRole.FOCUS, TintRole.FOCUS_LETTER);
 
-    assertEquals(7, second);
-    assertEquals(13, row.next());
     assertEquals(" Datei  F3 X    ", screen.lines().getFirst());
     assertEquals("whwwwwwfkkfff...", screen.tints().getFirst());
+  }
+
+  @Test
+  void eachEntryIsPlacedWhereTheOneBeforeEndsAndCoversItsCaptionAndABlankOnEachSide() {
+    EntryPlacer placer = new TextEntryPlacer();
+
+    PlacedEntry file = placer.place(new TextCaption("~D~atei"));
+    PlacedEntry load = placer.place(new TextCaption("~F3~ X"));
+
+    assertEquals(0, file.start());
+    assertEquals(7, load.start());
+    assertEquals(true, file.covers(6));
+    assertEquals(false, file.covers(7));
+    assertEquals(true, load.covers(12));
+    assertEquals(false, load.covers(13));
   }
 }

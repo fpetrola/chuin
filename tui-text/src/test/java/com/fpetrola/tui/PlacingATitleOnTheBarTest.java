@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 class PlacingATitleOnTheBarTest {
   private final Toolkit toolkit = new TextToolkit();
   private final Menu file = toolkit.menu("~A~rchivo");
-  private final PlacedTitle title = new TextPlacedTitle(file, 3);
+  private final PlacedTitle title = new TextPlacedTitle(file, new TextPlacedEntry(3, new TextCaption(file.title())));
 
   PlacingATitleOnTheBarTest() {
     file.add("~G~uardar", () -> { });
