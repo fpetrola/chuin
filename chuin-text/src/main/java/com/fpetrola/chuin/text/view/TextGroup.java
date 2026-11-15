@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /** Views placed together: visiting it goes on to each placement; it is as big as reaches its farthest view. */
-public class TextGroup implements Group {
+class TextGroup implements Group {
   /** The placements it is made of, in the order they were added. */
   private final List<Placement> placements = new ArrayList<>();
 

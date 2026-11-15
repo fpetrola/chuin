@@ -131,7 +131,7 @@ ea76c46575a2562f44bcd1226eaec074c84a96d248774e0ea9211fa22cfbc18a	chuin-text/src/
 9bfc571416533de4a1b91e90b7b57c5e6127cb5c6d5f44f9f7ff08eb286c0e04	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextCheckBox.java
 bac52e114a55bd8c8d65f24bc45d3f15da70cf9936427e55c15980366d1bd7d9	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextCursor.java
 f73e0da959bcb8aa423a44098f4976d101dad0d40f72b7494cb40b25dce26495	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextDropDown.java
-ed1200623dac382cff08228e39f76382e688b7ae5b75f2695a18af4142290aa6	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextGroup.java
+0abe4806cfb0193aab2b26453d77396d46239846c9453df0218abd334e3cabdb	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextGroup.java
 af50a3a09e6393b721bd38c79bbbecc5c0d14f233bc43f721d776eca836f044b	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextInputLine.java
 0aa43629d41073f715ba4eaef9fc9193aa013ddae33087094a59e943c07b830d	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextLabel.java
 7be524d3dfda3796dcb85760feafe358684a3a45bcb5efc42a97c83662cd510b	chuin-text/src/main/java/com/fpetrola/chuin/text/view/TextListBox.java
@@ -167,7 +167,7 @@ b39de6f6f88e23c6d9fe4b73a3cdd95ff5515795fd6beda2993ffae9309331a3	chuin-text/src/
 13b9202d21b2106075aba2cac0b4689306c339fd93acbd35a1137936f5dc0d3f	chuin-text/src/test/java/com/fpetrola/chuin/ReadingWhatWasEnteredTest.java
 76dac1bbceabc6e13be6a78473c063a0f2b90cfe5944f543032c7c52ea915d46	chuin-text/src/test/java/com/fpetrola/chuin/RunningOnAConsoleTest.java
 0c5cc1d58b125fcf11bda042cd65600ca1c76b4314263a26e629ebee9c10a590	chuin-text/src/test/java/com/fpetrola/chuin/ScrollingAListBoxTest.java
-4d3be22509e1dbf91e37de2fe8ccda2f1b1e464439a03266c82d3541d0d4fe6f	chuin-text/src/test/java/com/fpetrola/chuin/ScrollingAWindowTest.java
+b2fbcd0a2ee4f777d335ac1d4f57f8adbae4783102a9db36f3f65b1a91fd0410	chuin-text/src/test/java/com/fpetrola/chuin/ScrollingAWindowTest.java
 36d877155d04ea6dabc6118736807c1333da9c4b8b1fd09ffc3975808c5087d2	chuin-text/src/test/java/com/fpetrola/chuin/SeeingAButtonTest.java
 b1bc7c7b6d76f18b11e42f788403821c1d7f7c180bdfcaf7a5df51dbe32ddf3a	chuin-text/src/test/java/com/fpetrola/chuin/SeeingAFullMenuTest.java
 059c9d16d002eddd8486ece9181c3efd7535d52d4f6f3916475ff54af13e2c3a	chuin-text/src/test/java/com/fpetrola/chuin/SeeingAGroupOfOptionsTest.java
@@ -205,6 +205,7 @@ b011a8fad4597b28eaf085196b0efaf3cc1b941f161afe5bdf25533563c80d3a	chuin-text/src/
 42d339c9e6808f36b49ee32b5869a2cc672ce127b8df768cc45ae923c6637150	chuin-text/src/test/java/com/fpetrola/chuin/text/pointer/SettlingAfterAVisitTest.java
 12e0750013f027a30a9e6174449ccbe0a03793b1a1964f413bcf554d6f074a4e	chuin-text/src/test/java/com/fpetrola/chuin/text/screen/MakingScreensTest.java
 9e5d051c49eeb2a69f07b3c2cc1bee20ae340f864f637f36eb1993aa41dfe9dd	chuin-text/src/test/java/com/fpetrola/chuin/text/screen/TintingCellsTest.java
+c29ea968002320b86e562e8eda63d024d38ab93811d4cc3091a14ac39ef07318	chuin-text/src/test/java/com/fpetrola/chuin/text/view/GroupingViewsTest.java
 0a1c34c61e011176ef2a6753d0af42112f9c10fbbe1e45bfd77b46f5f991de4f	chuin-text/src/test/java/com/fpetrola/chuin/text/view/KeepingACursorAmongPlacesTest.java
 6578329045834a449b39bea81475688e6a9b162634547d0c5225407ef111d4bf	chuin-text/src/test/java/com/fpetrola/chuin/text/view/MakingViewsTest.java
 06cca33611b9b8fad1ad5fb58ac2d8e8d35b999b0bae784ba1613bf68593e0c4	chuin-text/src/test/java/com/fpetrola/chuin/text/view/ScrollingWithABarTest.java

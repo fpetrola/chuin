@@ -5,8 +5,6 @@ import com.fpetrola.chuin.text.pointer.Grab;
 import com.fpetrola.chuin.text.pointer.Dragging;
 import com.fpetrola.chuin.text.pointer.BarTarget;
 import com.fpetrola.chuin.text.pointer.TextBarLine;
-import com.fpetrola.chuin.text.view.TextGroup;
-import com.fpetrola.chuin.text.view.Group;
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.view.Button;
@@ -257,25 +255,6 @@ class ScrollingAWindowTest {
 
     panel.horizontal().pageDown();
     assertEquals(toolkit.point(10, 0), panel.origin());
-  }
-
-  /** A group keeps the views placed in it, visits them in the order added, and reaches as far as its farthest view. */
-  @Test
-  void aGroupVisitsItsViewsInOrderAndIsAsBigAsItsFarthestView() {
-    Group group = new TextGroup();
-    StringBuilder met = new StringBuilder();
-    group.add(toolkit.label("uno"), toolkit.point(4, 0));
-    group.add(toolkit.label("dos"), toolkit.point(0, 2));
-
-    group.accept(new ViewVisitor() {
-      @Override
-      public void visitLabel(Label label) {
-        met.append(label.text()).append(' ');
-      }
-    });
-
-    assertEquals("uno dos ", met.toString());
-    assertEquals("7x3", group.size().columns() + "x" + group.size().rows());
   }
 
   /** A view out of sight takes no click, not even where it would be if the window showed it. */
