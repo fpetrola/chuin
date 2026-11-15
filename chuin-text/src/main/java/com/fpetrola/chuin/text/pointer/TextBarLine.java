@@ -1,15 +1,15 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.pointer;
 
 import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.geometry.Point;
 
 
 /** A bar lying from its first cell on, each next cell a step further: (0, 1) down, (1, 0) across. */
-class TextBarLine implements BarLine {
+public class TextBarLine implements BarLine {
   private final Point from;
   private final Point step;
 
-  TextBarLine(Point from, Point step) {
+  public TextBarLine(Point from, Point step) {
     this.from = from;
     this.step = step;
   }

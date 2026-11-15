@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.BarLine;
 import com.fpetrola.chuin.geometry.Point;
 import com.fpetrola.chuin.screen.Screen;
 import com.fpetrola.chuin.view.ScrollBar;

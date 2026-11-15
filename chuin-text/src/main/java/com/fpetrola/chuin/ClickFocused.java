@@ -1,5 +1,10 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.Grab;
+import com.fpetrola.chuin.text.pointer.BarClick;
+import com.fpetrola.chuin.text.pointer.BarLine;
+import com.fpetrola.chuin.text.pointer.TextBarLine;
+import com.fpetrola.chuin.text.pointer.Settle;
 import com.fpetrola.chuin.text.geometry.TextPoint;
 import com.fpetrola.chuin.view.Button;
 import com.fpetrola.chuin.view.CheckBox;

@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.pointer;
 
 import com.fpetrola.chuin.view.ScrollBar;
 import com.fpetrola.chuin.view.ViewVisitor;
@@ -9,7 +9,7 @@ import com.fpetrola.chuin.view.ViewVisitor;
  * toward the click, and a press on the thumb takes it, so the drag that follows moves it along the bar. What it does
  * is noted while the bar walks its cells, and done after.
  */
-class BarClick implements ViewVisitor {
+public class BarClick implements ViewVisitor {
   private final int at;
   private final Settle pending;
   private final BarLine line;
@@ -18,7 +18,7 @@ class BarClick implements ViewVisitor {
   private int walked;
   private boolean pastThumb;
 
-  BarClick(int at, Settle pending, BarLine line, Grab grab) {
+  public BarClick(int at, Settle pending, BarLine line, Grab grab) {
     this.at = at;
     this.pending = pending;
     this.line = line;

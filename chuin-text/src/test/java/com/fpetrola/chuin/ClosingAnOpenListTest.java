@@ -1,5 +1,7 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.Settle;
+import com.fpetrola.chuin.text.pointer.PendingAction;
 import com.fpetrola.chuin.view.DropDown;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

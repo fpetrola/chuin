@@ -1,5 +1,9 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.ClickTarget;
+import com.fpetrola.chuin.text.pointer.Dragging;
+import com.fpetrola.chuin.text.pointer.Settle;
+import com.fpetrola.chuin.text.pointer.PendingAction;
 import com.fpetrola.chuin.text.screen.TintRole;
 import com.fpetrola.chuin.text.geometry.TextArea;
 import com.fpetrola.chuin.text.geometry.Extent;

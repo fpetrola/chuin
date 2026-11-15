@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.pointer;
 
 import com.fpetrola.chuin.text.geometry.TextPoint;
 import static org.junit.jupiter.api.Assertions.assertEquals;

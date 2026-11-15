@@ -1,4 +1,4 @@
-package com.fpetrola.chuin;
+package com.fpetrola.chuin.text.pointer;
 
 import com.fpetrola.chuin.geometry.Point;
 
@@ -7,7 +7,7 @@ import com.fpetrola.chuin.geometry.Point;
  * Where a scroll bar lies on the screen, down or across: the drawing of its cells, a click on one of them and the drag
  * of its thumb all count cells along the same line.
  */
-interface BarLine {
+public interface BarLine {
   /** Whether a cell is on the bar's column, for a bar down, or on its row, for one across, wherever along it. */
   boolean holds(Point cell);
 

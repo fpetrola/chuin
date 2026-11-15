@@ -1,5 +1,10 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.ClickTarget;
+import com.fpetrola.chuin.text.pointer.Grab;
+import com.fpetrola.chuin.text.pointer.Dragging;
+import com.fpetrola.chuin.text.pointer.BarTarget;
+import com.fpetrola.chuin.text.pointer.TextBarLine;
 import com.fpetrola.chuin.text.view.TextGroup;
 import com.fpetrola.chuin.text.view.Group;
 import com.fpetrola.chuin.geometry.Point;

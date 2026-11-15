@@ -1,5 +1,10 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.ClickTarget;
+import com.fpetrola.chuin.text.pointer.Grab;
+import com.fpetrola.chuin.text.pointer.BarTarget;
+import com.fpetrola.chuin.text.pointer.BarLine;
+import com.fpetrola.chuin.text.pointer.TextBarLine;
 import com.fpetrola.chuin.text.view.TextCaption;
 import com.fpetrola.chuin.text.view.Caption;
 import com.fpetrola.chuin.text.screen.ClippedScreen;

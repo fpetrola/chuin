@@ -1,12 +1,6 @@
 # What a person signed of this module's surface; cerco:approve grows it.
 module: "chuin-text"
 types:
-  "com.fpetrola.chuin.BarLine":
-    kind: interface
-    members:
-      - "along(Point): int"
-      - "cell(int): Point"
-      - "holds(Point): boolean"
   "com.fpetrola.chuin.Border":
     kind: interface
     members:
@@ -16,14 +10,6 @@ types:
       - "inside(Area): Area"
       - "middle(int): String"
       - "top(String, int): String"
-  "com.fpetrola.chuin.ClickTarget":
-    kind: interface
-    members:
-      - "click(Point, Runnable): void"
-  "com.fpetrola.chuin.Dragging":
-    kind: interface
-    members:
-      - "to(Point): void"
   "com.fpetrola.chuin.Drawing":
     kind: interface
     members:
@@ -40,10 +26,6 @@ types:
     kind: interface
     members:
       - "next(): boolean"
-  "com.fpetrola.chuin.Grab":
-    kind: interface
-    members:
-      - "hold(Dragging): void"
   "com.fpetrola.chuin.PlacedEntry":
     kind: interface
     members:
@@ -58,11 +40,6 @@ types:
       - "itemAt(Point): Optional<MenuItem>"
       - "items(): List<MenuItem>"
       - "menu(): Menu"
-  "com.fpetrola.chuin.Settle":
-    kind: interface
-    members:
-      - "note(Runnable): void"
-      - "settle(): void"
   "com.fpetrola.chuin.TextToolkit":
     members:
       - "<init>()"
@@ -89,6 +66,41 @@ types:
   "com.fpetrola.chuin.text.input.KeyName":
     members:
       - "<init>(StringBuilder)"
+  "com.fpetrola.chuin.text.pointer.BarClick":
+    members:
+      - "<init>(int, Settle, BarLine, Grab)"
+  "com.fpetrola.chuin.text.pointer.BarLine":
+    kind: interface
+    members:
+      - "along(Point): int"
+      - "cell(int): Point"
+      - "holds(Point): boolean"
+  "com.fpetrola.chuin.text.pointer.BarTarget":
+    members:
+      - "<init>(ScrollBar, BarLine, int, Grab)"
+  "com.fpetrola.chuin.text.pointer.ClickTarget":
+    kind: interface
+    members:
+      - "click(Point, Runnable): void"
+  "com.fpetrola.chuin.text.pointer.Dragging":
+    kind: interface
+    members:
+      - "to(Point): void"
+  "com.fpetrola.chuin.text.pointer.Grab":
+    kind: interface
+    members:
+      - "hold(Dragging): void"
+  "com.fpetrola.chuin.text.pointer.PendingAction":
+    members:
+      - "<init>(Runnable)"
+  "com.fpetrola.chuin.text.pointer.Settle":
+    kind: interface
+    members:
+      - "note(Runnable): void"
+      - "settle(): void"
+  "com.fpetrola.chuin.text.pointer.TextBarLine":
+    members:
+      - "<init>(Point, Point)"
   "com.fpetrola.chuin.text.screen.AnsiTerminal":
     members:
       - "<init>(OutputStream, Palette)"

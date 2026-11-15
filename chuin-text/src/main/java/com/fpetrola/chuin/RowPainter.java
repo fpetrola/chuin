@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.TextBarLine;
 import com.fpetrola.chuin.text.view.TextCaption;
 import com.fpetrola.chuin.text.view.Caption;
 import com.fpetrola.chuin.text.screen.Tint;

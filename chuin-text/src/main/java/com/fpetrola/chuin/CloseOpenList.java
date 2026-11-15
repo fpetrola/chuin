@@ -1,5 +1,6 @@
 package com.fpetrola.chuin;
 
+import com.fpetrola.chuin.text.pointer.Settle;
 import com.fpetrola.chuin.view.DropDownItem;
 import com.fpetrola.chuin.view.ViewVisitor;
 
